@@ -1,5 +1,5 @@
 import { withUser } from "@hoc/routes";
-import { handleRegister } from "@utils/firebase";
+import { handleRegister } from "@lib/auth";
 import Link from "next/link";
 import { useState } from "react";
 

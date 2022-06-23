@@ -1,9 +1,9 @@
-import ThemeToggle from "@components/buttons/ThemeToggle";
+import ThemeToggle from "@components/buttons/ThemeSwitch";
 import { useAppSelector } from "@hooks/useRedux";
 import { activeTheme } from "@redux/slices/themeSlice";
-import { handleSignOut } from "@utils/firebase";
 import Link from "next/link";
 import { useSelector } from "react-redux";
+import { handleSignOut } from "@lib/auth";
 
 const Home = () => {
   const theme = useSelector(activeTheme);

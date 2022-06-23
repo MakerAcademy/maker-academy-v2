@@ -6,8 +6,6 @@ export function withUser(gssp, options = {}) {
   const { hideIfUserExists } = options;
 
   return async (context) => {
-    const gsspData = gssp ? await gssp(context, "userData") : { props: {} };
-
     const { isLoggedIn, profile, user } = nookies.get(context);
 
     if (isLoggedIn == "true" && hideIfUserExists) {
@@ -18,6 +16,10 @@ export function withUser(gssp, options = {}) {
       };
     }
 
+    const gsspData = gssp
+      ? await gssp(context, { user, profile })
+      : { props: {} };
+
     if (gsspData.redirect) {
       return gsspData;
     }
@@ -25,8 +27,8 @@ export function withUser(gssp, options = {}) {
     return {
       props: {
         ...gsspData.props,
-        user: user ?? JSON.parse(user),
-        profile: profile ?? JSON.parse(profile),
+        user: user ? JSON.parse(user) : null,
+        profile: profile ? JSON.parse(profile) : null,
       },
     };
   };
@@ -37,8 +39,6 @@ export function withProtectedUser(gssp, options = {}) {
   const { trustLevel } = options;
 
   return async (context) => {
-    const gsspData = gssp ? await gssp(context, userData) : { props: {} };
-
     const { isLoggedIn, profile, user } = nookies.get(context);
 
     if (isLoggedIn !== "true") {
@@ -48,6 +48,10 @@ export function withProtectedUser(gssp, options = {}) {
         },
       };
     }
+
+    const gsspData = gssp
+      ? await gssp(context, { user, profile })
+      : { props: {} };
 
     const { trustLevel: userTrustLevel } = JSON.parse(user);
 
@@ -66,8 +70,8 @@ export function withProtectedUser(gssp, options = {}) {
     return {
       props: {
         ...gsspData.props,
-        user: user ?? JSON.parse(user),
-        profile: profile ?? JSON.parse(profile),
+        user: user ? JSON.parse(user) : null,
+        profile: profile ? JSON.parse(profile) : null,
       },
     };
   };

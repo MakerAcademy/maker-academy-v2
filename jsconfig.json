@@ -16,6 +16,8 @@
       "@context": ["src/context"],
       "@hoc/*": ["src/hoc/*"],
       "@hoc": ["src/hoc"],
+      "@lib/*": ["src/lib/*"],
+      "@lib": ["src/lib"],
       "@hooks/*": ["src/hooks/*"],
       "@hooks": ["src/hooks"],
       "@contexts/*": ["src/contexts/*"],

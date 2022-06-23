@@ -9,14 +9,18 @@ import {
   REHYDRATE,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import themeSlice from "../slices/themeSlice";
-import userSlice from "../slices/userSlice";
-import profileSlice from "../slices/profileSlice";
+import themeSlice from "@redux/slices/themeSlice";
+import userSlice from "@redux/slices/userSlice";
+import profileSlice from "@redux/slices/profileSlice";
+import globalSlice from "@redux/slices/globalSlice";
+import contentSlice from "@redux/slices/contentSlice";
 
 const reducers = combineReducers({
   theme: themeSlice,
   user: userSlice,
   profile: profileSlice,
+  content: contentSlice,
+  global: globalSlice,
 });
 
 const persistConfig = { key: "root", storage };
@@ -26,8 +30,6 @@ export const store = configureStore({
   reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
-      serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-      },
+      serializableCheck: false,
     }),
 });

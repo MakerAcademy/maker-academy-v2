@@ -4,6 +4,8 @@ import { Provider } from "react-redux";
 import { persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
 import { store } from "@redux/store/store";
+import appWithI18n from "next-translate/appWithI18n";
+import i18nConfig from "@i18n";
 
 const persistor = persistStore(store);
 
@@ -19,4 +21,4 @@ function MyApp({ Component, pageProps }) {
   );
 }
 
-export default MyApp;
+export default appWithI18n(MyApp, { ...i18nConfig });
