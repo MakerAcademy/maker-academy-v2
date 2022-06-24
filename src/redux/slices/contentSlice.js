@@ -1,4 +1,4 @@
-import { getContent } from "@lib/content";
+import { getContent, getPendingContent, getUserContent } from "@lib/content";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
@@ -13,8 +13,8 @@ const initialState = {
   order: "asc",
 };
 
-export const contentFetchData = createAsyncThunk(
-  "content/fetchData",
+export const fetchContentData = createAsyncThunk(
+  "content/fetchContent",
   async (payload, { getState }) => {
     const {
       content: { sort, order, limit, lastVisible },
@@ -32,6 +32,37 @@ export const contentFetchData = createAsyncThunk(
     const result = res;
 
     return { result, merge: !!payload?.merge };
+  }
+);
+
+export const fetchUserContent = createAsyncThunk(
+  "content/fetchUserContent",
+  async (payload, { getState }) => {
+    const {
+      profile: {
+        profile: { id },
+      },
+    } = getState();
+
+    const res = await getUserContent({ author: payload?.cid || id });
+
+    const result = res;
+
+    return { result };
+  }
+);
+
+export const fetchPendingContent = createAsyncThunk(
+  "content/fetchPendingContent",
+  async (payload, { getState }) => {
+    const res = await getPendingContent();
+    console.log("in 2");
+
+    const result = res;
+
+    console.log(result);
+
+    return { result };
   }
 );
 
@@ -75,11 +106,11 @@ export const contentSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(contentFetchData.pending, (state) => {
+      .addCase(fetchContentData.pending, (state) => {
         state.empty = false;
         state.loading = true;
       })
-      .addCase(contentFetchData.fulfilled, (state, action) => {
+      .addCase(fetchContentData.fulfilled, (state, action) => {
         const result = action.payload.result;
         const merge = action.payload.merge;
 

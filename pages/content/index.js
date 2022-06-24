@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from "@hooks/useRedux";
 import { Container } from "@mui/material";
-import { contentFetchData } from "@redux/slices/contentSlice";
+import { fetchContentData } from "@redux/slices/contentSlice";
 import { useEffect } from "react";
 
 const Content = (props) => {
@@ -18,11 +18,11 @@ const Content = (props) => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(contentFetchData());
+    dispatch(fetchContentData());
   }, []);
 
   const fetchMorePosts = () => {
-    dispatch(contentFetchData({ merge: true }));
+    dispatch(fetchContentData({ merge: true }));
   };
 
   return (
