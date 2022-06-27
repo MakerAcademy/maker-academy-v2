@@ -13,13 +13,12 @@ const MenuButtons = ({ menuItems = [], theme }) => {
           <Button
             sx={{
               // p: 1,
-              color: theme.palette.text.main,
+              color: theme.palette.text.primary,
               fontSize: 20,
               textTransform: "inherit",
               fontWeight: 400,
               "&:hover": {
                 color: theme.palette.primary.main,
-                // border: '1px solid grey'
               },
             }}
           >

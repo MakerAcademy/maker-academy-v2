@@ -9,9 +9,13 @@ import { onAuthStateChanged } from "firebase/auth";
 import { useRouter } from "next/router";
 import nookies from "nookies";
 import { useEffect } from "react";
+import { CssBaseline, ThemeProvider } from "@mui/material";
+import { createTheme } from "@config/theme";
 
 const Root = ({ children }) => {
   const { pathname } = useRouter();
+  const { active } = useAppSelector((state) => state.theme);
+  const theme = createTheme(active);
   const { user } = useAppSelector((state) => state.user);
   const { profile } = useAppSelector((state) => state.profile);
   const dispatch = useAppDispatch();
@@ -97,7 +101,12 @@ const Root = ({ children }) => {
       ? DashboardLayout
       : LandingLayout;
 
-  return <Layout>{children}</Layout>;
+  return (
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Layout>{children}</Layout>
+    </ThemeProvider>
+  );
 };
 
 export default Root;

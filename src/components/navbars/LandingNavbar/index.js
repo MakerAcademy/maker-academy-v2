@@ -1,7 +1,5 @@
 import LogoDark from "@assets/images/logos/logo-dark.png";
-import LogoLight from "@assets/images/logos/logo-light.png";
-import { darkTheme } from "@config/theme/dark";
-import { lightTheme } from "@config/theme/light";
+import LogoLight from "@assets/images/logos/logo-light.svg";
 import { NAVBAR_HEIGHT_DESKTOP, NAVBAR_HEIGHT_MOBILE } from "@constants/";
 import useScrollPosition from "@hooks/useScrollPosition";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -9,15 +7,15 @@ import {
   AppBar,
   Box,
   Container,
-  createTheme,
   Hidden,
   IconButton,
   Stack,
   ThemeProvider,
+  useTheme,
 } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useMemo, useState } from "react";
+import { useState } from "react";
 import ActionButtons from "./ActionButtons";
 import MenuButtons from "./MenuButtons";
 
@@ -28,7 +26,8 @@ const MENU_ITEMS = [
   // { name: "creator", link: "/content" },
 ];
 
-const Navbar = ({ fixed, transparent }) => {
+const Navbar = ({ transparent }) => {
+  const theme = useTheme();
   const [anchorEl, setAnchorEl] = useState();
   // const theme = useTheme();
 
@@ -36,27 +35,21 @@ const Navbar = ({ fixed, transparent }) => {
 
   const isScrolled = scrollPosition > 150;
 
-  const theme = useMemo(
-    () => (isScrolled ? createTheme(lightTheme) : createTheme(darkTheme)),
-    [isScrolled]
-  );
-
   return (
     <ThemeProvider theme={theme}>
       <AppBar
-        elevation={isScrolled ? 3 : 0}
+        elevation={0}
         sx={{
           flexGrow: 1,
-          backgroundColor: isScrolled
-            ? "#ffffff"
-            : transparent
+          backgroundColor: transparent
             ? "transparent"
-            : "#14005C",
+            : theme.palette.primary.main,
           width: "100%",
           zIndex: 999,
-          [theme.breakpoints.up("md")]: {
-            position: fixed ? "fixed" : "absolute",
-          },
+          position: "absolute",
+          // [theme.breakpoints.up("md")]: {
+          //   position: fixed ? "fixed" : "absolute",
+          // },
         }}
       >
         <Container maxWidth="xl">
@@ -74,23 +67,15 @@ const Navbar = ({ fixed, transparent }) => {
           >
             {/* Logo */}
             <Link href="/" passHref>
-              <Box
-                sx={{
-                  width: 70,
-                  p: 1,
-                  position: "relative",
+              <img
+                src={theme.palette.mode === "light" ? LogoLight : LogoDark}
+                alt="Maker Academy Logo"
+                style={{
                   height: "100%",
+                  maxHeight: "35px",
+                  objectFit: "contain",
                 }}
-              >
-                <Image
-                  src={isScrolled ? LogoLight : LogoDark}
-                  alt="Maker Academy Logo"
-                  priority
-                  layout="fill"
-                  objectFit="contain"
-                  style={{ cursor: "pointer" }}
-                />
-              </Box>
+              />
             </Link>
 
             <Hidden mdDown>
