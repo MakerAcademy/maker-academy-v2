@@ -5,7 +5,7 @@ import {
   ForumIcon,
   MAIcon,
   TwitterIcon,
-} from "@page-components/images";
+} from "@page-components/Home/images";
 import Image from "next/image";
 import React from "react";
 

@@ -10,7 +10,7 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import { BlurLeft, DoorImage } from "@page-components/images";
+import { BlurSection1, DoorImage } from "@page-components/Home/images";
 import Image from "next/image";
 
 const Section1 = () => {
@@ -26,9 +26,15 @@ const Section1 = () => {
     >
       <img
         loading="lazy"
-        src={BlurLeft}
+        src={BlurSection1}
         alt="Blur 1"
-        style={{ maxWidth: "100%", position: "absolute", top: 0, left: 0 }}
+        style={{
+          maxWidth: "100%",
+          position: "absolute",
+          top: 0,
+          left: 0,
+          zIndex: -1,
+        }}
       />
 
       <Container
@@ -48,7 +54,15 @@ const Section1 = () => {
         >
           {/* Left Side */}
           <Grid item xs={12} md={7}>
-            <Stack spacing={4} justifyContent="center" sx={{ height: "100%" }}>
+            <Stack
+              spacing={4}
+              justifyContent="center"
+              alignItems={{ xs: "center", md: "flex-start" }}
+              sx={{
+                height: "100%",
+                [theme.breakpoints.down("md")]: { textAlign: "center" },
+              }}
+            >
               <Typography
                 sx={{
                   ...themeTypography.h2,

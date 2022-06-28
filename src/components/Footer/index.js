@@ -9,7 +9,7 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import { DiscordIcon } from "@page-components/images";
+import { DiscordIcon } from "@page-components/Home/images";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";

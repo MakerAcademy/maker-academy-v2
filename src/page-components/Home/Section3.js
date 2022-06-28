@@ -1,10 +1,10 @@
 import ContentCard from "@components/cards/ContentCard";
 import { Box, Container, Grid, Tab, Tabs } from "@mui/material";
-import { BlurLeft } from "@page-components/images";
-import React, { useState } from "react";
+import { useState } from "react";
+import { BlurSection3 } from "./images";
 
 const DUMMY_CONTENT = [
-  ...new Array(9).fill(null).map((_, i) => ({
+  ...new Array(6).fill(null).map((_, i) => ({
     _id: i,
     thumbnail:
       "https://blog.makerdao.com/wp-content/uploads/2019/11/Product-blue-scaled.jpg",
@@ -33,13 +33,20 @@ const Section3 = () => {
   };
 
   return (
-    <Box sx={{ pt: 10, pb: 15, position: "relative" }}>
-      {/* <img
+    <Box sx={{ my: 15, position: "relative" }}>
+      <img
         loading="lazy"
-        src={BlurLeft}
-        alt="Blur 1"
-        style={{ maxWidth: "100%", position: "absolute", top: "50%", left: 0 }}
-      /> */}
+        src={BlurSection3}
+        alt="Blur 3"
+        style={{
+          maxWidth: "100%",
+          position: "absolute",
+          top: 230,
+          left: 0,
+          zIndex: -1,
+          // filter: "blur(100px)",
+        }}
+      />
 
       <Container maxWidth="lg">
         {/* Tabs */}

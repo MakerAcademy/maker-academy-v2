@@ -1,3 +1,5 @@
+import ArrowForwardOutlinedIcon from "@mui/icons-material/ArrowForwardOutlined";
+import PlayArrowOutlinedIcon from "@mui/icons-material/PlayArrowOutlined";
 import {
   Box,
   Button,
@@ -6,11 +8,17 @@ import {
   Grid,
   Stack,
   Typography,
+  useTheme,
 } from "@mui/material";
-import React from "react";
-import PlayArrowOutlinedIcon from "@mui/icons-material/PlayArrowOutlined";
-import ArrowForwardOutlinedIcon from "@mui/icons-material/ArrowForwardOutlined";
-import { BlurRight } from "@page-components/images";
+import {
+  BlurSection2,
+  BooksSec2Icon,
+  darkOutlineSec2Icon,
+  GlobeSec2Icon,
+  lightOutlineSec2Icon,
+  PenSec2Icon,
+  ScrollSec2Icon,
+} from "@page-components/Home/images";
 
 const ActionButton = ({ text, Icon, reverse }) => (
   <Button>
@@ -32,75 +40,112 @@ const ActionButton = ({ text, Icon, reverse }) => (
   </Button>
 );
 
-const ServiceCard = ({ title, description, image, Btn }) => (
-  <Card
-    elevation={0}
-    sx={(theme) => ({
-      height: "100%",
-      minHeight: 320,
-      p: { xs: 3, md: 5 },
-      borderRadius: 3,
-      boxShadow: "10px 12px 80px rgba(126, 129, 164, 0.2)",
-      background:
-        theme.palette.mode === "light"
-          ? "linear-gradient(335deg, rgba(245,252,239,1) 13%, rgba(250,255,247,1) 38%, rgba(255,255,255,1) 100%)"
-          : "linear-gradient(335deg, rgba(20,20,20,1) 0%, rgba(0,0,0,1) 65%)",
-    })}
-  >
-    <Grid
-      container
-      justifyContent="space-between"
-      sx={{ height: "100%", gap: "20px" }}
-      flexWrap={{ xs: "wrap-reverse", sm: "wrap" }}
+const ServiceCard = ({ title, description, image, Btn }) => {
+  const theme = useTheme();
+
+  return (
+    <Card
+      elevation={0}
+      sx={(theme) => ({
+        zIndex: 999,
+        height: "100%",
+        minHeight: 320,
+        p: { xs: 3, md: 5 },
+        borderRadius: 3,
+        boxShadow: "10px 12px 80px rgba(126, 129, 164, 0.2)",
+        background:
+          theme.palette.mode === "light"
+            ? "linear-gradient(335deg, rgba(245,252,239,1) 13%, rgba(250,255,247,1) 38%, rgba(255,255,255,1) 100%)"
+            : "linear-gradient(335deg, rgba(20,20,20,1) 0%, rgba(0,0,0,1) 65%)",
+      })}
     >
-      {/* Left */}
-      <Grid item xs={12} sm={8}>
-        <Stack
-          spacing={2}
-          justifyContent="space-between"
-          sx={{ height: "100%" }}
-        >
-          <Stack spacing={2}>
-            <Typography variant="h3" sx={{ fontSize: "32px" }}>
-              {title}
-            </Typography>
+      <Grid
+        container
+        justifyContent="space-between"
+        sx={{ height: "100%", gap: "20px" }}
+        flexWrap={{ xs: "wrap-reverse", sm: "wrap" }}
+      >
+        {/* Left */}
+        <Grid item xs={12} sm={8}>
+          <Stack
+            spacing={2}
+            justifyContent="space-between"
+            sx={{ height: "100%" }}
+          >
+            <Stack spacing={2}>
+              <Typography variant="h3" sx={{ fontSize: "32px" }}>
+                {title}
+              </Typography>
 
-            <Typography sx={{ whiteSpace: "pre-line" }}>
-              {description}
-            </Typography>
+              <Typography sx={{ whiteSpace: "pre-line" }}>
+                {description}
+              </Typography>
+            </Stack>
+
+            <Box>
+              {Btn}
+              {/* <Btn /> */}
+            </Box>
           </Stack>
+        </Grid>
 
-          <Box>
-            {Btn}
-            {/* <Btn /> */}
-          </Box>
-        </Stack>
+        {/* Right */}
+        <Grid item xs={12} sm={"auto"}>
+          <Stack
+            justifyContent="center"
+            alignItems="center"
+            sx={{ height: "100%" }}
+          >
+            <img
+              src={
+                theme.palette.mode === "light"
+                  ? lightOutlineSec2Icon
+                  : darkOutlineSec2Icon
+              }
+              alt="outline"
+              style={{ zIndex: 1, height: 123, width: 123 }}
+            />
+            <img
+              src={image}
+              alt="outline"
+              style={{
+                position: "absolute",
+                zIndex: 2,
+                height: 110,
+                width: 110,
+              }}
+            />
+          </Stack>
+        </Grid>
       </Grid>
-
-      {/* Right */}
-      <Grid item xs={12} sm={"auto"}>
-        <Stack
-          justifyContent="center"
-          alignItems="center"
-          sx={{ height: "100%" }}
-        >
-          <Box sx={{ backgroundColor: "red", height: 125, width: 125 }}></Box>
-        </Stack>
-      </Grid>
-    </Grid>
-  </Card>
-);
+    </Card>
+  );
+};
 
 const Section2 = () => {
   return (
     <Box
       sx={{
         position: "relative",
-        py: 15,
+        my: 10,
         // maxWidth: "100vh",
-        overflowX: "hidden",
+        // overflowX: "hidden",
       }}
     >
+      <img
+        loading="lazy"
+        src={BlurSection2}
+        alt="Blur 2"
+        style={{
+          maxWidth: "100%",
+          position: "absolute",
+          top: -200,
+          right: 0,
+          zIndex: -1,
+          filter: "blur(100px)",
+        }}
+      />
+
       <Container maxWidth="lg" sx={{ position: "relative" }}>
         <Grid container spacing={3}>
           {/* Item 1 */}
@@ -108,6 +153,7 @@ const Section2 = () => {
             <ServiceCard
               title={"What is Maker Academy?"}
               description={"Learn about Maker Academy"}
+              image={BooksSec2Icon}
               Btn={
                 <ActionButton
                   text="PLAY VIDEO"
@@ -125,6 +171,7 @@ const Section2 = () => {
               description={
                 "Tailored programs for subfields of maker that take you from the basics all the way to the advanced"
               }
+              image={ScrollSec2Icon}
               Btn={
                 <ActionButton
                   text="LEARN MORE"
@@ -141,6 +188,7 @@ const Section2 = () => {
               description={
                 "Want to add your own content?\nContribute to the Academy using the creator studio"
               }
+              image={PenSec2Icon}
               Btn={
                 <ActionButton
                   text="START CREATING"
@@ -157,6 +205,7 @@ const Section2 = () => {
               description={
                 "Want to contribute to MakerDAO?\nSee how you can get involved"
               }
+              image={GlobeSec2Icon}
               Btn={
                 <ActionButton
                   text="VIEW ROLES"

@@ -1,12 +1,27 @@
 import { Masonry } from "@mui/lab";
 import { Box, Container, Paper, Stack, Typography } from "@mui/material";
 import React from "react";
+import { BlurSection4 } from "./images";
 
 const heights = [222, 139, 222, 222, 310, 222, 222, 222];
 
 const Section5 = () => {
   return (
-    <Box sx={{ my: 15 }}>
+    <Box sx={{ my: 10, position: "relative" }}>
+      <img
+        loading="lazy"
+        src={BlurSection4}
+        alt="Blur 3"
+        style={{
+          maxWidth: "100%",
+          position: "absolute",
+          top: -50,
+          right: 0,
+          zIndex: -1,
+          // filter: "blur(10px)",
+        }}
+      />
+
       <Container maxWidth="lg">
         <Stack alignItems="center" spacing={4}>
           <Typography

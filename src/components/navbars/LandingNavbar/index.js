@@ -72,6 +72,7 @@ const Navbar = ({ transparent }) => {
                   height: "100%",
                   maxHeight: "35px",
                   objectFit: "contain",
+                  cursor: "pointer",
                 }}
               />
             </Link>
