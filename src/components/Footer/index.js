@@ -2,19 +2,14 @@ import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import {
-  Box,
   Container,
   IconButton,
   Stack,
   Typography,
   useTheme,
 } from "@mui/material";
-import { DiscordIcon } from "@page-components/Home/images";
-import Image from "next/image";
+import { FullLogoBlack, FullLogoWhite } from "@utils/images";
 import Link from "next/link";
-import React from "react";
-import LogoBlack from "@assets/images/logos/logo-black.svg";
-import LogoWhite from "@assets/images/logos/logo-white.svg";
 
 const socials = [
   { label: "Twitter", icon: TwitterIcon, link: "#", color: "#00acee" },
@@ -57,7 +52,7 @@ const LandingFooter = ({}) => {
         {/* Logo */}
         <Link href="/" passHref>
           <img
-            src={theme.palette.mode === "light" ? LogoBlack : LogoWhite}
+            src={theme.palette.mode === "light" ? FullLogoBlack : FullLogoWhite}
             alt="Maker Academy Logo"
             style={{
               height: "100%",

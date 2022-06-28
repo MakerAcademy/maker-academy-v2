@@ -15,8 +15,8 @@ const ActionButtons = ({ theme }) => {
 
       <ThemeSwitch />
 
-      <Link href="/sign-up">
-        <GreenButton size="small">Sign Up</GreenButton>
+      <Link href="/login">
+        <GreenButton size="small">Login</GreenButton>
       </Link>
     </Stack>
   );

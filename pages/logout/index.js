@@ -1,7 +1,7 @@
 import { handleSignOut } from "@lib/auth";
 import React, { useEffect } from "react";
 
-const Signout = () => {
+const logout = () => {
   useEffect(() => {
     handleSignOut();
   }, []);
@@ -9,4 +9,4 @@ const Signout = () => {
   return <></>;
 };
 
-export default Signout;
+export default logout;

@@ -8,9 +8,13 @@ import { getContact, getUser } from "@lib/user";
 import { onAuthStateChanged } from "firebase/auth";
 import { useRouter } from "next/router";
 import nookies from "nookies";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { createTheme } from "@config/theme";
+
+const EmptyLayout = ({ children }) => (
+  <React.Fragment>{children}</React.Fragment>
+);
 
 const Root = ({ children }) => {
   const { pathname } = useRouter();
@@ -97,7 +101,9 @@ const Root = ({ children }) => {
   }, [unsubscribeAuth]);
 
   const Layout =
-    pathname.startsWith("/dashboard") || pathname.startsWith("/app")
+    pathname.startsWith("/login") || pathname.startsWith("/register")
+      ? EmptyLayout
+      : pathname.startsWith("/dashboard") || pathname.startsWith("/app")
       ? DashboardLayout
       : LandingLayout;
 

@@ -1,7 +1,14 @@
 import { Button, useTheme } from "@mui/material";
 import React from "react";
 
-const GreenButton = ({ children, variant, size, fullWidth, sx = {} }) => {
+const GreenButton = ({
+  children,
+  variant,
+  size,
+  fullWidth,
+  sx = {},
+  ...other
+}) => {
   const theme = useTheme();
 
   return (
@@ -31,6 +38,7 @@ const GreenButton = ({ children, variant, size, fullWidth, sx = {} }) => {
         },
         ...sx,
       }}
+      {...other}
     >
       {children}
     </Button>
