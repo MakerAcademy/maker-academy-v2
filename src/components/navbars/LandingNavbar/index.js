@@ -41,7 +41,7 @@ const Navbar = ({ transparent }) => {
           flexGrow: 1,
           backgroundColor: transparent
             ? "transparent"
-            : theme.palette.primary.main,
+            : theme.palette.background.default,
           width: "100%",
           zIndex: 999,
           position: "absolute",
