@@ -10,6 +10,7 @@ import {
 import React from "react";
 import PlayArrowOutlinedIcon from "@mui/icons-material/PlayArrowOutlined";
 import ArrowForwardOutlinedIcon from "@mui/icons-material/ArrowForwardOutlined";
+import { BlurRight } from "@page-components/images";
 
 const ActionButton = ({ text, Icon, reverse }) => (
   <Button>
@@ -34,15 +35,17 @@ const ActionButton = ({ text, Icon, reverse }) => (
 const ServiceCard = ({ title, description, image, Btn }) => (
   <Card
     elevation={0}
-    sx={{
+    sx={(theme) => ({
       height: "100%",
       minHeight: 320,
       p: { xs: 3, md: 5 },
       borderRadius: 3,
-      boxShadow: "10px 12px 141px rgba(126, 129, 164, 0.2)",
+      boxShadow: "10px 12px 80px rgba(126, 129, 164, 0.2)",
       background:
-        "linear-gradient(335deg, rgba(245,252,239,1) 13%, rgba(250,255,247,1) 38%, rgba(255,255,255,1) 100%)",
-    }}
+        theme.palette.mode === "light"
+          ? "linear-gradient(335deg, rgba(245,252,239,1) 13%, rgba(250,255,247,1) 38%, rgba(255,255,255,1) 100%)"
+          : "linear-gradient(335deg, rgba(20,20,20,1) 0%, rgba(0,0,0,1) 65%)",
+    })}
   >
     <Grid
       container
@@ -90,8 +93,15 @@ const ServiceCard = ({ title, description, image, Btn }) => (
 
 const Section2 = () => {
   return (
-    <Box sx={{ mt: 5, mb: 15 }}>
-      <Container maxWidth="lg">
+    <Box
+      sx={{
+        position: "relative",
+        py: 15,
+        // maxWidth: "100vh",
+        overflowX: "hidden",
+      }}
+    >
+      <Container maxWidth="lg" sx={{ position: "relative" }}>
         <Grid container spacing={3}>
           {/* Item 1 */}
           <Grid item xs={12} md={6}>

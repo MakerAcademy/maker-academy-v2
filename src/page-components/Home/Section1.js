@@ -1,10 +1,8 @@
 import GreenButton from "@components/buttons/GreenButton";
 import themeTypography from "@config/theme/typography";
-import { NAVBAR_HEIGHT_DESKTOP } from "@constants/";
-import { NAVBAR_HEIGHT_MOBILE } from "@constants/";
+import { NAVBAR_HEIGHT_DESKTOP, NAVBAR_HEIGHT_MOBILE } from "@constants/";
 import {
   Box,
-  Button,
   Container,
   Grid,
   Hidden,
@@ -12,10 +10,8 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
+import { BlurLeft, DoorImage } from "@page-components/images";
 import Image from "next/image";
-import React from "react";
-import DoorImage from "@assets/images/homepage/door.png";
-import Blur1 from "@assets/images/homepage/bg-blur1.png";
 
 const Section1 = () => {
   const theme = useTheme();
@@ -23,10 +19,18 @@ const Section1 = () => {
   return (
     <Box
       sx={{
+        position: "relative",
         // backgroundColor: "red",
         [theme.breakpoints.up("md")]: {},
       }}
     >
+      <img
+        loading="lazy"
+        src={BlurLeft}
+        alt="Blur 1"
+        style={{ maxWidth: "100%", position: "absolute", top: 0, left: 0 }}
+      />
+
       <Container
         maxWidth="lg"
         sx={{
@@ -37,7 +41,11 @@ const Section1 = () => {
           },
         }}
       >
-        <Grid container spacing={8} sx={{ my: { xs: 3, md: 5 } }}>
+        <Grid
+          container
+          spacing={{ xs: 3, md: 8 }}
+          sx={{ my: { xs: 3, md: 5 } }}
+        >
           {/* Left Side */}
           <Grid item xs={12} md={7}>
             <Stack spacing={4} justifyContent="center" sx={{ height: "100%" }}>
@@ -72,10 +80,10 @@ const Section1 = () => {
                   width: "100%",
                   height: 550,
                   "& > span": { height: "100% !important" },
-                  filter: `drop-shadow(5px 5px 10px ${
+                  filter: `drop-shadow(5px 5px 30px ${
                     theme.palette.mode === "dark"
                       ? "rgba(255,255,255,0.2)"
-                      : "rgba(0,0,0,0.2)"
+                      : "rgba(0,0,0,0.15)"
                   })`,
                 }}
               >

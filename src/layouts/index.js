@@ -1,8 +1,7 @@
-// import Footer from "@components/Footer";
-// import Navbar from "@components/navbars/LandingNavbar";
+import Footer from "@components/Footer";
 import Navbar from "@components/navbars/LandingNavbar";
 import { NAVBAR_HEIGHT_DESKTOP } from "@constants/";
-import { Box, useTheme } from "@mui/material";
+import { Box, Divider, useTheme } from "@mui/material";
 import { useRouter } from "next/router";
 import React from "react";
 
@@ -25,7 +24,8 @@ const LandingLayout = ({ children }) => {
         {children}
       </Box>
 
-      {/* <Footer /> */}
+      <Divider />
+      <Footer />
     </React.Fragment>
   );
 };

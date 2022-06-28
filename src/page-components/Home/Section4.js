@@ -1,18 +1,38 @@
-import { Box, Container, Stack, Typography } from "@mui/material";
+import { Box, Button, Container, Stack, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
+import {
+  DiscordIcon,
+  ForumIcon,
+  MAIcon,
+  TwitterIcon,
+} from "@page-components/images";
+import Image from "next/image";
 import React from "react";
 
-const SocialButton = ({ icon, text }) => (
-  <Stack spacing={1} justifyContent="center" alignItems="center">
-    <Box>Icon</Box>
-    <Typography>{text}</Typography>
-  </Stack>
+const SocialButton = ({ icon, text, color }) => (
+  <Button sx={{ textTransform: "inherit" }}>
+    <Stack spacing={0.5} justifyContent="center" alignItems="center">
+      <Box sx={{ height: "100%", width: 55 }}>
+        <Image
+          src={icon}
+          alt={text}
+          layout="responsive"
+          objectFit="contain"
+          height="60px"
+          width="100%"
+        />
+      </Box>
+      <Typography variant="body2" sx={{ color, fontWeight: 600 }}>
+        {text}
+      </Typography>
+    </Stack>
+  </Button>
 );
 
 const Section4 = () => {
   return (
-    <Container maxWidth="lg" sx={{ my: 5 }}>
-      <Box sx={{ backgroundColor: grey[200], p: { xs: 4, md: 6 } }}>
+    <Container maxWidth="lg" sx={{ py: 5 }}>
+      <Box sx={{ backgroundColor: "primary.grey1", p: { xs: 4, md: 6 } }}>
         <Stack
           spacing={4}
           justifyContent="center"
@@ -29,11 +49,17 @@ const Section4 = () => {
             shaping the future if decentralized finance.
           </Typography>
 
-          <Stack direction="row" justifyContent="center" spacing={4}>
-            <SocialButton text="Discord" />
-            <SocialButton text="Forum" />
-            <SocialButton text="Twitter" />
-            <SocialButton text="Join" />
+          <Stack
+            direction="row"
+            justifyContent="center"
+            spacing={{ xs: 2, sm: 4, md: 5 }}
+            sx={{ pt: 2 }}
+            flexWrap="wrap"
+          >
+            <SocialButton text="Discord" icon={DiscordIcon} color="#7289DA" />
+            <SocialButton text="Forum" icon={ForumIcon} color="text.title" />
+            <SocialButton text="Twitter" icon={TwitterIcon} color="#4AA1EC" />
+            <SocialButton text="Join" icon={MAIcon} color="text.primary" />
           </Stack>
         </Stack>
       </Box>

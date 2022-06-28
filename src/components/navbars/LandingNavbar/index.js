@@ -1,11 +1,10 @@
-import LogoDark from "@assets/images/logos/logo-dark.png";
-import LogoLight from "@assets/images/logos/logo-light.svg";
+import LogoBlack from "@assets/images/logos/logo-black.svg";
+import LogoWhite from "@assets/images/logos/logo-white.svg";
 import { NAVBAR_HEIGHT_DESKTOP, NAVBAR_HEIGHT_MOBILE } from "@constants/";
 import useScrollPosition from "@hooks/useScrollPosition";
 import MenuIcon from "@mui/icons-material/Menu";
 import {
   AppBar,
-  Box,
   Container,
   Hidden,
   IconButton,
@@ -13,7 +12,6 @@ import {
   ThemeProvider,
   useTheme,
 } from "@mui/material";
-import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import ActionButtons from "./ActionButtons";
@@ -68,7 +66,7 @@ const Navbar = ({ transparent }) => {
             {/* Logo */}
             <Link href="/" passHref>
               <img
-                src={theme.palette.mode === "light" ? LogoLight : LogoDark}
+                src={theme.palette.mode === "light" ? LogoBlack : LogoWhite}
                 alt="Maker Academy Logo"
                 style={{
                   height: "100%",

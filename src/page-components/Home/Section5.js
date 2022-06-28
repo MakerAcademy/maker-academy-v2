@@ -21,7 +21,7 @@ const Section5 = () => {
             community and thankful for any feedback, support or suggestions.
           </Typography>
 
-          <Masonry columns={4} spacing={3} sx={{ pt: 3 }}>
+          <Masonry columns={{ xs: 1, sm: 2, md: 4 }} spacing={3} sx={{ pt: 3 }}>
             {heights.map((height, index) => (
               <Paper
                 key={index}

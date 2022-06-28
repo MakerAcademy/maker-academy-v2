@@ -1,17 +1,26 @@
-import DiscordIcon from "@assets/icons/discord-brand.svg";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import YouTubeIcon from "@mui/icons-material/YouTube";
-import { Box, IconButton, Stack, Typography, useTheme } from "@mui/material";
+import {
+  Box,
+  Container,
+  IconButton,
+  Stack,
+  Typography,
+  useTheme,
+} from "@mui/material";
+import { DiscordIcon } from "@page-components/images";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import LogoBlack from "@assets/images/logos/logo-black.svg";
+import LogoWhite from "@assets/images/logos/logo-white.svg";
 
 const socials = [
   { label: "Twitter", icon: TwitterIcon, link: "#", color: "#00acee" },
   { label: "Youtube", icon: YouTubeIcon, link: "#", color: "#c4302b" },
   { label: "LinkedIn", icon: LinkedInIcon, link: "#", color: "#1f8cbf" },
-  { label: "Discord", svg: DiscordIcon, link: "#", color: "#5865F2" },
+  // { label: "Discord", svg: DiscordIcon, link: "#", color: "#5865F2" },
 ];
 
 const ABOUT_ROUTES = [
@@ -32,98 +41,65 @@ const LandingFooter = ({}) => {
   const isDark = theme.palette.mode === "dark";
 
   return (
-    <Box
-      sx={{
-        py: 6,
-        px: 4,
-        backgroundColor: "#14005C",
-        color: theme.palette.common.white,
-      }}
-    >
-      {/* About Routes */}
-      <Typography
-        variant="h5"
-        sx={{ textAlign: "center", fontWeight: 400, pb: { xs: 2, md: 3 } }}
-      >
-        About Us
-      </Typography>
-
+    <Container maxWidth="xl" sx={{ py: 3 }}>
       <Stack
-        spacing={2}
         direction={{ xs: "column", md: "row" }}
-        justifyContent="center"
+        spacing={3}
         alignItems="center"
+        justifyContent="space-between"
+        sx={
+          {
+            // backgroundColor: "#14005C",
+            // color: theme.palette.common.white,
+          }
+        }
       >
-        {ABOUT_ROUTES.map((route, i) => (
-          <Link href={route.value} key={i} passHref>
-            <Typography
-              sx={{
-                cursor: "pointer",
-                "&:hover": { textDecoration: "underline" },
-              }}
-            >
-              {route.label}
-            </Typography>
-          </Link>
-        ))}
-      </Stack>
+        {/* Logo */}
+        <Link href="/" passHref>
+          <img
+            src={theme.palette.mode === "light" ? LogoBlack : LogoWhite}
+            alt="Maker Academy Logo"
+            style={{
+              height: "100%",
+              maxHeight: "25px",
+              objectFit: "contain",
+            }}
+          />
+        </Link>
 
-      {/* Socials */}
-      <Typography
-        variant="h5"
-        sx={{
-          textAlign: "center",
-          fontWeight: 400,
-          pb: { xs: 2, md: 3 },
-          pt: { xs: 3, md: 5 },
-        }}
-      >
-        Socials
-      </Typography>
+        {/* Rights */}
+        <Typography variant="body2">All rights Maker Academy 2022</Typography>
 
-      <Stack
-        spacing={2}
-        direction={{ xs: "column", md: "row" }}
-        justifyContent="center"
-        alignItems="center"
-      >
-        {socials.map((item, i) => (
-          <Link href={item.link} key={i} passHref>
-            <Stack
-              direction="row"
-              alignItems="center"
-              spacing={0.5}
-              sx={{
-                cursor: "pointer",
-                "&:hover": { textDecoration: "underline" },
-              }}
-            >
-              <IconButton
-                sx={{
-                  backgroundColor: item.color,
-                  color: theme.palette.common.white,
-                }}
-              >
+        {/* Socials */}
+        <Stack
+          spacing={2}
+          direction="row"
+          justifyContent="center"
+          alignItems="center"
+        >
+          {socials.map((item, i) => (
+            <Link href={item.link} key={i} passHref>
+              <IconButton>
                 {item.icon && <item.icon fontSize="small" />}
 
-                {item.svg && (
-                  <Image
-                    src={item.svg}
-                    alt="Discord"
-                    height="25px"
-                    width="25px"
-                    objectFit="contain"
-                    style={{
-                      filter: "invert(0.9)",
-                    }}
-                  />
-                )}
+                {/* {item.svg && (
+                    <Image
+                      src={item.svg}
+                      alt="Discord"
+                      height="25px"
+                      width="25px"
+                      objectFit="contain"
+                      style={{
+                        filter: "invert(0.9)",
+                      }}
+                    />
+                  )} */}
               </IconButton>
-            </Stack>
-          </Link>
-        ))}
+            </Link>
+          ))}
+        </Stack>
       </Stack>
-    </Box>
+    </Container>
   );
 };
 

@@ -1,5 +1,6 @@
 import ContentCard from "@components/cards/ContentCard";
 import { Box, Container, Grid, Tab, Tabs } from "@mui/material";
+import { BlurLeft } from "@page-components/images";
 import React, { useState } from "react";
 
 const DUMMY_CONTENT = [
@@ -32,7 +33,14 @@ const Section3 = () => {
   };
 
   return (
-    <Box sx={{ my: 15 }}>
+    <Box sx={{ pt: 10, pb: 15, position: "relative" }}>
+      {/* <img
+        loading="lazy"
+        src={BlurLeft}
+        alt="Blur 1"
+        style={{ maxWidth: "100%", position: "absolute", top: "50%", left: 0 }}
+      /> */}
+
       <Container maxWidth="lg">
         {/* Tabs */}
         <Tabs
