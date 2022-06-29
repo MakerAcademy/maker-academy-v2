@@ -1,3 +1,4 @@
+import Title from "@components/Title";
 import { Masonry } from "@mui/lab";
 import { Box, Container, Paper, Stack, Typography } from "@mui/material";
 import React from "react";
@@ -24,12 +25,9 @@ const Section5 = () => {
 
       <Container maxWidth="lg">
         <Stack alignItems="center" spacing={4}>
-          <Typography
-            variant="h2"
-            sx={{ textAlign: "center", color: "text.title" }}
-          >
+          <Title variant="h2" sx={{ textAlign: "center", color: "text.title" }}>
             Let us know what you think.
-          </Typography>
+          </Title>
 
           <Typography sx={{ textAlign: "center", maxWidth: 750 }}>
             We're proud to be the main source of information for the MakerDAO

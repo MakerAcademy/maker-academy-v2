@@ -1,3 +1,4 @@
+import Title from "@components/Title";
 import styled from "@emotion/styled";
 import { Stack, Typography, useTheme } from "@mui/material";
 import { useState } from "react";
@@ -22,11 +23,14 @@ const LoginContent = ({}) => {
           color: theme.palette.primary.white,
         }}
       >
-        <Typography variant="h2">Sign In</Typography>
+        <Title variant={{ xs: "h3", md: "h2" }}>Sign In</Title>
+        {/* <Typography variant="h2" sx={{ color: "text.title" }}>
+          Sign In
+        </Typography> */}
 
-        <Typography variant="h5">Good to see you again!</Typography>
+        <Title variant="h5">Good to see you again!</Title>
 
-        <Typography variant="h6" sx={{ fontWeight: 400, pb: 3 }}>
+        <Typography sx={{ fontWeight: 400, pb: 3 }}>
           By logging in for Maker Academy, you agree to our{" "}
           <StyledDialogButton onClick={() => setTermsDialog(true)}>
             Terms of Use

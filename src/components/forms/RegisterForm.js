@@ -14,13 +14,14 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as Yup from "yup";
 import GoogleIcon from "@mui/icons-material/Google";
+import Title from "@components/Title";
 
 export const SocialButton = ({ color, children, ...other }) => {
   const theme = useTheme();
 
   return (
     <IconButton
-      size="large"
+      // size="large"
       sx={{
         backgroundColor: color,
         color: theme.palette.common.white,
@@ -75,9 +76,9 @@ const RegisterForm = () => {
         spacing={3}
         sx={{ width: "100%", height: "100%" }}
       >
-        <Typography variant="h5" sx={{ pb: 2 }}>
+        <Title variant="h5" sx={{ pb: 2 }}>
           Create your account
-        </Typography>
+        </Title>
         {/*<Typography>Join Maker Academy as a</Typography>*/}
 
         {/*<ToggleButtonGroup*/}
@@ -96,7 +97,6 @@ const RegisterForm = () => {
         <FormTextField
           name="email"
           label="Email"
-          variant="filled"
           control={control}
           type="email"
           placeholder="abc@xyz.com"
@@ -106,7 +106,6 @@ const RegisterForm = () => {
 
         <FormTextField
           name="password"
-          variant="filled"
           label="Password"
           placeholder="Password"
           control={control}
@@ -117,7 +116,6 @@ const RegisterForm = () => {
 
         <FormTextField
           name="passwordConfirmation"
-          variant="filled"
           label="Confirm Password"
           placeholder="Confirm Password"
           control={control}
@@ -130,7 +128,15 @@ const RegisterForm = () => {
           Sign up
         </GreenButton>
 
-        <Divider variant="middle" sx={{ width: "100%", maxWidth: 410 }}>
+        <Divider
+          variant="middle"
+          sx={{
+            width: "100%",
+            maxWidth: 410,
+            display: "flex",
+            alignItems: "end",
+          }}
+        >
           Or
         </Divider>
 

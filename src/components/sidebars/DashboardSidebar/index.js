@@ -1,3 +1,4 @@
+import Title from "@components/Title";
 import { DASHBOARD_SIDE_DRAWER_WIDTH } from "@constants/";
 import { useAppDispatch, useAppSelector } from "@hooks/useRedux";
 import AccountCircleIcon from "@mui/icons-material/AccountCircleOutlined";
@@ -75,7 +76,7 @@ const UpgradeBox = () => (
         bgcolor: "grey.200",
       }}
     >
-      <Typography variant="h6">Get more?</Typography>
+      <Title variant="h6">Get more?</Title>
       <Typography>From only $69</Typography>
       <Button variant="contained">Upgrade to pro</Button>
     </Stack>
@@ -96,11 +97,11 @@ const Content = () => {
       {/* Logo */}
       <Link href="/">
         <Box sx={{ px: 2.5, py: 3, cursor: "pointer" }}>
-          <Typography variant="h4">
+          <Title variant="h4">
             Maker Academy
             <br />
             Logo
-          </Typography>
+          </Title>
           {/* <img
             alt="Maker Academy Logo"
             src=""

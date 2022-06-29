@@ -1,5 +1,6 @@
 import GreenButton from "@components/buttons/GreenButton";
 import FormTextField from "@components/formFields/FormTextField";
+import Title from "@components/Title";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { handleGoogleLogin, handleLogin } from "@lib/auth";
 import GoogleIcon from "@mui/icons-material/Google";
@@ -38,14 +39,13 @@ const LoginForm = () => {
         spacing={3}
         sx={{ width: "100%", height: "100%" }}
       >
-        <Typography variant="h5" sx={{ pb: 2 }}>
+        <Title variant="h5" sx={{ pb: 2 }}>
           Login to your account
-        </Typography>
+        </Title>
 
         <FormTextField
           name="email"
           label="Email"
-          variant="filled"
           control={control}
           type="email"
           placeholder="abc@xyz.com"
@@ -55,7 +55,6 @@ const LoginForm = () => {
 
         <FormTextField
           name="password"
-          variant="filled"
           label="Password"
           placeholder="Password"
           control={control}
@@ -68,7 +67,15 @@ const LoginForm = () => {
           Sign in
         </GreenButton>
 
-        <Divider variant="middle" sx={{ width: "100%", maxWidth: 410 }}>
+        <Divider
+          variant="middle"
+          sx={{
+            width: "100%",
+            maxWidth: 410,
+            display: "flex",
+            alignItems: "end",
+          }}
+        >
           Or
         </Divider>
 

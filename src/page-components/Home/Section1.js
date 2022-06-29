@@ -1,5 +1,5 @@
 import GreenButton from "@components/buttons/GreenButton";
-import themeTypography from "@config/theme/typography";
+import Title from "@components/Title";
 import { NAVBAR_HEIGHT_DESKTOP, NAVBAR_HEIGHT_MOBILE } from "@constants/";
 import {
   Box,
@@ -63,16 +63,9 @@ const Section1 = () => {
                 [theme.breakpoints.down("md")]: { textAlign: "center" },
               }}
             >
-              <Typography
-                sx={{
-                  ...themeTypography.h2,
-                  [theme.breakpoints.up("md")]: {
-                    ...themeTypography.h1,
-                  },
-                }}
-              >
+              <Title variant={{ xs: "h2", md: "h1" }}>
                 Welcome to the Maker Academy
-              </Typography>
+              </Title>
 
               <Typography sx={{ lineHeight: "150%" }}>
                 Your one-stop guide to all things Maker. Whether you are a new

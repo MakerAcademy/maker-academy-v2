@@ -16,40 +16,34 @@ const themeTypography = {
     lineHeight: 1.2,
   },
   h6: {
-    fontSize: "1.2rem",
+    fontSize: "1.25rem",
     fontWeight: 600,
     lineHeight: 1.2,
-    color: "text.title",
   },
   h5: {
     fontSize: "1.35rem",
     fontWeight: 600,
     lineHeight: 1.2,
-    color: "text.title",
   },
   h4: {
     fontSize: "1.75rem",
     fontWeight: 600,
     lineHeight: 1.2,
-    color: "text.title",
   },
   h3: {
     fontSize: "2.2rem",
     fontWeight: 800,
     lineHeight: 1.2,
-    color: "text.title",
   },
   h2: {
     fontSize: "3rem",
     fontWeight: 800,
     lineHeight: 1.2,
-    color: "text.title",
   },
   h1: {
     fontSize: "4rem",
     fontWeight: 800,
     lineHeight: 1.2,
-    color: "text.title",
   },
 };
 

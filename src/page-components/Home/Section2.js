@@ -1,3 +1,4 @@
+import Title from "@components/Title";
 import ArrowForwardOutlinedIcon from "@mui/icons-material/ArrowForwardOutlined";
 import PlayArrowOutlinedIcon from "@mui/icons-material/PlayArrowOutlined";
 import {
@@ -73,9 +74,9 @@ const ServiceCard = ({ title, description, image, Btn }) => {
             sx={{ height: "100%" }}
           >
             <Stack spacing={2}>
-              <Typography variant="h3" sx={{ fontSize: "32px" }}>
+              <Title variant="h3" sx={{ fontSize: "32px" }}>
                 {title}
-              </Typography>
+              </Title>
 
               <Typography sx={{ whiteSpace: "pre-line" }}>
                 {description}

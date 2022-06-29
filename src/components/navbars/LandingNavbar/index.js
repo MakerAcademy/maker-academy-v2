@@ -26,6 +26,7 @@ const MENU_ITEMS = [
 const Navbar = ({ transparent }) => {
   const theme = useTheme();
   const [anchorEl, setAnchorEl] = useState();
+
   // const theme = useTheme();
 
   const scrollPosition = useScrollPosition();

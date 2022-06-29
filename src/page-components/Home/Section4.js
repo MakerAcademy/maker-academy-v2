@@ -1,3 +1,4 @@
+import Title from "@components/Title";
 import { Box, Button, Container, Stack, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import {
@@ -39,9 +40,9 @@ const Section4 = () => {
           alignItems="center"
           sx={{ textAlign: "center" }}
         >
-          <Typography variant="h2" sx={{ color: "text.title" }}>
+          <Title variant="h2" sx={{ color: "text.title" }}>
             Learn. Contribute. Innovate.
-          </Typography>
+          </Title>
 
           <Typography sx={{ maxWidth: 920 }}>
             Your one-stop guide to all things MakerDAO. Learn more about Maker,

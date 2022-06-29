@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import LoginContent from "./LoginContent";
 import RegisterContent from "./RegisterContent";
 import Texture1 from "@assets/images/backgrounds/texture1.png";
+import Blur1 from "@assets/images/misc/authShape.png";
 
 const Auth = () => {
   const theme = useTheme();
@@ -14,9 +15,32 @@ const Auth = () => {
   const isLogin = pathname === "/login";
 
   return (
-    <Grid container sx={{ minHeight: "100vh" }}>
+    <Grid container sx={{ minHeight: "100vh", position: "relative" }}>
+      <img
+        loading="lazy"
+        src={Blur1}
+        alt="Blur 1"
+        style={{
+          maxWidth: "100%",
+          position: "absolute",
+          top: 0,
+          right: 0,
+          zIndex: -1,
+        }}
+      />
+
       {/* Left Content */}
-      <Grid item xs={12} md={5} lg={4} sx={{ background: `url(${Texture1})` }}>
+      <Grid
+        item
+        xs={12}
+        md={5}
+        lg={4}
+        sx={{
+          bgcolor:
+            theme.palette.mode === "dark" ? "common.black" : "common.white",
+          backgroundImage: `url(${Texture1})`,
+        }}
+      >
         <Stack sx={{ height: "100%", p: { xs: 3, md: 6 } }}>
           {/* Logo */}
           <Stack
@@ -37,6 +61,7 @@ const Auth = () => {
                   height: 40,
                   objectFit: "contain",
                   cursor: "pointer",
+                  zIndex: 999,
                 }}
               />
             </Link>

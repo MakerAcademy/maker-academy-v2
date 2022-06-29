@@ -1,4 +1,5 @@
 import GreenButton from "@components/buttons/GreenButton";
+import Title from "@components/Title";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import AssessmentOutlinedIcon from "@mui/icons-material/AssessmentOutlined";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -174,7 +175,7 @@ const ContentCard = ({
 
         {/* Content */}
         <CardContent sx={{ pt: 0 }}>
-          <Typography variant="h6">{title}</Typography>
+          <Title variant="h6">{title}</Title>
 
           {subtitle && (
             <Typography variant="body2" sx={{ mt: 2 }}>

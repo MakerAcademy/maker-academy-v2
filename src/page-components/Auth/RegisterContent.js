@@ -1,3 +1,4 @@
+import Title from "@components/Title";
 import { Stack, Typography, useTheme } from "@mui/material";
 
 const RegisterContent = ({}) => {
@@ -7,19 +8,19 @@ const RegisterContent = ({}) => {
     <Stack
       spacing={5}
       justifyContent="center"
-      alignItems="center"
+      // alignItems="center"
       sx={{
         py: { xs: 3, md: 5 },
         height: "100%",
-        textAlign: "center",
+        // textAlign: "center",
       }}
     >
-      <Typography variant="h2">Sign Up</Typography>
+      <Title variant="h2">Sign Up</Title>
 
       <Stack spacing={1}>
-        <Typography variant="h5">Why join as a learner?</Typography>
+        <Title variant="h5">Why join as a learner?</Title>
 
-        <Typography variant="h6" sx={{ fontWeight: 300, textAlign: "left" }}>
+        <Typography sx={{ textAlign: "left" }}>
           {
             "Joining as a learner will give you the SAME features as an educator or contributor. Choosing the best category you fall under just helps with Maker Academy's analytics :)"
           }
@@ -27,14 +28,12 @@ const RegisterContent = ({}) => {
       </Stack>
 
       <Stack spacing={1}>
-        <Typography variant="h5">Why create an account?</Typography>
-        <Typography variant="h6" sx={{ fontWeight: 300, textAlign: "left" }}>
+        <Title variant="h5">Why create an account?</Title>
+        <Typography sx={{ textAlign: "left" }}>
           Creating an account will give you access to the following features:
         </Typography>
         <Typography
-          variant="h6"
           sx={{
-            fontWeight: 300,
             whiteSpace: "pre-line",
             pb: 3,
             textAlign: "left",

@@ -1,3 +1,4 @@
+import Title from "@components/Title";
 import {
   Box,
   Button,
@@ -44,9 +45,9 @@ const FormFieldArray = ({
         <RenderHeader {...fieldArray} />
       ) : (
         <Stack direction={{ xs: "column", md: "row" }}>
-          <Typography variant="h6" sx={{ flex: 1 }}>
+          <Title variant="h6" sx={{ flex: 1 }}>
             {label}
-          </Typography>
+          </Title>
 
           <Button
             onClick={() => {
