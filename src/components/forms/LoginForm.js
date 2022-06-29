@@ -31,13 +31,17 @@ const LoginForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)} style={{ height: "100%" }}>
       <Stack
         alignItems="center"
         justifyContent="center"
         spacing={3}
-        sx={{ width: "100%" }}
+        sx={{ width: "100%", height: "100%" }}
       >
+        <Typography variant="h5" sx={{ pb: 2 }}>
+          Login to your account
+        </Typography>
+
         <FormTextField
           name="email"
           label="Email"

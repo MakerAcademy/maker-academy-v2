@@ -6,15 +6,17 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import LoginContent from "./LoginContent";
 import RegisterContent from "./RegisterContent";
+import Texture1 from "@assets/images/backgrounds/texture1.png";
 
 const Auth = () => {
   const theme = useTheme();
   const { pathname } = useRouter();
+  const isLogin = pathname === "/login";
 
   return (
     <Grid container sx={{ minHeight: "100vh" }}>
       {/* Left Content */}
-      <Grid item xs={12} md={5} lg={4} sx={{ backgroundColor: "skyblue" }}>
+      <Grid item xs={12} md={5} lg={4} sx={{ background: `url(${Texture1})` }}>
         <Stack sx={{ height: "100%", p: { xs: 3, md: 6 } }}>
           {/* Logo */}
           <Stack
@@ -52,7 +54,7 @@ const Auth = () => {
             }}
           >
             <Container sx={{ py: 5, height: "100%" }} maxWidth="xs">
-              {pathname === "/login" ? <LoginContent /> : <RegisterContent />}
+              {isLogin ? <LoginContent /> : <RegisterContent />}
             </Container>
           </Box>
         </Stack>
@@ -66,9 +68,22 @@ const Auth = () => {
             direction="row"
             alignItems="center"
             justifyContent="flex-end"
-            sx={{ p: 2 }}
+            sx={{ p: { xs: 3, md: 6 } }}
           >
-            <Button>abc</Button>
+            {isLogin ? (
+              <Link href="/register" passHref>
+                <Button sx={{ fontWeight: 600, textTransform: "inherit" }}>
+                  Register
+                </Button>
+              </Link>
+            ) : (
+              <Link href="/login" passHref>
+                <Button sx={{ fontWeight: 600, textTransform: "inherit" }}>
+                  Login
+                </Button>
+              </Link>
+            )}
+
             {/* <Hidden mdDown>
               <CloseButton />
             </Hidden> */}
@@ -83,7 +98,7 @@ const Auth = () => {
               }}
               maxWidth="md"
             >
-              {pathname === "/login" ? <LoginForm /> : <RegisterForm />}
+              {isLogin ? <LoginForm /> : <RegisterForm />}
             </Container>
           </Box>
         </Stack>

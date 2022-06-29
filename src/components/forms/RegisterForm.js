@@ -26,6 +26,7 @@ export const SocialButton = ({ color, children, ...other }) => {
         color: theme.palette.common.white,
         "&:hover": {
           backgroundColor: color,
+          filter: "brightness(90%)",
         },
       }}
       {...other}
@@ -41,6 +42,10 @@ const RegisterForm = () => {
   const validationSchema = Yup.object().shape({
     email: Yup.string().required("Email is required"),
     password: Yup.string().required("Password is required"),
+    passwordConfirmation: Yup.string().oneOf(
+      [Yup.ref("password"), null],
+      "Passwords must match"
+    ),
   });
   const formOptions = { resolver: yupResolver(validationSchema) };
 
@@ -63,13 +68,16 @@ const RegisterForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)} style={{ height: "100%" }}>
       <Stack
         alignItems="center"
         justifyContent="center"
         spacing={3}
-        sx={{ width: "100%" }}
+        sx={{ width: "100%", height: "100%" }}
       >
+        <Typography variant="h5" sx={{ pb: 2 }}>
+          Create your account
+        </Typography>
         {/*<Typography>Join Maker Academy as a</Typography>*/}
 
         {/*<ToggleButtonGroup*/}
@@ -101,6 +109,17 @@ const RegisterForm = () => {
           variant="filled"
           label="Password"
           placeholder="Password"
+          control={control}
+          type="password"
+          fullWidth
+          sx={{ maxWidth: 450 }}
+        />
+
+        <FormTextField
+          name="passwordConfirmation"
+          variant="filled"
+          label="Confirm Password"
+          placeholder="Confirm Password"
           control={control}
           type="password"
           fullWidth
