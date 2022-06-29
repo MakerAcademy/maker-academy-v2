@@ -1,13 +1,41 @@
 import LoginForm from "@components/forms/LoginForm";
 import RegisterForm from "@components/forms/RegisterForm";
-import { Box, Button, Container, Grid, Stack, useTheme } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+import {
+  Box,
+  Button,
+  Container,
+  Grid,
+  Hidden,
+  IconButton,
+  Stack,
+  useTheme,
+} from "@mui/material";
 import { FullLogoBlack, FullLogoWhite } from "@utils/images";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import LoginContent from "./LoginContent";
 import RegisterContent from "./RegisterContent";
 import Texture1 from "@assets/images/backgrounds/texture1.png";
 import Blur1 from "@assets/images/misc/authShape.png";
+import Router, { useRouter } from "next/router";
+
+const CloseButton = () => {
+  return (
+    <IconButton
+      onClick={() => Router.push("/")}
+      sx={(theme) => ({
+        zIndex: 1,
+        fontSize: 30,
+        color: theme.palette.text.disabled,
+        "&:hover": {
+          color: theme.palette.primary.main,
+        },
+      })}
+    >
+      <CloseIcon />
+    </IconButton>
+  );
+};
 
 const Auth = () => {
   const theme = useTheme();
@@ -26,6 +54,8 @@ const Auth = () => {
           top: 0,
           right: 0,
           zIndex: -1,
+          filter:
+            theme.palette.mode === "dark" && "invert(80%) brightness(60%)",
         }}
       />
 
@@ -66,9 +96,9 @@ const Auth = () => {
               />
             </Link>
 
-            {/* <Hidden mdUp>
+            <Hidden mdUp>
               <CloseButton />
-            </Hidden> */}
+            </Hidden>
           </Stack>
 
           {/* Content */}
@@ -94,6 +124,7 @@ const Auth = () => {
             alignItems="center"
             justifyContent="flex-end"
             sx={{ p: { xs: 3, md: 6 } }}
+            spacing={3}
           >
             {isLogin ? (
               <Link href="/register" passHref>
@@ -109,9 +140,9 @@ const Auth = () => {
               </Link>
             )}
 
-            {/* <Hidden mdDown>
+            <Hidden mdDown>
               <CloseButton />
-            </Hidden> */}
+            </Hidden>
           </Stack>
 
           {/* Content */}

@@ -19,6 +19,7 @@ import {
   Typography,
 } from "@mui/material";
 import useTranslation from "next-translate/useTranslation";
+import Router from "next/router";
 import { useState } from "react";
 
 const ActionButtons = ({ theme }) => {
@@ -93,7 +94,7 @@ const ActionButtons = ({ theme }) => {
           <MenuItem
             onClick={() => {
               setUserAnchorEl(null);
-              router.push("/app/studio");
+              Router.push("/app/studio");
             }}
           >
             <ListItemIcon>
@@ -106,7 +107,7 @@ const ActionButtons = ({ theme }) => {
             <MenuItem
               onClick={() => {
                 setUserAnchorEl(null);
-                router.push("/app/admin");
+                Router.push("/app/admin");
               }}
             >
               <ListItemIcon>
@@ -119,7 +120,7 @@ const ActionButtons = ({ theme }) => {
           <MenuItem
             onClick={() => {
               setUserAnchorEl(null);
-              router.push("/app/studio");
+              Router.push("/app/studio");
             }}
           >
             <ListItemIcon>
