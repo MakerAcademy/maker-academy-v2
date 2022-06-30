@@ -1,3 +1,4 @@
+import { useAppSelector } from "@hooks/useRedux";
 import ArrowDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowUpIcon from "@mui/icons-material/ArrowDropUp";
 import {
@@ -14,6 +15,7 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 
 const MenuItems = ({ items = [] }) => {
+  const { user } = useAppSelector((state) => state.user);
   const theme = useTheme();
   const router = useRouter();
   const { pathname } = router;
@@ -63,74 +65,88 @@ const MenuItems = ({ items = [] }) => {
       <List disablePadding>
         {items.map((item, i) => {
           const isActiveLink = activeLink === i;
+          const isGranted = item.trustLevel
+            ? user?.trustLevel >= item.trustLevel
+            : true;
 
           return (
             <React.Fragment key={i}>
-              <ListItem
-                button
-                sx={{
-                  pl: 4,
-                  fontWeight: 300,
+              {isGranted && (
+                <ListItem
+                  button
+                  sx={{
+                    pl: 4,
+                    fontWeight: 300,
 
-                  ...(isActiveLink
-                    ? {
-                        color: theme.palette.primary.main,
-                        borderRight: `3px solid ${theme.palette.primary.main}`,
-                        fontWeight: 500,
-                        backgroundColor: alpha(
-                          theme.palette.primary.main,
-                          theme.palette.action.selectedOpacity
-                        ),
-                      }
-                    : {}),
+                    ...(isActiveLink
+                      ? {
+                          color: theme.palette.primary.main,
+                          borderRight: `3px solid ${theme.palette.primary.main}`,
+                          fontWeight: 500,
+                          backgroundColor: alpha(
+                            theme.palette.primary.main,
+                            theme.palette.action.selectedOpacity
+                          ),
+                        }
+                      : {}),
 
-                  ...(isActiveLink && activeSubLink > -1
-                    ? { fontWeight: 400, backgroundColor: "transparent" }
-                    : {}),
-                }}
-                secondaryAction={
-                  <>
-                    {item.nestedItems && (
-                      <>
-                        {collapseItem === i ? (
-                          <ArrowUpIcon fontSize="small" />
-                        ) : (
-                          <ArrowDownIcon fontSize="small" />
-                        )}
-                      </>
-                    )}
-                  </>
-                }
-                onClick={(e) =>
-                  item.nestedItems
-                    ? handleCollapse(e, i)
-                    : item.link &&
-                      pathname !== item.link &&
-                      router.push(item.link)
-                }
-              >
-                <ListItemIcon sx={{ minWidth: 0, mr: 2 }}>
-                  <item.icon
-                    sx={{
-                      fontSize: 22,
-                      transition: theme.transitions.create("transform"),
-                      ...(isActiveLink
-                        ? {
-                            transform: "scale(1.1)",
-                            color: theme.palette.primary.main,
-                          }
-                        : {}),
-                    }}
+                    ...(isActiveLink && activeSubLink > -1
+                      ? { fontWeight: 400, backgroundColor: "transparent" }
+                      : {}),
+                  }}
+                  secondaryAction={
+                    <>
+                      {item.nestedItems && (
+                        <>
+                          {collapseItem === i ? (
+                            <ArrowUpIcon fontSize="small" />
+                          ) : (
+                            <ArrowDownIcon fontSize="small" />
+                          )}
+                        </>
+                      )}
+                    </>
+                  }
+                  onClick={(e) =>
+                    item.nestedItems
+                      ? handleCollapse(e, i)
+                      : item.link &&
+                        pathname !== item.link &&
+                        router.push(item.link)
+                  }
+                >
+                  <ListItemIcon sx={{ minWidth: 0, mr: 2 }}>
+                    <item.icon
+                      sx={{
+                        fontSize: 22,
+                        transition: theme.transitions.create("transform"),
+                        ...(isActiveLink
+                          ? {
+                              transform: "scale(1.1)",
+                              color: theme.palette.primary.main,
+                            }
+                          : {}),
+                      }}
+                    />
+                  </ListItemIcon>
+                  <ListItemText
+                    disableTypography
+                    primary={item.text}
+                    sx={{ typography: "body2" }}
                   />
-                </ListItemIcon>
-                <ListItemText disableTypography primary={item.text} />
-              </ListItem>
+                </ListItem>
+              )}
 
-              {item.nestedItems && (
+              {item.nestedItems && isGranted && (
                 <Collapse in={collapseItem === i}>
                   <List disablePadding>
                     {item.nestedItems.map((subItem, j) => {
                       const isActiveSubLink = activeSubLink === j;
+                      const isSubGranted = subItem.trustLevel
+                        ? user?.trustLevel >= subItem.trustLevel
+                        : true;
+
+                      if (!isSubGranted) return null;
 
                       return (
                         <Link href={subItem.link} key={j}>
@@ -156,6 +172,7 @@ const MenuItems = ({ items = [] }) => {
                             <ListItemText
                               disableTypography
                               primary={subItem.text}
+                              sx={{ typography: "body2" }}
                             />
                           </ListItem>
                         </Link>

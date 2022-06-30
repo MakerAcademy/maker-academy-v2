@@ -1,17 +1,19 @@
 import TranslateIcon from "@mui/icons-material/Translate";
-import { IconButton, Menu, MenuItem } from "@mui/material";
+import { IconButton, Menu, MenuItem, Typography } from "@mui/material";
 import useTranslation from "next-translate/useTranslation";
 import React, { useState } from "react";
+import setLanguage from "next-translate/setLanguage";
+import ReactCountryFlag from "react-country-flag";
 
 const LOCALES = [
-  { code: "en", name: "English" },
-  { code: "fr", name: "Français" },
-  { code: "es", name: "Español" },
-  { code: "ru", name: "Pyccкий" },
-  { code: "ar", name: "العربية" },
-  { code: "zh", name: "中文" },
-  { code: "hi", name: "हिन्दी" },
-  { code: "sw", name: "Kiswahili" },
+  { code: "en", name: "English", flag: "US" },
+  { code: "fr", name: "Français", flag: "FR" },
+  { code: "es", name: "Español", flag: "ES" },
+  { code: "ru", name: "Pyccкий", flag: "RU" },
+  { code: "ar", name: "العربية", flag: "SA" },
+  { code: "zh", name: "中文", flag: "CN" },
+  { code: "hi", name: "हिन्दी", flag: "IN" },
+  { code: "sw", name: "Kiswahili", flag: "TZ" },
 ];
 
 export const handleLanguageChange = async (lang, router, pathname) => {
@@ -53,15 +55,26 @@ const LanguageMenu = ({ sx = {}, ...other }) => {
         }}
         open={Boolean(langAnchor)}
         onClose={() => setLangAnchor(null)}
-        PaperProps={{ sx: { width: 135 } }}
+        PaperProps={{ sx: { width: 155 } }}
       >
-        {LOCALES.map(({ code, name }) => (
+        {LOCALES.map(({ code, name, flag }) => (
           <MenuItem
             onClick={() => handleLanguageChange(code)}
             key={code}
             selected={code === lang}
           >
-            {name}
+            <ReactCountryFlag
+              countryCode={flag}
+              style={{
+                fontSize: "1.1em",
+                borderRadius: "6px",
+              }}
+              svg
+            />
+
+            <Typography variant="body2" sx={{ ml: 1.5 }}>
+              {name}
+            </Typography>
           </MenuItem>
         ))}
       </Menu>

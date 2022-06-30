@@ -1,4 +1,5 @@
-import Title from "@components/Title";
+import OpenBook from "@assets/images/icons/open-book.png";
+import GreenButton from "@components/buttons/GreenButton";
 import { DASHBOARD_SIDE_DRAWER_WIDTH } from "@constants/";
 import { useAppDispatch, useAppSelector } from "@hooks/useRedux";
 import AccountCircleIcon from "@mui/icons-material/AccountCircleOutlined";
@@ -8,7 +9,6 @@ import OndemandVideoIcon from "@mui/icons-material/OndemandVideoOutlined";
 import {
   Avatar,
   Box,
-  Button,
   Drawer,
   Hidden,
   Stack,
@@ -16,74 +16,104 @@ import {
   useTheme,
 } from "@mui/material";
 import { setGlobalState } from "@redux/slices/globalSlice";
+import { FullLogoBlack, FullLogoWhite } from "@utils/images";
 import Link from "next/link";
 import MenuItems from "./MenuItems";
 
 const MENU_ITEMS = [
   {
-    link: "/dashboard",
-    grants: [],
+    link: "/app",
+    trustLevel: 1,
     text: "dashboard",
     icon: DashboardIcon,
   },
   {
-    link: "/app/studio",
-    grants: [],
+    trustLevel: 2,
     text: "creator_studio",
     icon: OndemandVideoIcon,
+    nestedItems: [
+      {
+        link: "/app/studio",
+        trustLevel: 2,
+        text: "my_content",
+      },
+      {
+        link: "/app/studio/new/document",
+        trustLevel: 2,
+        text: "new_document",
+      },
+      {
+        link: "/app/studio/new/course",
+        trustLevel: 2,
+        text: "new_course",
+      },
+      {
+        link: "/app/studio/new/assessment",
+        trustLevel: 2,
+        text: "new_assessment",
+      },
+    ],
   },
   {
     link: "/app/admin",
-    grants: [],
+    trustLevel: 4,
     text: "admin",
     icon: AdminPanelSettingsIcon,
   },
   {
-    grants: [],
+    trustLevel: 1,
     text: "my_account",
     icon: AccountCircleIcon,
     nestedItems: [
       {
         link: "/app/profile",
-        grants: [],
+        trustLevel: 1,
         text: "profile",
       },
       {
-        link: "/app/account",
-        grants: [],
+        link: "/app/profile/account",
+        trustLevel: 1,
         text: "account",
       },
     ],
   },
 ];
 
-const userProfile = {
-  photoURL: "",
-  firstName: "Salman",
-  lastName: "Fazal",
-  title: "Student",
-};
-
 const UpgradeBox = () => (
   <Box sx={{ px: 2.5, pb: 3 }}>
     <Stack
       alignItems="center"
-      spacing={2}
+      spacing={1}
       sx={{
         p: 2.5,
         borderRadius: 2,
         position: "relative",
-        bgcolor: "grey.200",
+        bgcolor: "primary.grey1",
       }}
     >
-      <Title variant="h6">Get more?</Title>
-      <Typography>From only $69</Typography>
-      <Button variant="contained">Upgrade to pro</Button>
+      <img
+        src={OpenBook}
+        alt="Open Book Icon"
+        style={{ width: 160, objectFit: "contain" }}
+      />
+
+      <Typography variant="body2" sx={{ fontWeight: 600, pt: 1 }}>
+        New to Maker Academy?
+      </Typography>
+
+      <Typography variant="body2" sx={{ pb: 3 }}>
+        Please check our docs
+      </Typography>
+
+      <GreenButton variant="contained" size="small">
+        Documentation
+      </GreenButton>
     </Stack>
   </Box>
 );
 
 const Content = () => {
+  const { profile } = useAppSelector((state) => state.profile);
   const theme = useTheme();
 
   return (
@@ -97,11 +127,17 @@ const Content = () => {
       {/* Logo */}
       <Link href="/">
         <Box sx={{ px: 2.5, py: 3, cursor: "pointer" }}>
-          <Title variant="h4">
-            Maker Academy
-            <br />
-            Logo
-          </Title>
+          <img
+            loading="lazy"
+            src={theme.palette.mode === "dark" ? FullLogoWhite : FullLogoBlack}
+            alt={"Maker Academy Logo"}
+            style={{
+              height: 40,
+              objectFit: "contain",
+              cursor: "pointer",
+              zIndex: 999,
+            }}
+          />
           {/* <img
             alt="Maker Academy Logo"
             src=""
@@ -119,17 +155,15 @@ const Content = () => {
               alignItems: "center",
               p: theme.spacing(2, 2.5),
               borderRadius: "12px",
-              bgcolor: "grey.200",
+              bgcolor: "primary.grey2",
             }}
           >
-            <Avatar src={userProfile?.photoURL} alt="photoURL" />
+            <Avatar src={profile?.photoURL} alt="photoURL" />
             <Box sx={{ ml: 2 }}>
-              <Typography variant="body2">
-                {userProfile?.firstName} {userProfile?.lastName}
+              <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                {profile?.firstName} {profile?.lastName}
               </Typography>
-              <Typography variant="body2">
-                Status: {userProfile?.title}
-              </Typography>
+              <Typography variant="body2">Status: {profile?.title}</Typography>
             </Box>
           </Box>
         </Link>

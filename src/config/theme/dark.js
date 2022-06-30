@@ -7,6 +7,7 @@ export const darkTheme = {
     primary: {
       main: "#1AAB9B",
       grey1: grey[900],
+      grey2: grey[800],
     },
     text: {
       primary: "#FFF",

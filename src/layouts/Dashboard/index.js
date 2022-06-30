@@ -7,6 +7,7 @@ import {
 } from "@constants/";
 import { useAppSelector } from "@hooks/useRedux";
 import { Box, useTheme } from "@mui/material";
+import { BlurSection1, BlurSection2 } from "@page-components/Home/images";
 import React from "react";
 
 const DashboardLayout = ({ children }) => {
@@ -19,11 +20,13 @@ const DashboardLayout = ({ children }) => {
   return (
     <React.Fragment>
       <DashboardNavbar />
+      
       <DashboardSidebar />
+
       <Box
         sx={{
+          position: "relative",
           minHeight: `calc(100vh - ${NAVBAR_HEIGHT_MOBILE}px)`,
-          bgcolor: "grey.100",
           P: theme.spacing(2, 3),
           marginTop: `${NAVBAR_HEIGHT_MOBILE}px`,
           [theme.breakpoints.up("lg")]: {
@@ -36,6 +39,34 @@ const DashboardLayout = ({ children }) => {
           },
         }}
       >
+        <img
+          loading="lazy"
+          src={BlurSection1}
+          alt="Blur 1"
+          style={{
+            maxWidth: "100%",
+            position: "absolute",
+            top: 0,
+            left: 0,
+            filter: "blur(50px)",
+            // zIndex: -1,
+          }}
+        />
+
+        <img
+          loading="lazy"
+          src={BlurSection2}
+          alt="Blur 1"
+          style={{
+            maxWidth: "100%",
+            position: "absolute",
+            bottom: 0,
+            right: 0,
+            filter: "blur(50px)",
+            // zIndex: -1,
+          }}
+        />
+
         {children}
       </Box>
     </React.Fragment>

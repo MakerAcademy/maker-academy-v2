@@ -3,15 +3,11 @@ import LanguageMenu from "@components/buttons/LanguageButton";
 import ThemeSwitch from "@components/buttons/ThemeSwitch";
 import { useAppSelector } from "@hooks/useRedux";
 import { handleSignOut } from "@lib/auth";
-import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
-import LogoutIcon from "@mui/icons-material/Logout";
-import OndemandVideoIcon from "@mui/icons-material/OndemandVideo";
-import SettingsIcon from "@mui/icons-material/Settings";
 import {
   Avatar,
+  Divider,
   IconButton,
   Link,
-  ListItemIcon,
   Menu,
   MenuItem,
   Stack,
@@ -25,6 +21,7 @@ import { useState } from "react";
 const ActionButtons = ({ theme }) => {
   const [userAnchorEl, setUserAnchorEl] = useState(null);
   const { user } = useAppSelector((state) => state.user);
+  const { profile } = useAppSelector((state) => state.profile);
   const isAdmin = user?.trustLevel >= 3;
   const { t } = useTranslation("common");
 
@@ -65,8 +62,9 @@ const ActionButtons = ({ theme }) => {
           PaperProps={{
             elevation: 0,
             sx: {
+              borderRadius: 3,
               overflow: "visible",
-              filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+              filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.1))",
               mt: 1.5,
               "& .MuiAvatar-root": {
                 width: 32,
@@ -91,16 +89,36 @@ const ActionButtons = ({ theme }) => {
           transformOrigin={{ horizontal: "right", vertical: "top" }}
           anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
         >
+          <MenuItem sx={{ pointerEvents: "none", minWidth: 180 }}>
+            <Stack>
+              <Typography
+                variant="body2"
+                sx={{ fontWeight: 600, color: "text.title" }}
+              >
+                {profile?.firstName} {profile?.lastName}
+              </Typography>
+              <Typography variant="body2">Admin</Typography>
+            </Stack>
+          </MenuItem>
+
+          <Divider />
+
           <MenuItem
             onClick={() => {
               setUserAnchorEl(null);
               Router.push("/app/studio");
             }}
           >
-            <ListItemIcon>
-              <SettingsIcon fontSize="small" />
-            </ListItemIcon>
-            <Typography variant="body2">{t("my_account")}</Typography>
+            <Typography variant="body2">{t("creator_studio")}</Typography>
+          </MenuItem>
+
+          <MenuItem
+            onClick={() => {
+              setUserAnchorEl(null);
+              Router.push("/app/studio");
+            }}
+          >
+            <Typography variant="body2">{t("profile")}</Typography>
           </MenuItem>
 
           {isAdmin && (
@@ -110,24 +128,11 @@ const ActionButtons = ({ theme }) => {
                 Router.push("/app/admin");
               }}
             >
-              <ListItemIcon>
-                <AdminPanelSettingsOutlinedIcon fontSize="small" />
-              </ListItemIcon>
               <Typography variant="body2">{t("admin")}</Typography>
             </MenuItem>
           )}
 
-          <MenuItem
-            onClick={() => {
-              setUserAnchorEl(null);
-              Router.push("/app/studio");
-            }}
-          >
-            <ListItemIcon>
-              <OndemandVideoIcon fontSize="small" />
-            </ListItemIcon>
-            <Typography variant="body2">{t("creator_studio")}</Typography>
-          </MenuItem>
+          <Divider />
 
           <MenuItem
             onClick={() => {
@@ -135,9 +140,6 @@ const ActionButtons = ({ theme }) => {
               handleSignOut();
             }}
           >
-            <ListItemIcon>
-              <LogoutIcon fontSize="small" />
-            </ListItemIcon>
             <Typography variant="body2">{t("logout")}</Typography>
           </MenuItem>
         </Menu>

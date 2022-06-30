@@ -1,8 +1,14 @@
 import { Box, Typography, useTheme } from "@mui/material";
 import "@toast-ui/editor/dist/toastui-editor.css";
+import dynamic from "next/dynamic";
 import { Editor } from "@toast-ui/react-editor";
-import React, { useRef } from "react";
+import { useRef } from "react";
 import { Controller } from "react-hook-form";
+
+// const Editor = dynamic(
+//   () => import("@toast-ui/react-editor").then((m) => m.Editor),
+//   { ssr: false }
+// );
 
 const FormMarkdown = ({ name, control, sx = {}, label, ...props }) => {
   const theme = useTheme();
@@ -15,7 +21,6 @@ const FormMarkdown = ({ name, control, sx = {}, label, ...props }) => {
       render={({ field: { ...field }, fieldState: { error }, formState }) => (
         <Box
           sx={{
-            p: 1,
             minHeight: 400,
             [theme.breakpoints.up("xl")]: {
               minHeight: 600,
@@ -31,11 +36,7 @@ const FormMarkdown = ({ name, control, sx = {}, label, ...props }) => {
           }}
           data-color-mode={theme.palette.mode}
         >
-          {label && (
-            <Typography variant="body2" sx={{ px: 1 }}>
-              {label}
-            </Typography>
-          )}
+          {label && <Typography sx={{ pb: 1 }}>{label}</Typography>}
 
           <Editor
             // theme={theme.palette.mode}
@@ -44,7 +45,7 @@ const FormMarkdown = ({ name, control, sx = {}, label, ...props }) => {
             {...props}
             {...field}
             initialValue={field?.value}
-            onChange={(e, v) => {
+            onChange={() => {
               field.onChange(editor?.current?.editorInst?.getMarkdown?.());
             }}
             ref={editor}

@@ -1,6 +1,7 @@
 import { Typography } from "@mui/material";
+import React from "react";
 
-const Title = ({ children, variant = "h6", sx = {}, ...props }) => {
+const Title = ({ sx = {}, variant = "h6", children }) => {
   const _variant =
     typeof variant === "object"
       ? {
@@ -15,13 +16,12 @@ const Title = ({ children, variant = "h6", sx = {}, ...props }) => {
 
   return (
     <Typography
-      variant={variant !== "object" && variant}
+      variant={typeof variant !== "object" ? variant : "h6"}
       sx={{
         color: "text.title",
-        typography: typeof _variant === "object" && { ..._variant },
+        typography: typeof _variant === "object" && _variant,
         ...sx,
       }}
-      {...props}
     >
       {children}
     </Typography>

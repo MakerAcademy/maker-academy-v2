@@ -11,7 +11,7 @@ const themeTypography = {
     fontWeight: 400,
   },
   body1: {
-    fontSize: "1.25rem",
+    fontSize: "1.15rem",
     fontWeight: 500,
     lineHeight: 1.2,
   },
@@ -27,8 +27,9 @@ const themeTypography = {
   },
   h4: {
     fontSize: "1.75rem",
-    fontWeight: 600,
+    fontWeight: 800,
     lineHeight: 1.2,
+    // letterSpacing: -1,
   },
   h3: {
     fontSize: "2.2rem",
