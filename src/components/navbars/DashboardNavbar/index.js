@@ -45,10 +45,10 @@ const DashboardNavbar = () => {
     >
       <Toolbar
         sx={{
-          minHeight: NAVBAR_HEIGHT_MOBILE,
+          height: NAVBAR_HEIGHT_MOBILE,
           p: theme.spacing(0, 3),
           [theme.breakpoints.up("lg")]: {
-            minHeight: NAVBAR_HEIGHT_DESKTOP,
+            height: NAVBAR_HEIGHT_DESKTOP,
             p: theme.spacing(0, 7),
           },
         }}

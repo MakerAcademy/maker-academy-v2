@@ -30,30 +30,28 @@ const NewDocument = ({ user, profile }) => {
 
   return (
     <Box sx={{ position: "relative" }}>
-      <Container sx={{ py: 2 }} maxWidth="xl">
-        <Title
-          variant={{ xs: "h6", md: "h4" }}
-          sx={{ mb: 1, fontWeight: "600 !important" }}
-        >
-          Create New Document
-        </Title>
+      <Title
+        variant={{ xs: "h6", md: "h4" }}
+        sx={{ mb: 1, fontWeight: "600 !important" }}
+      >
+        Create New Document
+      </Title>
 
-        <Typography sx={{ mb: 3 }}>
-          Qui aliqua Lorem nisi quis ut nisi ad excepteur sit eiusmod velit.
-        </Typography>
+      <Typography sx={{ mb: 3 }}>
+        Qui aliqua Lorem nisi quis ut nisi ad excepteur sit eiusmod velit.
+      </Typography>
 
-        <Paper
-          elevation={0}
-          sx={{
-            p: 4,
-            mb: 5,
-            borderRadius: 4,
-            boxShadow: "0px 12px 24px -4px rgba(145, 158, 171, 0.12)",
-          }}
-        >
-          <DocumentForm handleSubmit={handleDocumentSubmit} />
-        </Paper>
-      </Container>
+      <Paper
+        elevation={0}
+        sx={{
+          p: 4,
+          mb: 5,
+          borderRadius: 4,
+          boxShadow: "0px 12px 24px -4px rgba(145, 158, 171, 0.12)",
+        }}
+      >
+        <DocumentForm handleSubmit={handleDocumentSubmit} />
+      </Paper>
     </Box>
   );
 };
