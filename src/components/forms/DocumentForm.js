@@ -6,6 +6,7 @@ import FormTextField from "@components/formFields/FormTextField";
 import { BRAND, CONTENT_DIFFICULTY_LEVELS } from "@constants/";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Box, Divider, Stack, Typography } from "@mui/material";
+import { cleanObject } from "@utils/helpers";
 import useTranslation from "next-translate/useTranslation";
 import { useState } from "react";
 import { useForm, useWatch } from "react-hook-form";
@@ -40,8 +41,8 @@ const DocumentForm = ({
     useForm(formOptions);
 
   const onSubmit = (data, e) => {
-    // setDisabled(true);
-    propsHandleSubmit({ ...data });
+    setDisabled(true);
+    propsHandleSubmit(cleanObject(data));
   };
 
   // const handleDraftChange = ({ editor, markdown, html }) => {

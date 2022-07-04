@@ -4,7 +4,8 @@ import FormSelectField from "@components/formFields/FormSelectField";
 import FormTextField from "@components/formFields/FormTextField";
 import { BRAND, CONTENT_DIFFICULTY_LEVELS } from "@constants/";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Divider, Stack, Typography } from "@mui/material";
+import { Divider, Paper, Stack, Typography } from "@mui/material";
+import { cleanObject } from "@utils/helpers";
 import useTranslation from "next-translate/useTranslation";
 import { useState } from "react";
 import { useForm, useWatch } from "react-hook-form";
@@ -23,12 +24,12 @@ const CourseForm = ({
 
   // form validation rules
   const validationSchema = Yup.object().shape({
-    // title: Yup.string().required("Required"),
-    // description: Yup.string().required("Required"),
-    // level: Yup.string().required("Required"),
-    // category: Yup.string().required("Required"),
-    // duration: Yup.string().required("Required"),
-    // markdown: Yup.string().required("Required"),
+    title: Yup.string().required("Required"),
+    description: Yup.string().required("Required"),
+    level: Yup.string().required("Required"),
+    category: Yup.string().required("Required"),
+    duration: Yup.string().required("Required"),
+    carriculum: Yup.array().required("required"),
   });
 
   const formOptions = {
@@ -40,8 +41,9 @@ const CourseForm = ({
     useForm(formOptions);
 
   const onSubmit = (data, e) => {
-    // setDisabled(true);
-    propsHandleSubmit({ ...data });
+    console.log(data);
+    setDisabled(true);
+    propsHandleSubmit(cleanObject(data));
   };
 
   // const handleDraftChange = ({ editor, markdown, html }) => {
@@ -55,77 +57,92 @@ const CourseForm = ({
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       {/* Basic Information */}
-      <Stack spacing={3}>
-        <Stack spacing={2}>
-          <Typography sx={{ fontWeight: 600 }}>Basic Information</Typography>
 
-          <Divider />
-        </Stack>
+      <Paper
+        elevation={0}
+        sx={{
+          p: 4,
+          mb: 5,
+          borderRadius: 4,
+          boxShadow: "0px 12px 24px -4px rgba(145, 158, 171, 0.12)",
+        }}
+      >
+        <Stack spacing={3}>
+          <Stack spacing={2}>
+            <Typography sx={{ fontWeight: 600 }}>Basic Information</Typography>
 
-        <FormTextField
-          name="title"
-          label="Title"
-          control={control}
-          fullWidth
-          disabled={disabled}
-        />
-
-        <FormTextField
-          name="shortDescription"
-          label="Short Description"
-          control={control}
-          fullWidth
-          multiline
-          rows={2}
-          disabled={disabled}
-        />
-
-        <FormTextField
-          name="description"
-          label="Description"
-          control={control}
-          fullWidth
-          multiline
-          rows={5}
-          disabled={disabled}
-        />
-
-        <Stack direction="row" spacing={2}>
-          <FormSelectField
-            name="level"
-            label="Level"
-            control={control}
-            fullWidth
-            disabled={disabled}
-            options={CONTENT_DIFFICULTY_LEVELS}
-          />
+            <Divider />
+          </Stack>
 
           <FormTextField
-            name="category"
-            label="Category"
+            name="title"
+            label="Title"
             control={control}
             fullWidth
             disabled={disabled}
           />
 
           <FormTextField
-            name="duration"
-            label="Duration (minutes)"
-            type="number"
+            name="shortDescription"
+            label="Short Description"
             control={control}
             fullWidth
+            multiline
+            rows={2}
             disabled={disabled}
           />
+
+          <FormTextField
+            name="description"
+            label="Description"
+            control={control}
+            fullWidth
+            multiline
+            rows={5}
+            disabled={disabled}
+          />
+
+          <Stack direction="row" spacing={2}>
+            <FormSelectField
+              name="level"
+              label="Level"
+              control={control}
+              fullWidth
+              disabled={disabled}
+              options={CONTENT_DIFFICULTY_LEVELS}
+            />
+
+            <FormTextField
+              name="category"
+              label="Category"
+              control={control}
+              fullWidth
+              disabled={disabled}
+            />
+
+            <FormTextField
+              name="duration"
+              label="Duration (minutes)"
+              type="number"
+              control={control}
+              fullWidth
+              disabled={disabled}
+            />
+          </Stack>
         </Stack>
+      </Paper>
 
-        {/* Carriculum */}
-        <Stack spacing={2}>
-          <Typography sx={{ fontWeight: 600 }}>Carriculum</Typography>
-
-          <Divider />
-        </Stack>
-
-        <CourseCarriculum />
+      {/* Carriculum */}
+      <Paper
+        elevation={0}
+        sx={{
+          p: 4,
+          mb: 5,
+          borderRadius: 4,
+          boxShadow: "0px 12px 24px -4px rgba(145, 158, 171, 0.12)",
+        }}
+      >
+        <CourseCarriculum control={control} name="carriculum" />
 
         {/* Submit */}
         <Stack
@@ -151,11 +168,11 @@ const CourseForm = ({
             sx={{ minWidth: 200 }}
           />
 
-          <GreenButton type="submit" disabled={disabled}>
+          <GreenButton type="submit">
             {edit ? t("edit_course") : t("create_new_course")}
           </GreenButton>
         </Stack>
-      </Stack>
+      </Paper>
     </form>
   );
 };

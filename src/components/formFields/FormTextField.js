@@ -41,6 +41,7 @@ const FormTextField = ({
             },
           }}
           sx={{
+            // fontSize: 14,
             ".MuiInputBase-input.Mui-disabled": {
               WebkitTextFillColor: isDark ? grey[300] : grey[600],
               color: isDark ? grey[300] : grey[600],

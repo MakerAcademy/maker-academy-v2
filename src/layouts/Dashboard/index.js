@@ -49,7 +49,7 @@ const DashboardLayout = ({ children }) => {
             top: 0,
             left: 0,
             opacity: 0.2,
-            // zIndex: -1,
+            zIndex: -1,
           }}
         />
 
@@ -63,7 +63,7 @@ const DashboardLayout = ({ children }) => {
             bottom: 0,
             right: 0,
             opacity: 0.2,
-            // zIndex: -1,
+            zIndex: -1,
           }}
         />
         <Container maxWidth="xl" sx={{ p: 4, px: "32px !important" }}>

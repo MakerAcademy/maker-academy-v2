@@ -52,3 +52,5 @@ export const getCourse = async (cid) => {
     return console.log("cid", cid, "No such course!");
   }
 };
+
+export const getFullCourse = async (cid) => {};
