@@ -1,4 +1,5 @@
 import GreenButton from "@components/buttons/GreenButton";
+import DashboardPaper from "@components/DashboardPaper";
 import FormCheckbox from "@components/formFields/FormCheckbox";
 import FormSelectField from "@components/formFields/FormSelectField";
 import FormTextField from "@components/formFields/FormTextField";
@@ -58,15 +59,7 @@ const CourseForm = ({
     <form onSubmit={handleSubmit(onSubmit)}>
       {/* Basic Information */}
 
-      <Paper
-        elevation={0}
-        sx={{
-          p: 4,
-          mb: 5,
-          borderRadius: 4,
-          boxShadow: "0px 12px 24px -4px rgba(145, 158, 171, 0.12)",
-        }}
-      >
+      <DashboardPaper>
         <Stack spacing={3}>
           <Stack spacing={2}>
             <Typography sx={{ fontWeight: 600 }}>Basic Information</Typography>
@@ -130,18 +123,10 @@ const CourseForm = ({
             />
           </Stack>
         </Stack>
-      </Paper>
+      </DashboardPaper>
 
       {/* Carriculum */}
-      <Paper
-        elevation={0}
-        sx={{
-          p: 4,
-          mb: 5,
-          borderRadius: 4,
-          boxShadow: "0px 12px 24px -4px rgba(145, 158, 171, 0.12)",
-        }}
-      >
+      <DashboardPaper>
         <CourseCarriculum control={control} name="carriculum" />
 
         {/* Submit */}
@@ -172,7 +157,7 @@ const CourseForm = ({
             {edit ? t("edit_course") : t("create_new_course")}
           </GreenButton>
         </Stack>
-      </Paper>
+      </DashboardPaper>
     </form>
   );
 };

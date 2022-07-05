@@ -4,6 +4,7 @@ import { submitDocument } from "@lib/document";
 import Title from "@components/Title";
 import { Box, Container, Paper, Typography } from "@mui/material";
 import dynamic from "next/dynamic";
+import DashboardPaper from "@components/DashboardPaper";
 
 const DocumentForm = dynamic(() => import("@forms/DocumentForm"), {
   ssr: false,
@@ -41,17 +42,9 @@ const NewDocument = ({ user, profile }) => {
         Qui aliqua Lorem nisi quis ut nisi ad excepteur sit eiusmod velit.
       </Typography>
 
-      <Paper
-        elevation={0}
-        sx={{
-          p: 4,
-          mb: 5,
-          borderRadius: 4,
-          boxShadow: "0px 12px 24px -4px rgba(145, 158, 171, 0.12)",
-        }}
-      >
+      <DashboardPaper>
         <DocumentForm handleSubmit={handleDocumentSubmit} />
-      </Paper>
+      </DashboardPaper>
     </Box>
   );
 };

@@ -26,7 +26,7 @@ const GreenButton = ({
             : theme.palette.common.white,
         textTransform: "inherit",
         borderRadius: "8px",
-        py: size === "small" ? 0.8 : size === "large" ? 1.5 : 1,
+        py: size === "small" ? 0.6 : size === "large" ? 1.5 : 1,
         px: size === "small" ? 3 : size === "large" ? 4 : 3,
         fontSize: size === "small" ? 14 : size === "large" ? 16 : 16,
         boxShadow: variant === "outlined" && "none",
