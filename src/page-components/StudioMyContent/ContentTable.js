@@ -134,13 +134,11 @@ const ContentTable = () => {
       .then(() => setLoading(false));
   }, []);
 
-  console.log(data);
-
   const { t } = useTranslation("creator-studio");
 
   return (
     <DashboardPaper sx={{ minHeight: 400 }}>
-      <Typography sx={{ mb: 2 }}>My Content</Typography>
+      <Typography sx={{ mb: 3 }}>My Content</Typography>
 
       {!loading && (
         <DataGrid
@@ -168,7 +166,7 @@ const ContentTable = () => {
               fontSize: 14,
             },
             "& .MuiDataGrid-cellContent": {
-            //   fontSize: 15,
+              //   fontSize: 15,
             },
           }}
         />

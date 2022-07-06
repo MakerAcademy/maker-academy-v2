@@ -11,10 +11,11 @@ import {
   updateDoc,
   where,
 } from "@firebase/firestore";
+import { cleanObject } from "@utils/helpers";
 
 export const getContact = async (uid) => {
   try {
-    const q = await query(
+    const q = query(
       collection(db, "contacts"),
       where("uid", "==", uid),
       limit(1)
@@ -37,12 +38,17 @@ export const getUser = async (uid) => {
   }
 };
 
-export const editContact = (cid, data = {}, callback) => {
+export const updateContact = async (cid, data = {}) => {
   try {
     const docRef = doc(db, "contacts", cid);
-    const payload = { ...data, updateTimestamp: serverTimestamp() };
+    const payload = cleanObject({
+      ...data,
+      updateTimestamp: serverTimestamp(),
+    });
 
-    updateDoc(docRef, payload).then((res) => callback?.(res));
+    await updateDoc(docRef, payload);
+
+    return { success: true, payload };
   } catch (error) {
     return error;
   }

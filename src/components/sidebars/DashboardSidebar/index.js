@@ -61,21 +61,10 @@ const MENU_ITEMS = [
     icon: AdminPanelSettingsIcon,
   },
   {
+    link: "/app/settings",
     trustLevel: 1,
-    text: "my_account",
+    text: "settings",
     icon: AccountCircleIcon,
-    nestedItems: [
-      {
-        link: "/app/profile",
-        trustLevel: 1,
-        text: "profile",
-      },
-      {
-        link: "/app/profile/account",
-        trustLevel: 1,
-        text: "account",
-      },
-    ],
   },
 ];
 

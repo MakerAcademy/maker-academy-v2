@@ -1,16 +1,16 @@
+import { createTheme } from "@config/theme";
 import { auth } from "@firebase";
 import { useAppDispatch, useAppSelector } from "@hooks/useRedux";
 import LandingLayout from "@layouts/";
 import DashboardLayout from "@layouts/Dashboard";
-import { setProfile } from "@redux/slices/profileSlice";
-import { setUser } from "@redux/slices/userSlice";
 import { getContact, getUser } from "@lib/user";
+import { CssBaseline, ThemeProvider } from "@mui/material";
+import { setProfile, updateUserProfile } from "@redux/slices/profileSlice";
+import { setUser } from "@redux/slices/userSlice";
 import { onAuthStateChanged } from "firebase/auth";
 import { useRouter } from "next/router";
 import nookies from "nookies";
 import React, { useEffect } from "react";
-import { CssBaseline, ThemeProvider } from "@mui/material";
-import { createTheme } from "@config/theme";
 
 const EmptyLayout = ({ children }) => (
   <React.Fragment>{children}</React.Fragment>
@@ -58,7 +58,9 @@ const Root = ({ children }) => {
       const token = await _user.getIdToken();
 
       const userProfile = await getContact(_user.uid);
-      dispatch(setProfile(userProfile));
+      // dispatch(setProfile(userProfile));
+
+      dispatch(updateUserProfile({ uid: _user.uid }));
 
       const userData = await getUser(uid);
       dispatch(

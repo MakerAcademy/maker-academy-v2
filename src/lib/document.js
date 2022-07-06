@@ -46,6 +46,30 @@ export const submitDocument = async (cid, data = {}) => {
   }
 };
 
+export const getFullDocument = async (cid) => {
+  const contentRef = doc(db, "content", cid);
+  const contentSnap = await getDoc(contentRef);
+
+  if (contentSnap.exists()) {
+    const contentData = contentSnap.data();
+
+    const docRef = doc(db, "documents", contentData.published);
+    const docSnap = await getDoc(docRef);
+
+    const docObj = {
+      ...docSnap.data(),
+      ...contentData,
+      timestamp: contentData.timestamp.toDate().toString(),
+    };
+
+    if (docSnap.exists()) {
+      return docObj;
+    }
+  }
+
+  return console.log("cid", cid, "No such document!");
+};
+
 export const getDocument = async (cid) => {
   const docRef = doc(db, "documents", cid);
   const docSnap = await getDoc(docRef);

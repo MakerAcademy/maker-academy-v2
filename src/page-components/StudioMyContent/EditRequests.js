@@ -18,7 +18,7 @@ const DUMMY_REQUESTS = [
 const EditRequests = () => {
   return (
     <DashboardPaper>
-      <Typography sx={{ mb: 2 }}>Edit Requests</Typography>
+      <Typography sx={{ mb: 3 }}>Edit Requests</Typography>
 
       <Grid container spacing={4}>
         {DUMMY_REQUESTS.map((item) => (

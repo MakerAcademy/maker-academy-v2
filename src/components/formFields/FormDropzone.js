@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { Stack, useTheme } from "@mui/material";
+import { Box, Stack, useTheme } from "@mui/material";
 import React, { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import { Controller } from "react-hook-form";
@@ -16,6 +16,15 @@ const Dropzone = ({ onChange, multiple, children, exists, ...rest }) => {
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
+  if (children) {
+    return (
+      <Box {...getRootProps()} {...rest}>
+        <input {...getInputProps({ onChange })} />
+        {children}
+      </Box>
+    );
+  }
+
   return (
     <Stack
       alignItems="center"
@@ -29,8 +38,6 @@ const Dropzone = ({ onChange, multiple, children, exists, ...rest }) => {
         backgroundColor: exists && (isDark ? "green" : "lime"),
       }}
     >
-      <input {...getInputProps({ onChange })} />
-
       {/* {isDragActive && <Typography>Drop the files here ...</Typography>} */}
 
       {children}

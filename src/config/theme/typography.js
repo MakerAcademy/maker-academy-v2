@@ -3,7 +3,7 @@ const themeTypography = {
   htmlFontSize: 16,
   fontSize: 16,
   caption: {
-    fontSize: "0.75rem",
+    fontSize: "0.85rem",
     fontWeight: 400,
   },
   body2: {
