@@ -10,8 +10,13 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import { BlurSection1, DoorImage } from "@page-components/Home/images";
+import {
+  BlurSection1,
+  DoorBgImage,
+  DoorImage,
+} from "@page-components/Home/images";
 import Image from "next/image";
+import { Fade, Slide } from "react-awesome-reveal";
 
 const Section1 = () => {
   const theme = useTheme();
@@ -63,18 +68,25 @@ const Section1 = () => {
                 [theme.breakpoints.down("md")]: { textAlign: "center" },
               }}
             >
-              <Title variant={{ xs: "h2", md: "h1" }}>
-                Welcome to the Maker Academy
-              </Title>
+              <Fade triggerOnce direction="left">
+                <Title variant={{ xs: "h2", md: "h1" }}>
+                  Welcome to the Maker Academy
+                </Title>
+              </Fade>
 
-              <Typography sx={{ lineHeight: "150%" }}>
-                Your one-stop guide to all things Maker. Whether you are a new
-                trying to understand how MakerDAO works or a contributor looking
-                to help build, we have got everything you need to get started.
-              </Typography>
+              <Fade triggerOnce direction="right">
+                <Typography sx={{ lineHeight: "150%" }}>
+                  Your one-stop guide to all things Maker. Whether you are a new
+                  trying to understand how MakerDAO works or a contributor
+                  looking to help build, we have got everything you need to get
+                  started.
+                </Typography>
+              </Fade>
 
               <Stack direction="row" spacing={{ xs: 2, md: 4 }} sx={{ pt: 2 }}>
-                <GreenButton>JOIN THE ACADEMY</GreenButton>
+                <Fade triggerOnce direction="left" delay={300}>
+                  <GreenButton>JOIN THE ACADEMY</GreenButton>
+                </Fade>
               </Stack>
             </Stack>
           </Grid>
@@ -82,39 +94,62 @@ const Section1 = () => {
           {/* Right Side */}
           <Hidden mdDown>
             <Grid item xs={12} md={5}>
-              <Box
-                sx={{
-                  width: "100%",
-                  height: 550,
-                  "& > span": { height: "100% !important" },
-                  filter: `drop-shadow(5px 5px 30px ${
-                    theme.palette.mode === "dark"
-                      ? "rgba(255,255,255,0.2)"
-                      : "rgba(0,0,0,0.15)"
-                  })`,
-                }}
-              >
-                {/* <img
-                  src={DoorImage}
-                  alt="Home Image"
-                  loading="lazy"
-                  style={{
-                    height: '700px',
+              <Fade triggerOnce>
+                <Box
+                  // justifyContent="center"
+                  // alignItems="center"
+                  sx={{
                     width: "100%",
-                    objectFit: "contain",
+                    height: 550,
+                    "& > span": { height: "100% !important" },
                   }}
-                /> */}
+                >
+                  {/* <img
+                    src={DoorBgImage}
+                    alt="Home Image"
+                    loading="lazy"
+                    style={{
+                      height: "800px",
+                      // width: "100%",
+                      objectFit: "contain",
+                      zIndex: 1,
+                    }}
+                  />
 
-                <Image
-                  src={DoorImage}
-                  alt="Home Image"
-                  layout="responsive"
-                  objectFit="contain"
-                  height="100%"
-                  width="100%"
-                  priority
-                />
-              </Box>
+                  <img
+                    src={DoorImage}
+                    alt="Home Image"
+                    loading="lazy"
+                    style={{
+                      height: "500px",
+                      // width: "100%",
+                      objectFit: "contain",
+                      position: "absolute",
+                      zIndex: 2,
+                    }}
+                  /> */}
+
+                  {/* <Image
+                    src={DoorBgImage}
+                    alt="Home Image"
+                    layout="responsive"
+                    objectFit="contain"
+                    height="100%"
+                    width="100%"
+                    priority
+                  /> */}
+
+                  <Image
+                    src={DoorImage}
+                    alt="Home Image"
+                    layout="responsive"
+                    objectFit="contain"
+                    height="100%"
+                    width="100%"
+                    priority
+                  />
+                </Box>
+              </Fade>
             </Grid>
           </Hidden>
         </Grid>
