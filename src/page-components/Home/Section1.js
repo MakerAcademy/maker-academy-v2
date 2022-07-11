@@ -16,7 +16,7 @@ import {
   DoorImage,
 } from "@page-components/Home/images";
 import Image from "next/image";
-import { Fade, Slide } from "react-awesome-reveal";
+import { Bounce, Fade, Slide } from "react-awesome-reveal";
 
 const Section1 = () => {
   const theme = useTheme();
@@ -68,13 +68,13 @@ const Section1 = () => {
                 [theme.breakpoints.down("md")]: { textAlign: "center" },
               }}
             >
-              <Fade triggerOnce direction="left">
+              <Fade direction="left">
                 <Title variant={{ xs: "h2", md: "h1" }}>
                   Welcome to the Maker Academy
                 </Title>
               </Fade>
 
-              <Fade triggerOnce direction="right">
+              <Fade direction="right">
                 <Typography sx={{ lineHeight: "150%" }}>
                   Your one-stop guide to all things Maker. Whether you are a new
                   trying to understand how MakerDAO works or a contributor
@@ -84,9 +84,9 @@ const Section1 = () => {
               </Fade>
 
               <Stack direction="row" spacing={{ xs: 2, md: 4 }} sx={{ pt: 2 }}>
-                <Fade triggerOnce direction="left" delay={300}>
+                <Bounce delay={300}>
                   <GreenButton>JOIN THE ACADEMY</GreenButton>
-                </Fade>
+                </Bounce>
               </Stack>
             </Stack>
           </Grid>
@@ -94,7 +94,7 @@ const Section1 = () => {
           {/* Right Side */}
           <Hidden mdDown>
             <Grid item xs={12} md={5}>
-              <Fade triggerOnce>
+              <Fade>
                 <Box
                   // justifyContent="center"
                   // alignItems="center"

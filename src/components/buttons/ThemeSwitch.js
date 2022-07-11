@@ -1,11 +1,12 @@
-import { styled, Switch } from "@mui/material";
+import { Stack, styled, Switch, Typography } from "@mui/material";
 import { changeTheme, activeTheme } from "@redux/slices/themeSlice";
+import useTranslation from "next-translate/useTranslation";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-const MaterialUISwitch = styled(Switch)(({ theme }) => ({
-  width: 62,
-  height: 34,
+const MaterialUISwitch = styled(Switch)(({ theme, size }) => ({
+  width: size === "small" ? 55 : 62,
+  height: size === "small" ? 28 : 34,
   padding: 7,
   "& .MuiSwitch-switchBase": {
     margin: 1,
@@ -27,8 +28,8 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   },
   "& .MuiSwitch-thumb": {
     backgroundColor: theme.palette.primary.main,
-    width: 32,
-    height: 32,
+    width: size === "small" ? 25 : 32,
+    height: size === "small" ? 25 : 32,
     "&:before": {
       content: "''",
       position: "absolute",
@@ -50,9 +51,26 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   },
 }));
 
-const ThemeSwitch = () => {
+const ThemeSwitch = ({ fullWidth }) => {
   const mode = useSelector(activeTheme);
   const dispatch = useDispatch();
+
+  const { t } = useTranslation();
+
+  if (fullWidth) {
+    return (
+      <Stack direction="row" alignItems="center">
+        <Typography>{t(`${mode}_mode`)}</Typography>
+
+        <MaterialUISwitch
+          size="small"
+          checked={mode == "dark"}
+          sx={{ m: 1 }}
+          onClick={() => dispatch(changeTheme())}
+        />
+      </Stack>
+    );
+  }
 
   return (
     <MaterialUISwitch

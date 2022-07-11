@@ -1,6 +1,5 @@
 import Title from "@components/Title";
 import { Box, Button, Container, Stack, Typography } from "@mui/material";
-import { grey } from "@mui/material/colors";
 import {
   DiscordIcon,
   ForumIcon,
@@ -8,25 +7,27 @@ import {
   TwitterIcon,
 } from "@page-components/Home/images";
 import Image from "next/image";
-import React from "react";
+import { Bounce, Fade } from "react-awesome-reveal";
 
-const SocialButton = ({ icon, text, color }) => (
+const SocialButton = ({ icon, text, color, delay = 0 }) => (
   <Button sx={{ textTransform: "inherit" }}>
-    <Stack spacing={0.5} justifyContent="center" alignItems="center">
-      <Box sx={{ height: "100%", width: 55 }}>
-        <Image
-          src={icon}
-          alt={text}
-          layout="responsive"
-          objectFit="contain"
-          height="60px"
-          width="100%"
-        />
-      </Box>
-      <Typography variant="body2" sx={{ color, fontWeight: 600 }}>
-        {text}
-      </Typography>
-    </Stack>
+    <Bounce  delay={delay}>
+      <Stack spacing={0.5} justifyContent="center" alignItems="center">
+        <Box sx={{ height: "100%", width: 55 }}>
+          <Image
+            src={icon}
+            alt={text}
+            layout="responsive"
+            objectFit="contain"
+            height="60px"
+            width="100%"
+          />
+        </Box>
+        <Typography variant="body2" sx={{ color, fontWeight: 600 }}>
+          {text}
+        </Typography>
+      </Stack>
+    </Bounce>
   </Button>
 );
 
@@ -40,15 +41,19 @@ const Section4 = () => {
           alignItems="center"
           sx={{ textAlign: "center" }}
         >
-          <Title variant="h2" sx={{ color: "text.title" }}>
-            Learn. Contribute. Innovate.
-          </Title>
+          <Fade >
+            <Title variant="h2" sx={{ color: "text.title" }}>
+              Learn. Contribute. Innovate.
+            </Title>
+          </Fade>
 
-          <Typography sx={{ maxWidth: 920 }}>
-            Your one-stop guide to all things MakerDAO. Learn more about Maker,
-            chat with the team, others in the community, and have your say in
-            shaping the future if decentralized finance.
-          </Typography>
+          <Fade  delay={100}>
+            <Typography sx={{ maxWidth: 920 }}>
+              Your one-stop guide to all things MakerDAO. Learn more about
+              Maker, chat with the team, others in the community, and have your
+              say in shaping the future if decentralized finance.
+            </Typography>
+          </Fade>
 
           <Stack
             direction="row"
@@ -58,9 +63,24 @@ const Section4 = () => {
             flexWrap="wrap"
           >
             <SocialButton text="Discord" icon={DiscordIcon} color="#7289DA" />
-            <SocialButton text="Forum" icon={ForumIcon} color="text.title" />
-            <SocialButton text="Twitter" icon={TwitterIcon} color="#4AA1EC" />
-            <SocialButton text="Join" icon={MAIcon} color="text.primary" />
+            <SocialButton
+              text="Forum"
+              icon={ForumIcon}
+              color="text.title"
+              delay={50}
+            />
+            <SocialButton
+              text="Twitter"
+              icon={TwitterIcon}
+              color="#4AA1EC"
+              delay={100}
+            />
+            <SocialButton
+              text="Join"
+              icon={MAIcon}
+              color="text.primary"
+              delay={150}
+            />
           </Stack>
         </Stack>
       </Box>

@@ -1,6 +1,7 @@
 import ContentCard from "@components/cards/ContentCard";
 import { Box, Container, Grid, Tab, Tabs } from "@mui/material";
 import { useState } from "react";
+import { Fade } from "react-awesome-reveal";
 import { BlurSection3 } from "./images";
 
 const DUMMY_CONTENT = [
@@ -66,7 +67,9 @@ const Section3 = () => {
         <Grid container spacing={3}>
           {DUMMY_CONTENT.map((item, i) => (
             <Grid item xs={12} md={6} lg={4} key={i}>
-              <ContentCard {...item} />
+              <Fade delay={100 * i}>
+                <ContentCard {...item} />
+              </Fade>
             </Grid>
           ))}
         </Grid>

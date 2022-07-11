@@ -13,12 +13,14 @@ import {
   Stack,
   Tooltip,
   Typography,
+  useTheme,
 } from "@mui/material";
 import useTranslation from "next-translate/useTranslation";
 import Router from "next/router";
 import { useState } from "react";
 
-const ActionButtons = ({ theme }) => {
+const ActionButtons = () => {
+  const theme = useTheme();
   const [userAnchorEl, setUserAnchorEl] = useState(null);
   const { user } = useAppSelector((state) => state.user);
   const { profile } = useAppSelector((state) => state.profile);

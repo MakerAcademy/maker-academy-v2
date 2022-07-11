@@ -1,5 +1,12 @@
 import TranslateIcon from "@mui/icons-material/Translate";
-import { IconButton, Menu, MenuItem, Typography } from "@mui/material";
+import {
+  Button,
+  IconButton,
+  Stack,
+  Menu,
+  MenuItem,
+  Typography,
+} from "@mui/material";
 import useTranslation from "next-translate/useTranslation";
 import React, { useState } from "react";
 import setLanguage from "next-translate/setLanguage";
@@ -25,22 +32,42 @@ export const handleLanguageChange = async (lang, router, pathname) => {
   return null;
 };
 
-const LanguageMenu = ({ sx = {}, ...other }) => {
+const LanguageMenu = ({ fullWidth, sx = {}, ...other }) => {
   const [langAnchor, setLangAnchor] = useState(null);
 
   const { t, lang } = useTranslation();
 
   return (
     <>
-      <IconButton
-        size="large"
-        onClick={(e) => setLangAnchor(e.currentTarget)}
-        color="inherit"
-        sx={{ ...sx }}
-        {...other}
-      >
-        <TranslateIcon />
-      </IconButton>
+      {fullWidth && (
+        <Button
+          sx={{ textTransform: "inherit", color: "inherit" }}
+          onClick={(e) => setLangAnchor(e.currentTarget)}
+        >
+          <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent="flex-start"
+            spacing={1}
+            sx={{ width: "100%" }}
+          >
+            <Typography>{t("change_language")}</Typography>
+            <TranslateIcon fontSize="small" />
+          </Stack>
+        </Button>
+      )}
+
+      {!fullWidth && (
+        <IconButton
+          size="large"
+          onClick={(e) => setLangAnchor(e.currentTarget)}
+          color="inherit"
+          sx={{ ...sx }}
+          {...other}
+        >
+          <TranslateIcon />
+        </IconButton>
+      )}
 
       <Menu
         anchorEl={langAnchor}

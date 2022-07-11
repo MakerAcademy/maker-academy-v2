@@ -13,8 +13,6 @@ import {
 } from "@mui/material";
 import {
   BlurSection2,
-  darkOutlineSec2Icon,
-  lightOutlineSec2Icon,
   Service1DarkIcon,
   Service1LightIcon,
   Service2DarkIcon,
@@ -24,7 +22,7 @@ import {
   Service4DarkIcon,
   Service4LightIcon,
 } from "@page-components/Home/images";
-import { Fade } from "react-awesome-reveal";
+import { Slide } from "react-awesome-reveal";
 
 const ActionButton = ({ text, Icon, reverse }) => (
   <Button>
@@ -52,11 +50,12 @@ const ServiceCard = ({
   image,
   Btn,
   direction = "left",
+  delay = 0,
 }) => {
   const theme = useTheme();
 
   return (
-    <Fade triggerOnce direction={direction}>
+    <Slide  direction={direction} delay={delay}>
       <Card
         elevation={0}
         sx={{
@@ -122,7 +121,7 @@ const ServiceCard = ({
           </Grid>
         </Grid>
       </Card>
-    </Fade>
+    </Slide>
   );
 };
 
@@ -203,6 +202,7 @@ const Section2 = () => {
                   Icon={ArrowForwardOutlinedIcon}
                 />
               }
+              delay={100}
             />
           </Grid>
 
@@ -221,6 +221,7 @@ const Section2 = () => {
                 />
               }
               direction="right"
+              delay={100}
             />
           </Grid>
         </Grid>
