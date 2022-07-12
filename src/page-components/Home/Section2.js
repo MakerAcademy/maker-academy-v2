@@ -55,73 +55,91 @@ const ServiceCard = ({
   const theme = useTheme();
 
   return (
-    <Slide  direction={direction} delay={delay}>
-      <Card
-        elevation={0}
-        sx={{
-          zIndex: 999,
-          height: "100%",
-          minHeight: 300,
-          p: { xs: 3, md: 5 },
-          borderRadius: 3,
-          boxShadow: "10px 12px 80px rgba(126, 129, 164, 0.2)",
-          background:
-            theme.palette.mode === "light"
-              ? "linear-gradient(335deg, rgba(245,252,239,1) 13%, rgba(250,255,247,1) 38%, rgba(255,255,255,1) 100%)"
-              : "linear-gradient(335deg, rgba(20,20,20,1) 0%, rgba(0,0,0,1) 65%)",
-        }}
+    <Box sx={{ height: "100%" }}>
+      <Slide
+        direction={direction}
+        delay={delay}
+        triggerOnce
+        style={{ height: "100%" }}
       >
-        <Grid
-          container
-          justifyContent="space-between"
-          sx={{ height: "100%", gap: "20px" }}
-          flexWrap={{ xs: "wrap-reverse", sm: "wrap" }}
+        <Card
+          elevation={0}
+          sx={{
+            zIndex: 999,
+            height: "100%",
+            p: { xs: 3, md: 5 },
+            borderRadius: 3,
+            boxShadow: "10px 12px 80px rgba(126, 129, 164, 0.2)",
+            background:
+              theme.palette.mode === "light"
+                ? "linear-gradient(335deg, rgba(245,252,239,1) 13%, rgba(250,255,247,1) 38%, rgba(255,255,255,1) 100%)"
+                : "linear-gradient(335deg, rgba(20,20,20,1) 0%, rgba(0,0,0,1) 65%)",
+          }}
         >
-          {/* Left */}
-          <Grid item xs={12} sm={8}>
-            <Stack
-              spacing={2}
-              justifyContent="space-between"
-              sx={{ height: "100%" }}
-            >
-              <Stack spacing={2}>
-                <Title variant="h3" sx={{ fontSize: "32px" }}>
-                  {title}
-                </Title>
+          <Grid
+            container
+            justifyContent="space-between"
+            sx={{
+              textAlign: "center",
+              minHeight: `calc(300px - ${theme.spacing(6)})`,
+              height: "100%",
+              gap: "20px",
+              [theme.breakpoints.up("md")]: {
+                textAlign: "start",
+                minHeight: `calc(300px - ${theme.spacing(10)})`,
+              },
+            }}
+            flexWrap={{ xs: "wrap-reverse", md: "wrap" }}
+          >
+            {/* Left */}
+            <Grid item xs={12} sm={12} md={7} lg={8}>
+              <Stack
+                spacing={2}
+                justifyContent="space-between"
+                sx={{ height: "100%" }}
+              >
+                <Stack spacing={2}>
+                  <Title
+                    variant={{ xs: "h4", lg: "h3" }}
+                    sx={{ fontSize: "32px" }}
+                  >
+                    {title}
+                  </Title>
 
-                <Typography sx={{ whiteSpace: "pre-line" }}>
-                  {description}
-                </Typography>
+                  <Typography sx={{ whiteSpace: "pre-line" }}>
+                    {description}
+                  </Typography>
+                </Stack>
+
+                <Box>
+                  {Btn}
+                  {/* <Btn /> */}
+                </Box>
               </Stack>
+            </Grid>
 
-              <Box>
-                {Btn}
-                {/* <Btn /> */}
-              </Box>
-            </Stack>
+            {/* Right */}
+            <Grid item xs={12} sm={12} md={"auto"} lg={"auto"}>
+              <Stack
+                justifyContent="center"
+                alignItems="center"
+                sx={{ height: "100%" }}
+              >
+                <img
+                  src={image}
+                  alt="outline"
+                  style={{
+                    zIndex: 1,
+                    height: 110,
+                    width: 110,
+                  }}
+                />
+              </Stack>
+            </Grid>
           </Grid>
-
-          {/* Right */}
-          <Grid item xs={12} sm={"auto"}>
-            <Stack
-              justifyContent="center"
-              alignItems="center"
-              sx={{ height: "100%" }}
-            >
-              <img
-                src={image}
-                alt="outline"
-                style={{
-                  zIndex: 1,
-                  height: 110,
-                  width: 110,
-                }}
-              />
-            </Stack>
-          </Grid>
-        </Grid>
-      </Card>
-    </Slide>
+        </Card>
+      </Slide>
+    </Box>
   );
 };
 
@@ -152,7 +170,18 @@ const Section2 = () => {
         }}
       />
 
-      <Container maxWidth="lg" sx={{ position: "relative" }}>
+      <Container
+        maxWidth="lg"
+        sx={{
+          position: "relative",
+          [theme.breakpoints.up("md")]: {
+            px: 10,
+          },
+          [theme.breakpoints.up("lg")]: {
+            px: 3,
+          },
+        }}
+      >
         <Grid container spacing={3}>
           {/* Item 1 */}
           <Grid item xs={12} md={6}>

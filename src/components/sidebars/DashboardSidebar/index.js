@@ -152,7 +152,7 @@ const Content = () => {
               <Typography variant="body2" sx={{ fontWeight: 600 }}>
                 {profile?.firstName} {profile?.lastName}
               </Typography>
-              <Typography variant="body2">Status: {profile?.title}</Typography>
+              <Typography variant="body2">Title: {profile?.title}</Typography>
             </Box>
           </Box>
         </Link>

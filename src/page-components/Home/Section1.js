@@ -47,15 +47,18 @@ const Section1 = () => {
         sx={{
           pt: `${NAVBAR_HEIGHT_MOBILE}px`,
           [theme.breakpoints.up("md")]: {
-            pt: `calc(${theme.spacing(2)} + ${NAVBAR_HEIGHT_DESKTOP}px)`,
-            minHeight: "100vh",
+            px: 10,
+            minHeight: "95vh",
+          },
+          [theme.breakpoints.up("lg")]: {
+            px: 3,
           },
         }}
       >
         <Grid
           container
           spacing={{ xs: 3, md: 8 }}
-          sx={{ my: { xs: 3, md: 5 } }}
+          sx={{ my: { xs: 3, lg: 5 } }}
         >
           {/* Left Side */}
           <Grid item xs={12} md={7}>
@@ -68,13 +71,13 @@ const Section1 = () => {
                 [theme.breakpoints.down("md")]: { textAlign: "center" },
               }}
             >
-              <Fade direction="left">
-                <Title variant={{ xs: "h2", md: "h1" }}>
+              <Fade direction="left" triggerOnce>
+                <Title variant={{ xs: "h3", md: "h2", xl: "h1" }}>
                   Welcome to the Maker Academy
                 </Title>
               </Fade>
 
-              <Fade direction="right">
+              <Fade direction="right" triggerOnce>
                 <Typography sx={{ lineHeight: "150%" }}>
                   Your one-stop guide to all things Maker. Whether you are a new
                   trying to understand how MakerDAO works or a contributor
@@ -84,7 +87,7 @@ const Section1 = () => {
               </Fade>
 
               <Stack direction="row" spacing={{ xs: 2, md: 4 }} sx={{ pt: 2 }}>
-                <Bounce delay={300}>
+                <Bounce delay={300} triggerOnce>
                   <GreenButton>JOIN THE ACADEMY</GreenButton>
                 </Bounce>
               </Stack>
@@ -94,7 +97,7 @@ const Section1 = () => {
           {/* Right Side */}
           <Hidden mdDown>
             <Grid item xs={12} md={5}>
-              <Fade>
+              <Fade triggerOnce>
                 <Box
                   // justifyContent="center"
                   // alignItems="center"

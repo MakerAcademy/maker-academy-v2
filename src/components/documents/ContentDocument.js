@@ -13,6 +13,7 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
+import CodeRenderer from "./CodeRenderer";
 
 // function HeadingRenderer(props) {
 //   var children = React.Children.toArray(props.children);
@@ -114,6 +115,13 @@ const ContentDocument = ({ data = {}, user, next = {}, previous = {} }) => {
       });
   };
 
+  const _temp = markdown
+    .replace(
+      "==box-grey==",
+      "<div style='background-color:lightgrey; padding: 1rem;'>"
+    )
+    .replace("==/box-grey==", "</div>");
+
   return (
     <Container maxWidth="xl">
       <Stack direction="row" spacing={5}>
@@ -214,6 +222,7 @@ const ContentDocument = ({ data = {}, user, next = {}, previous = {} }) => {
                   h5: HeadingRenderer,
                   h6: HeadingRenderer,
                   p: ParagraphRenderer,
+                  code: CodeRenderer,
                 }}
               >
                 {markdown}

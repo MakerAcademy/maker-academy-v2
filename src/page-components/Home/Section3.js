@@ -1,7 +1,7 @@
 import ContentCard from "@components/cards/ContentCard";
 import { Box, Container, Grid, Tab, Tabs } from "@mui/material";
 import { useState } from "react";
-import { Fade } from "react-awesome-reveal";
+import { Fade, Zoom } from "react-awesome-reveal";
 import { BlurSection3 } from "./images";
 
 const DUMMY_CONTENT = [
@@ -49,7 +49,17 @@ const Section3 = () => {
         }}
       />
 
-      <Container maxWidth="lg">
+      <Container
+        maxWidth="lg"
+        sx={(theme) => ({
+          [theme.breakpoints.up("md")]: {
+            px: 10,
+          },
+          [theme.breakpoints.up("lg")]: {
+            px: 3,
+          },
+        })}
+      >
         {/* Tabs */}
         <Tabs
           value={tabValue}
@@ -66,10 +76,10 @@ const Section3 = () => {
         {/* Content */}
         <Grid container spacing={3}>
           {DUMMY_CONTENT.map((item, i) => (
-            <Grid item xs={12} md={6} lg={4} key={i}>
-              <Fade delay={100 * i}>
+            <Grid item xs={12} md={4} key={i}>
+              <Zoom delay={100 * i} triggerOnce>
                 <ContentCard {...item} />
-              </Fade>
+              </Zoom>
             </Grid>
           ))}
         </Grid>

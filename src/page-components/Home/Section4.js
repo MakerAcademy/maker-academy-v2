@@ -11,7 +11,7 @@ import { Bounce, Fade } from "react-awesome-reveal";
 
 const SocialButton = ({ icon, text, color, delay = 0 }) => (
   <Button sx={{ textTransform: "inherit" }}>
-    <Bounce  delay={delay}>
+    <Bounce delay={delay} triggerOnce>
       <Stack spacing={0.5} justifyContent="center" alignItems="center">
         <Box sx={{ height: "100%", width: 55 }}>
           <Image
@@ -33,7 +33,18 @@ const SocialButton = ({ icon, text, color, delay = 0 }) => (
 
 const Section4 = () => {
   return (
-    <Container maxWidth="lg" sx={{ py: 5 }}>
+    <Container
+      maxWidth="lg"
+      sx={(theme) => ({
+        py: 5,
+        [theme.breakpoints.up("md")]: {
+          px: 10,
+        },
+        [theme.breakpoints.up("lg")]: {
+          px: 3,
+        },
+      })}
+    >
       <Box sx={{ backgroundColor: "primary.grey1", p: { xs: 4, md: 6 } }}>
         <Stack
           spacing={4}
@@ -41,13 +52,13 @@ const Section4 = () => {
           alignItems="center"
           sx={{ textAlign: "center" }}
         >
-          <Fade >
+          <Fade triggerOnce>
             <Title variant="h2" sx={{ color: "text.title" }}>
               Learn. Contribute. Innovate.
             </Title>
           </Fade>
 
-          <Fade  delay={100}>
+          <Fade delay={100} triggerOnce>
             <Typography sx={{ maxWidth: 920 }}>
               Your one-stop guide to all things MakerDAO. Learn more about
               Maker, chat with the team, others in the community, and have your

@@ -1,5 +1,5 @@
 export const COMMON_CONTEXT_STORAGE = "COMMON_STORAGE_PERSIST";
-export const THEME_CONTEXT_STORAGE = "MAKER ACADEMY THEME"
+export const THEME_CONTEXT_STORAGE = "MAKER ACADEMY THEME";
 export const NAVBAR_HEIGHT_DESKTOP = 80;
 export const NAVBAR_HEIGHT_MOBILE = 80;
 
@@ -39,3 +39,13 @@ export const ASSESSMENT_QUESTION_TYPES = [
 ];
 
 export const BRAND = ["Maker Academy", "Meta Analysis"];
+
+export const DASHBOARD_BREADCRUMBS = {
+  "/app": "dashbaord",
+  "/app/studio": "dashboard_studio_content",
+  "/app/studio/new/document": "dashboard_studio_new_document",
+  "/app/studio/new/course": "dashboard_studio_new_course",
+  "/app/studio/new/assessment": "dashboard_studio_new_assessment",
+  "/app/admin": "dashboard_admin",
+  "/app/settings": "dashboard_settings",
+};

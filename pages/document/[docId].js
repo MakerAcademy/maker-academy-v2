@@ -35,9 +35,9 @@ const Document = ({ document }) => {
       <DocBreadcrumbs {...document} />
 
       <Box sx={{ background: "linear-gradient(90deg, #E7F3F1 40%, #fff 60%)" }}>
-        <Stack justifyContent="center" alignItems="center">
+        {/* <Stack justifyContent="center" alignItems="center">
           <DocImage title={title} thumbnail={thumbnail} />
-        </Stack>
+        </Stack> */}
 
         <ContentDocument data={document} />
       </Box>

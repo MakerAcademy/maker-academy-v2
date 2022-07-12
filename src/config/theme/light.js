@@ -1,5 +1,6 @@
 import { grey } from "@mui/material/colors";
 import typography from "./typography";
+import breakpoints from "./breakpoints";
 
 export const lightTheme = {
   palette: {
@@ -16,4 +17,5 @@ export const lightTheme = {
     background: { default: "#F6FAF9" },
   },
   typography,
+  breakpoints,
 };

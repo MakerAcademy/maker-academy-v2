@@ -5,7 +5,7 @@ const MenuButtons = ({ menuItems = [], theme }) => {
   return (
     <Stack
       direction={{ xs: "column", md: "row" }}
-      spacing={{ xs: 3, md: 6 }}
+      spacing={{ xs: 3, lg: 6 }}
       alignItems="center"
     >
       {menuItems.map(({ name, link }, i) => (

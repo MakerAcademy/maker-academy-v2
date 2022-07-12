@@ -24,9 +24,19 @@ const Section5 = () => {
         }}
       />
 
-      <Container maxWidth="lg">
+      <Container
+        maxWidth="lg"
+        sx={(theme) => ({
+          [theme.breakpoints.up("md")]: {
+            px: 10,
+          },
+          [theme.breakpoints.up("lg")]: {
+            px: 3,
+          },
+        })}
+      >
         <Stack alignItems="center" spacing={4}>
-          <Fade>
+          <Fade triggerOnce>
             <Title
               variant="h2"
               sx={{ textAlign: "center", color: "text.title" }}
@@ -35,7 +45,7 @@ const Section5 = () => {
             </Title>
           </Fade>
 
-          <Fade delay={100}>
+          <Fade delay={100} triggerOnce>
             <Typography sx={{ textAlign: "center", maxWidth: 750 }}>
               We're proud to be the main source of information for the MakerDAO
               community and thankful for any feedback, support or suggestions.
@@ -44,7 +54,7 @@ const Section5 = () => {
 
           <Masonry columns={{ xs: 1, sm: 2, md: 4 }} spacing={3} sx={{ pt: 3 }}>
             {heights.map((height, index) => (
-              <JackInTheBox key={index} delay={50 * index}>
+              <JackInTheBox key={index} delay={50 * index} triggerOnce>
                 <Paper
                   elevation={0}
                   sx={{

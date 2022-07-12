@@ -1,3 +1,4 @@
+import { Box } from "@mui/material";
 import Section1 from "@page-components/Home/Section1";
 import Section2 from "@page-components/Home/Section2";
 import Section3 from "@page-components/Home/Section3";
@@ -12,6 +13,7 @@ const Home = () => {
       <Section3 />
       <Section4 />
       <Section5 />
+      {/* <Box sx={{ height: "200vh" }}></Box> */}
     </>
   );
 };
