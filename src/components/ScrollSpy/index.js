@@ -82,18 +82,12 @@ const ScrollSpy = ({ title, data }) => {
                     }}
                   >
                     <Stack direction="row" spacing={1}>
-                      <Typography
-                        variant={ml ? "body2" : "body1"}
-                        sx={{ fontWeight: 500 }}
-                      >
-                        {item.chapter}
+                      <Typography variant={"body2"} sx={{ fontWeight: 500 }}>
+                        {item.chapter}.
                       </Typography>
 
                       <Hidden mdDown>
-                        <Typography
-                          variant={ml ? "body2" : "body1"}
-                          sx={{ fontWeight: 500 }}
-                        >
+                        <Typography variant={"body2"} sx={{ fontWeight: 500 }}>
                           {item.title}
                         </Typography>
                       </Hidden>

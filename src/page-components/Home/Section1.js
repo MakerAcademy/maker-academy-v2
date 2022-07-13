@@ -51,6 +51,7 @@ const Section1 = () => {
             minHeight: "95vh",
           },
           [theme.breakpoints.up("lg")]: {
+            pt: `calc(${NAVBAR_HEIGHT_MOBILE}px + 30px)`,
             px: 3,
           },
         }}
@@ -71,13 +72,13 @@ const Section1 = () => {
                 [theme.breakpoints.down("md")]: { textAlign: "center" },
               }}
             >
-              <Fade direction="left" triggerOnce>
+              <Fade direction="down" duration={800} triggerOnce>
                 <Title variant={{ xs: "h3", md: "h2", xl: "h1" }}>
                   Welcome to the Maker Academy
                 </Title>
               </Fade>
 
-              <Fade direction="right" triggerOnce>
+              <Fade direction="down" duration={800} triggerOnce>
                 <Typography sx={{ lineHeight: "150%" }}>
                   Your one-stop guide to all things Maker. Whether you are a new
                   trying to understand how MakerDAO works or a contributor
@@ -87,9 +88,9 @@ const Section1 = () => {
               </Fade>
 
               <Stack direction="row" spacing={{ xs: 2, md: 4 }} sx={{ pt: 2 }}>
-                <Bounce delay={300} triggerOnce>
+                <Fade direction="down" duration={800} triggerOnce>
                   <GreenButton>JOIN THE ACADEMY</GreenButton>
-                </Bounce>
+                </Fade>
               </Stack>
             </Stack>
           </Grid>
@@ -98,24 +99,26 @@ const Section1 = () => {
           <Hidden mdDown>
             <Grid item xs={12} md={5}>
               <Fade triggerOnce>
-                <Box
-                  // justifyContent="center"
-                  // alignItems="center"
+                <Stack
+                  justifyContent="center"
+                  alignItems="center"
                   sx={{
+                    position: "relative",
                     width: "100%",
                     height: 550,
-                    "& > span": { height: "100% !important" },
                   }}
                 >
-                  {/* <img
+                  <img
                     src={DoorBgImage}
                     alt="Home Image"
                     loading="lazy"
                     style={{
-                      height: "800px",
+                      height: "780px",
                       // width: "100%",
                       objectFit: "contain",
                       zIndex: 1,
+                      marginLeft: "-30px",
+                      marginTop: "-30px",
                     }}
                   />
 
@@ -124,13 +127,13 @@ const Section1 = () => {
                     alt="Home Image"
                     loading="lazy"
                     style={{
-                      height: "500px",
+                      height: "100%",
                       // width: "100%",
                       objectFit: "contain",
                       position: "absolute",
                       zIndex: 2,
                     }}
-                  /> */}
+                  />
 
                   {/* <Image
                     src={DoorBgImage}
@@ -140,9 +143,8 @@ const Section1 = () => {
                     height="100%"
                     width="100%"
                     priority
-                  /> */}
-
-                  <Image
+                  />
+                   <Image
                     src={DoorImage}
                     alt="Home Image"
                     layout="responsive"
@@ -150,8 +152,8 @@ const Section1 = () => {
                     height="100%"
                     width="100%"
                     priority
-                  />
-                </Box>
+                  /> */}
+                </Stack>
               </Fade>
             </Grid>
           </Hidden>

@@ -118,6 +118,8 @@ const ContentCard = ({
     );
   };
 
+  console.log(theme.palette.background.gradient1);
+
   return (
     <Link
       href={contentType === "documents" ? `/document/${_id}` : `/course/${_id}`}
@@ -131,6 +133,10 @@ const ContentCard = ({
           height: "100%",
           cursor: "pointer",
           transition: "all .4s ease",
+          background:
+            theme.palette.mode === "dark"
+              ? theme.palette.background.gradient1
+              : theme.palette.background.paper,
           boxShadow:
             "0px 0px 1px rgba(12, 26, 75, 0.24), 0px 3px 8px -1px rgba(50, 50, 71, 0.05)",
           "&:hover": {

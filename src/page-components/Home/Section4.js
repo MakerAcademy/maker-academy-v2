@@ -45,7 +45,16 @@ const Section4 = () => {
         },
       })}
     >
-      <Box sx={{ backgroundColor: "primary.grey1", p: { xs: 4, md: 6 } }}>
+      <Box
+        sx={(theme) => ({
+          borderRadius: 2,
+          background:
+            theme.palette.mode === "dark"
+              ? theme.palette.background.gradient1
+              : theme.palette.primary.grey1,
+          p: { xs: 4, md: 6 },
+        })}
+      >
         <Stack
           spacing={4}
           justifyContent="center"

@@ -70,10 +70,7 @@ const ServiceCard = ({
             p: { xs: 3, md: 5 },
             borderRadius: 3,
             boxShadow: "10px 12px 80px rgba(126, 129, 164, 0.2)",
-            background:
-              theme.palette.mode === "light"
-                ? "linear-gradient(335deg, rgba(245,252,239,1) 13%, rgba(250,255,247,1) 38%, rgba(255,255,255,1) 100%)"
-                : "linear-gradient(335deg, rgba(20,20,20,1) 0%, rgba(0,0,0,1) 65%)",
+            background: theme.palette.background.gradient1,
           }}
         >
           <Grid
@@ -152,8 +149,8 @@ const Section2 = () => {
       sx={{
         position: "relative",
         my: 10,
-        // maxWidth: "100vh",
-        // overflowX: "hidden",
+        maxWidth: "100vw",
+        overflowX: "clip",
       }}
     >
       <img

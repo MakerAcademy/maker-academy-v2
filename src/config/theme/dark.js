@@ -14,7 +14,11 @@ export const darkTheme = {
       primary: "#FFF",
       title: "#FFF",
     },
-    background: { default: "#1A1B1F" },
+    background: {
+      default: "#1A1B1F",
+      gradient1:
+        "linear-gradient(87deg, rgba(46,48,53,1) 0%, rgba(46,48,53,1) 46%, rgba(49,52,58,1) 100%)",
+    },
   },
   typography,
   breakpoints,
