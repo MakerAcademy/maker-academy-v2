@@ -1,6 +1,6 @@
 import GreenButton from "@components/buttons/GreenButton";
 import Title from "@components/Title";
-import { NAVBAR_HEIGHT_DESKTOP, NAVBAR_HEIGHT_MOBILE } from "@constants/";
+import { NAVBAR_HEIGHT_MOBILE } from "@constants/";
 import {
   Box,
   Container,
@@ -8,6 +8,7 @@ import {
   Hidden,
   Stack,
   Typography,
+  useMediaQuery,
   useTheme,
 } from "@mui/material";
 import {
@@ -15,11 +16,12 @@ import {
   DoorBgImage,
   DoorImage,
 } from "@page-components/Home/images";
-import Image from "next/image";
-import { Bounce, Fade, Slide } from "react-awesome-reveal";
+import { Fade } from "react-awesome-reveal";
 
 const Section1 = () => {
   const theme = useTheme();
+
+  const isMediumScreen = useMediaQuery(theme.breakpoints.between("md", "lg"));
 
   return (
     <Box
@@ -105,7 +107,10 @@ const Section1 = () => {
                   sx={{
                     position: "relative",
                     width: "100%",
-                    height: 550,
+                    height: 500,
+                    [theme.breakpoints.up("lg")]: {
+                      height: 550,
+                    },
                   }}
                 >
                   <img
@@ -113,7 +118,7 @@ const Section1 = () => {
                     alt="Home Image"
                     loading="lazy"
                     style={{
-                      height: "780px",
+                      height: isMediumScreen ? "700px" : "780px",
                       // width: "100%",
                       objectFit: "contain",
                       zIndex: 1,

@@ -3,30 +3,36 @@ import { withProtectedUser } from "@hoc/routes";
 import { submitCourse } from "@lib/course";
 import { Box, Container, Paper, Typography } from "@mui/material";
 import dynamic from "next/dynamic";
+import { useSnackbar } from "notistack";
 
 const CourseForm = dynamic(() => import("@components/forms/CourseForm"), {
   ssr: false,
 });
 
-const DUMMY_COURSE = {
-  title: "Course 1",
-  description:
-    "Magna et eu enim velit sit et reprehenderit commodo exercitation.",
-  level: "beginner",
-  topic: "MakerDAO",
-  brand: "Meta Analysis",
-  duration: 30,
-  markdown: "### Hello this is a markdown value",
-  documents: ["XQg5Kc8gZxd3IQ3yResU"],
-  thumbnail:
-    "https://prod-discovery.edx-cdn.org/media/course/image/0e575a39-da1e-4e33-bb3b-e96cc6ffc58e-8372a9a276c1.png",
-};
-
 const NewCourse = ({ user, profile }) => {
-  const handleCourseSubmit = async (data) => {
-    const res = await submitCourse(profile.id, data);
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
-    console.log(res);
+  const handleCourseSubmit = async (data) => {
+    const _key = enqueueSnackbar("Submitting Course...", {
+      variant: "default",
+    });
+
+    const res = await submitCourse(profile.id, data)
+      .then(() => {
+        closeSnackbar(_key);
+        enqueueSnackbar("Success", {
+          variant: "success",
+          autoHideDuration: 2000,
+          onClose: () => Router.push("/app/studio"),
+        });
+      })
+      .catch((err) => {
+        enqueueSnackbar("Error", {
+          variant: "error",
+          autoHideDuration: 2000,
+          onClose: () => Router.push("/app/studio"),
+        });
+      });
   };
 
   return (

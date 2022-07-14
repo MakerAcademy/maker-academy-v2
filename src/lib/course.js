@@ -35,7 +35,7 @@ export const submitCourse = async (cid, data = {}) => {
     };
     const contentRes = await setDoc(contentRef, contentPayload);
 
-    return { ...data, id: contentRef.id };
+    return { success: true, payload: { ...data, id: contentRef.id } };
   } catch (error) {
     console.log(error);
     return error;

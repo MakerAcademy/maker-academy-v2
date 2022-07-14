@@ -118,8 +118,6 @@ const ContentCard = ({
     );
   };
 
-  console.log(theme.palette.background.gradient1);
-
   return (
     <Link
       href={contentType === "documents" ? `/document/${_id}` : `/course/${_id}`}

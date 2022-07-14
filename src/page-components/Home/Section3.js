@@ -1,7 +1,8 @@
 import ContentCard from "@components/cards/ContentCard";
-import { Box, Container, Grid, Tab, Tabs } from "@mui/material";
+import { Box, Container, Grid, Tab, Tabs, useTheme } from "@mui/material";
+import hex from "@utils/hexTransparency";
 import { useState } from "react";
-import { Fade, Zoom } from "react-awesome-reveal";
+import { Zoom } from "react-awesome-reveal";
 import { BlurSection3 } from "./images";
 
 const DUMMY_CONTENT = [
@@ -26,7 +27,10 @@ const DUMMY_CONTENT = [
   })),
 ];
 
+const TABS = ["Recent Releases", "Popular Articles", "Popular Courses"];
+
 const Section3 = () => {
+  const theme = useTheme();
   const [tabValue, setTabValue] = useState(0);
 
   const handleTabChange = (e, i) => {
@@ -51,14 +55,14 @@ const Section3 = () => {
 
       <Container
         maxWidth="lg"
-        sx={(theme) => ({
+        sx={{
           [theme.breakpoints.up("md")]: {
             px: 10,
           },
           [theme.breakpoints.up("lg")]: {
             px: 3,
           },
-        })}
+        }}
       >
         {/* Tabs */}
         <Tabs
@@ -66,11 +70,28 @@ const Section3 = () => {
           onChange={handleTabChange}
           variant="scrollable"
           scrollButtons="auto"
-          sx={{ mb: 3 }}
+          sx={{
+            mb: 3,
+            ".MuiTabs-flexContainer": { gap: "10px" },
+            "& .MuiTab-root.Mui-selected": {
+              backgroundColor: `${theme.palette.primary.main}${hex["12%"]}`,
+            },
+          }}
+          TabIndicatorProps={{ style: { background: "none" } }}
         >
-          <Tab label="Recent Releases" />
-          <Tab label="Popular Articles" />
-          <Tab label="Popular Courses" />
+          {TABS.map((item, i) => (
+            <Tab
+              key={i}
+              label={item}
+              sx={{
+                backgroundColor: `${theme.palette.primary.grey1}`,
+                textTransform: "inherit",
+                fontSize: "18px",
+                fontWeight: 500,
+                borderRadius: "12px",
+              }}
+            />
+          ))}
         </Tabs>
 
         {/* Content */}

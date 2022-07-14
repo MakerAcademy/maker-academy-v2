@@ -1,18 +1,41 @@
 import { withProtectedUser } from "@hoc/routes";
 import { submitDocument } from "@lib/document";
 // import DocumentForm from "@forms/DocumentForm";
-import Title from "@components/Title";
-import { Box, Container, Paper, Typography } from "@mui/material";
-import dynamic from "next/dynamic";
 import DashboardPaper from "@components/DashboardPaper";
+import Title from "@components/Title";
+import { Box, Typography } from "@mui/material";
+import dynamic from "next/dynamic";
+import { useSnackbar } from "notistack";
+import Router from "next/router";
 
 const DocumentForm = dynamic(() => import("@forms/DocumentForm"), {
   ssr: false,
 });
 
 const NewDocument = ({ user, profile }) => {
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+
   const handleDocumentSubmit = async (data) => {
-    const res = await submitDocument(profile.id, data);
+    const _key = enqueueSnackbar("Submitting Document...", {
+      variant: "default",
+    });
+
+    const res = await submitDocument(profile?.id, data)
+      .then(() => {
+        closeSnackbar(_key);
+        enqueueSnackbar("Success", {
+          variant: "success",
+          autoHideDuration: 2000,
+          onClose: () => Router.push("/app/studio"),
+        });
+      })
+      .catch((err) => {
+        enqueueSnackbar("Error", {
+          variant: "error",
+          autoHideDuration: 2000,
+          onClose: () => Router.push("/app/studio"),
+        });
+      });
   };
 
   return (

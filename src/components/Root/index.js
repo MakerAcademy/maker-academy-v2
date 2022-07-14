@@ -10,6 +10,7 @@ import { setUser } from "@redux/slices/userSlice";
 import { onAuthStateChanged } from "firebase/auth";
 import { useRouter } from "next/router";
 import nookies from "nookies";
+import { SnackbarProvider } from "notistack";
 import React, { useEffect } from "react";
 
 const EmptyLayout = ({ children }) => (
@@ -111,8 +112,10 @@ const Root = ({ children }) => {
 
   return (
     <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Layout>{children}</Layout>
+      <SnackbarProvider maxSnack={3}>
+        <CssBaseline />
+        <Layout>{children}</Layout>
+      </SnackbarProvider>
     </ThemeProvider>
   );
 };

@@ -1,4 +1,5 @@
-import { Box } from "@mui/material";
+import ScrollToTop from "@components/buttons/ScrollToTop";
+import useScrollPosition from "@hooks/useScrollPosition";
 import Section1 from "@page-components/Home/Section1";
 import Section2 from "@page-components/Home/Section2";
 import Section3 from "@page-components/Home/Section3";
@@ -6,6 +7,8 @@ import Section4 from "@page-components/Home/Section4";
 import Section5 from "@page-components/Home/Section5";
 
 const Home = () => {
+  const scrollPosition = useScrollPosition();
+
   return (
     <>
       <Section1 />
@@ -13,7 +16,8 @@ const Home = () => {
       <Section3 />
       <Section4 />
       <Section5 />
-      {/* <Box sx={{ height: "200vh" }}></Box> */}
+
+      {scrollPosition > 150 && <ScrollToTop />}
     </>
   );
 };

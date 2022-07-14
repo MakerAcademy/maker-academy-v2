@@ -12,6 +12,8 @@ import {
 
 export const submitDocument = async (cid, data = {}) => {
   try {
+    // return { success: true, payload: { ...data } };
+
     // Add to documents
     const docRef = doc(collection(db, "documents"));
     const docPayload = {
@@ -39,7 +41,7 @@ export const submitDocument = async (cid, data = {}) => {
     };
     const contentRes = await setDoc(contentRef, contentPayload);
 
-    return { ...data, id: contentRef.id };
+    return { success: true, payload: { ...data, id: contentRef.id } };
   } catch (error) {
     console.log(error);
     return error;
