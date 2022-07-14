@@ -18,6 +18,7 @@ import RegisterContent from "./RegisterContent";
 import Texture1 from "@assets/images/backgrounds/texture1.png";
 import Blur1 from "@assets/images/misc/authShape.png";
 import Router, { useRouter } from "next/router";
+import { Fade, Slide, Zoom } from "react-awesome-reveal";
 
 const CloseButton = () => {
   return (
@@ -71,35 +72,39 @@ const Auth = () => {
           backgroundImage: `url(${Texture1})`,
         }}
       >
-        <Stack sx={{ height: "100%", p: { xs: 3, md: 6 } }}>
+        <Stack sx={{ height: "100%", p: { xs: 3 } }}>
           {/* Logo */}
-          <Stack
-            direction="row"
-            alignItems="center"
-            justifyContent="space-between"
-            spacing={2}
-            // sx={{ p: { xs: 3, md: 6 } }}
-          >
-            <Link href="/" passHref>
-              <img
-                loading="lazy"
-                src={
-                  theme.palette.mode === "dark" ? FullLogoWhite : FullLogoBlack
-                }
-                alt={"Maker Academy Logo"}
-                style={{
-                  height: 40,
-                  objectFit: "contain",
-                  cursor: "pointer",
-                  zIndex: 999,
-                }}
-              />
-            </Link>
+          <Fade>
+            <Stack
+              direction="row"
+              alignItems="center"
+              justifyContent="space-between"
+              spacing={2}
+              // sx={{ p: { xs: 3, md: 6 } }}
+            >
+              <Link href="/" passHref>
+                <img
+                  loading="lazy"
+                  src={
+                    theme.palette.mode === "dark"
+                      ? FullLogoWhite
+                      : FullLogoBlack
+                  }
+                  alt={"Maker Academy Logo"}
+                  style={{
+                    height: 40,
+                    objectFit: "contain",
+                    cursor: "pointer",
+                    zIndex: 999,
+                  }}
+                />
+              </Link>
 
-            <Hidden mdUp>
-              <CloseButton />
-            </Hidden>
-          </Stack>
+              <Hidden mdUp>
+                <CloseButton />
+              </Hidden>
+            </Stack>
+          </Fade>
 
           {/* Content */}
           <Box
@@ -119,31 +124,33 @@ const Auth = () => {
       <Grid item xs={12} md={7} lg={8}>
         <Stack sx={{ height: "100%" }}>
           {/* Close Button */}
-          <Stack
-            direction="row"
-            alignItems="center"
-            justifyContent="flex-end"
-            sx={{ p: { xs: 3, md: 6 } }}
-            spacing={3}
-          >
-            {isLogin ? (
-              <Link href="/register" passHref>
-                <Button sx={{ fontWeight: 600, textTransform: "inherit" }}>
-                  Register
-                </Button>
-              </Link>
-            ) : (
-              <Link href="/login" passHref>
-                <Button sx={{ fontWeight: 600, textTransform: "inherit" }}>
-                  Login
-                </Button>
-              </Link>
-            )}
+          <Fade>
+            <Stack
+              direction="row"
+              alignItems="center"
+              justifyContent="flex-end"
+              sx={{ p: { xs: 3 } }}
+              spacing={3}
+            >
+              {isLogin ? (
+                <Link href="/register" passHref>
+                  <Button sx={{ fontWeight: 600, textTransform: "inherit" }}>
+                    Register
+                  </Button>
+                </Link>
+              ) : (
+                <Link href="/login" passHref>
+                  <Button sx={{ fontWeight: 600, textTransform: "inherit" }}>
+                    Login
+                  </Button>
+                </Link>
+              )}
 
-            <Hidden mdDown>
-              <CloseButton />
-            </Hidden>
-          </Stack>
+              <Hidden mdDown>
+                <CloseButton />
+              </Hidden>
+            </Stack>
+          </Fade>
 
           {/* Content */}
           <Box sx={{ flex: 1, [theme.breakpoints.up("md")]: { mt: -7 } }}>

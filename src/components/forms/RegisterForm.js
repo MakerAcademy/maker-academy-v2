@@ -9,12 +9,14 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import { useRouter } from "next/router";
+import Router, { useRouter } from "next/router";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as Yup from "yup";
 import GoogleIcon from "@mui/icons-material/Google";
 import Title from "@components/Title";
+import { Bounce } from "react-awesome-reveal";
+import { useSnackbar } from "notistack";
 
 export const SocialButton = ({ color, children, ...other }) => {
   const theme = useTheme();
@@ -38,6 +40,8 @@ export const SocialButton = ({ color, children, ...other }) => {
 };
 
 const RegisterForm = () => {
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+
   const [type, setType] = useState("learner");
 
   const validationSchema = Yup.object().shape({
@@ -56,11 +60,50 @@ const RegisterForm = () => {
 
   const onSubmit = async (data, e) => {
     const { email, password } = data;
-    try {
-      handleRegister(email, password);
-    } catch (err) {
-      console.log(err);
-    }
+
+    const _key = enqueueSnackbar("Signing in...", {
+      variant: "default",
+    });
+
+    handleRegister(email, password)
+      .then(() => {
+        closeSnackbar(_key);
+        enqueueSnackbar("Success", {
+          variant: "success",
+          autoHideDuration: 2000,
+          onClose: () => Router.push("/app/studio"),
+        });
+      })
+      .catch((err) => {
+        enqueueSnackbar("Error", {
+          variant: err.message,
+          autoHideDuration: 2000,
+          onClose: () => Router.push("/register"),
+        });
+      });
+  };
+
+  const onGoogleRegister = async () => {
+    const _key = enqueueSnackbar("Signing in...", {
+      variant: "default",
+    });
+
+    handleGoogleLogin()
+      .then(() => {
+        closeSnackbar(_key);
+        enqueueSnackbar("Registeration Success", {
+          variant: "success",
+          autoHideDuration: 2000,
+          onClose: () => Router.push("/app/studio"),
+        });
+      })
+      .catch((err) => {
+        enqueueSnackbar(err.message, {
+          variant: "error",
+          autoHideDuration: 2000,
+          onClose: () => Router.push("/register"),
+        });
+      });
   };
 
   const handleTypeChange = (event, _type) => {
@@ -148,9 +191,11 @@ const RegisterForm = () => {
           justifyContent="center"
           spacing={2.5}
         >
-          <SocialButton color="#DF4D3B" onClick={handleGoogleLogin}>
-            <GoogleIcon />
-          </SocialButton>
+          <Bounce>
+            <SocialButton color="#DF4D3B" onClick={onGoogleRegister}>
+              <GoogleIcon />
+            </SocialButton>
+          </Bounce>
         </Stack>
       </Stack>
     </form>

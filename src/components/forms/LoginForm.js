@@ -5,30 +5,73 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { handleGoogleLogin, handleLogin } from "@lib/auth";
 import GoogleIcon from "@mui/icons-material/Google";
 import { Divider, Stack, Typography } from "@mui/material";
-import { useRouter } from "next/router";
+import Router from "next/router";
+import { useSnackbar } from "notistack";
+import { Bounce } from "react-awesome-reveal";
 import { useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { SocialButton } from "./RegisterForm";
 
 const LoginForm = () => {
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+
   // form validation rules
   const validationSchema = Yup.object().shape({
     email: Yup.string().required("Email is required"),
     password: Yup.string().required("Password is required"),
   });
-  const formOptions = { resolver: yupResolver(validationSchema) };
 
-  const router = useRouter();
+  const formOptions = { resolver: yupResolver(validationSchema) };
 
   const { handleSubmit, reset, control, getValues } = useForm(formOptions);
 
   const onSubmit = async (data, e) => {
     const { email, password } = data;
-    try {
-      handleLogin(email, password);
-    } catch (err) {
-      console.log(err);
-    }
+
+    const _key = enqueueSnackbar("Signing in...", {
+      variant: "default",
+    });
+
+    handleLogin(email, password)
+      .then((res) => {
+        closeSnackbar(_key);
+        enqueueSnackbar("Signed in", {
+          variant: "success",
+          autoHideDuration: 2000,
+          onClose: () => Router.push("/app/studio"),
+        });
+      })
+      .catch((err) => {
+        closeSnackbar(_key);
+        enqueueSnackbar(err.message, {
+          variant: "error",
+          autoHideDuration: 4000,
+          onClose: () => Router.push("/login"),
+        });
+      });
+  };
+
+  const onGoogleLogin = async () => {
+    const _key = enqueueSnackbar("Signing in...", {
+      variant: "default",
+    });
+
+    handleGoogleLogin()
+      .then(() => {
+        closeSnackbar(_key);
+        enqueueSnackbar("Success", {
+          variant: "success",
+          autoHideDuration: 2000,
+          onClose: () => Router.push("/app/studio"),
+        });
+      })
+      .catch((err) => {
+        enqueueSnackbar("Error", {
+          variant: err.message,
+          autoHideDuration: 2000,
+          onClose: () => Router.push("/login"),
+        });
+      });
   };
 
   return (
@@ -64,7 +107,7 @@ const LoginForm = () => {
         />
 
         <GreenButton fullWidth sx={{ maxWidth: 200 }} type="submit">
-          Sign in
+          Login
         </GreenButton>
 
         <Divider
@@ -87,9 +130,11 @@ const LoginForm = () => {
           justifyContent="center"
           spacing={2.5}
         >
-          <SocialButton color="#DF4D3B" onClick={handleGoogleLogin}>
-            <GoogleIcon />
-          </SocialButton>
+          <Bounce>
+            <SocialButton color="#DF4D3B" onClick={onGoogleLogin}>
+              <GoogleIcon />
+            </SocialButton>
+          </Bounce>
         </Stack>
       </Stack>
     </form>

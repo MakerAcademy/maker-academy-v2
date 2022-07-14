@@ -149,7 +149,6 @@ const ContentTable = () => {
           pageSize={pageSize}
           onPageSizeChange={(i) => setPageSize(i)}
           rowsPerPageOptions={[5, 10, 20, 50]}
-          isRowSelectable={false}
           sx={{
             "& .MuiDataGrid-root": {
               border: "none !important",

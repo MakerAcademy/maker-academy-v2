@@ -11,40 +11,39 @@ export const handleGoogleLogin = async () => {
   try {
     const res = await signInWithPopup(auth, providerGoogle);
 
-    if (res.user) {
-      window.location.href = "/";
-    }
+    // if (res.user) {
+    //   window.location.href = "/";
+    // }
 
-    return res.user;
+    return { success: true, user: res.user };
   } catch (error) {
-    return error;
+    throw { error: true, message: error.message };
   }
 };
 
 export const handleLogin = async (email, password) => {
   try {
+    if (!email && !password) throw { error: true, message: error.message };
+
     const res = await signInWithEmailAndPassword(auth, email, password);
 
-    if (res.user) {
-      window.location.href = "/";
-    }
+    console.log(res);
 
-    return res.user;
+    return { success: true, user: res.user };
   } catch (error) {
-    return error;
+    throw { error: true, message: error.message };
   }
 };
 
 export const handleRegister = async (email, password) => {
   try {
-    const res = await createUserWithEmailAndPassword(auth, email, password);
-    if (res.user) {
-      window.location.href = "/";
-    }
+    if (!email && !password) throw { error: true, message: error.message };
 
-    return res.user;
+    const res = await createUserWithEmailAndPassword(auth, email, password);
+
+    return { success: true, user: res.user };
   } catch (error) {
-    return error;
+    throw { error: true, message: error.message };
   }
 };
 
@@ -52,6 +51,6 @@ export const handleSignOut = async () => {
   try {
     await signOut(auth).then(() => (window.location.href = "/"));
   } catch (error) {
-    return error;
+    throw { error: true, message: error.message };
   }
 };

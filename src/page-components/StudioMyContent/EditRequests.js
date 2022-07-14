@@ -21,8 +21,8 @@ const EditRequests = () => {
       <Typography sx={{ mb: 3 }}>Edit Requests</Typography>
 
       <Grid container spacing={4}>
-        {DUMMY_REQUESTS.map((item) => (
-          <Grid item key={item.id} xs={12} md={4} lg={3}>
+        {DUMMY_REQUESTS.map((item, i) => (
+          <Grid item key={i} xs={12} md={4} lg={3}>
             <EditRequestCard {...item} />
           </Grid>
         ))}
