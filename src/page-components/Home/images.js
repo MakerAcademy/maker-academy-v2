@@ -7,6 +7,7 @@ import DoorBgImage from "@assets/images/homepage/door-bg.png";
 import DoorImage from "@assets/images/homepage/door.png";
 import ForumIcon from "@assets/images/homepage/Forum.svg";
 import MAIcon from "@assets/images/homepage/MA.svg";
+import MAWhiteIcon from "@assets/images/homepage/MAWhite.png";
 import Service1DarkIcon from "@assets/images/homepage/section2/1-dark.png";
 import Service1LightIcon from "@assets/images/homepage/section2/1-light.png";
 import Service2DarkIcon from "@assets/images/homepage/section2/2-dark.png";
@@ -27,6 +28,7 @@ export {
   DiscordIcon,
   ForumIcon,
   MAIcon,
+  MAWhiteIcon,
   TwitterIcon,
   Service1DarkIcon,
   Service1LightIcon,

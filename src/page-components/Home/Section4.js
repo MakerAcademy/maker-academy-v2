@@ -1,9 +1,17 @@
 import Title from "@components/Title";
-import { Box, Button, Container, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  Stack,
+  Typography,
+  useTheme,
+} from "@mui/material";
 import {
   DiscordIcon,
   ForumIcon,
   MAIcon,
+  MAWhiteIcon,
   TwitterIcon,
 } from "@page-components/Home/images";
 import Image from "next/image";
@@ -32,10 +40,13 @@ const SocialButton = ({ icon, text, color, delay = 0 }) => (
 );
 
 const Section4 = () => {
+  const theme = useTheme();
+  const isDark = theme.palette.mode === "dark";
+
   return (
     <Container
       maxWidth="lg"
-      sx={(theme) => ({
+      sx={{
         py: 5,
         [theme.breakpoints.up("md")]: {
           px: 10,
@@ -43,17 +54,16 @@ const Section4 = () => {
         [theme.breakpoints.up("lg")]: {
           px: 3,
         },
-      })}
+      }}
     >
       <Box
-        sx={(theme) => ({
+        sx={{
           borderRadius: 2,
-          background:
-            theme.palette.mode === "dark"
-              ? theme.palette.background.gradient1
-              : theme.palette.primary.grey1,
+          background: isDark
+            ? theme.palette.background.gradient1
+            : theme.palette.primary.grey1,
           p: { xs: 4, md: 6 },
-        })}
+        }}
       >
         <Stack
           spacing={4}
@@ -97,7 +107,7 @@ const Section4 = () => {
             />
             <SocialButton
               text="Join"
-              icon={MAIcon}
+              icon={isDark ? MAWhiteIcon : MAIcon}
               color="text.primary"
               delay={150}
             />
