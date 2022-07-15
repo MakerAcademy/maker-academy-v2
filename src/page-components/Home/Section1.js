@@ -1,6 +1,7 @@
 import GreenButton from "@components/buttons/GreenButton";
 import Title from "@components/Title";
 import { NAVBAR_HEIGHT_MOBILE } from "@constants/";
+import { useMousePosition } from "@hooks/useMousePosition";
 import {
   Box,
   Container,
@@ -17,11 +18,92 @@ import {
   DoorImage,
 } from "@page-components/Home/images";
 import { Fade } from "react-awesome-reveal";
+import ReactCursorPosition from "react-cursor-position";
+
+const DoorSection = (props) => {
+  const theme = useTheme();
+  const isMediumScreen = useMediaQuery(theme.breakpoints.between("md", "lg"));
+
+  const {
+    isActive = false,
+    position: { x = 0, y = 0 } = {},
+    elementDimensions: { width = 0, height = 0 } = {},
+  } = props;
+
+  return (
+    <Fade triggerOnce>
+      <Stack
+        justifyContent="center"
+        alignItems="center"
+        sx={{
+          position: "relative",
+          width: "100%",
+          height: 500,
+          [theme.breakpoints.up("lg")]: {
+            height: 550,
+          },
+          "& :hover": {
+            "& > img": {
+              marginLeft: 0,
+            },
+          },
+        }}
+      >
+        <img
+          src={DoorBgImage}
+          alt="Home Image"
+          loading="lazy"
+          style={{
+            height: isMediumScreen ? "700px" : "780px",
+            // width: "100%",
+            objectFit: "contain",
+            zIndex: 1,
+            transition: "100ms linear transform",
+            marginLeft: "-30px",
+            marginTop: "-30px",
+            transform: isActive && `translate(${x * -0.08}px, ${y * -0.1}px)`,
+          }}
+        />
+
+        <img
+          src={DoorImage}
+          alt="Home Image"
+          loading="lazy"
+          style={{
+            height: "100%",
+            // width: "100%",
+            objectFit: "contain",
+            position: "absolute",
+            zIndex: 2,
+          }}
+        />
+
+        {/* <Image
+  src={DoorBgImage}
+  alt="Home Image"
+  layout="responsive"
+  objectFit="contain"
+  height="100%"
+  width="100%"
+  priority
+/>
+ <Image
+  src={DoorImage}
+  alt="Home Image"
+  layout="responsive"
+  objectFit="contain"
+  height="100%"
+  width="100%"
+  priority
+/> */}
+      </Stack>
+    </Fade>
+  );
+};
 
 const Section1 = () => {
   const theme = useTheme();
-
-  const isMediumScreen = useMediaQuery(theme.breakpoints.between("md", "lg"));
+  // const { x, y } = useMousePosition();
 
   return (
     <Box
@@ -75,8 +157,11 @@ const Section1 = () => {
               }}
             >
               <Fade direction="down" duration={800} triggerOnce>
-                <Title variant={{ xs: "h3", md: "h2", xl: "h1" }}>
-                  Welcome to the Maker Academy
+                <Title
+                  variant={{ xs: "h3", md: "h2", xl: "h1" }}
+                  sx={{ whiteSpace: "pre-line" }}
+                >
+                  {"Welcome to the\nMaker Academy"}
                 </Title>
               </Fade>
 
@@ -100,66 +185,9 @@ const Section1 = () => {
           {/* Right Side */}
           <Hidden mdDown>
             <Grid item xs={12} md={5}>
-              <Fade triggerOnce>
-                <Stack
-                  justifyContent="center"
-                  alignItems="center"
-                  sx={{
-                    position: "relative",
-                    width: "100%",
-                    height: 500,
-                    [theme.breakpoints.up("lg")]: {
-                      height: 550,
-                    },
-                  }}
-                >
-                  <img
-                    src={DoorBgImage}
-                    alt="Home Image"
-                    loading="lazy"
-                    style={{
-                      height: isMediumScreen ? "700px" : "780px",
-                      // width: "100%",
-                      objectFit: "contain",
-                      zIndex: 1,
-                      marginLeft: "-30px",
-                      marginTop: "-30px",
-                    }}
-                  />
-
-                  <img
-                    src={DoorImage}
-                    alt="Home Image"
-                    loading="lazy"
-                    style={{
-                      height: "100%",
-                      // width: "100%",
-                      objectFit: "contain",
-                      position: "absolute",
-                      zIndex: 2,
-                    }}
-                  />
-
-                  {/* <Image
-                    src={DoorBgImage}
-                    alt="Home Image"
-                    layout="responsive"
-                    objectFit="contain"
-                    height="100%"
-                    width="100%"
-                    priority
-                  />
-                   <Image
-                    src={DoorImage}
-                    alt="Home Image"
-                    layout="responsive"
-                    objectFit="contain"
-                    height="100%"
-                    width="100%"
-                    priority
-                  /> */}
-                </Stack>
-              </Fade>
+              <ReactCursorPosition>
+                <DoorSection />
+              </ReactCursorPosition>
             </Grid>
           </Hidden>
         </Grid>

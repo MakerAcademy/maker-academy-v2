@@ -10,7 +10,7 @@ const heights = [222, 139, 222, 222, 310, 222, 222, 222];
 const Section5 = () => {
   return (
     <Box sx={{ my: 10, position: "relative" }}>
-      <img
+      {/* <img
         loading="lazy"
         src={BlurSection4}
         alt="Blur 3"
@@ -22,7 +22,7 @@ const Section5 = () => {
           zIndex: -1,
           // filter: "blur(10px)",
         }}
-      />
+      /> */}
 
       <Container
         maxWidth="lg"
@@ -60,7 +60,7 @@ const Section5 = () => {
                   sx={{
                     height,
                     borderRadius: "24px",
-                    boxShadow: "10px 12px 141px rgba(126, 129, 164, 0.2)",
+                    // boxShadow: "10px 12px 141px rgba(126, 129, 164, 0.2)",
                     p: 3,
                   }}
                 >

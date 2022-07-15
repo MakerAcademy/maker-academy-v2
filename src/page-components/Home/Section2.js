@@ -53,6 +53,7 @@ const ServiceCard = ({
   delay = 0,
 }) => {
   const theme = useTheme();
+  const isDark = theme.palette.mode === "dark";
 
   return (
     <Box sx={{ height: "100%" }}>
@@ -69,7 +70,9 @@ const ServiceCard = ({
             height: "100%",
             p: { xs: 3, md: 5 },
             borderRadius: 3,
-            boxShadow: "10px 12px 80px rgba(126, 129, 164, 0.2)",
+            boxShadow: isDark
+              ? "10px 12px 80px rgba(126, 129, 164, 0)"
+              : "10px 12px 80px rgba(126, 129, 164, 0.2)",
             background: theme.palette.background.gradient1,
           }}
         >
