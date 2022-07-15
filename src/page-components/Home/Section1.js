@@ -1,7 +1,6 @@
 import GreenButton from "@components/buttons/GreenButton";
 import Title from "@components/Title";
 import { NAVBAR_HEIGHT_MOBILE } from "@constants/";
-import { useMousePosition } from "@hooks/useMousePosition";
 import {
   Box,
   Container,
