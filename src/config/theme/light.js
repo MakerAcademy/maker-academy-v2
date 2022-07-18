@@ -20,6 +20,18 @@ export const lightTheme = {
         "linear-gradient(335deg, rgba(245,252,239,1) 13%, rgba(250,255,247,1) 38%, rgba(255,255,255,1) 100%)",
     },
   },
+  components: {
+    MuiFilledInput: {
+      styleOverrides: {
+        input: {
+          fontSize: "1rem",
+          // "&::placeholder": {
+          //   color: "red",
+          // },
+        },
+      },
+    },
+  },
   typography,
   breakpoints,
 };

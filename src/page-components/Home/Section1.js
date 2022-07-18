@@ -102,7 +102,6 @@ const DoorSection = (props) => {
 
 const Section1 = () => {
   const theme = useTheme();
-  // const { x, y } = useMousePosition();
 
   return (
     <Box

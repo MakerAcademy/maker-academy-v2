@@ -1,45 +1,26 @@
-import { useAppDispatch, useAppSelector } from "@hooks/useRedux";
-import { Container } from "@mui/material";
-import { fetchContentData } from "@redux/slices/contentSlice";
-import { useEffect } from "react";
+import Title from "@components/Title";
+import { Box, Container } from "@mui/material";
+import ContentCards from "@page-components/Content/ContentCards";
+import FilterMenu from "@page-components/Content/FilterMenu";
 
 const Content = (props) => {
-  const {
-    content,
-    filter,
-    loading,
-    order,
-    pageSize,
-    searchTerm,
-    firstVisible,
-    empty,
-    lastVisible,
-  } = useAppSelector((state) => state.content);
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(fetchContentData());
-  }, []);
-
-  const fetchMorePosts = () => {
-    dispatch(fetchContentData({ merge: true }));
-  };
-
   return (
-    <Container sx={{ my: 10 }}>
-      {content?.length &&
-        content.map(({ contentType, title, id }, i) => (
-          <p key={id}>
-            {i}: {title} {contentType} {id}
-          </p>
-        ))}
+    <Box sx={{ py: { xs: 5, md: 7 } }}>
+      <Container sx={{ mb: { xs: 3, md: 5 } }}>
+        <Title
+          variant={{ xs: "h4", md: "h3" }}
+          sx={{ fontWeight: "600!important" }}
+        >
+          Explore the Academy
+        </Title>
+      </Container>
 
-      {loading && <h1> Loading... </h1>}
-      {!loading && !empty && (
-        <button onClick={fetchMorePosts}>Fetch more Posts</button>
-      )}
-      {empty && <h1> There are no more data </h1>}
-    </Container>
+      <FilterMenu />
+
+      <Container sx={{ my: 7, minHeight: "40vh" }}>
+        <ContentCards />
+      </Container>
+    </Box>
   );
 };
 

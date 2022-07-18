@@ -21,6 +21,18 @@ export const darkTheme = {
         "linear-gradient(87deg, rgba(46,48,53,1) 0%, rgba(46,48,53,1) 46%, rgba(49,52,58,1) 100%)",
     },
   },
+  components: {
+    MuiFilledInput: {
+      styleOverrides: {
+        input: {
+          fontSize: "1rem",
+          // "&::placeholder": {
+          //   color: "red",
+          // },
+        },
+      },
+    },
+  },
   typography,
   breakpoints,
 };

@@ -38,7 +38,16 @@ export const ASSESSMENT_QUESTION_TYPES = [
   // "file",
 ];
 
-export const BRAND = ["Maker Academy", "Meta Analysis"];
+export const BRANDS = ["Maker Academy", "Meta Analysis"];
+
+export const CONTENT_CATEGORIES = [
+  "makerdao",
+  "academy",
+  "defi",
+  "dai",
+  "blockchain",
+  "crypto",
+];
 
 export const DASHBOARD_BREADCRUMBS = {
   "/app": "dashbaord",

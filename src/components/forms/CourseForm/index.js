@@ -3,7 +3,7 @@ import DashboardPaper from "@components/DashboardPaper";
 import FormCheckbox from "@components/formFields/FormCheckbox";
 import FormSelectField from "@components/formFields/FormSelectField";
 import FormTextField from "@components/formFields/FormTextField";
-import { BRAND, CONTENT_DIFFICULTY_LEVELS } from "@constants/";
+import { BRANDS, CONTENT_DIFFICULTY_LEVELS } from "@constants/";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Divider, Paper, Stack, Typography } from "@mui/material";
 import { cleanObject } from "@utils/helpers";

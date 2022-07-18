@@ -46,6 +46,9 @@ const themeTypography = {
     fontWeight: 800,
     lineHeight: 1.2,
   },
+  button: {
+    textTransform: "none",
+  },
 };
 
 export default themeTypography;
