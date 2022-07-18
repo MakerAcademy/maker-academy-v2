@@ -1,12 +1,9 @@
 import GreenButton from "@components/buttons/GreenButton";
-import DashboardPaper from "@components/DashboardPaper";
-import FormDropzone from "@components/FormFields/FormDropzone";
-import FormTextField from "@components/FormFields/FormTextField";
+import FormTextField from "@components/formFields/FormTextField";
 import Title from "@components/Title";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Box, Grid, Stack, Typography, useTheme } from "@mui/material";
+import { Grid, Stack, Typography, useTheme } from "@mui/material";
 import { cleanObject } from "@utils/helpers";
-import React from "react";
 import { useForm, useWatch } from "react-hook-form";
 import * as Yup from "yup";
 

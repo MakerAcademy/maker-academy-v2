@@ -1,7 +1,6 @@
 import GreenButton from "@components/buttons/GreenButton";
-import FormDropzone from "@components/FormFields/FormDropzone";
-import FormTextField from "@components/FormFields/FormTextField";
-import Title from "@components/Title";
+import FormDropzone from "@components/formFields/FormDropzone";
+import FormTextField from "@components/formFields/FormTextField";
 import { yupResolver } from "@hookform/resolvers/yup";
 import {
   Avatar,
