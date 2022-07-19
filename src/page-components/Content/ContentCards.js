@@ -36,6 +36,8 @@ const ContentCards = () => {
         author: query.author,
         categories: query.categories?.split(",") || [],
         difficulty: query.difficulty,
+        category: query.category,
+        searchTerm: query?.searchTerm,
         limit: 10,
       })
     );

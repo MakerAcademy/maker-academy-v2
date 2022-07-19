@@ -20,6 +20,16 @@ export const submitCourse = async (cid, data = {}) => {
     };
     const docRes = await setDoc(docRef, docPayload);
 
+    //searchable term
+    let _searchTerm = `${data?.title || ""} ${data?.brand || ""} ${
+      data?.shortDescription || ""
+    } ${data?.level || ""} ${data?.category || ""}`
+      ?.toLowerCase()
+      ?.split(" ");
+
+    //remove duplicate words
+    _searchTerm = Array.from(new Set(_searchTerm)).filter(Boolean);
+
     // new content
     const contentRef = doc(collection(db, "content"));
     const contentPayload = {
@@ -35,6 +45,7 @@ export const submitCourse = async (cid, data = {}) => {
       timestamp: serverTimestamp(),
       private: !!data?.private,
       brand: data?.brand,
+      searchTerm: _searchTerm,
     };
     const contentRes = await setDoc(contentRef, cleanObject(contentPayload));
 

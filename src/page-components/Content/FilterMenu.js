@@ -22,9 +22,10 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
+import { createSlug } from "@utils/markdown";
 import useTranslation from "next-translate/useTranslation";
 import Router, { useRouter } from "next/router";
-import { useReducer, useState } from "react";
+import { useEffect, useReducer, useState } from "react";
 
 const typeBtnCommonStyles = {
   color: "inherit",
@@ -34,7 +35,7 @@ const typeBtnCommonStyles = {
   borderRadius: "12px",
 };
 
-const StyledSearch = () => {
+const StyledSearch = ({ value, dispatch }) => {
   const [isActive, setIsActive] = useState(false);
 
   //   if (!isActive) {
@@ -73,6 +74,14 @@ const StyledSearch = () => {
         variant="filled"
         size="small"
         placeholder="Search"
+        value={value}
+        onChange={(e) => {
+          dispatch({
+            type: "CHANGE",
+            field: "searchTerm",
+            payload: e.target.value,
+          });
+        }}
         sx={(theme) => ({
           ml: 1,
           width: isActive ? 350 : 120,
@@ -156,6 +165,7 @@ const initialFilters = (query) => {
       difficulty: query.difficulty,
       author: query.author,
       searchTerm: query.searchTerm || "",
+      category: query.category || "",
     };
   }
 
@@ -165,6 +175,7 @@ const initialFilters = (query) => {
     difficulty: null,
     author: null,
     searchTerm: "",
+    category: "",
   };
 };
 
@@ -214,34 +225,53 @@ const FilterMenu = () => {
   };
 
   const handleApplyFilter = (_type) => {
-    const { contentType, categories, difficulty, author, searchTerm } = filters;
+    const {
+      contentType,
+      categories,
+      category,
+      difficulty,
+      author,
+      searchTerm,
+    } = filters;
     let _url = "/content";
 
     // Type
     if (!!_type && _type !== "all") {
       const _start = _url.endsWith("/content") ? "?" : "&";
-      _url += `${_start}contentType=${_type}`;
+      _url += `${_start}contentType=${createSlug(_type)}`;
     } else if (!!contentType && contentType !== "all") {
       const _start = _url.endsWith("/content") ? "?" : "&";
-      _url += `${_start}contentType=${contentType}`;
+      _url += `${_start}contentType=${createSlug(contentType)}`;
     }
 
     // Categories
-    if (categories?.length) {
+    if (categories?.length && !searchTerm) {
       const _start = _url.endsWith("/content") ? "?" : "&";
-      _url += `${_start}categories=${categories.join("%2C")}`;
+      _url += `${_start}categories=${createSlug(categories.join("%2C"))}`;
     }
 
     // Difficulty
     if (difficulty) {
       const _start = _url.endsWith("/content") ? "?" : "&";
-      _url += `${_start}difficulty=${difficulty}`;
+      _url += `${_start}difficulty=${createSlug(difficulty)}`;
     }
 
     // Author
     if (author) {
       const _start = _url.endsWith("/content") ? "?" : "&";
-      _url += `${_start}author=${author}`;
+      _url += `${_start}author=${createSlug(author)}`;
+    }
+
+    // Search Term
+    if (searchTerm) {
+      const _start = _url.endsWith("/content") ? "?" : "&";
+      _url += `${_start}searchTerm=${createSlug(searchTerm)}`;
+    }
+
+    // Category
+    if (category && searchTerm) {
+      const _start = _url.endsWith("/content") ? "?" : "&";
+      _url += `${_start}category=${createSlug(category)}`;
     }
 
     Router.push(_url);
@@ -317,7 +347,10 @@ const FilterMenu = () => {
               Courses
             </Button>
 
-            <StyledSearch />
+            <StyledSearch
+              value={filters?.searchTerm || ""}
+              dispatch={dispatch}
+            />
           </Stack>
 
           {/* Right side */}
@@ -348,17 +381,33 @@ const FilterMenu = () => {
                 Categories:
               </Typography>
 
-              <Stack direction="row" flexWrap="wrap">
-                {CONTENT_CATEGORIES.map((item, i) => (
-                  <StyledChip
-                    name="categories"
-                    label={item}
-                    key={i}
-                    filters={filters?.categories}
-                    dispatch={dispatch}
-                  />
-                ))}
-              </Stack>
+              {filters?.searchTerm ? (
+                <Stack direction="row" flexWrap="wrap">
+                  {CONTENT_CATEGORIES.map((item, i) => (
+                    <StyledChip
+                      name="category"
+                      label={item}
+                      key={i}
+                      filters={filters?.category}
+                      dispatch={dispatch}
+                      toggle
+                    />
+                  ))}
+                </Stack>
+              ) : (
+                <Stack direction="row" flexWrap="wrap">
+                  {CONTENT_CATEGORIES.map((item, i) => (
+                    <StyledChip
+                      name="categories"
+                      label={item}
+                      key={i}
+                      filters={filters?.categories}
+                      dispatch={dispatch}
+                      toggle={!!filters?.searchTerm}
+                    />
+                  ))}
+                </Stack>
+              )}
             </Grid>
 
             {/* Difficulty */}
@@ -409,7 +458,7 @@ const FilterMenu = () => {
             spacing={2}
             sx={{ pb: 1 }}
           >
-            <GreenButton size="small" onClick={handleApplyFilter}>
+            <GreenButton size="small" onClick={() => handleApplyFilter()}>
               Apply Filter
             </GreenButton>
 

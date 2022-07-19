@@ -19,11 +19,13 @@ export const getContent = async ({
   limit: _limit,
   startAfter: _startAfter,
   author,
+  category,
   categories,
   difficulty,
   showPrivate,
   hideAssessments,
   contentType,
+  searchTerm,
 }) => {
   try {
     const docsRef = collection(db, "content");
@@ -35,12 +37,19 @@ export const getContent = async ({
     if (author) queryConstraints.push(where("author", "==", author));
     if (contentType)
       queryConstraints.push(where("contentType", "==", contentType));
-    if (categories?.length)
+    if (categories?.length && !searchTerm)
       queryConstraints.push(where("category", "in", categories));
+
     if (difficulty) queryConstraints.push(where("level", "==", difficulty));
     if (!showPrivate) queryConstraints.push(where("private", "==", false));
     if (hideAssessments)
       queryConstraints.push(where("contentType", "!=", "assessment"));
+    if (searchTerm) {
+      const _term = searchTerm?.toLowerCase()?.trim()?.split(" ");
+      queryConstraints.push(where("searchTerm", "array-contains-any", _term));
+    }
+    if (category && searchTerm)
+      queryConstraints.push(where("category", "==", category));
 
     const q = query(docsRef, orderBy(_sort, _order), ...queryConstraints);
 
