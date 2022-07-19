@@ -1,4 +1,5 @@
 import { db } from "@config/firebase";
+import { cleanObject } from "@utils/helpers";
 import {
   setDoc,
   collection,
@@ -30,7 +31,6 @@ export const submitDocument = async (cid, data = {}) => {
       author: cid,
       published: docRef.id,
       id: contentRef.id,
-      private: !!data.private,
       contentType: "document",
       likes: [],
       views: 0,
@@ -38,8 +38,10 @@ export const submitDocument = async (cid, data = {}) => {
       editRequests: [],
       status: "pending",
       timestamp: serverTimestamp(),
+      private: !!data?.private,
+      brand: data?.brand,
     };
-    const contentRes = await setDoc(contentRef, contentPayload);
+    const contentRes = await setDoc(contentRef, cleanObject(contentPayload));
 
     return { success: true, payload: { ...data, id: contentRef.id } };
   } catch (error) {

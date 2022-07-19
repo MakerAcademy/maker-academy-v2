@@ -15,7 +15,7 @@ import * as Yup from "yup";
 const DocumentForm = ({
   handleSubmit: propsHandleSubmit,
   edit,
-  values = {},
+  values = { private: false },
   user,
 }) => {
   const [disabled, setDisabled] = useState(false);

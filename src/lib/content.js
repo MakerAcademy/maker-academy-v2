@@ -19,17 +19,26 @@ export const getContent = async ({
   limit: _limit,
   startAfter: _startAfter,
   author,
-  hidePrivate,
+  categories,
+  difficulty,
+  showPrivate,
   hideAssessments,
+  contentType,
 }) => {
   try {
     const docsRef = collection(db, "content");
 
     const queryConstraints = [];
+    queryConstraints.push(where("status", "==", "published"));
     if (_startAfter) queryConstraints.push(startAfter(_startAfter.timestamp));
     if (_limit) queryConstraints.push(limit(_limit));
     if (author) queryConstraints.push(where("author", "==", author));
-    if (hidePrivate) queryConstraints.push(where("private", "!=", true));
+    if (contentType)
+      queryConstraints.push(where("contentType", "==", contentType));
+    if (categories?.length)
+      queryConstraints.push(where("category", "in", categories));
+    if (difficulty) queryConstraints.push(where("level", "==", difficulty));
+    if (!showPrivate) queryConstraints.push(where("private", "==", false));
     if (hideAssessments)
       queryConstraints.push(where("contentType", "!=", "assessment"));
 

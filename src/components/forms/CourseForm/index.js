@@ -16,7 +16,7 @@ import CourseCarriculum from "./Carriculum";
 const CourseForm = ({
   handleSubmit: propsHandleSubmit,
   edit,
-  values = {},
+  values = { private: false },
   user,
 }) => {
   const [disabled, setDisabled] = useState(false);

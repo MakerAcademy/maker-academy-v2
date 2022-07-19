@@ -1,3 +1,4 @@
+import GreenButton from "@components/buttons/GreenButton";
 import {
   BRANDS,
   CONTENT_CATEGORIES,
@@ -22,17 +23,40 @@ import {
   useTheme,
 } from "@mui/material";
 import useTranslation from "next-translate/useTranslation";
-import { useState } from "react";
+import Router, { useRouter } from "next/router";
+import { useReducer, useState } from "react";
 
 const typeBtnCommonStyles = {
   color: "inherit",
   height: 40,
   px: 2,
-  fontSize: 14,
+  fontSize: "1rem",
   borderRadius: "12px",
 };
 
 const StyledSearch = () => {
+  const [isActive, setIsActive] = useState(false);
+
+  //   if (!isActive) {
+  //     return (
+  //       <Button
+  //         onClick={() => setIsActive(true)}
+  //         sx={(theme) => ({
+  //           width: 40,
+  //           height: 40,
+  //           minWidth: 40,
+  //           backgroundColor: theme.palette.primary.grey1,
+
+  //           color: "inherit",
+  //           borderRadius: "12px",
+  //           cursor: "pointer",
+  //         })}
+  //       >
+  //         <SearchIcon fontSize="small" />
+  //       </Button>
+  //     );
+  //   }
+
   return (
     <Box
       sx={{
@@ -50,13 +74,13 @@ const StyledSearch = () => {
         size="small"
         placeholder="Search"
         sx={(theme) => ({
-          m: 1,
-          width: "110px",
+          ml: 1,
+          width: isActive ? 350 : 120,
           height: 40,
           transition: theme.transitions.create("width"),
-          "& input::placeholder": {
-            fontSize: 14,
-          },
+          //   "& input::placeholder": {
+          //     fontSize: "1rem",
+          //   },
         })}
         InputProps={{
           disableUnderline: true,
@@ -71,7 +95,20 @@ const StyledSearch = () => {
   );
 };
 
-const StyledChip = ({ label, selected }) => {
+const StyledChip = ({ name, label, filters, dispatch, toggle }) => {
+  const { query } = useRouter();
+
+  //   console.log(filters);
+  const selected = filters?.includes?.(label) || filters === label;
+
+  const handleClick = () => {
+    dispatch({
+      type: toggle ? "TOGGLE" : selected ? "REMOVE" : "ADD",
+      field: name,
+      payload: label,
+    });
+  };
+
   return (
     <Box
       sx={{
@@ -82,6 +119,7 @@ const StyledChip = ({ label, selected }) => {
         cursor: "pointer",
         "& :hover": { backgroundColor: "primary.grey1" },
       }}
+      onClick={handleClick}
     >
       <Stack
         direction="row"
@@ -89,10 +127,16 @@ const StyledChip = ({ label, selected }) => {
         spacing={0.5}
         sx={{
           px: 1,
-          py: 0.5,
+          py: 0.7,
         }}
       >
-        <Typography variant="body2">{label}</Typography>
+        <Typography
+          sx={{
+            fontSize: "1rem",
+          }}
+        >
+          {label}
+        </Typography>
 
         {selected ? (
           <DoneIcon sx={{ fontSize: 16 }} />
@@ -104,14 +148,121 @@ const StyledChip = ({ label, selected }) => {
   );
 };
 
+const initialFilters = (query) => {
+  if (query) {
+    return {
+      contentType: query.contentType || "all",
+      categories: query.categories?.split(",") || [],
+      difficulty: query.difficulty,
+      author: query.author,
+      searchTerm: query.searchTerm || "",
+    };
+  }
+
+  return {
+    contentType: "all",
+    categories: [],
+    difficulty: null,
+    author: null,
+    searchTerm: "",
+  };
+};
+
+const reducer = (state, action) => {
+  const _key = action.field;
+
+  switch (action.type) {
+    case "ADD":
+      return {
+        ...state,
+        [_key]: [...state[_key], action.payload],
+      };
+    case "REMOVE":
+      return {
+        ...state,
+        [_key]: state[_key].filter((i) => i !== action.payload),
+      };
+    case "CHANGE":
+      return {
+        ...state,
+        [action.field]: action.payload,
+      };
+    case "TOGGLE":
+      return {
+        ...state,
+        [action.field]:
+          state[action.field] === action.payload ? null : action.payload,
+      };
+    case "RESET":
+      return initialFilters();
+
+    default:
+      return state;
+  }
+};
+
 const FilterMenu = () => {
   const theme = useTheme();
+  const { query } = useRouter();
+  const [filters, dispatch] = useReducer(reducer, initialFilters(query));
   const [filterOpen, setFilterOpen] = useState(false);
 
   const { t } = useTranslation();
 
   const triggerFilterDrawer = () => {
     setFilterOpen(!filterOpen);
+  };
+
+  const handleApplyFilter = (_type) => {
+    const { contentType, categories, difficulty, author, searchTerm } = filters;
+    let _url = "/content";
+
+    // Type
+    if (!!_type && _type !== "all") {
+      const _start = _url.endsWith("/content") ? "?" : "&";
+      _url += `${_start}contentType=${_type}`;
+    } else if (!!contentType && contentType !== "all") {
+      const _start = _url.endsWith("/content") ? "?" : "&";
+      _url += `${_start}contentType=${contentType}`;
+    }
+
+    // Categories
+    if (categories?.length) {
+      const _start = _url.endsWith("/content") ? "?" : "&";
+      _url += `${_start}categories=${categories.join("%2C")}`;
+    }
+
+    // Difficulty
+    if (difficulty) {
+      const _start = _url.endsWith("/content") ? "?" : "&";
+      _url += `${_start}difficulty=${difficulty}`;
+    }
+
+    // Author
+    if (author) {
+      const _start = _url.endsWith("/content") ? "?" : "&";
+      _url += `${_start}author=${author}`;
+    }
+
+    Router.push(_url);
+  };
+
+  const handleTypeChange = (_type) => {
+    // dispatch({
+    //   type: "CHANGE",
+    //   field: "contentType",
+    //   payload: _type == "all" ? null : _type,
+    // });
+
+    if (!filterOpen) {
+      handleApplyFilter(_type);
+    } else {
+      dispatch({
+        type: "CHANGE",
+        field: "contentType",
+        payload: _type == "all" ? null : _type,
+      });
+    }
   };
 
   return (
@@ -130,8 +281,12 @@ const FilterMenu = () => {
             <Button
               sx={{
                 ...typeBtnCommonStyles,
-                backgroundColor: theme.palette.primary.main,
+                backgroundColor:
+                  filters?.contentType === "all" || !filters?.contentType
+                    ? theme.palette.primary.main
+                    : theme.palette.primary.grey1,
               }}
+              onClick={() => handleTypeChange("all")}
             >
               All
             </Button>
@@ -139,8 +294,12 @@ const FilterMenu = () => {
             <Button
               sx={{
                 ...typeBtnCommonStyles,
-                backgroundColor: theme.palette.primary.grey1,
+                backgroundColor:
+                  filters?.contentType === "documents"
+                    ? theme.palette.primary.main
+                    : theme.palette.primary.grey1,
               }}
+              onClick={() => handleTypeChange("documents")}
             >
               Articles
             </Button>
@@ -148,8 +307,12 @@ const FilterMenu = () => {
             <Button
               sx={{
                 ...typeBtnCommonStyles,
-                backgroundColor: theme.palette.primary.grey1,
+                backgroundColor:
+                  filters?.contentType === "courses"
+                    ? theme.palette.primary.main
+                    : theme.palette.primary.grey1,
               }}
+              onClick={() => handleTypeChange("courses")}
             >
               Courses
             </Button>
@@ -187,7 +350,13 @@ const FilterMenu = () => {
 
               <Stack direction="row" flexWrap="wrap">
                 {CONTENT_CATEGORIES.map((item, i) => (
-                  <StyledChip label={item} key={i} />
+                  <StyledChip
+                    name="categories"
+                    label={item}
+                    key={i}
+                    filters={filters?.categories}
+                    dispatch={dispatch}
+                  />
                 ))}
               </Stack>
             </Grid>
@@ -200,7 +369,14 @@ const FilterMenu = () => {
 
               <Stack direction="row" flexWrap="wrap">
                 {CONTENT_DIFFICULTY_LEVELS.map((item, i) => (
-                  <StyledChip label={item} key={i} />
+                  <StyledChip
+                    name="difficulty"
+                    label={item}
+                    key={i}
+                    filters={filters?.difficulty}
+                    dispatch={dispatch}
+                    toggle
+                  />
                 ))}
               </Stack>
             </Grid>
@@ -213,11 +389,38 @@ const FilterMenu = () => {
 
               <Stack direction="row" flexWrap="wrap">
                 {BRANDS.map((item, i) => (
-                  <StyledChip label={item} key={i} />
+                  <StyledChip
+                    name="author"
+                    label={item}
+                    key={i}
+                    filters={filters?.author}
+                    dispatch={dispatch}
+                    toggle
+                  />
                 ))}
               </Stack>
             </Grid>
           </Grid>
+
+          <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent="flex-end"
+            spacing={2}
+            sx={{ pb: 1 }}
+          >
+            <GreenButton size="small" onClick={handleApplyFilter}>
+              Apply Filter
+            </GreenButton>
+
+            <GreenButton
+              variant="outlined"
+              size="small"
+              onClick={() => dispatch({ type: "RESET" })}
+            >
+              Clear Filter
+            </GreenButton>
+          </Stack>
         </Collapse>
       </Container>
     </Box>

@@ -56,9 +56,9 @@ const StyledRibbon = styled(Box)(({ theme }) => ({
 
 const ContentCard = ({
   _id,
-  thumbnail,
+  thumbnail = "https://prod-discovery.edx-cdn.org/media/course/image/0e575a39-da1e-4e33-bb3b-e96cc6ffc58e-8372a9a276c1.png",
   title,
-  subtitle,
+  shortDescription,
   username,
   topic,
   duration,
@@ -163,16 +163,6 @@ const ContentCard = ({
             />
           </Box>
 
-          {/* <Image
-            loader={() => thumbnail}
-            src={thumbnail}
-            alt={title}
-            width="100%"
-            height="100%"
-            layout="fill"
-            objectFit="cover"
-          /> */}
-
           {/* Brand */}
           {brand && <Badge text={brand} />}
         </Box>
@@ -181,23 +171,23 @@ const ContentCard = ({
         <CardContent sx={{ pt: 0 }}>
           <Title variant="h6">{title}</Title>
 
-          {subtitle && (
+          {shortDescription && (
             <Typography variant="body2" sx={{ mt: 2 }}>
-              {subtitle}
+              {shortDescription}
             </Typography>
           )}
 
           <Stack
             direction="row"
-            spacing={2}
+            spacing={1}
             justifyContent="space-between"
             alignItems="center"
-            sx={{ mt: 2 }}
+            sx={{ mt: 2, width: "100%" }}
             flexWrap="wrap"
           >
             {/* Type */}
-            {contentType === "documents" ? (
-              <Stack direction="row" alignItems="center" spacing={1}>
+            {contentType === "document" ? (
+              <Stack direction="row" alignItems="center" spacing={0.5}>
                 <FeedOutlinedIcon sx={{ fontSize: 20 }} />
                 <Typography variant="body2" sx={{ fontSize: 14 }}>
                   Document
@@ -233,14 +223,6 @@ const ContentCard = ({
               </Typography>
             </Stack>
           </Stack>
-
-          <GreenButton
-            variant="outlined"
-            fullWidth
-            sx={{ mt: 3, borderRadius: "126px" }}
-          >
-            Start Course
-          </GreenButton>
         </CardContent>
       </Card>
     </Link>

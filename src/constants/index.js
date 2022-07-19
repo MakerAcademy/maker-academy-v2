@@ -38,7 +38,7 @@ export const ASSESSMENT_QUESTION_TYPES = [
   // "file",
 ];
 
-export const BRANDS = ["Maker Academy", "Meta Analysis"];
+export const BRANDS = ["maker_academy", "meta_analysis"];
 
 export const CONTENT_CATEGORIES = [
   "makerdao",

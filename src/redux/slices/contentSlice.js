@@ -3,14 +3,14 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   content: [],
-  limit: 1,
+  limit: 5,
   loading: false,
   empty: false,
   firstVisible: null,
   lastVisible: null,
   searchTerm: "",
   sort: "timestamp",
-  order: "asc",
+  order: "desc",
 };
 
 export const fetchContentData = createAsyncThunk(
@@ -28,7 +28,6 @@ export const fetchContentData = createAsyncThunk(
       ...payload,
     });
 
-    console.log(res);
     const result = res;
 
     return { result, merge: !!payload?.merge };

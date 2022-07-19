@@ -4,7 +4,8 @@ import Title from "@components/Title";
 import { useAppDispatch, useAppSelector } from "@hooks/useRedux";
 import { Box, Button, Container, Grid, Stack } from "@mui/material";
 import { fetchContentData } from "@redux/slices/contentSlice";
-import { useEffect } from "react";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 const ContentCards = () => {
   const {
@@ -18,11 +19,27 @@ const ContentCards = () => {
     empty,
     lastVisible,
   } = useAppSelector((state) => state.content);
+
+  const { query } = useRouter();
+
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(fetchContentData());
-  }, []);
+    dispatch(
+      fetchContentData({
+        contentType:
+          query.contentType === "courses"
+            ? "course"
+            : query.contentType === "documents"
+            ? "document"
+            : null,
+        author: query.author,
+        categories: query.categories?.split(",") || [],
+        difficulty: query.difficulty,
+        limit: 10,
+      })
+    );
+  }, [query]);
 
   const fetchMorePosts = () => {
     dispatch(fetchContentData({ merge: true }));
@@ -31,9 +48,9 @@ const ContentCards = () => {
   return (
     <Box>
       <Grid container spacing={3}>
-        {content?.length &&
+        {content?.length > 0 &&
           content.map((item, i) => (
-            <Grid item key={i}>
+            <Grid item xs={12} sm={6} md={3} key={i}>
               <ContentCard {...item} />
             </Grid>
           ))}
