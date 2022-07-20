@@ -17,7 +17,7 @@ const buildRows = (data, t) => {
     thumbnail: item.thumbnail,
     contentType: t(item.contentType),
     title: item.title,
-    date: moment(item.timestamp.toDate()).format("MMM DD, YY - HH:mm"),
+    date: moment(item.timestamp?.toDate?.()).format("MMM DD, YY - HH:mm"),
     visibility: item.status,
     views: item.views,
     likes: item?.likes?.length || 0,

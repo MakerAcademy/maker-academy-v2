@@ -7,6 +7,7 @@ import { Box, Typography } from "@mui/material";
 import dynamic from "next/dynamic";
 import { useSnackbar } from "notistack";
 import Router from "next/router";
+import { cleanObject } from "@utils/helpers";
 
 const DocumentForm = dynamic(() => import("@forms/DocumentForm"), {
   ssr: false,
@@ -20,7 +21,7 @@ const NewDocument = ({ user, profile }) => {
       variant: "default",
     });
 
-    const res = await submitDocument(profile?.id, data)
+    const res = await submitDocument(profile?.id, cleanObject(data))
       .then(() => {
         closeSnackbar(_key);
         enqueueSnackbar("Success", {

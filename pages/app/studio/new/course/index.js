@@ -2,7 +2,9 @@ import Title from "@components/Title";
 import { withProtectedUser } from "@hoc/routes";
 import { submitCourse } from "@lib/course";
 import { Box, Container, Paper, Typography } from "@mui/material";
+import { cleanObject } from "@utils/helpers";
 import dynamic from "next/dynamic";
+import Router from "next/router";
 import { useSnackbar } from "notistack";
 
 const CourseForm = dynamic(() => import("@components/forms/CourseForm"), {
@@ -17,7 +19,7 @@ const NewCourse = ({ user, profile }) => {
       variant: "default",
     });
 
-    const res = await submitCourse(profile.id, data)
+    const res = await submitCourse(profile.id, cleanObject(data))
       .then(() => {
         closeSnackbar(_key);
         enqueueSnackbar("Success", {

@@ -43,3 +43,9 @@ export const buildGithubPdfLink = (user, repo, branch, pathToFile) => {
 
   return docsLink;
 };
+
+// Cut string with ...
+export const truncateString = (str, n) => {
+  if (!str) return null;
+  return str.length > n ? str.substr(0, n - 1) + "..." : str;
+};

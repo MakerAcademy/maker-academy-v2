@@ -14,7 +14,10 @@ const Document = ({ document }) => {
   return (
     <Box
       sx={{
-        background: "linear-gradient(90deg, rgba(0,0,0,0) 40%, #F4F6F7 60%)",
+        background:
+          theme.palette.mode === "dark"
+            ? "linear-gradient(90deg, rgba(0,0,0,0) 40%, #141518 60%)"
+            : "linear-gradient(90deg, rgba(0,0,0,0) 40%, #F4F6F7 60%)",
         pt: `${NAVBAR_HEIGHT_MOBILE}px`,
         [theme.breakpoints.up("md")]: {
           pt: `${NAVBAR_HEIGHT_DESKTOP}px`,

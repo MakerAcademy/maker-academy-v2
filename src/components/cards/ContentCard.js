@@ -15,6 +15,7 @@ import {
   Divider,
   Stack,
   styled,
+  Tooltip,
   Typography,
   useTheme,
 } from "@mui/material";
@@ -55,7 +56,7 @@ const StyledRibbon = styled(Box)(({ theme }) => ({
 }));
 
 const ContentCard = ({
-  _id,
+  id,
   thumbnail = "https://prod-discovery.edx-cdn.org/media/course/image/0e575a39-da1e-4e33-bb3b-e96cc6ffc58e-8372a9a276c1.png",
   title,
   shortDescription,
@@ -102,7 +103,7 @@ const ContentCard = ({
       <Box
         sx={{
           position: "absolute",
-          top: 30,
+          bottom: 20,
           left: 0,
           backgroundColor: "primary.main",
           py: 1,
@@ -120,10 +121,10 @@ const ContentCard = ({
 
   return (
     <Link
-      href={contentType === "documents" ? `/document/${_id}` : `/course/${_id}`}
+      href={contentType === "document" ? `/document/${id}` : `/course/${id}`}
       passHref
     >
-      <Card
+      <Stack
         elevation={0}
         sx={{
           borderRadius: "16px",
@@ -145,11 +146,10 @@ const ContentCard = ({
         onMouseEnter={(e) => setHover(e, true)}
         onMouseLeave={(e) => setHover(e, false)}
       >
-        {/* Image */}
-        <Box sx={{ position: "relative", height: 180, width: "100%" }}>
-          <Box
-            sx={{ position: "absolute", height: "100%", width: "100%", p: 2 }}
-          >
+        {/* Image container */}
+        <Box sx={{ position: "relative", height: 160, width: "100%" }}>
+          {/* Image */}
+          <Box sx={{ position: "absolute", height: "100%", width: "100%" }}>
             <img
               loading="lazy"
               src={thumbnail}
@@ -158,73 +158,101 @@ const ContentCard = ({
                 objectFit: "cover",
                 height: "100%",
                 width: "100%",
-                borderRadius: "16px",
+                borderTopRightRadius: "16px",
+                borderTopLeftRadius: "16px",
               }}
             />
           </Box>
 
           {/* Brand */}
-          {brand && <Badge text={brand} />}
+          {brand && brand !== "none" && <Badge text={brand} />}
         </Box>
 
         {/* Content */}
-        <CardContent sx={{ pt: 0 }}>
-          <Title variant="h6">{title}</Title>
-
-          {shortDescription && (
-            <Typography variant="body2" sx={{ mt: 2 }}>
-              {shortDescription}
+        <CardContent sx={{ flex: 1 }}>
+          <Stack spacing={2} sx={{ height: "100%" }}>
+            {/* Title */}
+            <Typography
+              sx={{ fontWeight: "500 !important", lineHeight: "25px" }}
+            >
+              {title}
             </Typography>
-          )}
 
-          <Stack
-            direction="row"
-            spacing={1}
-            justifyContent="space-between"
-            alignItems="center"
-            sx={{ mt: 2, width: "100%" }}
-            flexWrap="wrap"
-          >
-            {/* Type */}
-            {contentType === "document" ? (
-              <Stack direction="row" alignItems="center" spacing={0.5}>
-                <FeedOutlinedIcon sx={{ fontSize: 20 }} />
-                <Typography variant="body2" sx={{ fontSize: 14 }}>
-                  Document
-                </Typography>
-              </Stack>
-            ) : (
-              <Stack direction="row" alignItems="center" spacing={0.5}>
-                <SubscriptionsOutlinedIcon sx={{ fontSize: 20 }} />
-                <Typography variant="body2" sx={{ fontSize: 14 }}>
-                  Course
-                </Typography>
-              </Stack>
+            {/* Description */}
+            {shortDescription && (
+              <Box sx={{ flex: 1 }}>
+                <Tooltip
+                  title={shortDescription.length > 55 ? shortDescription : ""}
+                  placement="right"
+                >
+                  <Typography
+                    variant="body2"
+                    sx={{
+                      maxHeight: 44,
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      display: "-webkit-box",
+                      lineClamp: 2,
+                      WebkitLineClamp: 2,
+                      WebkitBoxOrient: "vertical",
+                    }}
+                  >
+                    {shortDescription}
+                  </Typography>
+                </Tooltip>
+              </Box>
             )}
 
-            {/* Duration */}
-            <Stack direction="row" alignItems="center" spacing={1}>
-              <AccessTimeIcon sx={{ fontSize: 20 }} />
-              <Typography variant="body2" sx={{ fontSize: 14 }}>
-                {duration} min
-              </Typography>
-            </Stack>
-
-            {/* Level */}
+            {/* Meta data */}
             <Stack
               direction="row"
+              spacing={1}
+              justifyContent="space-between"
               alignItems="center"
-              spacing={0.5}
-              sx={{ color: yellow[900] }}
+              sx={{ mt: 2, width: "100%" }}
+              flexWrap="wrap"
             >
-              <AssessmentOutlinedIcon sx={{ fontSize: 20 }} />
-              <Typography variant="body2" sx={{ fontSize: 14 }}>
-                {level}
-              </Typography>
+              {/* Type */}
+              {contentType === "document" ? (
+                <Stack direction="row" alignItems="center" spacing={0.2}>
+                  <FeedOutlinedIcon sx={{ fontSize: 18 }} />
+                  <Typography variant="body2" sx={{ fontSize: 14 }}>
+                    Document
+                  </Typography>
+                </Stack>
+              ) : (
+                <Stack direction="row" alignItems="center" spacing={0.2}>
+                  <SubscriptionsOutlinedIcon sx={{ fontSize: 18 }} />
+                  <Typography variant="body2" sx={{ fontSize: 14 }}>
+                    Course
+                  </Typography>
+                </Stack>
+              )}
+
+              {/* Duration */}
+              <Stack direction="row" alignItems="center" spacing={0.2}>
+                <AccessTimeIcon sx={{ fontSize: 18 }} />
+                <Typography variant="body2" sx={{ fontSize: 14 }}>
+                  {duration} min
+                </Typography>
+              </Stack>
+
+              {/* Level */}
+              <Stack
+                direction="row"
+                alignItems="center"
+                spacing={0.5}
+                sx={{ color: yellow[900] }}
+              >
+                <AssessmentOutlinedIcon sx={{ fontSize: 20 }} />
+                <Typography variant="body2" sx={{ fontSize: 14 }}>
+                  {level}
+                </Typography>
+              </Stack>
             </Stack>
           </Stack>
         </CardContent>
-      </Card>
+      </Stack>
     </Link>
   );
 };

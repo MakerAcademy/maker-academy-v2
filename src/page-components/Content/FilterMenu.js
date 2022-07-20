@@ -297,7 +297,7 @@ const FilterMenu = () => {
 
   return (
     <Box sx={{ py: 2, background: theme.palette.background.gradient1 }}>
-      <Container>
+      <Container maxWidth="xl">
         <Stack
           direction="row"
           alignItems="center"

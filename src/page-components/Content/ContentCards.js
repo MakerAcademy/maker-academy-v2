@@ -49,7 +49,7 @@ const ContentCards = () => {
 
   return (
     <Box>
-      <Grid container spacing={3}>
+      <Grid container spacing={4}>
         {content?.length > 0 &&
           content.map((item, i) => (
             <Grid item xs={12} sm={6} md={3} key={i}>

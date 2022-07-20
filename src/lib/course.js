@@ -25,7 +25,9 @@ export const submitCourse = async (cid, data = {}) => {
       data?.shortDescription || ""
     } ${data?.level || ""} ${data?.category || ""}`
       ?.toLowerCase()
-      ?.split(" ");
+      ?.split(" ")
+      ?.replaceAll("(", "")
+      ?.replaceAll(")", "");
 
     //remove duplicate words
     _searchTerm = Array.from(new Set(_searchTerm)).filter(Boolean);
@@ -44,7 +46,7 @@ export const submitCourse = async (cid, data = {}) => {
       status: "pending",
       timestamp: serverTimestamp(),
       private: !!data?.private,
-      brand: data?.brand,
+      brand: data?.brand || "none",
       searchTerm: _searchTerm,
     };
     const contentRes = await setDoc(contentRef, cleanObject(contentPayload));

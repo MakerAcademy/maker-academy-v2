@@ -3,6 +3,7 @@ import DashboardPaper from "@components/DashboardPaper";
 import FormCheckbox from "@components/formFields/FormCheckbox";
 import FormSelectField from "@components/formFields/FormSelectField";
 import FormTextField from "@components/formFields/FormTextField";
+import { CONTENT_CATEGORIES } from "@constants/";
 import { BRANDS, CONTENT_DIFFICULTY_LEVELS } from "@constants/";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Divider, Paper, Stack, Typography } from "@mui/material";
@@ -105,12 +106,14 @@ const CourseForm = ({
               options={CONTENT_DIFFICULTY_LEVELS}
             />
 
-            <FormTextField
+            <FormSelectField
               name="category"
               label="Category"
               control={control}
-              fullWidth
               disabled={disabled}
+              options={CONTENT_CATEGORIES}
+              fullWidth={false}
+              sx={{ width: "100%", minWidth: 200 }}
             />
 
             <FormTextField
@@ -148,7 +151,7 @@ const CourseForm = ({
             label="Brand"
             control={control}
             disabled={disabled}
-            options={BRAND}
+            options={BRANDS}
             fullWidth={false}
             sx={{ minWidth: 200 }}
           />

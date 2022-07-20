@@ -58,12 +58,7 @@ const CourseBody = () => {
             sx={{
               position: "sticky",
               top: 20,
-              [theme.breakpoints.up("md")]: {
-                my: -20,
-              },
-              [theme.breakpoints.up("lg")]: {
-                my: -30,
-              },
+              
             }}
           >
             <CourseCard />

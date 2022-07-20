@@ -3,6 +3,7 @@ import FormCheckbox from "@components/formFields/FormCheckbox";
 import FormMarkdown from "@components/formFields/FormMarkdown";
 import FormSelectField from "@components/formFields/FormSelectField";
 import FormTextField from "@components/formFields/FormTextField";
+import { CONTENT_CATEGORIES } from "@constants/";
 import { BRANDS, CONTENT_DIFFICULTY_LEVELS } from "@constants/";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Box, Divider, Stack, Typography } from "@mui/material";
@@ -100,12 +101,14 @@ const DocumentForm = ({
             options={CONTENT_DIFFICULTY_LEVELS}
           />
 
-          <FormTextField
+          <FormSelectField
             name="category"
             label="Category"
             control={control}
-            fullWidth
             disabled={disabled}
+            options={CONTENT_CATEGORIES}
+            fullWidth={false}
+            sx={{ width: "100%", minWidth: 200 }}
           />
 
           <FormTextField
@@ -142,7 +145,7 @@ const DocumentForm = ({
             label="Brand"
             control={control}
             disabled={disabled}
-            options={BRAND}
+            options={BRANDS}
             fullWidth={false}
             sx={{ minWidth: 200 }}
           />
