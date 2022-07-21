@@ -22,6 +22,7 @@ const FormMarkdown = ({ name, control, sx = {}, label, ...props }) => {
         <Box
           sx={{
             minHeight: 400,
+            cursor: props.disabled ? "not-allowed" : "auto",
             [theme.breakpoints.up("xl")]: {
               minHeight: 600,
             },
@@ -46,7 +47,9 @@ const FormMarkdown = ({ name, control, sx = {}, label, ...props }) => {
             {...field}
             initialValue={field?.value}
             onChange={() => {
-              field.onChange(editor?.current?.editorInst?.getMarkdown?.());
+              props.disabled
+                ? null
+                : field.onChange(editor?.current?.editorInst?.getMarkdown?.());
             }}
             ref={editor}
           />

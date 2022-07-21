@@ -97,7 +97,7 @@ const buildColumns = (t) => {
           <GreenButton
             size="small"
             variant="outlined"
-            href={`/studio/edit/${params.row.contentType}/${params.id}`}
+            href={`/app/studio/edit/${params.row.contentType}/${params.id}`}
             target="_black"
             icon={<EditIcon sx={{ fontSize: 16 }} />}
           >

@@ -9,6 +9,9 @@ import {
   getDocs,
   query,
   where,
+  updateDoc,
+  arrayUnion,
+  arrayRemove,
 } from "firebase/firestore";
 
 export const submitDocument = async (cid, data = {}) => {
@@ -63,28 +66,38 @@ export const submitDocument = async (cid, data = {}) => {
   }
 };
 
-export const getFullDocument = async (cid) => {
-  const contentRef = doc(db, "content", cid);
-  const contentSnap = await getDoc(contentRef);
+export const getFullDocument = async (cid, seperate) => {
+  try {
+    const contentRef = doc(db, "content", cid);
+    const contentSnap = await getDoc(contentRef);
 
-  if (contentSnap.exists()) {
-    const contentData = contentSnap.data();
+    if (contentSnap.exists()) {
+      const contentData = contentSnap.data();
 
-    const docRef = doc(db, "documents", contentData.published);
-    const docSnap = await getDoc(docRef);
+      const docRef = doc(db, "documents", contentData.published);
+      const docSnap = await getDoc(docRef);
 
-    const docObj = {
-      ...docSnap.data(),
-      ...contentData,
-      timestamp: contentData.timestamp.toDate().toString(),
-    };
+      if (docSnap.exists()) {
+        const docObj = {
+          ...(seperate
+            ? {
+                document: {
+                  ...docSnap.data(),
+                  timestamp: contentData.timestamp.toDate().toString(),
+                },
+              }
+            : docSnap.data()),
+          ...contentData,
+          timestamp: contentData.timestamp.toDate().toString(),
+        };
 
-    if (docSnap.exists()) {
-      return docObj;
+        return docObj;
+      }
     }
+  } catch (error) {
+    console.log("cid", cid, "No such document!");
+    throw error;
   }
-
-  return console.log("cid", cid, "No such document!");
 };
 
 export const getDocument = async (cid) => {
@@ -131,5 +144,36 @@ export const getUserDocuments = async (uid) => {
   } catch (error) {
     console.log(error);
     return error;
+  }
+};
+
+export const likeDocument = async (contentId, cid) => {
+  console.log(contentId, cid);
+  try {
+    const _ref = doc(db, "content", contentId);
+
+    await updateDoc(_ref, {
+      likes: arrayUnion(cid),
+    });
+
+    return { success: true };
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const unlikeDocument = async (contentId, cid) => {
+  try {
+    const _ref = doc(db, "content", contentId);
+
+    await updateDoc(_ref, {
+      likes: arrayRemove(cid),
+    });
+
+    return { success: true };
+  } catch (error) {
+    console.log(error);
+    throw error;
   }
 };

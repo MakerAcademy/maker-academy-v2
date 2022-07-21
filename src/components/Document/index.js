@@ -1,9 +1,12 @@
 import ScrollSpy from "@components/ScrollSpy";
 import Title from "@components/Title";
 import { useAppSelector } from "@hooks/useRedux";
+import { listenOneContent } from "@lib/content";
 import DescriptionIcon from "@mui/icons-material/Description";
 import TimerIcon from "@mui/icons-material/Timer";
-import { Box, Container, Stack, Typography } from "@mui/material";
+import { Box, Container, Hidden, Stack, Typography } from "@mui/material";
+import DocumentBreadcrumbs from "@page-components/Document/DocBreadcrumbs";
+import DocMetadata from "@page-components/Document/DocMetadata";
 import {
   addChapters,
   createSlug,
@@ -28,7 +31,7 @@ const ContentDocument = ({ data = {} }) => {
   const uid = user?._id;
 
   var {
-    _id,
+    id,
     title,
     description,
     username,
@@ -43,6 +46,16 @@ const ContentDocument = ({ data = {} }) => {
     author,
     thumbnail = "https://thumbs.dreamstime.com/b/bitcoin-banner-golden-digital-currency-cryptocurrency-futuristic-money-technology-worldwide-network-concept-vector-206771631.jpg",
   } = document || {};
+
+  useEffect(() => {
+    const unsub = listenOneContent(id, (res) => {
+      setDocument((old) => ({ ...old, ...res }));
+    });
+
+    return () => {
+      unsub?.();
+    };
+  }, []);
 
   const liked = !!likes?.includes?.(uid);
 
@@ -67,48 +80,24 @@ const ContentDocument = ({ data = {} }) => {
     }
   }, [markdown]);
 
-  const triggerLike = async () => {
-    const res = await fetch(
-      `/api/documents?_id=${_id}&uid=${uid}&like=${!liked}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "Application/json",
-        },
-      }
-    )
-      .then((response) => {
-        if (response.ok) return response.json();
-        throw new Error("Something's wrong");
-      })
-      .then((data) => {
-        setDocument((old) => ({ ...old, likes: data.message.value.likes }));
-      });
-  };
-
-  const _temp = markdown
-    .replace(
-      "==box-grey==",
-      "<div style='background-color:lightgrey; padding: 1rem;'>"
-    )
-    .replace("==/box-grey==", "</div>");
-
   return (
     <Container maxWidth="xl">
       <Stack direction="row" spacing={5}>
-        {/* Left side scrollspy */}
-        {ids.length > 0 && (
-          <Box sx={{ py: 5 }}>
-            {/* <BackButton sx={{ mb: { xs: 1, md: 2 } }} /> */}
-            <ScrollSpy title="Table of Content" data={ids} />
-          </Box>
-        )}
+        <Hidden smDown>
+          {/* Left side scrollspy */}
+          {ids.length > 0 && (
+            <Box sx={{ py: 5 }}>
+              {/* <BackButton sx={{ mb: { xs: 1, md: 2 } }} /> */}
+              <ScrollSpy title="Table of Content" data={ids} />
+            </Box>
+          )}
+        </Hidden>
 
         {/* Right side content */}
         <Container sx={{ py: 5 }}>
           <Stack spacing={3}>
             {/* Breadcrumbs */}
-            <Typography>Breadcrumbs here</Typography>
+            <DocumentBreadcrumbs />
 
             {/* Image */}
             <Box
@@ -138,42 +127,7 @@ const ContentDocument = ({ data = {} }) => {
             <Typography>{description}</Typography>
 
             {/* Details */}
-            <Stack
-              direction={{ xs: "column", md: "row" }}
-              alignItems="center"
-              spacing={{ xs: 2, md: 3, lg: 4 }}
-            >
-              <Stack
-                direction="row"
-                alignItems="center"
-                spacing={0.5}
-                sx={{
-                  px: 1,
-                  py: 0.5,
-                  backgroundColor: "rgba(249,166,6,0.1)",
-                  color: "rgba(249,166,6)",
-                  borderRadius: 2,
-                }}
-              >
-                <DescriptionIcon sx={{ fontSize: 17 }} />
-                <Typography variant="body2">{level}</Typography>
-              </Stack>
-
-              <Typography variant="body2">
-                Published {moment(timestamp).format("ll")}
-              </Typography>
-
-              {updatedTimestamp && (
-                <Typography variant="body2">
-                  Updated {moment(updatedTimestamp).format("ll")}
-                </Typography>
-              )}
-
-              <Stack direction="row" alignItems="center" spacing={0.5}>
-                <TimerIcon sx={{ fontSize: 18 }} />
-                <Typography variant="body2">{duration} mins</Typography>
-              </Stack>
-            </Stack>
+            <DocMetadata {...document} />
 
             {/* Markdown Body */}
             <MarkdownBody markdown={markdown} />

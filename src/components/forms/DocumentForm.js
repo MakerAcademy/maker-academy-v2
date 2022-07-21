@@ -17,9 +17,17 @@ const DocumentForm = ({
   handleSubmit: propsHandleSubmit,
   edit,
   values = { private: false },
-  user,
+  editableFields,
 }) => {
   const [disabled, setDisabled] = useState(false);
+
+  const isEditable = (_name) => {
+    if (!editableFields?.length) return true;
+
+    if (editableFields?.includes(_name)) return true;
+
+    return false;
+  };
 
   const { t } = useTranslation("creator-studio");
 
@@ -68,7 +76,7 @@ const DocumentForm = ({
           label="Title"
           control={control}
           fullWidth
-          disabled={disabled}
+          disabled={!isEditable("title") || disabled}
         />
 
         <FormTextField
@@ -78,7 +86,7 @@ const DocumentForm = ({
           fullWidth
           multiline
           rows={2}
-          disabled={disabled}
+          disabled={!isEditable("shortDescription") || disabled}
         />
 
         <FormTextField
@@ -88,7 +96,7 @@ const DocumentForm = ({
           fullWidth
           multiline
           rows={5}
-          disabled={disabled}
+          disabled={!isEditable("description") || disabled}
         />
 
         <Stack direction="row" spacing={2}>
@@ -97,7 +105,7 @@ const DocumentForm = ({
             label="Level"
             control={control}
             fullWidth
-            disabled={disabled}
+            disabled={!isEditable("level") || disabled}
             options={CONTENT_DIFFICULTY_LEVELS}
           />
 
@@ -105,7 +113,7 @@ const DocumentForm = ({
             name="category"
             label="Category"
             control={control}
-            disabled={disabled}
+            disabled={!isEditable("category") || disabled}
             options={CONTENT_CATEGORIES}
             fullWidth={false}
             sx={{ width: "100%", minWidth: 200 }}
@@ -117,7 +125,7 @@ const DocumentForm = ({
             type="number"
             control={control}
             fullWidth
-            disabled={disabled}
+            disabled={!isEditable("duration") || disabled}
           />
         </Stack>
 
@@ -125,6 +133,7 @@ const DocumentForm = ({
           placeholder="Write your document content here..."
           name="markdown"
           control={control}
+          disabled={!isEditable("markdown") || disabled}
         />
 
         <Stack
@@ -138,13 +147,14 @@ const DocumentForm = ({
             control={control}
             options={["private"]}
             sx={{ width: "auto" }}
+            disabled={!isEditable("private") || disabled}
           />
 
           <FormSelectField
             name="brand"
             label="Brand"
             control={control}
-            disabled={disabled}
+            disabled={!isEditable("brand") || disabled}
             options={BRANDS}
             fullWidth={false}
             sx={{ minWidth: 200 }}

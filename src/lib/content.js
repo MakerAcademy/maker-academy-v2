@@ -9,6 +9,7 @@ import {
   where,
   updateDoc,
   doc,
+  onSnapshot,
 } from "firebase/firestore";
 import { getCourse } from "./course";
 import { getDocument } from "./document";
@@ -167,5 +168,20 @@ export const approveRejectContent = async ({ id, approve }) => {
   } catch (error) {
     console.log(error);
     return error;
+  }
+};
+
+export const listenOneContent = (_id, callback) => {
+  try {
+    const docRef = doc(db, "content", _id);
+
+    const unsub = onSnapshot(docRef, (snapshot) => {
+      callback?.(snapshot.data());
+    });
+
+    return unsub;
+  } catch (err) {
+    console.log(err);
+    throw err;
   }
 };
