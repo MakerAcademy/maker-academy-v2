@@ -12,6 +12,8 @@ import {
   updateDoc,
   arrayUnion,
   arrayRemove,
+  orderBy,
+  deleteDoc,
 } from "firebase/firestore";
 import { getCourse } from "./course";
 import { getDocument } from "./document";
@@ -42,7 +44,7 @@ export const getUserEditRequests = async (cid) => {
             ? await getCourse(published)
             : await getDocument(published);
 
-        const { id, timestamp, ...rest } = _fetch;
+        const { id, timestamp, ...rest } = _fetch || {};
 
         return { ...content, ...rest };
       })
@@ -50,11 +52,12 @@ export const getUserEditRequests = async (cid) => {
 
     return data;
   } catch (error) {
-    return console.log(error);
+    console.log(error);
+    throw error;
   }
 };
 
-export const newDocumentEditRequest = async (cid, data = {}) => {
+export const submitDocumentEditRequest = async (cid, data = {}, contentId) => {
   try {
     // return { success: true, payload: { ...data } };
 
@@ -62,9 +65,7 @@ export const newDocumentEditRequest = async (cid, data = {}) => {
     const docRef = doc(collection(db, "documents"));
     const docPayload = {
       ...data,
-      updateAuthor: cid,
       id: docRef.id,
-      updateTimestamp: serverTimestamp(),
     };
     const docRes = await setDoc(docRef, docPayload);
 
@@ -72,7 +73,7 @@ export const newDocumentEditRequest = async (cid, data = {}) => {
     const erRef = doc(collection(db, "edit_requests"));
     const erPayload = {
       author: data.author,
-      updateAuthor: cid,
+      contentId,
       published: docRef.id,
       id: erRef.id,
       contentType: "document",
@@ -85,5 +86,57 @@ export const newDocumentEditRequest = async (cid, data = {}) => {
   } catch (error) {
     console.log(error);
     return error;
+  }
+};
+
+export const acceptEditRequest = async (data) => {
+  try {
+    const { contentId, id, published } = data;
+
+    //searchable term
+    let _searchTerm = `${data?.title || ""} ${data?.brand || ""} ${
+      data?.shortDescription || ""
+    } ${data?.level || ""} ${data?.category || ""}`
+      ?.toLowerCase()
+      ?.replaceAll("(", "")
+      ?.replaceAll(")", "")
+      ?.split(" ")
+      ?.filter((i) => i.length < 4);
+
+    //remove duplicate words
+    _searchTerm = Array.from(new Set(_searchTerm)).filter(Boolean);
+
+    // new content
+    const contentRef = doc(db, "content", contentId);
+    const contentPayload = {
+      published,
+      private: !!data?.private,
+      updatedTimestamp: serverTimestamp(),
+      filters: {
+        brand: data?.brand || "none",
+        searchTerm: _searchTerm,
+        category: data?.category || "",
+        level: data?.level || "",
+      },
+    };
+    await updateDoc(contentRef, contentPayload, { merge: true });
+
+    await deleteDoc(doc(db, "edit_requests", id));
+
+    return { success: true };
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const declineEditRequest = async (id) => {
+  try {
+    await deleteDoc(doc(db, "edit_requests", id));
+
+    return { success: true };
+  } catch (error) {
+    console.log(error);
+    throw error;
   }
 };

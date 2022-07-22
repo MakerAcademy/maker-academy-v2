@@ -1,6 +1,5 @@
 import { TextField, useTheme } from "@mui/material";
 import { grey } from "@mui/material/colors";
-
 import React from "react";
 import { Controller } from "react-hook-form";
 
@@ -50,6 +49,7 @@ const FormTextField = ({
           }}
           {...props}
           {...field}
+          value={field.value || ""}
         />
       )}
     />

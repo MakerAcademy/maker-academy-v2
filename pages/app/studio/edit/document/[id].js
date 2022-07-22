@@ -1,8 +1,8 @@
 import DashboardPaper from "@components/DashboardPaper";
 import Title from "@components/Title";
 import { withProtectedUser } from "@hoc/routes";
-import { getFullDocument } from "@lib/document";
-import { newDocumentEditRequest } from "@lib/editrequests";
+import { getDocumentWithContent } from "@lib/document";
+import { submitDocumentEditRequest } from "@lib/editrequests";
 import { Box, Typography } from "@mui/material";
 import ErrorPage from "@page-components/Error";
 import { cleanObject } from "@utils/helpers";
@@ -21,7 +21,7 @@ const editableFields = [
   // "markdown",
 ];
 
-const EditDocumentPage = ({ document, profile, user }) => {
+const EditDocumentPage = ({ response, document, profile, user }) => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   if (!document) return <ErrorPage />;
@@ -31,7 +31,11 @@ const EditDocumentPage = ({ document, profile, user }) => {
       variant: "default",
     });
 
-    const res = await newDocumentEditRequest(profile?.id, cleanObject(data))
+    const res = await submitDocumentEditRequest(
+      profile?.id,
+      cleanObject({ ...data, contentId: response.id }),
+      response?.id
+    )
       .then(() => {
         closeSnackbar(_key);
         enqueueSnackbar("Success", {
@@ -81,7 +85,7 @@ export default EditDocumentPage;
 // export async function getServerSideProps(context) {
 //   const docId = context.params.id;
 
-//   const res = await getFullDocument(docId, true);
+//   const res = await getDocumentWithContent(docId, true);
 
 //   return {
 //     props: { document: res?.document },
@@ -91,9 +95,9 @@ export default EditDocumentPage;
 export const getServerSideProps = withProtectedUser(async (context) => {
   const docId = context.params.id;
 
-  const res = await getFullDocument(docId, true);
+  const res = await getDocumentWithContent(docId, true);
 
   return {
-    props: { document: res?.document },
+    props: { response: res, document: res?.document },
   };
 });

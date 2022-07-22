@@ -27,6 +27,53 @@ import useTranslation from "next-translate/useTranslation";
 import Router, { useRouter } from "next/router";
 import { useEffect, useReducer, useState } from "react";
 
+const buildUrl = (filters, _type) => {
+  const { contentType, categories, category, difficulty, author, searchTerm } =
+    filters;
+  let _url = "/content";
+
+  // Type
+  if (!!_type) {
+    const _start = _url.endsWith("/content") ? "?" : "&";
+    _url += `${_start}contentType=${encodeURIComponent(_type)}`;
+  } else if (!!contentType && contentType !== "all") {
+    const _start = _url.endsWith("/content") ? "?" : "&";
+    _url += `${_start}contentType=${encodeURIComponent(contentType)}`;
+  }
+
+  // Categories
+  if (categories?.length && !searchTerm) {
+    const _start = _url.endsWith("/content") ? "?" : "&";
+    _url += `${_start}categories=${encodeURIComponent(categories.join(","))}`;
+  }
+
+  // Difficulty
+  if (difficulty) {
+    const _start = _url.endsWith("/content") ? "?" : "&";
+    _url += `${_start}difficulty=${encodeURIComponent(difficulty)}`;
+  }
+
+  // Author
+  if (author) {
+    const _start = _url.endsWith("/content") ? "?" : "&";
+    _url += `${_start}author=${encodeURIComponent(author)}`;
+  }
+
+  // Search Term
+  if (searchTerm) {
+    const _start = _url.endsWith("/content") ? "?" : "&";
+    _url += `${_start}searchTerm=${createSlug(searchTerm)}`;
+  }
+
+  // Category
+  if (category && searchTerm) {
+    const _start = _url.endsWith("/content") ? "?" : "&";
+    _url += `${_start}category=${encodeURIComponent(category)}`;
+  }
+
+  return _url.toLowerCase();
+};
+
 const typeBtnCommonStyles = {
   color: "inherit",
   height: 40,
@@ -205,7 +252,7 @@ const reducer = (state, action) => {
           state[action.field] === action.payload ? null : action.payload,
       };
     case "RESET":
-      return initialFilters();
+      return initialFilters(action.query);
 
     default:
       return state;
@@ -220,60 +267,16 @@ const FilterMenu = () => {
 
   const { t } = useTranslation();
 
+  useEffect(() => {
+    dispatch({ type: "RESET", query });
+  }, [query]);
+
   const triggerFilterDrawer = () => {
     setFilterOpen(!filterOpen);
   };
 
   const handleApplyFilter = (_type) => {
-    const {
-      contentType,
-      categories,
-      category,
-      difficulty,
-      author,
-      searchTerm,
-    } = filters;
-    let _url = "/content";
-
-    // Type
-    if (!!_type && _type !== "all") {
-      const _start = _url.endsWith("/content") ? "?" : "&";
-      _url += `${_start}contentType=${createSlug(_type)}`;
-    } else if (!!contentType && contentType !== "all") {
-      const _start = _url.endsWith("/content") ? "?" : "&";
-      _url += `${_start}contentType=${createSlug(contentType)}`;
-    }
-
-    // Categories
-    if (categories?.length && !searchTerm) {
-      const _start = _url.endsWith("/content") ? "?" : "&";
-      _url += `${_start}categories=${createSlug(categories.join("%2C"))}`;
-    }
-
-    // Difficulty
-    if (difficulty) {
-      const _start = _url.endsWith("/content") ? "?" : "&";
-      _url += `${_start}difficulty=${createSlug(difficulty)}`;
-    }
-
-    // Author
-    if (author) {
-      const _start = _url.endsWith("/content") ? "?" : "&";
-      _url += `${_start}author=${createSlug(author)}`;
-    }
-
-    // Search Term
-    if (searchTerm) {
-      const _start = _url.endsWith("/content") ? "?" : "&";
-      _url += `${_start}searchTerm=${createSlug(searchTerm)}`;
-    }
-
-    // Category
-    if (category && searchTerm) {
-      const _start = _url.endsWith("/content") ? "?" : "&";
-      _url += `${_start}category=${createSlug(category)}`;
-    }
-
+    const _url = buildUrl(filters, _type);
     Router.push(_url);
   };
 
@@ -290,7 +293,7 @@ const FilterMenu = () => {
       dispatch({
         type: "CHANGE",
         field: "contentType",
-        payload: _type == "all" ? null : _type,
+        payload: _type,
       });
     }
   };

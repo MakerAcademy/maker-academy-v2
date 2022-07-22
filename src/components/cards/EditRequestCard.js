@@ -1,5 +1,6 @@
 import GreenButton from "@components/buttons/GreenButton";
 import Title from "@components/Title";
+import { acceptEditRequest, declineEditRequest } from "@lib/editrequests";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import {
   Box,
@@ -11,13 +12,9 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 
-const EditRequestCard = ({
-  thumbnail,
-  contentType,
-  id,
-  title,
-  shortDescription,
-}) => {
+const EditRequestCard = (props) => {
+  const { thumbnail, contentType, id, title, shortDescription } = props;
+
   const theme = useTheme();
   const [showOpenBtn, setShowOpenBtn] = useState(false);
 
@@ -29,6 +26,14 @@ const EditRequestCard = ({
   const hideButton = (e) => {
     e.preventDefault();
     setShowOpenBtn(false);
+  };
+
+  const handleAccept = async () => {
+    acceptEditRequest(props);
+  };
+
+  const handleDecline = async () => {
+    declineEditRequest(id);
   };
 
   return (
@@ -83,11 +88,16 @@ const EditRequestCard = ({
           </Typography>
 
           <Stack direction="row" spacing={2}>
-            <GreenButton variant="outlined" size="small" fullWidth>
+            <GreenButton
+              variant="outlined"
+              size="small"
+              fullWidth
+              onClick={handleDecline}
+            >
               Decline
             </GreenButton>
 
-            <GreenButton size="small" fullWidth>
+            <GreenButton size="small" fullWidth onClick={handleAccept}>
               Accept
             </GreenButton>
           </Stack>

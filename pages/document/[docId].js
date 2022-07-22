@@ -1,6 +1,6 @@
 import ContentDocument from "@components/Document/index";
 import { NAVBAR_HEIGHT_DESKTOP, NAVBAR_HEIGHT_MOBILE } from "@constants/";
-import { getFullDocument } from "@lib/document";
+import { getDocumentWithContent } from "@lib/document";
 import { Box, useTheme } from "@mui/material";
 import ErrorPage from "@page-components/Error";
 
@@ -34,7 +34,7 @@ export default Document;
 export async function getServerSideProps(context) {
   const docId = context.params.docId;
 
-  const document = await getFullDocument(docId);
+  const document = await getDocumentWithContent(docId);
 
   return {
     props: { document },

@@ -33,9 +33,10 @@ export const submitDocument = async (cid, data = {}) => {
       data?.shortDescription || ""
     } ${data?.level || ""} ${data?.category || ""}`
       ?.toLowerCase()
-      ?.split(" ")
       ?.replaceAll("(", "")
-      ?.replaceAll(")", "");
+      ?.replaceAll(")", "")
+      ?.split(" ")
+      ?.filter((i) => i.length < 4);
 
     //remove duplicate words
     _searchTerm = Array.from(new Set(_searchTerm)).filter(Boolean);
@@ -49,13 +50,15 @@ export const submitDocument = async (cid, data = {}) => {
       contentType: "document",
       likes: [],
       views: 0,
-      contributors: [],
-      editRequests: [],
       status: "pending",
       timestamp: serverTimestamp(),
       private: !!data?.private,
-      brand: data?.brand || "none",
-      searchTerm: _searchTerm,
+      filters: {
+        brand: data?.brand || "none",
+        searchTerm: _searchTerm,
+        category: data?.category || "",
+        level: data?.level || "",
+      },
     };
     const contentRes = await setDoc(contentRef, contentPayload);
 
@@ -66,7 +69,7 @@ export const submitDocument = async (cid, data = {}) => {
   }
 };
 
-export const getFullDocument = async (cid, seperate) => {
+export const getDocumentWithContent = async (cid, seperate) => {
   try {
     const contentRef = doc(db, "content", cid);
     const contentSnap = await getDoc(contentRef);

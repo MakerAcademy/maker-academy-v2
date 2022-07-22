@@ -1,4 +1,5 @@
 import { getContent, getPendingContent, getUserContent } from "@lib/content";
+import { getUserEditRequests } from "@lib/editrequests";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 const initialState = {

@@ -25,40 +25,43 @@ const FormSelectField = ({
     <Controller
       name={name}
       control={control}
-      render={({ field: { ...field }, fieldState: { error }, formState }) => (
-        <FormControl
-          fullWidth={fullWidth}
-          size="small"
-          sx={{
-            height: "auto",
-            ".MuiInputBase-root": {
-              minHeight: 45,
-              height: "100%",
-              borderRadius: "8px",
-              // fontSize: 14,
-              fontWeight: 300,
-            },
-            ...sx,
-          }}
-          variant={variant}
-        >
-          <InputLabel id="select-field">{label}</InputLabel>
-          <Select
-            id="select-field"
-            // helperText={error ? error.message : null}
-            error={!!error}
-            label={label}
-            {...props}
-            {...field}
+      render={({ field, fieldState: { error }, formState }) => {
+        return (
+          <FormControl
+            fullWidth={fullWidth}
+            size="small"
+            sx={{
+              height: "auto",
+              ".MuiInputBase-root": {
+                minHeight: 45,
+                height: "100%",
+                borderRadius: "8px",
+                // fontSize: 14,
+                fontWeight: 300,
+              },
+              ...sx,
+            }}
+            variant={variant}
           >
-            {options?.map((item) => (
-              <MenuItem key={item} value={item}>
-                {item}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-      )}
+            <InputLabel id="select-field">{label}</InputLabel>
+            <Select
+              id="select-field"
+              // helperText={error ? error.message : null}
+              error={!!error}
+              label={label}
+              {...props}
+              {...field}
+              value={field.value || ""}
+            >
+              {options?.map((item) => (
+                <MenuItem key={item} value={item}>
+                  {item}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        );
+      }}
     />
   );
 };

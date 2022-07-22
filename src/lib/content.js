@@ -35,22 +35,22 @@ export const getContent = async ({
     queryConstraints.push(where("status", "==", "published"));
     if (_startAfter) queryConstraints.push(startAfter(_startAfter.timestamp));
     if (_limit) queryConstraints.push(limit(_limit));
-    if (author) queryConstraints.push(where("author", "==", author));
+    if (author) queryConstraints.push(where("filters.brand", "==", author));
     if (contentType)
       queryConstraints.push(where("contentType", "==", contentType));
     if (categories?.length && !searchTerm)
-      queryConstraints.push(where("category", "in", categories));
+      queryConstraints.push(where("filters.category", "in", categories));
 
-    if (difficulty) queryConstraints.push(where("level", "==", difficulty));
+    if (difficulty) queryConstraints.push(where("filters.level", "==", difficulty));
     if (!showPrivate) queryConstraints.push(where("private", "==", false));
     if (hideAssessments)
       queryConstraints.push(where("contentType", "!=", "assessment"));
     if (searchTerm) {
       const _term = searchTerm?.toLowerCase()?.trim()?.split(" ");
-      queryConstraints.push(where("searchTerm", "array-contains-any", _term));
+      queryConstraints.push(where("filters.searchTerm", "array-contains-any", _term));
     }
     if (category && searchTerm)
-      queryConstraints.push(where("category", "==", category));
+      queryConstraints.push(where("filters.category", "==", category));
 
     const q = query(docsRef, orderBy(_sort, _order), ...queryConstraints);
 
