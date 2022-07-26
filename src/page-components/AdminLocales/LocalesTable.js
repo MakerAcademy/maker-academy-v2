@@ -1,14 +1,19 @@
 import { LANGUAGES } from "@constants/";
-import { updateLocaleField, updateLocaleFields } from "@lib/locales";
-import { Box, IconButton } from "@mui/material";
+import {
+  deleteLocaleFields,
+  updateLocaleField,
+  updateLocaleFields,
+} from "@lib/locales";
+import { Box, IconButton, Stack } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 import GTranslateIcon from "@mui/icons-material/GTranslate";
 import { translateText } from "@utils/helperFunctions";
+import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 
-const TranslateButton = ({ params, locales }) => {
+const TranslateButton = ({ params, id }) => {
   const { row } = params;
-  const { id, word, en } = row;
+  const { word, en } = row;
 
   const translateAll = async () => {
     const _results = await Promise.all(
@@ -18,12 +23,25 @@ const TranslateButton = ({ params, locales }) => {
     );
     const results = Object.assign({}, ..._results);
 
-    await updateLocaleFields(locales.id, word, results);
+    await updateLocaleFields(id, word, results);
   };
 
   return (
     <IconButton onClick={translateAll}>
       <GTranslateIcon fontSize="small" />
+    </IconButton>
+  );
+};
+
+const DeleteButton = ({ params, id }) => {
+  const deleteRow = async () => {
+    const { word } = params.row;
+    await deleteLocaleFields(id, word);
+  };
+
+  return (
+    <IconButton onClick={deleteRow}>
+      <DeleteOutlinedIcon fontSize="small" />
     </IconButton>
   );
 };
@@ -43,7 +61,14 @@ const parseColumns = (languages, locales) => {
       headerName: "Actions",
       width: 150,
       renderCell: (params) => (
-        <TranslateButton params={params} locales={locales} />
+        <Stack direction="row">
+          <TranslateButton params={params} id={locales.id} />
+          <DeleteButton
+            params={params}
+            fileName={locales._filename}
+            id={locales.id}
+          />
+        </Stack>
       ),
       disableClickEventBubbling: true,
     },

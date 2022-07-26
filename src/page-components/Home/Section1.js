@@ -16,6 +16,7 @@ import {
   DoorBgImage,
   DoorImage,
 } from "@page-components/Home/images";
+import { parseLineBreaks } from "@utils/helperFunctions";
 import useTranslation from "next-translate/useTranslation";
 import { Fade } from "react-awesome-reveal";
 // import ReactCursorPosition from "react-cursor-position";
@@ -84,7 +85,7 @@ const DoorSection = (props) => {
 
 const Section1 = () => {
   const theme = useTheme();
-  const { t, lang } = useTranslation("common");
+  const { t, lang } = useTranslation("home");
 
   return (
     <Box
@@ -138,27 +139,23 @@ const Section1 = () => {
               }}
             >
               <Fade direction="down" duration={800} triggerOnce>
-                <Typography>{t("test_common")}</Typography>
                 <Title
                   variant={{ xs: "h3", md: "h2", xl: "h1" }}
                   sx={{ whiteSpace: "pre-line" }}
                 >
-                  {"Welcome to the\nMaker Academy"}
+                  {parseLineBreaks(t("section1_welcome"))}
                 </Title>
               </Fade>
 
               <Fade direction="down" duration={800} triggerOnce>
                 <Typography sx={{ lineHeight: "150%" }}>
-                  Your one-stop guide to all things Maker. Whether you are a new
-                  trying to understand how MakerDAO works or a contributor
-                  looking to help build, we have got everything you need to get
-                  started.
+                  {t("section1_description")}
                 </Typography>
               </Fade>
 
               <Stack direction="row" spacing={{ xs: 2, md: 4 }} sx={{ pt: 2 }}>
                 <Fade direction="down" duration={800} triggerOnce>
-                  <GreenButton>JOIN THE ACADEMY</GreenButton>
+                  <GreenButton>{t("section1_join_btn")}</GreenButton>
                 </Fade>
               </Stack>
             </Stack>

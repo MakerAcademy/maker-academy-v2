@@ -4,6 +4,7 @@ import Title from "@components/Title";
 import { useAppDispatch, useAppSelector } from "@hooks/useRedux";
 import { Box, Button, Container, Grid, Stack } from "@mui/material";
 import { fetchContentData } from "@redux/slices/contentSlice";
+import useTranslation from "next-translate/useTranslation";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
@@ -19,6 +20,8 @@ const ContentCards = ({ query }) => {
     empty,
     lastVisible,
   } = useAppSelector((state) => state.content);
+
+  const { t } = useTranslation("content");
 
   const dispatch = useAppDispatch();
 
@@ -62,15 +65,15 @@ const ContentCards = ({ query }) => {
         justifyContent="center"
         sx={{ mt: { xs: 5, md: 10 } }}
       >
-        {loading && <Title variant="h6"> Loading... </Title>}
+        {loading && <Title variant="h6"> {t("loading")}... </Title>}
 
         {!loading && !empty && (
           <GreenButton variant="outlined" size="small" onClick={fetchMorePosts}>
-            Fetch more Posts
+            {t("load_more")}
           </GreenButton>
         )}
 
-        {empty && <Title variant="h6"> There are no more data </Title>}
+        {empty && <Title variant="h6"> {t("no_data")} </Title>}
       </Stack>
     </Box>
   );

@@ -32,7 +32,7 @@ const MENU_ITEMS = [
 ];
 
 const MobileDrawer = ({ anchorEl, setAnchorEl }) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   return (
     <Drawer

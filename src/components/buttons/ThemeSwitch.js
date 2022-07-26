@@ -55,7 +55,7 @@ const ThemeSwitch = ({ fullWidth }) => {
   const mode = useSelector(activeTheme);
   const dispatch = useDispatch();
 
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   if (fullWidth) {
     return (

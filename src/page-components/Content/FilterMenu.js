@@ -16,6 +16,7 @@ import {
   Collapse,
   Container,
   Grid,
+  Hidden,
   InputAdornment,
   Stack,
   TextField,
@@ -74,15 +75,21 @@ const buildUrl = (filters, _type) => {
   return _url;
 };
 
-const typeBtnCommonStyles = {
-  color: "inherit",
-  height: 40,
-  px: 2,
-  fontSize: "1rem",
-  borderRadius: "12px",
+const typeBtnCommonStyles = (theme, active) => {
+  return {
+    color: "inherit",
+    height: 40,
+    px: 2,
+    fontSize: "1rem",
+    borderRadius: "12px",
+    backgroundColor: active
+      ? theme.palette.primary.main
+      : theme.palette.primary.grey1,
+    color: active ? theme.palette.common.white : "inherit",
+  };
 };
 
-const StyledSearch = ({ value, dispatch }) => {
+const StyledSearch = ({ value, dispatch, ...other }) => {
   const [isActive, setIsActive] = useState(false);
 
   //   if (!isActive) {
@@ -120,7 +127,7 @@ const StyledSearch = ({ value, dispatch }) => {
         hiddenLabel
         variant="filled"
         size="small"
-        placeholder="Search"
+        // placeholder="Search"
         value={value}
         onChange={(e) => {
           dispatch({
@@ -146,6 +153,7 @@ const StyledSearch = ({ value, dispatch }) => {
             </InputAdornment>
           ),
         }}
+        {...other}
       />
     </Box>
   );
@@ -265,7 +273,7 @@ const FilterMenu = () => {
   const [filters, dispatch] = useReducer(reducer, initialFilters(query));
   const [filterOpen, setFilterOpen] = useState(false);
 
-  const { t } = useTranslation();
+  const { t } = useTranslation("content");
 
   // console.log(filters);
 
@@ -305,7 +313,7 @@ const FilterMenu = () => {
     <Box sx={{ py: 2, background: theme.palette.background.gradient1 }}>
       <Container maxWidth="xl">
         <Stack
-          direction="row"
+          direction={{ xs: "column", md: "row" }}
           alignItems="center"
           justifyContent="space-between"
           spacing={2}
@@ -314,49 +322,48 @@ const FilterMenu = () => {
           <Stack direction="row" alignItems="center" spacing={1}>
             <Typography sx={{ pr: 2 }}>Type:</Typography>
 
+            {/* all */}
             <Button
-              sx={{
-                ...typeBtnCommonStyles,
-                backgroundColor:
-                  filters?.contentType === "all" || !filters?.contentType
-                    ? theme.palette.primary.main
-                    : theme.palette.primary.grey1,
-              }}
+              sx={typeBtnCommonStyles(
+                theme,
+                filters?.contentType === "all" || !filters?.contentType
+              )}
               onClick={() => handleTypeChange("all")}
             >
-              All
+              {t("all")}
             </Button>
 
+            {/* documents */}
             <Button
-              sx={{
-                ...typeBtnCommonStyles,
-                backgroundColor:
-                  filters?.contentType === "documents"
-                    ? theme.palette.primary.main
-                    : theme.palette.primary.grey1,
-              }}
+              sx={typeBtnCommonStyles(
+                theme,
+                filters?.contentType === "documents"
+              )}
               onClick={() => handleTypeChange("documents")}
             >
-              Articles
+              {t("articles")}
             </Button>
 
+            {/* courses */}
             <Button
-              sx={{
-                ...typeBtnCommonStyles,
-                backgroundColor:
-                  filters?.contentType === "courses"
-                    ? theme.palette.primary.main
-                    : theme.palette.primary.grey1,
-              }}
+              sx={typeBtnCommonStyles(
+                theme,
+                filters?.contentType === "courses"
+              )}
               onClick={() => handleTypeChange("courses")}
             >
-              Courses
+              {t("courses")}
             </Button>
 
-            <StyledSearch
-              value={filters?.searchTerm || ""}
-              dispatch={dispatch}
-            />
+            <Hidden smDown>
+              {filterOpen && (
+                <StyledSearch
+                  value={filters?.searchTerm || ""}
+                  dispatch={dispatch}
+                  placeholder={t("search")}
+                />
+              )}
+            </Hidden>
           </Stack>
 
           {/* Right side */}
@@ -381,10 +388,20 @@ const FilterMenu = () => {
 
         <Collapse in={filterOpen} timeout="auto" unmountOnExit>
           <Grid container spacing={5} sx={{ py: 5 }}>
+            <Hidden smUp>
+              <Grid item xs={12}>
+                <StyledSearch
+                  placeholder={t("search")}
+                  value={filters?.searchTerm || ""}
+                  dispatch={dispatch}
+                />
+              </Grid>
+            </Hidden>
+
             {/* Categories */}
             <Grid item xs={12} md={4}>
               <Typography variant="body2" sx={{ mb: 1 }}>
-                Categories:
+                {!filters?.searchTerm ? t("categories") : t("category")}:
               </Typography>
 
               {filters?.searchTerm ? (
@@ -392,7 +409,7 @@ const FilterMenu = () => {
                   {CONTENT_CATEGORIES.map((item, i) => (
                     <StyledChip
                       name="category"
-                      label={item}
+                      label={t(item)}
                       key={i}
                       filters={filters?.category}
                       dispatch={dispatch}
@@ -405,7 +422,7 @@ const FilterMenu = () => {
                   {CONTENT_CATEGORIES.map((item, i) => (
                     <StyledChip
                       name="categories"
-                      label={item}
+                      label={t(item)}
                       key={i}
                       filters={filters?.categories}
                       dispatch={dispatch}
@@ -419,14 +436,14 @@ const FilterMenu = () => {
             {/* Difficulty */}
             <Grid item xs={12} md={4}>
               <Typography variant="body2" sx={{ mb: 1 }}>
-                Difficulty:
+                {t("difficulty")}:
               </Typography>
 
               <Stack direction="row" flexWrap="wrap">
                 {CONTENT_DIFFICULTY_LEVELS.map((item, i) => (
                   <StyledChip
                     name="difficulty"
-                    label={item}
+                    label={t(item)}
                     key={i}
                     filters={filters?.difficulty}
                     dispatch={dispatch}
@@ -439,14 +456,14 @@ const FilterMenu = () => {
             {/* Creator */}
             <Grid item xs={12} md={4}>
               <Typography variant="body2" sx={{ mb: 1 }}>
-                Creator:
+                {t("creator")}:
               </Typography>
 
               <Stack direction="row" flexWrap="wrap">
                 {BRANDS.map((item, i) => (
                   <StyledChip
                     name="author"
-                    label={item}
+                    label={t(item)}
                     key={i}
                     filters={filters?.author}
                     dispatch={dispatch}
@@ -465,7 +482,7 @@ const FilterMenu = () => {
             sx={{ pb: 1 }}
           >
             <GreenButton size="small" onClick={() => handleApplyFilter()}>
-              Apply Filter
+              {t("apply_filters")}
             </GreenButton>
 
             <GreenButton
@@ -473,7 +490,7 @@ const FilterMenu = () => {
               size="small"
               onClick={() => dispatch({ type: "RESET" })}
             >
-              Clear Filter
+              {t("clear_filters")}
             </GreenButton>
           </Stack>
         </Collapse>

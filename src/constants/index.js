@@ -56,6 +56,7 @@ export const DASHBOARD_BREADCRUMBS = {
   "/app/studio/new/course": "dashboard_studio_new_course",
   "/app/studio/new/assessment": "dashboard_studio_new_assessment",
   "/app/admin": "dashboard_admin",
+  "/app/admin/locales": "localizations",
   "/app/settings": "dashboard_settings",
 };
 

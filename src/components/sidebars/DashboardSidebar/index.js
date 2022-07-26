@@ -6,6 +6,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircleOutlined";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
 import DashboardIcon from "@mui/icons-material/DashboardOutlined";
 import OndemandVideoIcon from "@mui/icons-material/OndemandVideoOutlined";
+import GTranslateOutlinedIcon from "@mui/icons-material/GTranslateOutlined";
 import {
   Avatar,
   Box,
@@ -59,6 +60,12 @@ const MENU_ITEMS = [
     trustLevel: 4,
     text: "admin",
     icon: AdminPanelSettingsIcon,
+  },
+  {
+    link: "/app/admin/locales",
+    trustLevel: 4,
+    text: "locales",
+    icon: GTranslateOutlinedIcon,
   },
   {
     link: "/app/settings",
@@ -152,7 +159,7 @@ const Content = () => {
               <Typography variant="body2" sx={{ fontWeight: 600 }}>
                 {profile?.firstName} {profile?.lastName}
               </Typography>
-              <Typography variant="body2">Title: {profile?.title}</Typography>
+              <Typography variant="body2">{profile?.title}</Typography>
             </Box>
           </Box>
         </Link>

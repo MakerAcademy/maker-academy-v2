@@ -10,6 +10,7 @@ import {
   ListItemText,
 } from "@mui/material";
 import { alpha, useTheme } from "@mui/material/styles";
+import useTranslation from "next-translate/useTranslation";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
@@ -19,6 +20,7 @@ const MenuItems = ({ items = [] }) => {
   const theme = useTheme();
   const router = useRouter();
   const { pathname } = router;
+  const { t } = useTranslation("dashboard");
 
   const [activeLink, setActiveLink] = useState(-1);
   const [activeSubLink, setActiveSubLink] = useState(-1);
@@ -131,7 +133,7 @@ const MenuItems = ({ items = [] }) => {
                   </ListItemIcon>
                   <ListItemText
                     disableTypography
-                    primary={item.text}
+                    primary={t(item.text)}
                     sx={{ typography: "body2" }}
                   />
                 </ListItem>
@@ -171,7 +173,7 @@ const MenuItems = ({ items = [] }) => {
                           >
                             <ListItemText
                               disableTypography
-                              primary={subItem.text}
+                              primary={t(subItem.text)}
                               sx={{ typography: "body2" }}
                             />
                           </ListItem>

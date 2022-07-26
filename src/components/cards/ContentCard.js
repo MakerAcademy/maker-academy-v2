@@ -21,6 +21,7 @@ import {
 } from "@mui/material";
 import { blue, green, red, yellow } from "@mui/material/colors";
 import moment from "moment";
+import useTranslation from "next-translate/useTranslation";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
@@ -55,6 +56,30 @@ const StyledRibbon = styled(Box)(({ theme }) => ({
   },
 }));
 
+const Badge = ({ text }) => {
+  const theme = useTheme();
+
+  return (
+    <Box
+      sx={{
+        position: "absolute",
+        bottom: 20,
+        left: 0,
+        backgroundColor: "primary.main",
+        py: 1,
+        pl: 1,
+        pr: 2,
+        minWidth: 80,
+        clipPath: "polygon(0% 0%, 85% 0, 100% 49%, 85% 99%, 0% 100%)",
+      }}
+    >
+      <Typography variant="body2" sx={{ color: theme.palette.common.white }}>
+        {text}
+      </Typography>
+    </Box>
+  );
+};
+
 const ContentCard = ({
   id,
   thumbnail = "https://prod-discovery.edx-cdn.org/media/course/image/0e575a39-da1e-4e33-bb3b-e96cc6ffc58e-8372a9a276c1.png",
@@ -71,6 +96,7 @@ const ContentCard = ({
   likes = 0,
 }) => {
   const theme = useTheme();
+  const { t } = useTranslation("content");
 
   const [isHovered, setIsHovered] = useState(false);
 
@@ -96,27 +122,6 @@ const ContentCard = ({
   const setHover = (e, val) => {
     e.preventDefault();
     setIsHovered(!!val);
-  };
-
-  const Badge = ({ text }) => {
-    return (
-      <Box
-        sx={{
-          position: "absolute",
-          bottom: 20,
-          left: 0,
-          backgroundColor: "primary.main",
-          py: 1,
-          px: 2,
-          minWidth: 80,
-          clipPath: "polygon(0% 0%, 85% 0, 100% 49%, 85% 99%, 0% 100%)",
-        }}
-      >
-        <Typography variant="body2" sx={{ color: theme.palette.common.white }}>
-          {text}
-        </Typography>
-      </Box>
-    );
   };
 
   return (
@@ -165,7 +170,7 @@ const ContentCard = ({
           </Box>
 
           {/* Brand */}
-          {brand && brand !== "none" && <Badge text={brand} />}
+          {brand && brand !== "none" && <Badge text={t(brand)} />}
         </Box>
 
         {/* Content */}
@@ -214,23 +219,23 @@ const ContentCard = ({
             >
               {/* Type */}
               {contentType === "document" ? (
-                <Stack direction="row" alignItems="center" spacing={0.2}>
+                <Stack direction="row" alignItems="center" spacing={0.3}>
                   <FeedOutlinedIcon sx={{ fontSize: 18 }} />
                   <Typography variant="body2" sx={{ fontSize: 14 }}>
-                    Document
+                    {t("article")}
                   </Typography>
                 </Stack>
               ) : (
-                <Stack direction="row" alignItems="center" spacing={0.2}>
+                <Stack direction="row" alignItems="center" spacing={0.3}>
                   <SubscriptionsOutlinedIcon sx={{ fontSize: 18 }} />
                   <Typography variant="body2" sx={{ fontSize: 14 }}>
-                    Course
+                    {t("course")}
                   </Typography>
                 </Stack>
               )}
 
               {/* Duration */}
-              <Stack direction="row" alignItems="center" spacing={0.2}>
+              <Stack direction="row" alignItems="center" spacing={0.3}>
                 <AccessTimeIcon sx={{ fontSize: 18 }} />
                 <Typography variant="body2" sx={{ fontSize: 14 }}>
                   {duration} min
@@ -241,12 +246,12 @@ const ContentCard = ({
               <Stack
                 direction="row"
                 alignItems="center"
-                spacing={0.5}
+                spacing={0.3}
                 sx={{ color: yellow[900] }}
               >
                 <AssessmentOutlinedIcon sx={{ fontSize: 20 }} />
                 <Typography variant="body2" sx={{ fontSize: 14 }}>
-                  {level}
+                  {t(level)}
                 </Typography>
               </Stack>
             </Stack>

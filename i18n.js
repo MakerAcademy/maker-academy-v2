@@ -3,21 +3,21 @@ module.exports = {
   defaultLocale: "en",
   pages: {
     "*": ["common"],
-    "/": ["common"],
+    "/": ["home"],
   },
   // loadLocaleFrom: (locale, namespace) =>
   //   import(`./locales/${locale}/${namespace}`)
   //     .then((m) => m.default)
   //     .catch((err) => console.log(err)),
 
-  loadLocaleFrom: async (lang, ns) => {
+  loadLocaleFrom: async (lang, ns = "common") => {
     try {
       const c = await require(`./locales/${lang}/common.json`);
       const m = await require(`./locales/${lang}/${ns}.json`);
 
       return {
-        ...c,
-        ...m,
+        ...(c || {}),
+        ...(m || {}),
       };
     } catch (error) {
       console.log(123, error);

@@ -1,6 +1,7 @@
 import ContentCard from "@components/cards/ContentCard";
 import { Box, Container, Grid, Tab, Tabs, useTheme } from "@mui/material";
 import hex from "@utils/hexTransparency";
+import useTranslation from "next-translate/useTranslation";
 import { useState } from "react";
 import { Zoom } from "react-awesome-reveal";
 import { BlurSection3 } from "./images";
@@ -27,11 +28,17 @@ const DUMMY_CONTENT = [
   })),
 ];
 
-const TABS = ["Recent Releases", "Popular Articles", "Popular Courses"];
+const TABS = [
+  "section3_recent_releases",
+  "section3_popular_articles",
+  "section3_popular_courses",
+];
 
 const Section3 = () => {
   const theme = useTheme();
   const [tabValue, setTabValue] = useState(0);
+
+  const { t } = useTranslation("home");
 
   const handleTabChange = (e, i) => {
     setTabValue(i);
@@ -82,7 +89,7 @@ const Section3 = () => {
           {TABS.map((item, i) => (
             <Tab
               key={i}
-              label={item}
+              label={t(item)}
               sx={{
                 backgroundColor: `${theme.palette.primary.grey1}`,
                 textTransform: "inherit",

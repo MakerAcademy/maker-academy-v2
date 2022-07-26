@@ -1,6 +1,7 @@
 import Title from "@components/Title";
 import { Masonry } from "@mui/lab";
 import { Box, Container, Paper, Stack, Typography } from "@mui/material";
+import useTranslation from "next-translate/useTranslation";
 import React from "react";
 import { Fade, JackInTheBox } from "react-awesome-reveal";
 import { BlurSection4 } from "./images";
@@ -8,6 +9,8 @@ import { BlurSection4 } from "./images";
 const heights = [222, 139, 222, 222, 310, 222, 222, 222];
 
 const Section5 = () => {
+  const { t } = useTranslation("home");
+
   return (
     <Box sx={{ my: 10, position: "relative" }}>
       {/* <img
@@ -41,14 +44,13 @@ const Section5 = () => {
               variant="h2"
               sx={{ textAlign: "center", color: "text.title" }}
             >
-              Let us know what you think.
+              {t("section5_what_you_think")}
             </Title>
           </Fade>
 
           <Fade delay={100} triggerOnce>
             <Typography sx={{ textAlign: "center", maxWidth: 750 }}>
-              We're proud to be the main source of information for the MakerDAO
-              community and thankful for any feedback, support or suggestions.
+              {t("section5_description")}
             </Typography>
           </Fade>
 

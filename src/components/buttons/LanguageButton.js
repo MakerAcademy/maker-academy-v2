@@ -6,6 +6,7 @@ import {
   Menu,
   MenuItem,
   Typography,
+  Tooltip,
 } from "@mui/material";
 import useTranslation from "next-translate/useTranslation";
 import React, { useState } from "react";
@@ -35,7 +36,7 @@ export const handleLanguageChange = async (lang, router, pathname) => {
 const LanguageMenu = ({ fullWidth, sx = {}, ...other }) => {
   const [langAnchor, setLangAnchor] = useState(null);
 
-  const { t, lang } = useTranslation();
+  const { t, lang } = useTranslation("common");
 
   return (
     <>
@@ -58,15 +59,17 @@ const LanguageMenu = ({ fullWidth, sx = {}, ...other }) => {
       )}
 
       {!fullWidth && (
-        <IconButton
-          size="large"
-          onClick={(e) => setLangAnchor(e.currentTarget)}
-          color="inherit"
-          sx={{ ...sx }}
-          {...other}
-        >
-          <TranslateIcon />
-        </IconButton>
+        <Tooltip title={t("change_language")}>
+          <IconButton
+            size="large"
+            onClick={(e) => setLangAnchor(e.currentTarget)}
+            color="inherit"
+            sx={{ ...sx }}
+            {...other}
+          >
+            <TranslateIcon />
+          </IconButton>
+        </Tooltip>
       )}
 
       <Menu

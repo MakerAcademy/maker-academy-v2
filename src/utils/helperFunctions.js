@@ -71,3 +71,7 @@ export const translateText = async (text = "text", from = "en", to = "es") => {
     console.log("rest api error", err);
   }
 };
+
+export const parseLineBreaks = (str) => {
+  return str.replaceAll(" \\n ", "\n");
+};

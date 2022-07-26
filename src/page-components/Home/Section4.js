@@ -14,6 +14,7 @@ import {
   MAWhiteIcon,
   TwitterIcon,
 } from "@page-components/Home/images";
+import useTranslation from "next-translate/useTranslation";
 import Image from "next/image";
 import { Bounce, Fade } from "react-awesome-reveal";
 
@@ -42,6 +43,8 @@ const SocialButton = ({ icon, text, color, delay = 0 }) => (
 const Section4 = () => {
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
+
+  const { t } = useTranslation("home");
 
   return (
     <Container
@@ -73,15 +76,13 @@ const Section4 = () => {
         >
           <Fade triggerOnce>
             <Title variant="h2" sx={{ color: "text.title" }}>
-              Learn. Contribute. Innovate.
+              {t("section4_learn_contribute_innovate")}
             </Title>
           </Fade>
 
           <Fade delay={100} triggerOnce>
             <Typography sx={{ maxWidth: 920 }}>
-              Your one-stop guide to all things MakerDAO. Learn more about
-              Maker, chat with the team, others in the community, and have your
-              say in shaping the future if decentralized finance.
+              {t("section4_description")}
             </Typography>
           </Fade>
 
@@ -94,7 +95,7 @@ const Section4 = () => {
           >
             <SocialButton text="Discord" icon={DiscordIcon} color="#7289DA" />
             <SocialButton
-              text="Forum"
+              text={t("section4_forum")}
               icon={ForumIcon}
               color="text.title"
               delay={50}
@@ -106,7 +107,7 @@ const Section4 = () => {
               delay={100}
             />
             <SocialButton
-              text="Join"
+              text={t("section4_join")}
               icon={isDark ? MAWhiteIcon : MAIcon}
               color="text.primary"
               delay={150}

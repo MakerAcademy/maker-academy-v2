@@ -4,7 +4,7 @@ import { Box } from "@mui/material";
 import LocalesTable from "@page-components/AdminLocales/LocalesTable";
 import NewLocale from "@page-components/AdminLocales/NewLocale";
 import TabsAppbar from "@page-components/AdminLocales/TabsAppbar";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -42,11 +42,13 @@ const LocalesPage = ({ user }) => {
 
       {locales?.length > 0 &&
         locales?.map?.((_, i) => (
-          <TabPanel value={i} index={i} key={i}>
+          <React.Fragment key={i}>
             {selectedTab === i && (
-              <LocalesTable locales={locales[selectedTab]} />
+              <TabPanel value={i} index={i}>
+                <LocalesTable locales={locales[selectedTab]} />
+              </TabPanel>
             )}
-          </TabPanel>
+          </React.Fragment>
         ))}
     </Box>
   );

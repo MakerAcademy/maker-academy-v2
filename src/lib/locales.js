@@ -1,6 +1,8 @@
 import { db } from "@config/firebase";
+import { LANGUAGES } from "@constants/";
 import {
   collection,
+  deleteField,
   doc,
   onSnapshot,
   orderBy,
@@ -23,7 +25,7 @@ export const listenLocales = (callback) => {
       });
     });
 
-    console.log("Result", result);
+    // console.log("Result", result);
 
     callback?.(result);
   });
@@ -65,6 +67,21 @@ export const updateLocaleFields = async (id, word, data) => {
     if (lang !== "word") acc[`${lang}.${word}`] = data[lang];
     return acc;
   }, {});
+
+  return await updateDoc(itemRef, _data, { merge: true }).catch((err) =>
+    console.error(err)
+  );
+};
+
+export const deleteLocaleFields = async (id, word) => {
+  const itemRef = doc(db, "locales", id);
+
+  const _data = LANGUAGES.reduce((acc, lang) => {
+    acc = { ...acc, [`${lang}.${word}`]: deleteField() };
+    return acc;
+  }, {});
+
+  // return console.log(_data);
 
   return await updateDoc(itemRef, _data, { merge: true }).catch((err) =>
     console.error(err)

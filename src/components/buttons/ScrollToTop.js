@@ -3,8 +3,11 @@ import React from "react";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import hex from "@utils/hexTransparency";
 import { Zoom } from "react-awesome-reveal";
+import useTranslation from "next-translate/useTranslation";
 
 const ScrollToTop = () => {
+  const { t } = useTranslation("common");
+
   const scrollToTop = () => {
     window?.scrollTo?.({
       top: 0,
@@ -14,7 +17,7 @@ const ScrollToTop = () => {
 
   return (
     <Zoom duration={500} style={{ position: "fixed", bottom: 24, right: 24 }}>
-      <Tooltip title="Scroll to top">
+      <Tooltip title={t("scroll_to_top")}>
         <Fab
           onClick={scrollToTop}
           color="primary"

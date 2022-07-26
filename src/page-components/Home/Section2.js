@@ -22,6 +22,7 @@ import {
   Service4DarkIcon,
   Service4LightIcon,
 } from "@page-components/Home/images";
+import useTranslation from "next-translate/useTranslation";
 import { Slide } from "react-awesome-reveal";
 
 const ActionButton = ({ text, Icon, reverse }) => (
@@ -147,6 +148,8 @@ const Section2 = () => {
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
 
+  const { t } = useTranslation("home");
+
   return (
     <Box
       sx={{
@@ -186,12 +189,12 @@ const Section2 = () => {
           {/* Item 1 */}
           <Grid item xs={12} md={6}>
             <ServiceCard
-              title={"What is Maker Academy?"}
-              description={"Learn about Maker Academy"}
+              title={t("section2_what_is_maker")}
+              description={t("section2_learn_about_maker")}
               image={isDark ? Service1DarkIcon : Service1LightIcon}
               Btn={
                 <ActionButton
-                  text="PLAY VIDEO"
+                  text={t("section2_play_video")}
                   Icon={PlayArrowOutlinedIcon}
                   reverse
                 />
@@ -202,14 +205,12 @@ const Section2 = () => {
           {/* Item 2 */}
           <Grid item xs={12} md={6}>
             <ServiceCard
-              title={"Advance Knowledge"}
-              description={
-                "Tailored programs for subfields of maker that take you from the basics all the way to the advanced"
-              }
+              title={t("section2_advance_knowledge")}
+              description={t("section2_tailored_programs")}
               image={isDark ? Service2DarkIcon : Service2LightIcon}
               Btn={
                 <ActionButton
-                  text="LEARN MORE"
+                  text={t("section2_learn_more")}
                   Icon={ArrowForwardOutlinedIcon}
                 />
               }
@@ -220,14 +221,12 @@ const Section2 = () => {
           {/* Item 3 */}
           <Grid item xs={12} md={6}>
             <ServiceCard
-              title={"Contribute"}
-              description={
-                "Want to add your own content?\nContribute to the Academy using the creator studio"
-              }
+              title={t("section2_contribute")}
+              description={t("section2_add_your_content")}
               image={isDark ? Service3DarkIcon : Service3LightIcon}
               Btn={
                 <ActionButton
-                  text="START CREATING"
+                  text={t("section2_start_creating")}
                   Icon={ArrowForwardOutlinedIcon}
                 />
               }
@@ -238,14 +237,12 @@ const Section2 = () => {
           {/* Item 4 */}
           <Grid item xs={12} md={6}>
             <ServiceCard
-              title={"Find your role at Maker"}
-              description={
-                "Want to contribute to MakerDAO?\nSee how you can get involved"
-              }
+              title={t("section2_role_at_maker")}
+              description={t("section2_want_to_contribute")}
               image={isDark ? Service4DarkIcon : Service4LightIcon}
               Btn={
                 <ActionButton
-                  text="VIEW ROLES"
+                  text={t("section2_view_roles")}
                   Icon={ArrowForwardOutlinedIcon}
                 />
               }

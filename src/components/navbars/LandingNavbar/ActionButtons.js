@@ -38,7 +38,7 @@ const ActionButtons = () => {
       <ThemeSwitch />
 
       {user && (
-        <Tooltip title="Account">
+        <Tooltip title={t("account")}>
           <IconButton onClick={(e) => setUserAnchorEl(e.currentTarget)}>
             <Avatar
               // sx={{ width: 32, height: 32 }}
@@ -50,7 +50,7 @@ const ActionButtons = () => {
 
       {!user && (
         <Link href="/login">
-          <GreenButton size="small">Login</GreenButton>
+          <GreenButton size="small">{t("login")}</GreenButton>
         </Link>
       )}
 
@@ -99,7 +99,7 @@ const ActionButtons = () => {
               >
                 {profile?.firstName} {profile?.lastName}
               </Typography>
-              <Typography variant="body2">Admin</Typography>
+              <Typography variant="body2">{t("admin")}</Typography>
             </Stack>
           </MenuItem>
 

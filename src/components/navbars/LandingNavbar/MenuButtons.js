@@ -1,7 +1,10 @@
 import { Button, Link, Stack, Typography } from "@mui/material";
+import useTranslation from "next-translate/useTranslation";
 import React from "react";
 
 const MenuButtons = ({ menuItems = [], theme }) => {
+  const { t } = useTranslation("common");
+
   return (
     <Stack
       direction={{ xs: "column", md: "row" }}
@@ -22,7 +25,7 @@ const MenuButtons = ({ menuItems = [], theme }) => {
               },
             }}
           >
-            {name}
+            {t(name)}
           </Button>
         </Link>
       ))}
