@@ -33,10 +33,9 @@ export const submitDocument = async (cid, data = {}) => {
       data?.shortDescription || ""
     } ${data?.level || ""} ${data?.category || ""}`
       ?.toLowerCase()
-      ?.replaceAll("(", "")
-      ?.replaceAll(")", "")
+      ?.replace(/[^a-zA-Z ]/g, "")
       ?.split(" ")
-      ?.filter((i) => i.length < 4);
+      ?.filter((i) => i.length > 4);
 
     //remove duplicate words
     _searchTerm = Array.from(new Set(_searchTerm)).filter(Boolean);

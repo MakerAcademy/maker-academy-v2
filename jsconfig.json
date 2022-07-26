@@ -38,7 +38,9 @@
       "@public": ["public"],
       "@redux/*": ["src/redux/*"],
       "@redux": ["src/redux"],
-      "@i18n": ["./i18n.js"]
+      "@i18n": ["./i18n.js"],
+      "@locales/*": ["locales/*"],
+      "@locales": ["locales"]
     },
     "incremental": true
   },

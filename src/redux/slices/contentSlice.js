@@ -56,11 +56,8 @@ export const fetchPendingContent = createAsyncThunk(
   "content/fetchPendingContent",
   async (payload, { getState }) => {
     const res = await getPendingContent();
-    console.log("in 2");
 
     const result = res;
-
-    console.log(result);
 
     return { result };
   }

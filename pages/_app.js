@@ -1,11 +1,9 @@
 import Root from "@components/Root";
-import "../styles/globals.css";
+import { store } from "@redux/store/store";
 import { Provider } from "react-redux";
 import { persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
-import { store } from "@redux/store/store";
-import appWithI18n from "next-translate/appWithI18n";
-import i18nConfig from "@i18n";
+import "../styles/globals.css";
 
 const persistor = persistStore(store);
 
@@ -21,4 +19,4 @@ function MyApp({ Component, pageProps }) {
   );
 }
 
-export default appWithI18n(MyApp, { ...i18nConfig });
+export default MyApp;

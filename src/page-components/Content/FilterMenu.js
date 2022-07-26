@@ -71,7 +71,7 @@ const buildUrl = (filters, _type) => {
     _url += `${_start}category=${encodeURIComponent(category)}`;
   }
 
-  return _url.toLowerCase();
+  return _url;
 };
 
 const typeBtnCommonStyles = {
@@ -267,6 +267,8 @@ const FilterMenu = () => {
 
   const { t } = useTranslation();
 
+  // console.log(filters);
+
   useEffect(() => {
     dispatch({ type: "RESET", query });
   }, [query]);
@@ -277,6 +279,7 @@ const FilterMenu = () => {
 
   const handleApplyFilter = (_type) => {
     const _url = buildUrl(filters, _type);
+    // console.log(_url);
     Router.push(_url);
   };
 

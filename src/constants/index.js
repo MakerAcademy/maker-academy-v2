@@ -58,3 +58,5 @@ export const DASHBOARD_BREADCRUMBS = {
   "/app/admin": "dashboard_admin",
   "/app/settings": "dashboard_settings",
 };
+
+export const LANGUAGES = ["en", "fr", "es", "ru", "ar", "zh", "hi", "sw"];

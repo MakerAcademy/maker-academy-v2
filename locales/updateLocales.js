@@ -3,7 +3,7 @@ const fetch = (...args) =>
 var fs = require("fs");
 
 const URL =
-  "https://us-central1-maker-localizations.cloudfunctions.net/firestoreLocalesOnRequest";
+  "https://us-central1-maker-academy-c22f7.cloudfunctions.net/firestore-localesOnRequest";
 
 const languages = ["en", "fr", "es", "ru", "ar", "zh", "hi", "sw"];
 

@@ -7,7 +7,7 @@ import { fetchContentData } from "@redux/slices/contentSlice";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
-const ContentCards = () => {
+const ContentCards = ({ query }) => {
   const {
     content,
     filter,
@@ -19,8 +19,6 @@ const ContentCards = () => {
     empty,
     lastVisible,
   } = useAppSelector((state) => state.content);
-
-  const { query } = useRouter();
 
   const dispatch = useAppDispatch();
 

@@ -3,7 +3,7 @@ import { Box, Container } from "@mui/material";
 import ContentCards from "@page-components/Content/ContentCards";
 import FilterMenu from "@page-components/Content/FilterMenu";
 
-const Content = (props) => {
+const Content = ({ query }) => {
   return (
     <Box sx={{ py: { xs: 5, md: 7 } }}>
       <Container maxWidth="xl" sx={{ mb: { xs: 3, md: 5 } }}>
@@ -18,7 +18,7 @@ const Content = (props) => {
       <FilterMenu />
 
       <Container maxWidth="xl" sx={{ my: 7, minHeight: "40vh" }}>
-        <ContentCards />
+        <ContentCards query={query} />
       </Container>
     </Box>
   );
@@ -26,7 +26,6 @@ const Content = (props) => {
 
 export default Content;
 
-// export const getServerSideProps = async (context) => {
-//   getContent();
-//   return { props: { data: [] } };
-// };
+export const getServerSideProps = async (context) => {
+  return { props: { query: context.query } };
+};

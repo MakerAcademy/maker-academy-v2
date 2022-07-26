@@ -14,20 +14,22 @@ import {
 import { getCourse } from "./course";
 import { getDocument } from "./document";
 
-export const getContent = async ({
-  sort: _sort = "timestamp",
-  order: _order = "asc",
-  limit: _limit,
-  startAfter: _startAfter,
-  author,
-  category,
-  categories,
-  difficulty,
-  showPrivate,
-  hideAssessments,
-  contentType,
-  searchTerm,
-}) => {
+export const getContent = async (params) => {
+  const {
+    sort: _sort = "timestamp",
+    order: _order = "asc",
+    limit: _limit,
+    startAfter: _startAfter,
+    author,
+    category,
+    categories,
+    difficulty,
+    showPrivate,
+    hideAssessments,
+    contentType,
+    searchTerm,
+  } = params;
+
   try {
     const docsRef = collection(db, "content");
 
@@ -41,16 +43,21 @@ export const getContent = async ({
     if (categories?.length && !searchTerm)
       queryConstraints.push(where("filters.category", "in", categories));
 
-    if (difficulty) queryConstraints.push(where("filters.level", "==", difficulty));
+    if (difficulty)
+      queryConstraints.push(where("filters.level", "==", difficulty));
     if (!showPrivate) queryConstraints.push(where("private", "==", false));
     if (hideAssessments)
       queryConstraints.push(where("contentType", "!=", "assessment"));
     if (searchTerm) {
       const _term = searchTerm?.toLowerCase()?.trim()?.split(" ");
-      queryConstraints.push(where("filters.searchTerm", "array-contains-any", _term));
+      queryConstraints.push(
+        where("filters.searchTerm", "array-contains-any", _term)
+      );
     }
     if (category && searchTerm)
       queryConstraints.push(where("filters.category", "==", category));
+
+    // console.log(queryConstraints);
 
     const q = query(docsRef, orderBy(_sort, _order), ...queryConstraints);
 

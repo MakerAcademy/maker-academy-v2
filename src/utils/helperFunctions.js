@@ -1,3 +1,4 @@
+import axios from "axios";
 import { flatten } from "lodash";
 import setLanguage from "next-translate/setLanguage";
 import React from "react";
@@ -48,4 +49,25 @@ export const buildGithubPdfLink = (user, repo, branch, pathToFile) => {
 export const truncateString = (str, n) => {
   if (!str) return null;
   return str.length > n ? str.substr(0, n - 1) + "..." : str;
+};
+
+export const translateText = async (text = "text", from = "en", to = "es") => {
+  try {
+    const response = await axios.post(
+      "https://translation.googleapis.com/language/translate/v2",
+      {},
+      {
+        params: {
+          q: text,
+          source: from,
+          target: to,
+          key: process.env.NEXT_PUBLIC_GOOGLE_TRANSLATE_API,
+          format: "text",
+        },
+      }
+    );
+    return response.data.data.translations[0].translatedText;
+  } catch (err) {
+    console.log("rest api error", err);
+  }
 };

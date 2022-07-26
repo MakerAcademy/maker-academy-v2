@@ -16,18 +16,19 @@ import {
   DoorBgImage,
   DoorImage,
 } from "@page-components/Home/images";
+import useTranslation from "next-translate/useTranslation";
 import { Fade } from "react-awesome-reveal";
-import ReactCursorPosition from "react-cursor-position";
+// import ReactCursorPosition from "react-cursor-position";
 
 const DoorSection = (props) => {
   const theme = useTheme();
   const isMediumScreen = useMediaQuery(theme.breakpoints.between("md", "lg"));
 
-  const {
-    isActive = false,
-    position: { x = 0, y = 0 } = {},
-    elementDimensions: { width = 0, height = 0 } = {},
-  } = props;
+  // const {
+  //   isActive = false,
+  //   position: { x = 0, y = 0 } = {},
+  //   elementDimensions: { width = 0, height = 0 } = {},
+  // } = props;
 
   return (
     <Fade triggerOnce>
@@ -60,7 +61,7 @@ const DoorSection = (props) => {
             transition: "100ms linear transform",
             marginLeft: "-30px",
             marginTop: "-30px",
-            transform: isActive && `translate(${x * -0.08}px, ${y * -0.1}px)`,
+            // transform: isActive && `translate(${x * -0.08}px, ${y * -0.1}px)`,
           }}
         />
 
@@ -76,25 +77,6 @@ const DoorSection = (props) => {
             zIndex: 2,
           }}
         />
-
-        {/* <Image
-  src={DoorBgImage}
-  alt="Home Image"
-  layout="responsive"
-  objectFit="contain"
-  height="100%"
-  width="100%"
-  priority
-/>
- <Image
-  src={DoorImage}
-  alt="Home Image"
-  layout="responsive"
-  objectFit="contain"
-  height="100%"
-  width="100%"
-  priority
-/> */}
       </Stack>
     </Fade>
   );
@@ -102,6 +84,7 @@ const DoorSection = (props) => {
 
 const Section1 = () => {
   const theme = useTheme();
+  const { t, lang } = useTranslation("common");
 
   return (
     <Box
@@ -155,6 +138,7 @@ const Section1 = () => {
               }}
             >
               <Fade direction="down" duration={800} triggerOnce>
+                <Typography>{t("test_common")}</Typography>
                 <Title
                   variant={{ xs: "h3", md: "h2", xl: "h1" }}
                   sx={{ whiteSpace: "pre-line" }}
@@ -183,9 +167,7 @@ const Section1 = () => {
           {/* Right Side */}
           <Hidden mdDown>
             <Grid item xs={12} md={5}>
-              <ReactCursorPosition>
-                <DoorSection />
-              </ReactCursorPosition>
+              <DoorSection />
             </Grid>
           </Hidden>
         </Grid>

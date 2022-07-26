@@ -3,20 +3,24 @@ module.exports = {
   defaultLocale: "en",
   pages: {
     "*": ["common"],
-    "/": ["home"],
-    "rgx:^/contribute": ["contribute"],
-    "rgx:^/studio": ["creator-studio"],
-    "rgx:^/account": ["account"],
-    "rgx:^/program": ["programs"],
-    "rgx:^/content": ["content"],
-    "rgx:^/about-us": ["about-us"],
+    "/": ["common"],
   },
-  loadLocaleFrom: (lang, ns) =>
-    import(`./locales/${lang}/common.json`).then((c) => {
-      const common = { ...c.default };
-      return import(`./locales/${lang}/${ns}.json`).then((m) => ({
-        ...common,
-        ...m.default,
-      }));
-    }),
+  // loadLocaleFrom: (locale, namespace) =>
+  //   import(`./locales/${locale}/${namespace}`)
+  //     .then((m) => m.default)
+  //     .catch((err) => console.log(err)),
+
+  loadLocaleFrom: async (lang, ns) => {
+    try {
+      const c = await require(`./locales/${lang}/common.json`);
+      const m = await require(`./locales/${lang}/${ns}.json`);
+
+      return {
+        ...c,
+        ...m,
+      };
+    } catch (error) {
+      console.log(123, error);
+    }
+  },
 };
