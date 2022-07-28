@@ -19,7 +19,7 @@ const DocMetadata = ({
 }) => {
   const { profile } = useAppSelector((state) => state.profile);
 
-  console.log(timestamp);
+  // console.log(timestamp);
 
   const hasUserLiked = likes?.includes?.(profile?.id);
 

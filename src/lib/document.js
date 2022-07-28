@@ -85,12 +85,17 @@ export const getDocumentWithContent = async (cid, seperate) => {
             ? {
                 document: {
                   ...docSnap.data(),
-                  timestamp: contentData.timestamp.toDate().toString(),
+                  timestamp: contentData.timestamp?.toDate()?.toString(),
+                  updatedTimestamp:
+                    contentData?.updatedTimestamp?.toDate?.()?.toString?.() ||
+                    null,
                 },
               }
             : docSnap.data()),
           ...contentData,
-          timestamp: contentData.timestamp.toDate().toString(),
+          timestamp: contentData.timestamp?.toDate()?.toString(),
+          updatedTimestamp:
+            contentData?.updatedTimestamp?.toDate?.()?.toString?.() || null,
         };
 
         return docObj;

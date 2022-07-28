@@ -80,18 +80,6 @@ const EditDocumentPage = ({ response, document, profile, user }) => {
   );
 };
 
-export default EditDocumentPage;
-
-// export async function getServerSideProps(context) {
-//   const docId = context.params.id;
-
-//   const res = await getDocumentWithContent(docId, true);
-
-//   return {
-//     props: { document: res?.document },
-//   };
-// }
-
 export const getServerSideProps = withProtectedUser(async (context) => {
   const docId = context.params.id;
 
@@ -101,3 +89,5 @@ export const getServerSideProps = withProtectedUser(async (context) => {
     props: { response: res, document: res?.document },
   };
 });
+
+export default EditDocumentPage;

@@ -1,10 +1,12 @@
+import MarkdownComponent from "@components/markdownElements";
 import Title from "@components/Title";
-import { Box, Typography } from "@mui/material";
+import { Box, Card, Typography } from "@mui/material";
 import { flattenChildren } from "@utils/helperFunctions";
 import { createSlug } from "@utils/markdown";
 import React from "react";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
+import RemarkMathPlugin from "remark-math";
 
 // function HeadingRenderer(props) {
 //   var children = React.Children.toArray(props.children);
@@ -42,7 +44,15 @@ function HeadingRenderer(props) {
 }
 
 function ParagraphRenderer(props) {
-  return <Typography sx={{ pb: 1 }}>{props.children}</Typography>;
+  return <Typography sx={{ pb: 0.5 }}>{props.children}</Typography>;
+}
+
+function CustomRenderer(props) {
+  if (props.className?.includes("math")) {
+    return <MarkdownComponent value={props.children[0]} />;
+  }
+
+  return <div>{props.children}</div>;
 }
 
 const MarkdownBody = ({ markdown }) => {
@@ -56,7 +66,7 @@ const MarkdownBody = ({ markdown }) => {
       }}
     >
       <ReactMarkdown
-        rehypePlugins={[rehypeRaw]}
+        rehypePlugins={[RemarkMathPlugin, rehypeRaw]}
         components={{
           h1: HeadingRenderer,
           h2: HeadingRenderer,
@@ -65,6 +75,7 @@ const MarkdownBody = ({ markdown }) => {
           h5: HeadingRenderer,
           h6: HeadingRenderer,
           p: ParagraphRenderer,
+          div: CustomRenderer,
         }}
       >
         {markdown}

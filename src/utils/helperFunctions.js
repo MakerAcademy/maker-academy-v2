@@ -72,6 +72,7 @@ export const translateText = async (text = "text", from = "en", to = "es") => {
   }
 };
 
-export const parseLineBreaks = (str) => {
-  return str.replaceAll(" \\n ", "\n");
+export const parseLineBreaks = (str = "") => {
+  if (!str) return "";
+  return str.replaceAll(" \\n ", "\n").replaceAll("\\n", "\n");
 };
