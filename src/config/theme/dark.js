@@ -9,10 +9,12 @@ export const darkTheme = {
       main: "#1AAB9B",
       grey1: grey[900],
       grey2: grey[800],
+      grey3: grey[700],
     },
     text: {
       primary: "#FFF",
       title: "#FFF",
+      invert: "#425466",
     },
     background: {
       default: "#1A1B1F",

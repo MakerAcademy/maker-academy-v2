@@ -1,9 +1,11 @@
 import MarkdownComponent from "@components/markdownElements";
+import MdHero from "@components/markdownElements/MdHero";
 import Title from "@components/Title";
 import { Box, Card, Typography } from "@mui/material";
 import { flattenChildren } from "@utils/helperFunctions";
 import { createSlug } from "@utils/markdown";
 import React from "react";
+import { Fade } from "react-awesome-reveal";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 import RemarkMathPlugin from "remark-math";
@@ -15,7 +17,7 @@ import RemarkMathPlugin from "remark-math";
 //   return React.createElement("h" + props.level, { id: slug }, props.children);
 // }
 
-function HeadingRenderer(props) {
+export const HeadingRenderer = (props) => {
   const level = props.level;
 
   var children = React.Children.toArray(props.children);
@@ -26,34 +28,35 @@ function HeadingRenderer(props) {
 
   return (
     <>
-      <Title
-        variant={`h${level}`}
-        sx={{
-          my: isBigText ? 2 : 1.2,
-          // borderTop: isBigText && "2px solid grey",
-          // borderBottom: isBigText && "2px solid grey",
-          py: isBigText && 0.5,
-          textAlign: isBigText && "center",
-        }}
-        id={slug}
-      >
-        {props.children}
-      </Title>
+      <Fade triggerOnce>
+        <Title
+          variant={`h${level}`}
+          sx={{
+            my: isBigText ? 2 : 1.2,
+            py: isBigText && 0.5,
+            textAlign: isBigText && "center",
+            color: props.color || "text.title",
+          }}
+          id={slug}
+        >
+          {props.children}
+        </Title>
+      </Fade>
     </>
   );
-}
+};
 
-function ParagraphRenderer(props) {
+export const ParagraphRenderer = (props) => {
   return <Typography sx={{ pb: 0.5 }}>{props.children}</Typography>;
-}
+};
 
-function CustomRenderer(props) {
+const CustomRenderer = (props) => {
   if (props.className?.includes("math")) {
     return <MarkdownComponent value={props.children[0]} />;
   }
 
   return <div>{props.children}</div>;
-}
+};
 
 const MarkdownBody = ({ markdown }) => {
   return (
@@ -61,7 +64,7 @@ const MarkdownBody = ({ markdown }) => {
       sx={{
         minHeight: "50vh",
         "& img": {
-          maxWidth: "90%",
+          // maxWidth: "90%",
         },
       }}
     >

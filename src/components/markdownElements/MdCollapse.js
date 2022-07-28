@@ -1,12 +1,10 @@
-import { Card, Collapse, IconButton, Stack, Typography } from "@mui/material";
-import React, { useState } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
-import { parseMdCode } from ".";
+import { Card, Collapse, IconButton, Stack, Typography } from "@mui/material";
 import { parseLineBreaks } from "@utils/helperFunctions";
+import { useState } from "react";
 
-const MdCollapse = ({ value }) => {
-  const data = parseMdCode(value);
+const MdCollapse = ({ data }) => {
   const { title, text } = data || {};
 
   const [open, setOpen] = useState(!!data.open);

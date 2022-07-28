@@ -9,10 +9,12 @@ export const lightTheme = {
       main: "#1ABC9C",
       grey1: grey[100],
       grey2: grey[200],
+      grey3: grey[300],
     },
     text: {
       primary: "#425466",
       title: "#333333",
+      invert: "#FFF",
     },
     background: {
       default: "#F6FAF9",

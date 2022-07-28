@@ -1,10 +1,6 @@
 import { Card, Stack, Typography } from "@mui/material";
-import React from "react";
-import { parseMdCode } from ".";
 
-const MdQuote = ({ value }) => {
-  const data = parseMdCode(value);
-
+const MdQuote = ({ data }) => {
   const { text, author } = data || {};
   const _text = parseLineBreaks(text);
 
