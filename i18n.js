@@ -4,6 +4,7 @@ module.exports = {
   pages: {
     "*": ["common"],
     "/": ["home"],
+    "/content": ["content"],
   },
   // loadLocaleFrom: (locale, namespace) =>
   //   import(`./locales/${locale}/${namespace}`)
