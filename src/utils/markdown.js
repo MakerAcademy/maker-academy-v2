@@ -43,11 +43,11 @@ export const addChapters = (data) => {
       return (1).toString();
     } else {
       let arr = str.split(".");
-      for (let i = 0; i < arr.length; i++) {
+      for (let i = 0; i < arr?.length; i++) {
         arr[i] = parseInt(arr[i]);
       }
 
-      arr[arr.length - 1] += 1;
+      arr[arr?.length - 1] += 1;
       str = arr.join(".");
       return str;
     }
@@ -56,7 +56,7 @@ export const addChapters = (data) => {
   const low = (str, depth) => {
     let arr = str.split(".").slice(0, depth + 1);
 
-    for (let i = 0; i < arr.length; i++) {
+    for (let i = 0; i < arr?.length; i++) {
       arr[i] = parseInt(arr[i]);
     }
 
@@ -92,7 +92,7 @@ export const addChapters = (data) => {
 export const createTitle = (string, stringLimit) => {
   const rawTitle = string.replace(/^#+\s/g, "").replaceAll("\n", "");
 
-  if (rawTitle.length >= stringLimit)
+  if (rawTitle?.length >= stringLimit)
     return `${rawTitle.slice(0, stringLimit)}..`;
 
   return rawTitle;

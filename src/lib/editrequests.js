@@ -20,6 +20,8 @@ import { getDocument } from "./document";
 
 export const getUserEditRequests = async (cid) => {
   try {
+    if (!cid) return null;
+
     const docsRef = collection(db, "edit_requests");
 
     const q = query(
@@ -100,7 +102,7 @@ export const acceptEditRequest = async (data) => {
       ?.toLowerCase()
       ?.replace(/[^a-zA-Z ]/g, "")
       ?.split(" ")
-      ?.filter((i) => i.length > 4);
+      ?.filter((i) => i?.length > 4);
 
     //remove duplicate words
     _searchTerm = Array.from(new Set(_searchTerm)).filter(Boolean);

@@ -6,7 +6,14 @@ export function withUser(gssp, options = {}) {
   const { hideIfUserExists } = options;
 
   return async (context) => {
-    const { isLoggedIn, profile, user } = nookies.get(context);
+    const { isLoggedIn, profile: _profile, user: _user } = nookies.get(context);
+
+    const profile =
+      _profile && _profile != "undefined"
+        ? JSON?.parse?.(_profile || "")
+        : null;
+    const user =
+      _user && _user != "undefined" ? JSON?.parse?.(_user || "") : null;
 
     if (isLoggedIn == "true" && hideIfUserExists) {
       return {
@@ -27,8 +34,8 @@ export function withUser(gssp, options = {}) {
     return {
       props: {
         ...gsspData.props,
-        user: user ? JSON.parse(user) : null,
-        profile: profile ? JSON.parse(profile) : null,
+        user: user ? user : null,
+        profile: profile ? profile : null,
       },
     };
   };
@@ -39,7 +46,14 @@ export function withProtectedUser(gssp, options = {}) {
   const { trustLevel } = options;
 
   return async (context) => {
-    const { isLoggedIn, profile, user } = nookies.get(context);
+    const { isLoggedIn, profile: _profile, user: _user } = nookies.get(context);
+
+    const profile =
+      _profile && _profile != "undefined"
+        ? JSON?.parse?.(_profile || "")
+        : null;
+    const user =
+      _user && _user != "undefined" ? JSON?.parse?.(_user || "") : null;
 
     if (isLoggedIn !== "true") {
       return {
@@ -53,7 +67,7 @@ export function withProtectedUser(gssp, options = {}) {
       ? await gssp(context, { user, profile })
       : { props: {} };
 
-    const { trustLevel: userTrustLevel } = JSON.parse(user);
+    const { trustLevel: userTrustLevel } = user;
 
     if (!!trustLevel && userTrustLevel < trustLevel) {
       return {
@@ -70,8 +84,8 @@ export function withProtectedUser(gssp, options = {}) {
     return {
       props: {
         ...gsspData.props,
-        user: user ? JSON.parse(user) : null,
-        profile: profile ? JSON.parse(profile) : null,
+        user: user ? user : null,
+        profile: profile ? profile : null,
       },
     };
   };

@@ -45,7 +45,7 @@ const generateJsons = (data) => {
 
 const main = async () => {
   const data = await getLocales();
-  if (data && data.length) {
+  if (data && data?.length) {
     generateJsons(data);
   }
 };

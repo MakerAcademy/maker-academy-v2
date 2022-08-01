@@ -19,7 +19,7 @@ const NewCourse = ({ user, profile }) => {
       variant: "default",
     });
 
-    const res = await submitCourse(profile.id, cleanObject(data))
+    const res = await submitCourse(profile?.id, cleanObject(data))
       .then(() => {
         closeSnackbar(_key);
         enqueueSnackbar("Success", {

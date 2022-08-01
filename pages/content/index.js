@@ -9,7 +9,7 @@ const Content = ({ query }) => {
 
   return (
     <Box sx={{ py: { xs: 5, md: 7 } }}>
-      <Container maxWidth="xl" sx={{ mb: { xs: 3, md: 5 } }}>
+      <Container maxWidth="lg" sx={{ mb: { xs: 3, md: 5 } }}>
         <Title
           variant={{ xs: "h4", md: "h3" }}
           sx={{ fontWeight: "600!important" }}
@@ -20,7 +20,7 @@ const Content = ({ query }) => {
 
       <FilterMenu />
 
-      <Container maxWidth="xl" sx={{ my: 7, minHeight: "40vh" }}>
+      <Container maxWidth="lg" sx={{ my: 7, minHeight: "40vh" }}>
         <ContentCards query={query} />
       </Container>
     </Box>

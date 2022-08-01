@@ -1,4 +1,5 @@
 import Root from "@components/Root";
+import { CommonContextProvider } from "@context/commonContext";
 import { store } from "@redux/store/store";
 import { Provider } from "react-redux";
 import { persistStore } from "redux-persist";
@@ -11,9 +12,11 @@ function MyApp({ Component, pageProps }) {
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor} loading={null}>
-        <Root>
-          <Component {...pageProps} />
-        </Root>
+        <CommonContextProvider>
+          <Root>
+            <Component {...pageProps} />
+          </Root>
+        </CommonContextProvider>
       </PersistGate>
     </Provider>
   );

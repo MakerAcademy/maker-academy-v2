@@ -48,7 +48,7 @@ export const buildGithubPdfLink = (user, repo, branch, pathToFile) => {
 // Cut string with ...
 export const truncateString = (str, n) => {
   if (!str) return null;
-  return str.length > n ? str.substr(0, n - 1) + "..." : str;
+  return str?.length > n ? str.substr(0, n - 1) + "..." : str;
 };
 
 export const translateText = async (text = "text", from = "en", to = "es") => {

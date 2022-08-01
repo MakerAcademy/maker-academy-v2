@@ -11,7 +11,7 @@ import useTranslation from "next-translate/useTranslation";
 import { useEffect, useState } from "react";
 
 const buildRows = (data, t) => {
-  return data?.map((item, i) => ({
+  return data?.map?.((item, i) => ({
     id: item.id,
     count: i,
     thumbnail: item.thumbnail,

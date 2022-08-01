@@ -53,7 +53,7 @@ const EditDocumentPage = ({ response, document, profile, user }) => {
       });
   };
 
-  const isRestricted = document.author !== profile.id || user.trustLevel < 4;
+  const isRestricted = document.author !== profile?.id || user?.trustLevel < 4;
 
   return (
     <Box sx={{ position: "relative" }}>

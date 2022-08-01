@@ -46,7 +46,7 @@ const CourseCarriculum = ({ control, name }) => {
 
   useEffect(() => {
     const timer = setTimeout(async () => {
-      const data = await getUserDocuments(profile.id);
+      const data = await getUserDocuments(profile?.id);
       setDocuments(data);
     }, 1000);
     return () => clearTimeout(timer);

@@ -14,6 +14,7 @@ import {
 import {
   BlurSection1,
   DoorBgImage,
+  HomeGraphicImage,
   DoorImage,
 } from "@page-components/Home/images";
 import { parseLineBreaks } from "@utils/helperFunctions";
@@ -83,6 +84,37 @@ const DoorSection = (props) => {
   );
 };
 
+const RightImage = () => {
+  const theme = useTheme();
+
+  return (
+    <Box
+      sx={{
+        height: "100%",
+        zIndex: -1,
+        [theme.breakpoints.up("md")]: {
+          maxHeight: 600,
+          ml: 0,
+          position: "absolute",
+          right: 30,
+          top: 50,
+        },
+        [theme.breakpoints.up("lg")]: {
+          maxHeight: 680,
+          top: 70,
+        },
+      }}
+    >
+      <img
+        src={HomeGraphicImage}
+        alt="Home Image"
+        loading="lazy"
+        style={{ width: "100%", height: "100%", objectFit: "contain" }}
+      />
+    </Box>
+  );
+};
+
 const Section1 = () => {
   const theme = useTheme();
   const { t, lang } = useTranslation("home");
@@ -91,6 +123,7 @@ const Section1 = () => {
     <Box
       sx={{
         position: "relative",
+        overflow: "hidden",
         // backgroundColor: "red",
         [theme.breakpoints.up("md")]: {},
       }}
@@ -114,7 +147,7 @@ const Section1 = () => {
           pt: `${NAVBAR_HEIGHT_MOBILE}px`,
           [theme.breakpoints.up("md")]: {
             px: 10,
-            minHeight: "95vh",
+            minHeight: 750,
           },
           [theme.breakpoints.up("lg")]: {
             pt: `calc(${NAVBAR_HEIGHT_MOBILE}px + 30px)`,
@@ -128,7 +161,7 @@ const Section1 = () => {
           sx={{ my: { xs: 3, lg: 5 } }}
         >
           {/* Left Side */}
-          <Grid item xs={12} md={7}>
+          <Grid item xs={12} md={8} lg={7}>
             <Stack
               spacing={4}
               justifyContent="center"
@@ -160,15 +193,13 @@ const Section1 = () => {
               </Stack>
             </Stack>
           </Grid>
-
-          {/* Right Side */}
-          <Hidden mdDown>
-            <Grid item xs={12} md={5}>
-              <DoorSection />
-            </Grid>
-          </Hidden>
         </Grid>
       </Container>
+
+      {/* Right Side */}
+      <Hidden mdDown>
+        <RightImage />
+      </Hidden>
     </Box>
   );
 };

@@ -1,9 +1,11 @@
 import DashboardPaper from "@components/DashboardPaper";
+import { withProtectedUser } from "@hoc/routes";
 import { useAppDispatch, useAppSelector } from "@hooks/useRedux";
 import { updateContact } from "@lib/user";
 import { Box, Tab, Tabs } from "@mui/material";
 import { updateUserProfile } from "@redux/slices/profileSlice";
 import dynamic from "next/dynamic";
+import { useSnackbar } from "notistack";
 import React, { useEffect, useState } from "react";
 
 const ProfileForm = dynamic(
@@ -24,6 +26,7 @@ const Profile = () => {
   const dispatch = useAppDispatch();
   const { profile } = useAppSelector((state) => state.profile);
   const { user } = useAppSelector((state) => state.user);
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   const [tabValue, setTabValue] = useState(0);
 
@@ -32,9 +35,16 @@ const Profile = () => {
   };
 
   const handleProfileSubmit = async (data) => {
-    const res = await updateContact(profile.id, data).then(() => {
-      dispatch(updateUserProfile());
-    });
+    const res = await updateContact(profile?.id, data)
+      .then(() => {
+        dispatch(updateUserProfile());
+      })
+      .then(() => {
+        enqueueSnackbar("Updated!", {
+          variant: "success",
+          autoHideDuration: 2000,
+        });
+      });
   };
 
   return (
@@ -62,3 +72,5 @@ const Profile = () => {
 };
 
 export default Profile;
+
+export const getServerSideProps = withProtectedUser();

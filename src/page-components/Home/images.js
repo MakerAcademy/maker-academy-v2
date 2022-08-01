@@ -5,6 +5,7 @@ import BlurSection4 from "@assets/images/homepage/blurSection4.png";
 import DiscordIcon from "@assets/images/homepage/Discord.svg";
 import DoorBgImage from "@assets/images/homepage/door-bg.png";
 import DoorImage from "@assets/images/homepage/door.png";
+import HomeGraphicImage from "@assets/images/homepage/mkr-hero.png";
 import ForumIcon from "@assets/images/homepage/Forum.svg";
 import MAIcon from "@assets/images/homepage/MA.svg";
 import MAWhiteIcon from "@assets/images/homepage/MAWhite.png";
@@ -21,6 +22,7 @@ import TwitterIcon from "@assets/images/homepage/Twitter.svg";
 export {
   DoorImage,
   DoorBgImage,
+  HomeGraphicImage,
   BlurSection1,
   BlurSection2,
   BlurSection3,

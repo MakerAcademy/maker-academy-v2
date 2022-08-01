@@ -187,7 +187,7 @@ const ContentCard = ({
             {shortDescription && (
               <Box sx={{ flex: 1 }}>
                 <Tooltip
-                  title={shortDescription.length > 55 ? shortDescription : ""}
+                  title={shortDescription?.length > 55 ? shortDescription : ""}
                   placement="right"
                 >
                   <Typography

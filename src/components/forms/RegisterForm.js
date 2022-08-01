@@ -1,7 +1,10 @@
 import GreenButton from "@components/buttons/GreenButton";
 import FormTextField from "@components/formFields/FormTextField";
+import Title from "@components/Title";
+import { CommonContext } from "@context/commonContext";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { handleGoogleLogin, handleRegister } from "@lib/auth";
+import GoogleIcon from "@mui/icons-material/Google";
 import {
   Divider,
   IconButton,
@@ -9,14 +12,12 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import Router, { useRouter } from "next/router";
-import { useState } from "react";
+import Router from "next/router";
+import { useSnackbar } from "notistack";
+import { useContext, useState } from "react";
+import { Bounce } from "react-awesome-reveal";
 import { useForm } from "react-hook-form";
 import * as Yup from "yup";
-import GoogleIcon from "@mui/icons-material/Google";
-import Title from "@components/Title";
-import { Bounce } from "react-awesome-reveal";
-import { useSnackbar } from "notistack";
 
 export const SocialButton = ({ color, children, ...other }) => {
   const theme = useTheme();
@@ -41,6 +42,7 @@ export const SocialButton = ({ color, children, ...other }) => {
 
 const RegisterForm = () => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const { setCommonState } = useContext(CommonContext);
 
   const [type, setType] = useState("learner");
 
@@ -52,31 +54,34 @@ const RegisterForm = () => {
       "Passwords must match"
     ),
   });
+
   const formOptions = { resolver: yupResolver(validationSchema) };
 
   const { handleSubmit, control } = useForm(formOptions);
 
-  const router = useRouter();
-
   const onSubmit = async (data, e) => {
     const { email, password } = data;
 
-    const _key = enqueueSnackbar("Signing in...", {
-      variant: "default",
-    });
-
     handleRegister(email, password)
       .then(() => {
-        closeSnackbar(_key);
-        enqueueSnackbar("Success", {
-          variant: "success",
-          autoHideDuration: 2000,
-          onClose: () => Router.push("/app/studio"),
+        setCommonState({
+          loadingOverlay: [
+            "Creating User...",
+            "Generating Profile...",
+            "Finalizing...",
+            "Finalizing...",
+            "Finalizing...",
+          ],
         });
+
+        setTimeout(() => {
+          setCommonState({ loadingOverlay: null });
+          Router.push("/");
+        }, 15000);
       })
       .catch((err) => {
-        enqueueSnackbar("Error", {
-          variant: err.message,
+        enqueueSnackbar(JSON.stringify(err || {}), {
+          variant: "error",
           autoHideDuration: 2000,
           onClose: () => Router.push("/register"),
         });
@@ -84,21 +89,33 @@ const RegisterForm = () => {
   };
 
   const onGoogleRegister = async () => {
-    const _key = enqueueSnackbar("Signing in...", {
-      variant: "default",
-    });
-
     handleGoogleLogin()
-      .then(() => {
-        closeSnackbar(_key);
-        enqueueSnackbar("Registeration Success", {
-          variant: "success",
-          autoHideDuration: 2000,
-          onClose: () => Router.push("/app/studio"),
-        });
+      .then(({ isNewUser, user }) => {
+        if (isNewUser) {
+          setCommonState({
+            loadingOverlay: [
+              "Creating User...",
+              "Generating Profile...",
+              "Finalizing...",
+              "Finalizing...",
+              "Finalizing...",
+            ],
+          });
+
+          setTimeout(() => {
+            setCommonState({ loadingOverlay: null });
+            Router.push("/");
+          }, 12000);
+        } else if (user?.uid) {
+          setCommonState({ loadingOverlay: ["Signing in..."] });
+          setTimeout(() => {
+            setCommonState({ loadingOverlay: null });
+            Router.push("/");
+          }, 1000);
+        }
       })
       .catch((err) => {
-        enqueueSnackbar(err.message, {
+        enqueueSnackbar(JSON.stringify(err || {}), {
           variant: "error",
           autoHideDuration: 2000,
           onClose: () => Router.push("/register"),

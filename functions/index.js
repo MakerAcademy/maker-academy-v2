@@ -4,7 +4,7 @@ const admin = require("firebase-admin");
 const config = functions.config().firebase;
 
 try {
-  if (!admin.apps.length) {
+  if (!admin.apps?.length) {
     admin.initializeApp(config);
   }
 } catch (e) {

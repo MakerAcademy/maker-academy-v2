@@ -85,7 +85,7 @@ const ContentDocument = ({ data = {} }) => {
       <Stack direction="row" spacing={5}>
         <Hidden smDown>
           {/* Left side scrollspy */}
-          {ids.length > 0 && (
+          {ids?.length > 0 && (
             <Box sx={{ py: 5 }}>
               {/* <BackButton sx={{ mb: { xs: 1, md: 2 } }} /> */}
               <ScrollSpy title="Table of Content" data={ids} />

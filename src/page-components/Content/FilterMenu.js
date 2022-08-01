@@ -159,17 +159,17 @@ const StyledSearch = ({ value, dispatch, ...other }) => {
   );
 };
 
-const StyledChip = ({ name, label, filters, dispatch, toggle }) => {
+const StyledChip = ({ name, label, slug, filters, dispatch, toggle }) => {
   const { query } = useRouter();
 
   //   console.log(filters);
-  const selected = filters?.includes?.(label) || filters === label;
+  const selected = filters?.includes?.(slug) || filters === slug;
 
   const handleClick = () => {
     dispatch({
       type: toggle ? "TOGGLE" : selected ? "REMOVE" : "ADD",
       field: name,
-      payload: label,
+      payload: slug,
     });
   };
 
@@ -311,7 +311,7 @@ const FilterMenu = () => {
 
   return (
     <Box sx={{ py: 2, background: theme.palette.background.gradient1 }}>
-      <Container maxWidth="xl">
+      <Container maxWidth="lg">
         <Stack
           direction={{ xs: "column", md: "row" }}
           alignItems="center"
@@ -410,6 +410,7 @@ const FilterMenu = () => {
                     <StyledChip
                       name="category"
                       label={t(item)}
+                      slug={item}
                       key={i}
                       filters={filters?.category}
                       dispatch={dispatch}
@@ -423,6 +424,7 @@ const FilterMenu = () => {
                     <StyledChip
                       name="categories"
                       label={t(item)}
+                      slug={item}
                       key={i}
                       filters={filters?.categories}
                       dispatch={dispatch}
@@ -444,6 +446,7 @@ const FilterMenu = () => {
                   <StyledChip
                     name="difficulty"
                     label={t(item)}
+                    slug={item}
                     key={i}
                     filters={filters?.difficulty}
                     dispatch={dispatch}
@@ -464,6 +467,7 @@ const FilterMenu = () => {
                   <StyledChip
                     name="author"
                     label={t(item)}
+                    slug={item}
                     key={i}
                     filters={filters?.author}
                     dispatch={dispatch}

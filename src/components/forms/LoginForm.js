@@ -28,22 +28,25 @@ const LoginForm = () => {
   const onSubmit = async (data, e) => {
     const { email, password } = data;
 
-    const _key = enqueueSnackbar("Signing in...", {
-      variant: "default",
-    });
-
     handleLogin(email, password)
       .then((res) => {
-        closeSnackbar(_key);
-        enqueueSnackbar("Signed in", {
-          variant: "success",
-          autoHideDuration: 2000,
-          onClose: () => Router.push("/app/studio"),
+        setCommonState({
+          loadingOverlay: [
+            "Creating User...",
+            "Generating Profile...",
+            "Finalizing...",
+            "Finalizing...",
+            "Finalizing...",
+          ],
         });
+
+        setTimeout(() => {
+          setCommonState({ loadingOverlay: null });
+          Router.push("/");
+        }, 1000);
       })
       .catch((err) => {
-        closeSnackbar(_key);
-        enqueueSnackbar(err.message, {
+        enqueueSnackbar(JSON.stringify(err || {}), {
           variant: "error",
           autoHideDuration: 4000,
           onClose: () => Router.push("/login"),
@@ -52,22 +55,34 @@ const LoginForm = () => {
   };
 
   const onGoogleLogin = async () => {
-    const _key = enqueueSnackbar("Signing in...", {
-      variant: "default",
-    });
-
     handleGoogleLogin()
-      .then(() => {
-        closeSnackbar(_key);
-        enqueueSnackbar("Success", {
-          variant: "success",
-          autoHideDuration: 2000,
-          onClose: () => Router.push("/app/studio"),
-        });
+      .then(({ isNewUser, user }) => {
+        if (isNewUser) {
+          setCommonState({
+            loadingOverlay: [
+              "Creating User...",
+              "Generating Profile...",
+              "Finalizing...",
+              "Finalizing...",
+              "Finalizing...",
+            ],
+          });
+
+          setTimeout(() => {
+            setCommonState({ loadingOverlay: null });
+            Router.push("/");
+          }, 12000);
+        } else if (user?.uid) {
+          setCommonState({ loadingOverlay: ["Signing in..."] });
+          setTimeout(() => {
+            setCommonState({ loadingOverlay: null });
+            Router.push("/");
+          }, 1000);
+        }
       })
       .catch((err) => {
-        enqueueSnackbar("Error", {
-          variant: err.message,
+        enqueueSnackbar(JSON.stringify(err || {}), {
+          variant: "error",
           autoHideDuration: 2000,
           onClose: () => Router.push("/login"),
         });

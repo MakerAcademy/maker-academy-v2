@@ -92,6 +92,8 @@ export const getContent = async (params) => {
 
 export const getUserContent = async ({ author }) => {
   try {
+    if (!author) return null;
+    
     const docsRef = collection(db, "content");
 
     const q = query(

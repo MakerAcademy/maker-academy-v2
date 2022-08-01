@@ -1,3 +1,4 @@
+import LoadingOverlay from "@components/LoadingOverlay";
 import { createTheme } from "@config/theme";
 import { auth } from "@firebase";
 import { useAppDispatch, useAppSelector } from "@hooks/useRedux";
@@ -58,17 +59,17 @@ const Root = ({ children }) => {
 
       const token = await _user.getIdToken();
 
-      const userProfile = await getContact(_user.uid);
+      const userProfile = await getContact(_user?.uid);
       // dispatch(setProfile(userProfile));
 
-      dispatch(updateUserProfile({ uid: _user.uid }));
+      dispatch(updateUserProfile({ uid: _user?.uid }));
 
       const userData = await getUser(uid);
       dispatch(
         setUser({
           ...user,
           ...userObj,
-          trustLevel: userData?.trustLevel || user.trustLevel,
+          trustLevel: userData?.trustLevel || user?.trustLevel,
         })
       );
 
@@ -85,7 +86,7 @@ const Root = ({ children }) => {
         JSON.stringify({
           ...user,
           ...userObj,
-          trustLevel: userData?.trustLevel || user.trustLevel,
+          trustLevel: userData?.trustLevel || user?.trustLevel,
         }),
         { path: "/" }
       );
@@ -116,6 +117,7 @@ const Root = ({ children }) => {
         <CssBaseline />
         <Layout>{children}</Layout>
       </SnackbarProvider>
+      <LoadingOverlay />
     </ThemeProvider>
   );
 };

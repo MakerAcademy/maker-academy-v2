@@ -27,7 +27,7 @@ export const submitCourse = async (cid, data = {}) => {
       ?.toLowerCase()
       ?.replace(/[^a-zA-Z ]/g, "")
       ?.split(" ")
-      ?.filter((i) => i.length > 4);
+      ?.filter((i) => i?.length > 4);
 
     //remove duplicate words
     _searchTerm = Array.from(new Set(_searchTerm)).filter(Boolean);

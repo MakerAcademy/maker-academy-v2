@@ -58,6 +58,7 @@
     "remark-math": "^5.1.1",
     "slick-carousel": "^1.8.1",
     "tsparticles": "^2.1.0",
+    "typewriter-effect": "^2.19.0",
     "yup": "^0.32.11"
   },
   "devDependencies": {

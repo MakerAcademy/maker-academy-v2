@@ -17,6 +17,7 @@ const ContentCards = ({ query }) => {
     pageSize,
     searchTerm,
     firstVisible,
+    reachedLast,
     empty,
     lastVisible,
   } = useAppSelector((state) => state.content);
@@ -25,35 +26,37 @@ const ContentCards = ({ query }) => {
 
   const dispatch = useAppDispatch();
 
+  const fetchQueries = {
+    contentType:
+      query.contentType === "courses"
+        ? "course"
+        : query.contentType === "documents"
+        ? "document"
+        : null,
+    author: query.author,
+    categories: query.categories?.split(",") || [],
+    difficulty: query.difficulty,
+    category: query.category,
+    searchTerm: query?.searchTerm,
+    limit: 10,
+  };
+
   useEffect(() => {
-    dispatch(
-      fetchContentData({
-        contentType:
-          query.contentType === "courses"
-            ? "course"
-            : query.contentType === "documents"
-            ? "document"
-            : null,
-        author: query.author,
-        categories: query.categories?.split(",") || [],
-        difficulty: query.difficulty,
-        category: query.category,
-        searchTerm: query?.searchTerm,
-        limit: 10,
-      })
-    );
+    dispatch(fetchContentData(fetchQueries));
   }, [query]);
 
   const fetchMorePosts = () => {
-    dispatch(fetchContentData({ merge: true }));
+    dispatch(fetchContentData({ merge: true, ...fetchQueries }));
   };
+
+  console.log("reachedlast", reachedLast);
 
   return (
     <Box>
       <Grid container spacing={4}>
         {content?.length > 0 &&
           content.map((item, i) => (
-            <Grid item xs={12} sm={6} md={3} key={i}>
+            <Grid item xs={12} sm={6} md={4} key={i}>
               <ContentCard {...item} />
             </Grid>
           ))}
@@ -67,7 +70,7 @@ const ContentCards = ({ query }) => {
       >
         {loading && <Title variant="h6"> {t("loading")}... </Title>}
 
-        {!loading && !empty && (
+        {!loading && !empty && !reachedLast && (
           <GreenButton variant="outlined" size="small" onClick={fetchMorePosts}>
             {t("load_more")}
           </GreenButton>

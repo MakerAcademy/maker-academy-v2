@@ -1,10 +1,9 @@
 import { getContent, getPendingContent, getUserContent } from "@lib/content";
-import { getUserEditRequests } from "@lib/editrequests";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   content: [],
-  limit: 5,
+  limit: 1,
   loading: false,
   empty: false,
   firstVisible: null,
@@ -12,6 +11,7 @@ const initialState = {
   searchTerm: "",
   sort: "timestamp",
   order: "desc",
+  reachedLast: false,
 };
 
 export const fetchContentData = createAsyncThunk(
@@ -45,6 +45,8 @@ export const fetchUserContent = createAsyncThunk(
     } = getState();
 
     const res = await getUserContent({ author: payload?.cid || id });
+
+    console.log(res);
 
     const result = res;
 
@@ -105,21 +107,21 @@ export const contentSlice = createSlice({
     builder
       .addCase(fetchContentData.pending, (state) => {
         state.empty = false;
+        state.reachedLast = false;
         state.loading = true;
       })
       .addCase(fetchContentData.fulfilled, (state, action) => {
         const result = action.payload.result;
         const merge = action.payload.merge;
 
-        // console.log("Payload", result);
-
         const _content = !merge ? result : [...state.content, ...result];
         state.content = _content;
 
         state.firstVisible = _content?.[0];
-        state.lastVisible = _content?.[_content.length - 1];
+        state.lastVisible = _content?.[_content?.length - 1];
 
         if (!_content?.length) state.empty = true;
+        if (!result?.length) state.reachedLast = true;
 
         state.loading = false;
       });
