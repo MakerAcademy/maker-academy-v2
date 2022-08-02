@@ -46,11 +46,13 @@ const LoginForm = () => {
         }, 1000);
       })
       .catch((err) => {
-        enqueueSnackbar(JSON.stringify(err || {}), {
-          variant: "error",
-          autoHideDuration: 4000,
-          onClose: () => Router.push("/login"),
-        });
+        if (err?.message) {
+          enqueueSnackbar(JSON.stringify(err || {}), {
+            variant: "error",
+            autoHideDuration: 4000,
+            onClose: () => Router.push("/login"),
+          });
+        }
       });
   };
 
@@ -81,11 +83,13 @@ const LoginForm = () => {
         }
       })
       .catch((err) => {
-        enqueueSnackbar(JSON.stringify(err || {}), {
-          variant: "error",
-          autoHideDuration: 2000,
-          onClose: () => Router.push("/login"),
-        });
+        if (err?.message) {
+          enqueueSnackbar(JSON.stringify(err || {}), {
+            variant: "error",
+            autoHideDuration: 4000,
+            onClose: () => Router.push("/login"),
+          });
+        }
       });
   };
 

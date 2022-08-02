@@ -32,7 +32,7 @@ const DashboardNavbar = () => {
 
   const { pathname } = useRouter();
 
-  const { t } = useTranslation("common");
+  const { t } = useTranslation("dashboard");
 
   const theme = useTheme();
 

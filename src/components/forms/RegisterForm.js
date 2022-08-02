@@ -80,11 +80,13 @@ const RegisterForm = () => {
         }, 15000);
       })
       .catch((err) => {
-        enqueueSnackbar(JSON.stringify(err || {}), {
-          variant: "error",
-          autoHideDuration: 2000,
-          onClose: () => Router.push("/register"),
-        });
+        if (err?.message) {
+          enqueueSnackbar(JSON.stringify(err || {}), {
+            variant: "error",
+            autoHideDuration: 4000,
+            onClose: () => Router.push("/login"),
+          });
+        }
       });
   };
 
@@ -115,11 +117,13 @@ const RegisterForm = () => {
         }
       })
       .catch((err) => {
-        enqueueSnackbar(JSON.stringify(err || {}), {
-          variant: "error",
-          autoHideDuration: 2000,
-          onClose: () => Router.push("/register"),
-        });
+        if (err?.message) {
+          enqueueSnackbar(JSON.stringify(err || {}), {
+            variant: "error",
+            autoHideDuration: 4000,
+            onClose: () => Router.push("/login"),
+          });
+        }
       });
   };
 

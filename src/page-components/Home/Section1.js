@@ -94,13 +94,19 @@ const RightImage = () => {
         zIndex: -1,
         [theme.breakpoints.up("md")]: {
           maxHeight: 600,
-          ml: 0,
           position: "absolute",
-          right: 30,
+          right: 0,
           top: 50,
         },
         [theme.breakpoints.up("lg")]: {
-          maxHeight: 680,
+          ml: -4,
+          right: 10,
+          maxHeight: 700,
+          top: 70,
+        },
+        [theme.breakpoints.up("xl")]: {
+          right: 30,
+          maxHeight: 740,
           top: 70,
         },
       }}
@@ -161,7 +167,7 @@ const Section1 = () => {
           sx={{ my: { xs: 3, lg: 5 } }}
         >
           {/* Left Side */}
-          <Grid item xs={12} md={8} lg={7}>
+          <Grid item xs={12} md={7}>
             <Stack
               spacing={4}
               justifyContent="center"

@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from "@hooks/useRedux";
 import { updateContact } from "@lib/user";
 import { Box, Tab, Tabs } from "@mui/material";
 import { updateUserProfile } from "@redux/slices/profileSlice";
+import useTranslation from "next-translate/useTranslation";
 import dynamic from "next/dynamic";
 import { useSnackbar } from "notistack";
 import React, { useEffect, useState } from "react";
@@ -28,6 +29,8 @@ const Profile = () => {
   const { user } = useAppSelector((state) => state.user);
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
+  const { t } = useTranslation("dashboard");
+
   const [tabValue, setTabValue] = useState(0);
 
   const handleChange = (event, newValue) => {
@@ -51,10 +54,10 @@ const Profile = () => {
     <DashboardPaper>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs value={tabValue} onChange={handleChange}>
-          <Tab label="Profile" sx={{ textTransform: "inherit" }} />
-          <Tab label="Social Media" sx={{ textTransform: "inherit" }} />
-          <Tab label="Password" sx={{ textTransform: "inherit" }} />
-          <Tab label="Personal Data" sx={{ textTransform: "inherit" }} />
+          <Tab label={t("profile")} sx={{ textTransform: "inherit" }} />
+          <Tab label={t("social_media")} sx={{ textTransform: "inherit" }} />
+          <Tab label={t("password")} sx={{ textTransform: "inherit" }} />
+          <Tab label={t("personal_data")} sx={{ textTransform: "inherit" }} />
         </Tabs>
       </Box>
 

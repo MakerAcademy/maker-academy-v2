@@ -5,6 +5,7 @@ module.exports = {
     "*": ["common"],
     "/": ["home"],
     "/content": ["content"],
+    "rgx:^/app": ["dashboard"],
   },
   // loadLocaleFrom: (locale, namespace) =>
   //   import(`./locales/${locale}/${namespace}`)
