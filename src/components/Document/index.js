@@ -94,7 +94,7 @@ const ContentDocument = ({ data = {} }) => {
         </Hidden>
 
         {/* Right side content */}
-        <Container sx={{ py: 5 }}>
+        <Container maxWidth="md" sx={{ py: 5 }}>
           <Stack spacing={3}>
             {/* Breadcrumbs */}
             <DocumentBreadcrumbs />

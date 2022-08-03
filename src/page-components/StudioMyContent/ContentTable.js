@@ -1,6 +1,6 @@
 import GreenButton from "@components/buttons/GreenButton";
 import DashboardPaper from "@components/DashboardPaper";
-import { useAppDispatch } from "@hooks/useRedux";
+import { useAppDispatch, useAppSelector } from "@hooks/useRedux";
 import EditIcon from "@mui/icons-material/Edit";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import { Box, Stack, Typography } from "@mui/material";
@@ -127,12 +127,15 @@ const ContentTable = () => {
   const [pageSize, setPageSize] = useState(10);
   const [data, setData] = useState(null);
   const dispatch = useAppDispatch();
+  const { profile } = useAppSelector((state) => state.profile);
 
   useEffect(() => {
-    dispatch(fetchUserContent())
-      .then(({ payload }) => setData(payload?.result))
-      .then(() => setLoading(false));
-  }, []);
+    if (profile?.id && !data) {
+      dispatch(fetchUserContent())
+        .then(({ payload }) => setData(payload?.result))
+        .then(() => setLoading(false));
+    }
+  }, [profile]);
 
   const { t } = useTranslation("creator-studio");
 

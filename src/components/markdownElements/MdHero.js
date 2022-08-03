@@ -47,12 +47,36 @@ const MdHero = ({ data }) => {
         <ReactMarkdown
           rehypePlugins={[rehypeRaw]}
           components={{
-            h1: (_props) => HeadingRenderer({ ..._props, color: _textColor }),
-            h2: (_props) => HeadingRenderer({ ..._props, color: _textColor }),
-            h3: (_props) => HeadingRenderer({ ..._props, color: _textColor }),
-            h4: (_props) => HeadingRenderer({ ..._props, color: _textColor }),
-            h5: (_props) => HeadingRenderer({ ..._props, color: _textColor }),
-            h6: (_props) => HeadingRenderer({ ..._props, color: _textColor }),
+            h1: (_props) =>
+              HeadingRenderer({
+                ..._props,
+                sx: { mt: 0, mb: 1, color: _textColor },
+              }),
+            h2: (_props) =>
+              HeadingRenderer({
+                ..._props,
+                sx: { mt: 0, mb: 1, color: _textColor },
+              }),
+            h3: (_props) =>
+              HeadingRenderer({
+                ..._props,
+                sx: { mt: 0, mb: 1, color: _textColor },
+              }),
+            h4: (_props) =>
+              HeadingRenderer({
+                ..._props,
+                sx: { mt: 0, mb: 1, color: _textColor },
+              }),
+            h5: (_props) =>
+              HeadingRenderer({
+                ..._props,
+                sx: { mt: 0, mb: 1, color: _textColor },
+              }),
+            h6: (_props) =>
+              HeadingRenderer({
+                ..._props,
+                sx: { mt: 0, mb: 1, color: _textColor },
+              }),
             p: ParagraphRenderer,
           }}
         >

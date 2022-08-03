@@ -46,8 +46,6 @@ export const fetchUserContent = createAsyncThunk(
 
     const res = await getUserContent({ author: payload?.cid || id });
 
-    console.log(res);
-
     const result = res;
 
     return { result };

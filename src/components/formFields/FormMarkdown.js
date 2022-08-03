@@ -1,9 +1,10 @@
-import { Box, Typography, useTheme } from "@mui/material";
+import { Box, Stack, Typography, useTheme } from "@mui/material";
 import "@toast-ui/editor/dist/toastui-editor.css";
 import dynamic from "next/dynamic";
 import { Editor } from "@toast-ui/react-editor";
 import { useRef } from "react";
 import { Controller } from "react-hook-form";
+import ElementsTabs from "@components/markdownElements/ElementsTabs";
 
 // const Editor = dynamic(
 //   () => import("@toast-ui/react-editor").then((m) => m.Editor),
@@ -15,48 +16,63 @@ const FormMarkdown = ({ name, control, sx = {}, label, ...props }) => {
   const editor = useRef();
 
   return (
-    <Controller
-      name={name}
-      control={control}
-      render={({ field: { ...field }, fieldState: { error }, formState }) => (
-        <Box
-          sx={{
-            minHeight: 400,
-            cursor: props.disabled ? "not-allowed" : "auto",
-            [theme.breakpoints.up("xl")]: {
-              minHeight: 600,
-            },
-            "& > div": {
-              minHeight: "inherit !important",
-            },
-            "&.toastui-editor-defaultUI": {
-              minHeight: "inherit !important",
-            },
-            "&.toastui-editor-mode-switch": { display: "none" },
-            ...sx,
-          }}
-          data-color-mode={theme.palette.mode}
-        >
-          {label && <Typography sx={{ pb: 1 }}>{label}</Typography>}
-
-          <Editor
-            // theme={theme.palette.mode}
-            previewStyle="vertical"
-            initialEditType="markdown"
-            {...props}
-            {...field}
-            initialValue={field?.value}
-            onChange={() => {
-              props.disabled
-                ? null
-                : field.onChange(editor?.current?.editorInst?.getMarkdown?.());
+    <Stack
+      direction="row"
+      spacing={1}
+      sx={{
+        minHeight: 450,
+        [theme.breakpoints.up("xl")]: {
+          minHeight: 600,
+        },
+      }}
+    >
+      <Controller
+        name={name}
+        control={control}
+        render={({ field: { ...field }, fieldState: { error }, formState }) => (
+          <Box
+            sx={{
+              width: "100%",
+              cursor: props.disabled ? "not-allowed" : "auto",
+              minHeight: "inherit",
+              "& > div": {
+                minHeight: "inherit !important",
+                backgroundColor: "#fff",
+              },
+              "&.toastui-editor-defaultUI": {
+                minHeight: "inherit !important",
+              },
+              "&.toastui-editor-mode-switch": { display: "none" },
+              ...sx,
             }}
-            ref={editor}
-          />
-          {error && <Typography>{error}</Typography>}
-        </Box>
-      )}
-    />
+            data-color-mode={theme.palette.mode}
+          >
+            {label && <Typography sx={{ pb: 1 }}>{label}</Typography>}
+
+            <Editor
+              // theme={theme.palette.mode}
+              previewStyle="vertical"
+              initialEditType="markdown"
+              {...props}
+              {...field}
+              initialValue={field?.value}
+              onChange={() => {
+                props.disabled
+                  ? null
+                  : field.onChange(
+                      editor?.current?.editorInst?.getMarkdown?.()
+                    );
+              }}
+              ref={editor}
+              // toolbarItems={["bold"]}
+            />
+            {error && <Typography>{error}</Typography>}
+          </Box>
+        )}
+      />
+
+      <ElementsTabs />
+    </Stack>
   );
 };
 

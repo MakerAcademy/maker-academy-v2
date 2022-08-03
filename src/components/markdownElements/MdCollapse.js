@@ -5,9 +5,9 @@ import { parseLineBreaks } from "@utils/helperFunctions";
 import { useState } from "react";
 
 const MdCollapse = ({ data }) => {
-  const { title, text } = data || {};
+  const { title, text, defaultOpen } = data || {};
 
-  const [open, setOpen] = useState(!!data.open);
+  const [open, setOpen] = useState(!!defaultOpen);
 
   const _text = parseLineBreaks(text);
 
@@ -16,14 +16,18 @@ const MdCollapse = ({ data }) => {
   };
 
   return (
-    <Card sx={{ p: 2 }}>
+    <Card sx={{ p: 2, borderRadius: "16px" }} elevation={0}>
       <Stack direction="row" alignItems="center" justifyContent="space-between">
         <Typography>{title}</Typography>
-        <IconButton size="small" onClick={triggerCollapse}>
+        <IconButton
+          size="small"
+          onClick={triggerCollapse}
+          sx={{ bgcolor: "primary.grey1" }}
+        >
           {open ? (
-            <RemoveIcon fontSize="small" />
+            <RemoveIcon sx={{ fontSize: 16 }} />
           ) : (
-            <AddIcon fontSize="small" />
+            <AddIcon sx={{ fontSize: 16 }} />
           )}
         </IconButton>
       </Stack>

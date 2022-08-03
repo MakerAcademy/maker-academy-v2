@@ -69,4 +69,36 @@ export const getCourse = async (cid) => {
   }
 };
 
-export const getFullCourse = async (cid) => {};
+export const getCourseWithContent = async (cid, seperate) => {
+  try {
+    const contentRef = doc(db, "content", cid);
+    const contentSnap = await getDoc(contentRef);
+
+    if (contentSnap.exists()) {
+      const contentData = contentSnap.data();
+
+      const docRef = doc(db, "courses", contentData.published);
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        const docObj = {
+          ...(seperate
+            ? {
+                document: {
+                  ...docSnap.data(),
+                  timestamp: contentData.timestamp?.toDate?.()?.toString(),
+                },
+              }
+            : docSnap.data()),
+          ...contentData,
+          timestamp: contentData.timestamp?.toDate?.()?.toString(),
+        };
+
+        return cleanObject(docObj);
+      }
+    }
+  } catch (error) {
+    console.log("cid", cid, "No such course!");
+    throw error;
+  }
+};

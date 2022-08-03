@@ -50,7 +50,7 @@ export const CONTENT_CATEGORIES = [
 ];
 
 export const DASHBOARD_BREADCRUMBS = {
-  "/app": "dashbaord",
+  "/app": "dashboard",
   "/app/studio": "dashboard_studio_content",
   "/app/studio/new/document": "dashboard_studio_new_document",
   "/app/studio/new/course": "dashboard_studio_new_course",

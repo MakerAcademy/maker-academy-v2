@@ -1,71 +1,102 @@
+import Title from "@components/Title";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import {
   Box,
+  Button,
   Container,
-  Divider,
-  Grid,
+  Paper,
   Tab,
   Tabs,
+  Typography,
   useTheme,
 } from "@mui/material";
 import { grey } from "@mui/material/colors";
-import React, { useState } from "react";
-import Content from "./Content";
-import Overview from "./Overview";
-import CourseCard from "./CourseCard";
+import hex from "@utils/hexTransparency";
+import { useState } from "react";
+import Content from "./ContentTab";
+import Overview from "./OverviewTab";
 
-const CourseBody = () => {
-  const theme = useTheme();
+const CourseBody = ({ course = {} }) => {
   const [tabValue, setTabValue] = useState(0);
 
+  const theme = useTheme();
+  const { title, description, category, brand, level, duration, likes, views } =
+    course;
+
   return (
-    <Container maxWidth="xl" sx={{ py: 3 }}>
-      <Grid container spacing={5}>
-        {/* Content */}
-        <Grid item xs={12} md={8} lg={9}>
+    <Box sx={{ my: 5 }}>
+      {/* Content */}
+      <Container maxWidth="md" sx={{ py: 3 }}>
+        <Box spacing={2}>
+          {/* Breadcrumbs */}
+          <Typography sx={{ mb: 2 }}>{`Home > Courses > ${title}`}</Typography>
+
+          {/* Image */}
+          <Paper
+            sx={{
+              mb: 4,
+              height: 240,
+              borderRadius: "24px",
+              boxShadow:
+                "0px 8px 18px -6px rgba(24, 39, 75, 0.12), 0px 12px 42px -4px rgba(24, 39, 75, 0.12)",
+            }}
+          ></Paper>
+
+          {/* Title */}
+          <Title variant={{ xs: "h4", md: "h2" }} sx={{ mb: 2 }}>
+            {title}
+          </Title>
+
           <Tabs
             value={tabValue}
             onChange={(e, v) => setTabValue(v)}
             variant="scrollable"
             scrollButtons="auto"
+            indicatorColor="transparent"
             sx={{
+              mb: 5,
               "& .MuiButtonBase-root": {
+                mr: 1.5,
+                borderRadius: "12px",
                 textTransform: "inherit",
                 color: grey[700],
+                backgroundColor: `${theme.palette.primary.grey1}`,
                 fontWeight: 400,
               },
               "& .Mui-selected": {
                 color: theme.palette.primary.main,
+                backgroundColor: `${theme.palette.primary.main}${hex["10%"]}`,
               },
             }}
           >
             <Tab label="Overview" />
             <Tab label="Course content" />
-            <Tab label="Instructor" />
-            <Tab label="Reviews" />
           </Tabs>
-          <Divider />
+
+          {/* <Divider /> */}
 
           <Box sx={{ my: 5 }}>
             {tabValue === 0 && <Overview />}
 
             {tabValue === 1 && <Content />}
           </Box>
-        </Grid>
+        </Box>
+      </Container>
 
-        {/* Card */}
-        <Grid item xs={12} md={4} lg={3} sx={{ zIndex: 1 }}>
-          <Box
-            sx={{
-              position: "sticky",
-              top: 20,
-              
-            }}
-          >
-            <CourseCard />
-          </Box>
-        </Grid>
-      </Grid>
-    </Container>
+      {/* Start */}
+      <Button
+        fullWidth
+        variant="contained"
+        sx={{
+          py: 3,
+          color: "#fff",
+          borderRadius: 0,
+        }}
+      >
+        <Typography variant="h6">Start this course</Typography>
+        <ArrowForwardIcon sx={{ ml: 1 }} />
+      </Button>
+    </Box>
   );
 };
 

@@ -25,6 +25,7 @@ export const HeadingRenderer = (props) => {
   var slug = createSlug(text);
 
   const isBigText = level <= 5;
+  const align = props.align || "center";
 
   return (
     <>
@@ -34,8 +35,9 @@ export const HeadingRenderer = (props) => {
           sx={{
             my: isBigText ? 2 : 1.2,
             py: isBigText && 0.5,
-            textAlign: isBigText && "center",
-            color: props.color || "text.title",
+            textAlign: isBigText && align,
+            color: "text.title",
+            ...(props.sx || {}),
           }}
           id={slug}
         >
