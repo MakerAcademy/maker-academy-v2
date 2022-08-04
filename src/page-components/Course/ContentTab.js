@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import React from "react";
 
-const Content = ({ title }) => {
+const Content = ({ course }) => {
   return <Box>Content</Box>;
 };
 

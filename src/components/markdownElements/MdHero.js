@@ -37,13 +37,7 @@ const MdHero = ({ data }) => {
         backgroundSize: "cover",
       }}
     >
-      <Box
-        sx={{
-          px: 2,
-          whiteSpace: "pre-line",
-          color: _textColor,
-        }}
-      >
+      <Box sx={{ px: 2, color: _textColor }}>
         <ReactMarkdown
           rehypePlugins={[rehypeRaw]}
           components={{

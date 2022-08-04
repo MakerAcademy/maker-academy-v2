@@ -1,7 +1,7 @@
 import MarkdownComponent from "@components/markdownElements";
-import MdHero from "@components/markdownElements/MdHero";
+import MdVoteResults from "@components/markdownElements/MdVoteResults";
 import Title from "@components/Title";
-import { Box, Card, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { flattenChildren } from "@utils/helperFunctions";
 import { createSlug } from "@utils/markdown";
 import React from "react";
@@ -49,7 +49,11 @@ export const HeadingRenderer = (props) => {
 };
 
 export const ParagraphRenderer = (props) => {
-  return <Typography sx={{ pb: 0.5 }}>{props.children}</Typography>;
+  return (
+    <Typography sx={{ pb: 0.5, whiteSpace: "pre-line" }}>
+      {props.children}
+    </Typography>
+  );
 };
 
 const CustomRenderer = (props) => {

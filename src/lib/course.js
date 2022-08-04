@@ -6,6 +6,8 @@ import {
   doc,
   serverTimestamp,
   getDoc,
+  updateDoc,
+  arrayUnion,
 } from "firebase/firestore";
 
 export const submitCourse = async (cid, data = {}) => {
@@ -43,6 +45,7 @@ export const submitCourse = async (cid, data = {}) => {
       views: 0,
       contributors: [],
       editRequests: [],
+      enrolledUsers: [],
       status: "pending",
       timestamp: serverTimestamp(),
       private: !!data?.private,
@@ -86,19 +89,37 @@ export const getCourseWithContent = async (cid, seperate) => {
             ? {
                 document: {
                   ...docSnap.data(),
-                  timestamp: contentData.timestamp?.toDate?.()?.toString(),
+                  timestamp:
+                    contentData.timestamp?.toDate?.()?.toString() || null,
                 },
               }
             : docSnap.data()),
           ...contentData,
-          timestamp: contentData.timestamp?.toDate?.()?.toString(),
+          timestamp: contentData.timestamp?.toDate?.()?.toString() || null,
         };
 
-        return cleanObject(docObj);
+        return docObj;
       }
     }
   } catch (error) {
     console.log("cid", cid, "No such course!");
+    throw error;
+  }
+};
+
+export const enrollToCourse = async (contentId, cid) => {
+  try {
+    if (!contentId || !cid)
+      throw { message: "Missing Content ID or Profile ID" };
+
+    const contentRef = doc(db, "content", contentId);
+    await updateDoc(contentRef, {
+      enrolledUsers: arrayUnion(cid),
+    });
+
+    return { success: true };
+  } catch (error) {
+    console.log(error);
     throw error;
   }
 };

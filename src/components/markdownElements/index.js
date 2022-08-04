@@ -1,9 +1,31 @@
 import React from "react";
 import MarkdownBox from "./MdBox";
 import MdCollapse from "./MdCollapse";
+import MdCtaBox from "./MdCtaBox";
 import MdHero from "./MdHero";
 import MdQuote from "./MdQuote";
 import MdTooltip from "./MdTooltip";
+import MdVoteResults from "./MdVoteResults";
+
+const _parseArray = (str) => {
+  if (!str) return str;
+
+  if (str.startsWith("[") && str.endsWith("]")) {
+    var arr = JSON.parse(str.replace(/'/g, '"'));
+    return arr;
+  }
+
+  return str;
+};
+
+const _parseBoolean = (str) => {
+  if (!str) return str;
+
+  if (str === "true") return true;
+  if (str === "false") return false;
+
+  return str;
+};
 
 const _mergeDots = (object) => {
   Object.keys(object)
@@ -14,7 +36,10 @@ const _mergeDots = (object) => {
       const child = combined[1];
       if (!object[parent]) object[parent] = {}; // in case the key doesn't exist yet
 
-      object[parent][child] = object[key]; // assign the value.
+      let _val = _parseArray(object[key]);
+      _val = _parseBoolean(_val);
+
+      object[parent][child] = _val; // assign the value.
       delete object[key]; // remove the ugly key
     });
 
@@ -45,7 +70,10 @@ export const parseMdCode = (_str) => {
       const [key, ...rest] = item.split(":");
       let value = rest.join(":").trim()?.replaceAll("<<break>>", "\n");
 
-      acc[key] = value;
+      let _val = _parseArray(value);
+      _val = _parseBoolean(_val);
+
+      acc[key] = _val;
     }
 
     return acc;
@@ -75,6 +103,8 @@ MarkdownComponent.type = {
   collapse: MdCollapse,
   quote: MdQuote,
   hero: MdHero,
+  cta_box: MdCtaBox,
+  vote_results: MdVoteResults,
 };
 
 export default MarkdownComponent;

@@ -1,4 +1,6 @@
 import Title from "@components/Title";
+import { useAppSelector } from "@hooks/useRedux";
+import { enrollToCourse } from "@lib/course";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import {
   Box,
@@ -12,16 +14,41 @@ import {
 } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import hex from "@utils/hexTransparency";
+import Router from "next/router";
 import { useState } from "react";
 import Content from "./ContentTab";
 import Overview from "./OverviewTab";
 
 const CourseBody = ({ course = {} }) => {
   const [tabValue, setTabValue] = useState(0);
+  const { profile } = useAppSelector((state) => state.profile);
 
   const theme = useTheme();
-  const { title, description, category, brand, level, duration, likes, views } =
-    course;
+  const {
+    title,
+    description,
+    category,
+    brand,
+    level,
+    duration,
+    likes,
+    views,
+    enrolledUsers,
+    id,
+  } = course;
+
+  const isUserEnrolled = enrolledUsers?.includes?.(profile?.id);
+
+  const handleClick = async () => {
+    const _route = `/course/${id}/learn`;
+    if (isUserEnrolled) {
+      Router.push(_route);
+    } else {
+      enrollToCourse(id, profile?.id).then((res) => {
+        Router.push(_route);
+      });
+    }
+  };
 
   return (
     <Box sx={{ my: 5 }}>
@@ -52,7 +79,7 @@ const CourseBody = ({ course = {} }) => {
             onChange={(e, v) => setTabValue(v)}
             variant="scrollable"
             scrollButtons="auto"
-            indicatorColor="transparent"
+            TabIndicatorProps={{ style: { display: "none" } }}
             sx={{
               mb: 5,
               "& .MuiButtonBase-root": {
@@ -76,26 +103,31 @@ const CourseBody = ({ course = {} }) => {
           {/* <Divider /> */}
 
           <Box sx={{ my: 5 }}>
-            {tabValue === 0 && <Overview />}
+            {tabValue === 0 && <Overview course={course} />}
 
-            {tabValue === 1 && <Content />}
+            {tabValue === 1 && <Content course={course} />}
           </Box>
         </Box>
       </Container>
 
       {/* Start */}
-      <Button
-        fullWidth
-        variant="contained"
-        sx={{
-          py: 3,
-          color: "#fff",
-          borderRadius: 0,
-        }}
-      >
-        <Typography variant="h6">Start this course</Typography>
-        <ArrowForwardIcon sx={{ ml: 1 }} />
-      </Button>
+      {profile?.id && (
+        <Button
+          fullWidth
+          variant="contained"
+          onClick={handleClick}
+          sx={{
+            py: 3,
+            color: "#fff",
+            borderRadius: 0,
+          }}
+        >
+          <Typography variant="h6">
+            {isUserEnrolled ? "Open Course" : "Start this course"}
+          </Typography>
+          <ArrowForwardIcon sx={{ ml: 1 }} />
+        </Button>
+      )}
     </Box>
   );
 };

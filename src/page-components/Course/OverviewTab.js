@@ -10,7 +10,9 @@ const OUTCOMES = Array(10)
   .fill(null)
   .map((i) => "Enim laboris labore cupidatat do reprehenderit.");
 
-const Overview = ({ description = DESCRIPTION, outcomes = OUTCOMES }) => {
+const Overview = ({ outcomes = OUTCOMES, course }) => {
+  const { description } = course;
+
   return (
     <Box>
       <Title variant={{ xs: "h5", md: "h3" }} sx={{ mb: 4 }}>

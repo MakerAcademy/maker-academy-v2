@@ -10,7 +10,7 @@ const MdQuote = ({ data }) => {
       sx={{
         py: 3,
         px: 4,
-        bgcolor: "primary.grey1",
+        bgcolor: "primary.grey2",
         textAlign: "center",
         borderRadius: "10px",
       }}

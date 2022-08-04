@@ -3,7 +3,6 @@ import {
   Button,
   ClickAwayListener,
   Paper,
-  Popover,
   Popper,
   Stack,
   Tab,
@@ -11,7 +10,7 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import React, { useState } from "react";
+import { useState } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 
 const ELEMENTS = [
@@ -43,6 +42,20 @@ const ELEMENTS = [
     image:
       "https://media.sproutsocial.com/uploads/2017/02/10x-featured-social-media-image-size.png",
   },
+  {
+    label: "cta_box",
+    value:
+      "$$\ncomponent: cta_box\ntitle: MakerDao History\ndescription: Start here if you’re new to MakerDAO and the Academy.\nbuttonText: Learn More\nbuttonLink: #\n$$",
+    image:
+      "https://media.sproutsocial.com/uploads/2017/02/10x-featured-social-media-image-size.png",
+  },
+  {
+    label: "vote_results",
+    value:
+      "$$\ncomponent: vote_results\ntitle: Maker Vote\ndirection: horizontal\nlabels: [For, Against]\ndata: [1408, 643]\nshowLegend: true\n$$",
+    image:
+      "https://media.sproutsocial.com/uploads/2017/02/10x-featured-social-media-image-size.png",
+  },
 ];
 
 const ElementsTabs = () => {
@@ -58,8 +71,6 @@ const ElementsTabs = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
-  const handleCopy = () => {};
 
   return (
     <Box>

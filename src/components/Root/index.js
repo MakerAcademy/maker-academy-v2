@@ -96,6 +96,14 @@ const Root = ({ children }) => {
   };
 
   useEffect(() => {
+    if (user && !profile) {
+      setTimeout(() => {
+        dispatch(updateUserProfile({ uid: user?.uid }));
+      }, 3000);
+    }
+  }, [user, profile]);
+
+  useEffect(() => {
     if (typeof window !== "undefined") {
       window.nookies = nookies;
     }
