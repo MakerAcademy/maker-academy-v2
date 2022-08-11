@@ -82,21 +82,26 @@ const Badge = ({ text }) => {
 
 const ContentCard = ({
   id,
-  thumbnail = "https://prod-discovery.edx-cdn.org/media/course/image/0e575a39-da1e-4e33-bb3b-e96cc6ffc58e-8372a9a276c1.png",
-  title,
-  shortDescription,
   username,
   topic,
-  duration,
   contentType,
-  level,
   timestamp,
-  brand,
   views = 0,
   likes = 0,
+  metadata = {},
 }) => {
   const theme = useTheme();
   const { t } = useTranslation("content");
+
+  const {
+    title,
+    shortDescription,
+    brand,
+    level,
+    duration,
+    category,
+    thumbnail = "https://prod-discovery.edx-cdn.org/media/course/image/0e575a39-da1e-4e33-bb3b-e96cc6ffc58e-8372a9a276c1.png",
+  } = metadata;
 
   const [isHovered, setIsHovered] = useState(false);
 

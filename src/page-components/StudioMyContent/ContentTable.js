@@ -20,7 +20,7 @@ const buildRows = (data, t) => {
     date: moment(item.timestamp?.toDate?.()).format("MMM DD, YY - HH:mm"),
     visibility: item.status,
     views: item.views,
-    likes: item?.likes?.length || 0,
+    likes: item?.likes || 0,
   }));
 };
 

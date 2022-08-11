@@ -21,7 +21,7 @@ const CourseMetadata = ({
 
   // console.log(timestamp);
 
-  const hasUserLiked = likes?.includes?.(profile?.id);
+  const hasUserLiked = !!profile?.likedContent?.includes?.(id);
 
   const triggerLike = () => {
     if (!hasUserLiked) {
@@ -80,7 +80,7 @@ const CourseMetadata = ({
         {/* Likes */}
         <Stack direction="row" alignItems="center" spacing={0.5}>
           <FavoriteIcon sx={{ fontSize: 18 }} />
-          <Typography variant="body2">{likes?.length || 0} likes</Typography>
+          <Typography variant="body2">{likes || 0} likes</Typography>
         </Stack>
       </Stack>
 

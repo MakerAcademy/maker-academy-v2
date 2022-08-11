@@ -10,6 +10,7 @@ import {
   updateDoc,
   doc,
   onSnapshot,
+  getDoc,
 } from "firebase/firestore";
 import { getCourse } from "./course";
 import { getDocument } from "./document";
@@ -68,32 +69,59 @@ export const getContent = async (params) => {
       snapshotData.push(doc.data());
     });
 
-    let data = await Promise.all(
-      snapshotData.map(async (content, i) => {
-        const { contentType, published } = content;
+    // let data = await Promise.all(
+    //   snapshotData.map(async (content, i) => {
+    //     const { contentType, published } = content;
 
-        const _fetch =
-          contentType == "course"
-            ? await getCourse(published)
-            : await getDocument(published);
+    //     const _fetch =
+    //       contentType == "course"
+    //         ? await getCourse(published)
+    //         : await getDocument(published);
 
-        const { id, timestamp, ...rest } = _fetch;
+    //     const { id, timestamp, ...rest } = _fetch;
 
-        return { ...content, ...rest };
-      })
-    );
+    //     return { ...content, ...rest };
+    //   })
+    // );
 
-    return data;
+    return snapshotData;
   } catch (error) {
     console.log(error);
     return error;
   }
 };
 
+export const listenOneContent = (_id, callback) => {
+  try {
+    const docRef = doc(db, "content", _id);
+
+    const unsub = onSnapshot(docRef, (snapshot) => {
+      callback?.(snapshot.data());
+    });
+
+    return unsub;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};
+
+export const fetchOneContent = async (_id) => {
+  try {
+    const contentRef = doc(db, "content", _id);
+    const contentSnap = await getDoc(contentRef);
+
+    return contentSnap.data();
+  } catch (error) {
+    console.log("cid", _id, "No such document!");
+    throw error;
+  }
+};
+
 export const getUserContent = async ({ author }) => {
   try {
     if (!author) return null;
-    
+
     const docsRef = collection(db, "content");
 
     const q = query(
@@ -177,20 +205,5 @@ export const approveRejectContent = async ({ id, approve }) => {
   } catch (error) {
     console.log(error);
     return error;
-  }
-};
-
-export const listenOneContent = (_id, callback) => {
-  try {
-    const docRef = doc(db, "content", _id);
-
-    const unsub = onSnapshot(docRef, (snapshot) => {
-      callback?.(snapshot.data());
-    });
-
-    return unsub;
-  } catch (err) {
-    console.log(err);
-    throw err;
   }
 };

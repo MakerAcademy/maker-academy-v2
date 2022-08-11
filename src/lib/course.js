@@ -8,6 +8,7 @@ import {
   getDoc,
   updateDoc,
   arrayUnion,
+  increment,
 } from "firebase/firestore";
 
 export const submitCourse = async (cid, data = {}) => {
@@ -41,16 +42,26 @@ export const submitCourse = async (cid, data = {}) => {
       published: docRef.id,
       id: contentRef.id,
       contentType: "course",
-      likes: [],
+      likes: 0,
       views: 0,
-      contributors: [],
-      editRequests: [],
-      enrolledUsers: [],
+      enrolledUsers: 0,
       status: "pending",
       timestamp: serverTimestamp(),
       private: !!data?.private,
-      brand: data?.brand || "none",
-      searchTerm: _searchTerm,
+      filters: {
+        brand: data?.brand || "none",
+        searchTerm: _searchTerm,
+        category: data?.category || "",
+        level: data?.level || "",
+      },
+      metadata: {
+        level: data?.level || "",
+        title: data?.title || "",
+        brand: data?.brand || "",
+        shortDescription: data?.shortDescription || "",
+        category: data?.category || "",
+        duration: data?.duration || "",
+      },
     };
     const contentRes = await setDoc(contentRef, cleanObject(contentPayload));
 
@@ -112,9 +123,52 @@ export const enrollToCourse = async (contentId, cid) => {
     if (!contentId || !cid)
       throw { message: "Missing Content ID or Profile ID" };
 
+    const userRef = doc(db, "contacts", cid);
+    await updateDoc(userRef, {
+      enrolledCourses: arrayUnion(contentId),
+    });
+
     const contentRef = doc(db, "content", contentId);
     await updateDoc(contentRef, {
-      enrolledUsers: arrayUnion(cid),
+      enrolledUsers: increment(1),
+    });
+
+    return { success: true };
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const likeCourse = async (contentId, cid) => {
+  try {
+    const _ref = doc(db, "contacts", cid);
+    await updateDoc(_ref, {
+      likedContent: arrayUnion(contentId),
+    });
+
+    const contentRef = doc(db, "content", contentId);
+    await updateDoc(contentRef, {
+      likes: increment(1),
+    });
+
+    return { success: true };
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const unlikeCourse = async (contentId, cid) => {
+  try {
+    const _ref = doc(db, "contacts", cid);
+    await updateDoc(_ref, {
+      likedContent: arrayRemove(contentId),
+    });
+
+    const contentRef = doc(db, "content", contentId);
+    await updateDoc(contentRef, {
+      likes: increment(-1),
     });
 
     return { success: true };

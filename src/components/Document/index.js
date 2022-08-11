@@ -1,11 +1,10 @@
 import ScrollSpy from "@components/ScrollSpy";
 import Title from "@components/Title";
+import useDocRead from "@hooks/useDocRead";
 import { useAppSelector } from "@hooks/useRedux";
 import { listenOneContent } from "@lib/content";
-import DescriptionIcon from "@mui/icons-material/Description";
-import TimerIcon from "@mui/icons-material/Timer";
+import { updateUserReadDocument } from "@lib/document";
 import { Box, Container, Hidden, Stack, Typography } from "@mui/material";
-import DocumentBreadcrumbs from "@page-components/Document/DocBreadcrumbs";
 import DocMetadata from "@page-components/Document/DocMetadata";
 import {
   addChapters,
@@ -15,7 +14,6 @@ import {
   getLevel,
   parseDepths,
 } from "@utils/markdown";
-import moment from "moment";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -23,6 +21,7 @@ import MarkdownBody from "./MarkdownBody";
 
 const ContentDocument = ({ data = {} }) => {
   const { user } = useAppSelector((state) => state.user);
+  const { profile } = useAppSelector((state) => state.profile);
 
   const [document, setDocument] = useState(data);
   const [ids, setIds] = useState([]);
@@ -47,6 +46,15 @@ const ContentDocument = ({ data = {} }) => {
     thumbnail = "https://thumbs.dreamstime.com/b/bitcoin-banner-golden-digital-currency-cryptocurrency-futuristic-money-technology-worldwide-network-concept-vector-206771631.jpg",
   } = document || {};
 
+  const read = useDocRead(false, 500);
+  const hasUserRead = profile?.readDocuments?.includes?.(id);
+
+  useEffect(() => {
+    if (profile?.id && !hasUserRead && read) {
+      updateUserReadDocument(profile?.id, id);
+    }
+  }, [profile, read]);
+
   useEffect(() => {
     const unsub = listenOneContent(id, (res) => {
       setDocument((old) => ({ ...old, ...res }));
@@ -57,7 +65,7 @@ const ContentDocument = ({ data = {} }) => {
     };
   }, []);
 
-  const liked = !!likes?.includes?.(uid);
+  const liked = !!profile?.likedContent?.includes?.(id);
 
   // Edit Button condition here
   const isLoggedIn = !!user?.uid;
@@ -81,7 +89,7 @@ const ContentDocument = ({ data = {} }) => {
   }, [markdown]);
 
   return (
-    <Container maxWidth="xl">
+    <Box>
       <Stack direction="row" spacing={5}>
         <Hidden smDown>
           {/* Left side scrollspy */}
@@ -97,7 +105,7 @@ const ContentDocument = ({ data = {} }) => {
         <Container maxWidth="md" sx={{ py: 5 }}>
           <Stack spacing={3}>
             {/* Breadcrumbs */}
-            <DocumentBreadcrumbs />
+            {/* <DocumentBreadcrumbs /> */}
 
             {/* Image */}
             <Box
@@ -136,7 +144,7 @@ const ContentDocument = ({ data = {} }) => {
           </Stack>
         </Container>
       </Stack>
-    </Container>
+    </Box>
   );
 };
 

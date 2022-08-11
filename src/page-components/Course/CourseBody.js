@@ -34,10 +34,13 @@ const CourseBody = ({ course = {} }) => {
     likes,
     views,
     enrolledUsers,
+    carriculum,
     id,
   } = course;
 
-  const isUserEnrolled = enrolledUsers?.includes?.(profile?.id);
+  // console.log(course);
+
+  const isUserEnrolled = profile?.enrolledCourses?.includes?.(id);
 
   const handleClick = async () => {
     const _route = `/course/${id}/learn`;

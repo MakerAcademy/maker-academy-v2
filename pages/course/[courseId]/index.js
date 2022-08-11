@@ -24,7 +24,7 @@ export const getServerSideProps = withUser(async (context, { profile }) => {
 
     const course = await getCourseWithContent(courseId);
 
-    if (course?.private && !course?.enrolledUsers?.includes?.(profile?.id)) {
+    if (course?.private && !profile?.enrolledCourses?.includes?.(courseId)) {
       return { redirect: { destination: "/content" } };
     }
 

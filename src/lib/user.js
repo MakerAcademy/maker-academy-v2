@@ -10,8 +10,23 @@ import {
   serverTimestamp,
   updateDoc,
   where,
+  onSnapshot,
 } from "@firebase/firestore";
 import { cleanObject } from "@utils/helpers";
+
+export const listenContact = (uid, callback) => {
+  const q = query(
+    collection(db, "contacts"),
+    where("uid", "==", uid),
+    limit(1)
+  );
+
+  const unsub = onSnapshot(q, (snap) => {
+    callback?.(snap?.docs?.[0]?.data?.());
+  });
+
+  return unsub;
+};
 
 export const getContact = async (uid) => {
   try {

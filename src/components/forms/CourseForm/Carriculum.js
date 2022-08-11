@@ -113,14 +113,13 @@ const CourseCarriculum = ({ control, name }) => {
                               <MenuIcon />
                             </IconButton>
 
-                            <Typography sx={{ flex: 1 }}>
-                              <FormTextField
-                                name={`${name}.${i}.title`}
-                                placeholder="Title"
-                                control={control}
-                                fullWidth={false}
-                              />
-                            </Typography>
+                            <FormTextField
+                              name={`${name}.${i}.title`}
+                              placeholder="Title"
+                              control={control}
+                              fullWidth={false}
+                              sx={{ flex: 1 }}
+                            />
 
                             <IconButton size="small" onClick={() => remove(i)}>
                               <DeleteOutlinedIcon sx={{ fontSize: 18 }} />
@@ -128,16 +127,15 @@ const CourseCarriculum = ({ control, name }) => {
                           </Stack>
 
                           <Box sx={{ p: 2 }}>
-                            <Typography sx={{ mb: 1 }} variant="body2">
-                              <FormTextField
-                                name={`${name}.${i}.description`}
-                                placeholder="Description"
-                                control={control}
-                                fullWidth
-                                multiline
-                                // rows={2}
-                              />
-                            </Typography>
+                            <FormTextField
+                              name={`${name}.${i}.description`}
+                              placeholder="Description"
+                              control={control}
+                              fullWidth
+                              multiline
+                              sx={{ mb: 1 }}
+                              // rows={2}
+                            />
 
                             <Collapse in timeout="auto" unmountOnExit>
                               <CarriculumDocs

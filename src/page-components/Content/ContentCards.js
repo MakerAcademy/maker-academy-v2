@@ -49,8 +49,6 @@ const ContentCards = ({ query }) => {
     dispatch(fetchContentData({ merge: true, ...fetchQueries }));
   };
 
-  console.log("reachedlast", reachedLast);
-
   return (
     <Box>
       <Grid container spacing={4}>
@@ -83,8 +81,3 @@ const ContentCards = ({ query }) => {
 };
 
 export default ContentCards;
-
-// export const getServerSideProps = async (context) => {
-//   getContent();
-//   return { props: { data: [] } };
-// };

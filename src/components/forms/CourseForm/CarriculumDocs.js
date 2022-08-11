@@ -40,8 +40,8 @@ const CarriculumDocs = ({ control, name, documents }) => {
     setDialogOpen(false);
   };
 
-  const handleAddDocument = async (id) => {
-    append({ docId: id });
+  const handleAddDocument = async (data) => {
+    append(data);
   };
 
   const handleRemoveDocument = async (index) => {
@@ -129,10 +129,17 @@ const CarriculumDocs = ({ control, name, documents }) => {
                 <ListItem
                   key={i}
                   onClick={() =>
-                    alreadyAdded ? null : handleAddDocument(doc.id)
+                    alreadyAdded
+                      ? null
+                      : handleAddDocument({
+                          docId: doc.id,
+                          title: doc.title,
+                          contentType: doc.contentType,
+                          duration: doc.duration,
+                        })
                   }
                   button
-                  disabled={alreadyAdded}
+                  disabled={!!alreadyAdded}
                 >
                   <ListItemText primary={doc.title} secondary={doc.id} />
                 </ListItem>

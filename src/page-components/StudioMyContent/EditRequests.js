@@ -1,9 +1,9 @@
 import EditRequestCard from "@components/cards/EditRequestCard";
 import DashboardPaper from "@components/DashboardPaper";
 import { useAppSelector } from "@hooks/useRedux";
-import { getUserEditRequests } from "@lib/editrequests";
+import { listenUserEditRequests } from "@lib/editrequests";
 import { Grid, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const DUMMY_REQUESTS = [
   ...new Array(6).fill(null).map((_, i) => ({
@@ -23,7 +23,11 @@ const EditRequests = () => {
   const { profile } = useAppSelector((state) => state.profile);
 
   useEffect(() => {
-    getUserEditRequests(profile?.id).then(setData);
+    if (profile?.id) {
+      const unsub = listenUserEditRequests(profile?.id, setData);
+
+      return () => unsub();
+    }
   }, []);
 
   return (

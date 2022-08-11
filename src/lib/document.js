@@ -12,6 +12,7 @@ import {
   updateDoc,
   arrayUnion,
   arrayRemove,
+  increment,
 } from "firebase/firestore";
 
 export const submitDocument = async (cid, data = {}) => {
@@ -47,7 +48,7 @@ export const submitDocument = async (cid, data = {}) => {
       published: docRef.id,
       id: contentRef.id,
       contentType: "document",
-      likes: [],
+      likes: 0,
       views: 0,
       status: "pending",
       timestamp: serverTimestamp(),
@@ -57,6 +58,14 @@ export const submitDocument = async (cid, data = {}) => {
         searchTerm: _searchTerm,
         category: data?.category || "",
         level: data?.level || "",
+      },
+      metadata: {
+        level: data?.level || "",
+        title: data?.title || "",
+        brand: data?.brand || "",
+        shortDescription: data?.shortDescription || "",
+        category: data?.category || "",
+        duration: data?.duration || "",
       },
     };
     const contentRes = await setDoc(contentRef, contentPayload);
@@ -155,12 +164,15 @@ export const getUserDocuments = async (uid) => {
 };
 
 export const likeDocument = async (contentId, cid) => {
-  console.log(contentId, cid);
   try {
-    const _ref = doc(db, "content", contentId);
-
+    const _ref = doc(db, "contacts", cid);
     await updateDoc(_ref, {
-      likes: arrayUnion(cid),
+      likedContent: arrayUnion(contentId),
+    });
+
+    const contentRef = doc(db, "content", contentId);
+    await updateDoc(contentRef, {
+      likes: increment(1),
     });
 
     return { success: true };
@@ -172,10 +184,28 @@ export const likeDocument = async (contentId, cid) => {
 
 export const unlikeDocument = async (contentId, cid) => {
   try {
-    const _ref = doc(db, "content", contentId);
-
+    const _ref = doc(db, "contacts", cid);
     await updateDoc(_ref, {
-      likes: arrayRemove(cid),
+      likedContent: arrayRemove(contentId),
+    });
+
+    const contentRef = doc(db, "content", contentId);
+    await updateDoc(contentRef, {
+      likes: increment(-1),
+    });
+
+    return { success: true };
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const updateUserReadDocument = async (cid, docId) => {
+  try {
+    const _ref = doc(db, "contacts", cid);
+    await updateDoc(_ref, {
+      readDocuments: arrayUnion(docId),
     });
 
     return { success: true };

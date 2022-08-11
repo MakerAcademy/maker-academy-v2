@@ -4,7 +4,7 @@ import { auth } from "@firebase";
 import { useAppDispatch, useAppSelector } from "@hooks/useRedux";
 import LandingLayout from "@layouts/";
 import DashboardLayout from "@layouts/Dashboard";
-import { getContact, getUser } from "@lib/user";
+import { getContact, getUser, listenContact } from "@lib/user";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { setProfile, updateUserProfile } from "@redux/slices/profileSlice";
 import { setUser } from "@redux/slices/userSlice";
@@ -12,7 +12,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { useRouter } from "next/router";
 import nookies from "nookies";
 import { SnackbarProvider } from "notistack";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 const EmptyLayout = ({ children }) => (
   <React.Fragment>{children}</React.Fragment>
@@ -23,7 +23,6 @@ const Root = ({ children }) => {
   const { active } = useAppSelector((state) => state.theme);
   const theme = createTheme(active);
   const { user } = useAppSelector((state) => state.user);
-  const { profile } = useAppSelector((state) => state.profile);
   const dispatch = useAppDispatch();
   let unsubscribeAuth;
 
@@ -96,12 +95,18 @@ const Root = ({ children }) => {
   };
 
   useEffect(() => {
-    if (user && !profile) {
-      setTimeout(() => {
-        dispatch(updateUserProfile({ uid: user?.uid }));
-      }, 3000);
+    if (user) {
+      const unsub = listenContact(user?.uid, (userProfile) => {
+        dispatch(setProfile(userProfile));
+        nookies.destroy(null, "profile");
+        nookies.set(null, "profile", JSON.stringify(userProfile), {
+          path: "/",
+        });
+      });
+
+      return () => unsub();
     }
-  }, [user, profile]);
+  }, [user]);
 
   useEffect(() => {
     if (typeof window !== "undefined") {

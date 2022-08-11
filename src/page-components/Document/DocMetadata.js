@@ -1,7 +1,6 @@
 import { useAppSelector } from "@hooks/useRedux";
 import { likeDocument, unlikeDocument } from "@lib/document";
 import DescriptionIcon from "@mui/icons-material/Description";
-import EditIcon from "@mui/icons-material/Edit";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import TimerIcon from "@mui/icons-material/Timer";
@@ -21,7 +20,7 @@ const DocMetadata = ({
 
   // console.log(timestamp);
 
-  const hasUserLiked = likes?.includes?.(profile?.id);
+  const hasUserLiked = profile?.likedContent?.includes?.(id);
 
   const triggerLike = () => {
     if (!hasUserLiked) {
@@ -80,7 +79,7 @@ const DocMetadata = ({
         {/* Likes */}
         <Stack direction="row" alignItems="center" spacing={0.5}>
           <FavoriteIcon sx={{ fontSize: 18 }} />
-          <Typography variant="body2">{likes?.length || 0} likes</Typography>
+          <Typography variant="body2">{likes || 0} likes</Typography>
         </Stack>
       </Stack>
 

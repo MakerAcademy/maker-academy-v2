@@ -14,6 +14,7 @@ import {
   arrayRemove,
   orderBy,
   deleteDoc,
+  onSnapshot,
 } from "firebase/firestore";
 import { getCourse } from "./course";
 import { getDocument } from "./document";
@@ -59,6 +60,30 @@ export const getUserEditRequests = async (cid) => {
   }
 };
 
+export const listenUserEditRequests = (cid, callback) => {
+  const docsRef = collection(db, "edit_requests");
+
+  const q = query(
+    docsRef,
+    orderBy("timestamp", "desc"),
+    where("author", "==", cid)
+  );
+
+  const unsub = onSnapshot(q, (snapshot) => {
+    const result = [];
+
+    snapshot.docs.forEach((doc) => {
+      result.push({
+        ...doc.data(),
+        id: doc.id,
+      });
+    });
+    callback?.(result);
+  });
+
+  return unsub;
+};
+
 export const submitDocumentEditRequest = async (cid, data = {}, contentId) => {
   try {
     // return { success: true, payload: { ...data } };
@@ -70,30 +95,6 @@ export const submitDocumentEditRequest = async (cid, data = {}, contentId) => {
       id: docRef.id,
     };
     const docRes = await setDoc(docRef, docPayload);
-
-    // new edit request
-    const erRef = doc(collection(db, "edit_requests"));
-    const erPayload = {
-      author: data.author,
-      contentId,
-      published: docRef.id,
-      id: erRef.id,
-      contentType: "document",
-      status: "pending",
-      timestamp: serverTimestamp(),
-    };
-    const erRes = await setDoc(erRef, erPayload);
-
-    return { success: true, payload: { ...data, id: erRef.id } };
-  } catch (error) {
-    console.log(error);
-    return error;
-  }
-};
-
-export const acceptEditRequest = async (data) => {
-  try {
-    const { contentId, id, published } = data;
 
     //searchable term
     let _searchTerm = `${data?.title || ""} ${data?.brand || ""} ${
@@ -107,18 +108,112 @@ export const acceptEditRequest = async (data) => {
     //remove duplicate words
     _searchTerm = Array.from(new Set(_searchTerm)).filter(Boolean);
 
-    // new content
-    const contentRef = doc(db, "content", contentId);
-    const contentPayload = {
-      published,
-      private: !!data?.private,
-      updatedTimestamp: serverTimestamp(),
+    // new edit request
+    const erRef = doc(collection(db, "edit_requests"));
+    const erPayload = {
+      updateAuthor: cid,
+      author: data.author,
+      contentId,
+      published: docRef.id,
+      id: erRef.id,
+      contentType: "document",
+      status: "pending",
+      timestamp: serverTimestamp(),
       filters: {
         brand: data?.brand || "none",
         searchTerm: _searchTerm,
         category: data?.category || "",
         level: data?.level || "",
       },
+      metadata: {
+        level: data?.level || "",
+        title: data?.title || "",
+        brand: data?.brand || "",
+        shortDescription: data?.shortDescription || "",
+        category: data?.category || "",
+        duration: data?.duration || "",
+      },
+    };
+    const erRes = await setDoc(erRef, erPayload);
+
+    return { success: true, payload: { ...data, id: erRef.id } };
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
+export const submitCourseEditRequest = async (cid, data = {}, contentId) => {
+  try {
+    // return { success: true, payload: { ...data } };
+
+    // Add to documents
+    const docRef = doc(collection(db, "courses"));
+    const docPayload = {
+      ...data,
+      id: docRef.id,
+    };
+    const docRes = await setDoc(docRef, docPayload);
+
+    //searchable term
+    let _searchTerm = `${data?.title || ""} ${data?.brand || ""} ${
+      data?.shortDescription || ""
+    } ${data?.level || ""} ${data?.category || ""}`
+      ?.toLowerCase()
+      ?.replace(/[^a-zA-Z ]/g, "")
+      ?.split(" ")
+      ?.filter((i) => i?.length > 4);
+
+    //remove duplicate words
+    _searchTerm = Array.from(new Set(_searchTerm)).filter(Boolean);
+
+    // new edit request
+    const erRef = doc(collection(db, "edit_requests"));
+    const erPayload = {
+      updateAuthor: cid,
+      author: data.author,
+      contentId,
+      published: docRef.id,
+      id: erRef.id,
+      contentType: "document",
+      status: "pending",
+      timestamp: serverTimestamp(),
+      metadata: {
+        level: data?.level || "",
+        title: data?.title || "",
+        brand: data?.brand || "",
+        shortDescription: data?.shortDescription || "",
+        category: data?.category || "",
+        duration: data?.duration || "",
+      },
+      filters: {
+        brand: data?.brand || "none",
+        searchTerm: _searchTerm,
+        category: data?.category || "",
+        level: data?.level || "",
+      },
+    };
+    const erRes = await setDoc(erRef, erPayload);
+
+    return { success: true, payload: { ...data, id: erRef.id } };
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
+export const acceptEditRequest = async (data) => {
+  try {
+    const { contentId, id, published, filters, metadata } = data;
+
+    // new content
+    const contentRef = doc(db, "content", contentId);
+    const contentPayload = {
+      filters,
+      metadata,
+      published,
+      private: !!data?.private,
+      updatedTimestamp: serverTimestamp(),
     };
     await updateDoc(contentRef, contentPayload, { merge: true });
 

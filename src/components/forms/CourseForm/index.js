@@ -43,7 +43,7 @@ const CourseForm = ({
     useForm(formOptions);
 
   const onSubmit = (data, e) => {
-    console.log(data);
+    // return console.log(1, data);
     setDisabled(true);
     propsHandleSubmit(cleanObject(data));
   };
@@ -139,12 +139,12 @@ const CourseForm = ({
           direction="row"
           spacing={2}
         >
-          <FormCheckbox
+          {/* <FormCheckbox
             name="private"
             control={control}
             options={["private"]}
             sx={{ width: "auto" }}
-          />
+          /> */}
 
           <FormSelectField
             name="brand"

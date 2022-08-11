@@ -1,10 +1,18 @@
+import ElementsTabs from "@components/markdownElements/ElementsTabs";
 import { Box, Stack, Typography, useTheme } from "@mui/material";
+import colorSyntax from "@toast-ui/editor-plugin-color-syntax";
+import "@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css";
+import "@toast-ui/editor-plugin-table-merged-cell/dist/toastui-editor-plugin-table-merged-cell.css";
 import "@toast-ui/editor/dist/toastui-editor.css";
-import dynamic from "next/dynamic";
 import { Editor } from "@toast-ui/react-editor";
+import Prism from "prismjs";
 import { useRef } from "react";
 import { Controller } from "react-hook-form";
-import ElementsTabs from "@components/markdownElements/ElementsTabs";
+import "tui-color-picker/dist/tui-color-picker.css";
+import "@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css";
+import tableMergedCell from "@toast-ui/editor-plugin-table-merged-cell";
+import "prismjs/themes/prism.css";
+import codeSyntaxHighlight from "@toast-ui/editor-plugin-code-syntax-highlight";
 
 // const Editor = dynamic(
 //   () => import("@toast-ui/react-editor").then((m) => m.Editor),
@@ -17,7 +25,6 @@ const FormMarkdown = ({ name, control, sx = {}, label, ...props }) => {
 
   return (
     <Stack
-      direction="row"
       spacing={1}
       sx={{
         minHeight: 450,
@@ -26,6 +33,8 @@ const FormMarkdown = ({ name, control, sx = {}, label, ...props }) => {
         },
       }}
     >
+      <ElementsTabs />
+
       <Controller
         name={name}
         control={control}
@@ -53,6 +62,11 @@ const FormMarkdown = ({ name, control, sx = {}, label, ...props }) => {
               // theme={theme.palette.mode}
               previewStyle="vertical"
               initialEditType="markdown"
+              plugins={[
+                colorSyntax,
+                tableMergedCell,
+                [codeSyntaxHighlight, { highlighter: Prism }],
+              ]}
               {...props}
               {...field}
               initialValue={field?.value}
@@ -70,8 +84,6 @@ const FormMarkdown = ({ name, control, sx = {}, label, ...props }) => {
           </Box>
         )}
       />
-
-      <ElementsTabs />
     </Stack>
   );
 };
