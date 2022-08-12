@@ -1,6 +1,7 @@
 import GreenButton from "@components/buttons/GreenButton";
 import Title from "@components/Title";
 import { NAVBAR_HEIGHT_MOBILE } from "@constants/";
+import { useAppSelector } from "@hooks/useRedux";
 import {
   Box,
   Container,
@@ -19,6 +20,7 @@ import {
 } from "@page-components/Home/images";
 import { parseLineBreaks } from "@utils/helperFunctions";
 import useTranslation from "next-translate/useTranslation";
+import Link from "next/link";
 import { Fade } from "react-awesome-reveal";
 // import ReactCursorPosition from "react-cursor-position";
 
@@ -125,6 +127,8 @@ const Section1 = () => {
   const theme = useTheme();
   const { t, lang } = useTranslation("home");
 
+  const { profile } = useAppSelector((state) => state.profile);
+
   return (
     <Box
       sx={{
@@ -194,7 +198,15 @@ const Section1 = () => {
 
               <Stack direction="row" spacing={{ xs: 2, md: 4 }} sx={{ pt: 2 }}>
                 <Fade direction="down" duration={800} triggerOnce>
-                  <GreenButton>{t("section1_join_btn")}</GreenButton>
+                  {profile ? (
+                    <Link href="/content" passHref>
+                      <GreenButton>{t("section1_view_content")}</GreenButton>
+                    </Link>
+                  ) : (
+                    <Link href="/register" passHref>
+                      <GreenButton>{t("section1_join_btn")}</GreenButton>
+                    </Link>
+                  )}
                 </Fade>
               </Stack>
             </Stack>
