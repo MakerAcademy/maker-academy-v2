@@ -13,6 +13,7 @@ export const darkTheme = {
       grey4: grey[600],
       grey5: grey[500],
       grey6: grey[400],
+      grey9: grey[100],
     },
     text: {
       primary: "#FFF",
@@ -21,6 +22,7 @@ export const darkTheme = {
     },
     background: {
       default: "#1A1B1F",
+      dark: "#333333",
       paper: "rgba(46,48,53,1)",
       gradient1:
         "linear-gradient(87deg, rgba(46,48,53,1) 0%, rgba(46,48,53,1) 46%, rgba(49,52,58,1) 100%)",

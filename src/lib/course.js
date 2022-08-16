@@ -9,6 +9,7 @@ import {
   updateDoc,
   arrayUnion,
   increment,
+  arrayRemove,
 } from "firebase/firestore";
 
 export const submitCourse = async (cid, data = {}) => {

@@ -1,24 +1,22 @@
 import { db } from "@config/firebase";
 import {
   collection,
+  doc,
+  getDoc,
+  getDocs,
+  limit,
+  onSnapshot,
   orderBy,
   query,
-  limit,
-  getDocs,
   startAfter,
-  where,
   updateDoc,
-  doc,
-  onSnapshot,
-  getDoc,
+  where,
 } from "firebase/firestore";
-import { getCourse } from "./course";
-import { getDocument } from "./document";
 
 export const getContent = async (params) => {
   const {
     sort: _sort = "timestamp",
-    order: _order = "asc",
+    order: _order = "desc",
     limit: _limit,
     startAfter: _startAfter,
     author,
@@ -137,22 +135,7 @@ export const getUserContent = async ({ author }) => {
       snapshotData.push(doc.data());
     });
 
-    let data = await Promise.all(
-      snapshotData.map(async (content, i) => {
-        const { contentType, published } = content;
-
-        const _fetch =
-          contentType == "course"
-            ? await getCourse(published)
-            : await getDocument(published);
-
-        const { id, timestamp, ...rest } = _fetch;
-
-        return { ...content, ...rest };
-      })
-    );
-
-    return data;
+    return snapshotData;
   } catch (error) {
     return console.log(error);
   }
@@ -171,22 +154,7 @@ export const getPendingContent = async () => {
       snapshotData.push(doc.data());
     });
 
-    let data = await Promise.all(
-      snapshotData.map(async (content, i) => {
-        const { contentType, published } = content;
-
-        const _fetch =
-          contentType == "course"
-            ? await getCourse(published)
-            : await getDocument(published);
-
-        const { id, timestamp, ...rest } = _fetch;
-
-        return { ...content, ...rest };
-      })
-    );
-
-    return data;
+    return snapshotData;
   } catch (error) {
     console.log(error);
     return error;

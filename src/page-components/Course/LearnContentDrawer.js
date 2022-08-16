@@ -60,9 +60,7 @@ const LearnContentDrawer = ({ course }) => {
         disableElevation
         sx={{
           mt: 13,
-          mr: drawerOpen
-            ? `${isDesktop ? DRAWER_WIDTH : DRAWER_WIDTH - 18}px`
-            : 0,
+          mr: drawerOpen ? `${isDesktop ? DRAWER_WIDTH : DRAWER_WIDTH}px` : 0,
           height: 100,
           width: 35,
           minWidth: 0,

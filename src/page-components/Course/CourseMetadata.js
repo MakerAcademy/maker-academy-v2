@@ -1,22 +1,13 @@
 import { useAppSelector } from "@hooks/useRedux";
-import { likeDocument, unlikeDocument } from "@lib/document";
+import { likeCourse, unlikeCourse } from "@lib/course";
 import DescriptionIcon from "@mui/icons-material/Description";
-import EditIcon from "@mui/icons-material/Edit";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import TimerIcon from "@mui/icons-material/Timer";
 import { Button, Stack, Typography } from "@mui/material";
 import moment from "moment";
 
-const CourseMetadata = ({
-  id,
-  level,
-  timestamp,
-  updatedTimestamp,
-  duration,
-  likes,
-  views,
-}) => {
+const CourseMetadata = ({ id, level, timestamp, duration, likes, views }) => {
   const { profile } = useAppSelector((state) => state.profile);
 
   // console.log(timestamp);
@@ -25,9 +16,9 @@ const CourseMetadata = ({
 
   const triggerLike = () => {
     if (!hasUserLiked) {
-      likeDocument(id, profile?.id);
+      likeCourse(id, profile?.id);
     } else {
-      unlikeDocument(id, profile?.id);
+      unlikeCourse(id, profile?.id);
     }
   };
 
@@ -64,12 +55,6 @@ const CourseMetadata = ({
         <Typography variant="body2">
           Published {moment(timestamp?.toDate?.()).format("ll")}
         </Typography>
-
-        {updatedTimestamp && (
-          <Typography variant="body2">
-            Updated {moment(updatedTimestamp).format("ll")}
-          </Typography>
-        )}
 
         {/* Duration */}
         <Stack direction="row" alignItems="center" spacing={0.5}>

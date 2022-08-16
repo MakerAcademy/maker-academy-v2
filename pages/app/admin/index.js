@@ -33,7 +33,7 @@ const Admin = () => {
       Pending Content
       <div>
         {pendingContent &&
-          pendingContent.map(({ contentType, title, id }, i) => (
+          pendingContent?.map?.(({ contentType, title, id }, i) => (
             <div key={id}>
               <p>
                 {i}: {title} {contentType} {id}

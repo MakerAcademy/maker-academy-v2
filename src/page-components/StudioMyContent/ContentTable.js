@@ -11,12 +11,12 @@ import useTranslation from "next-translate/useTranslation";
 import { useEffect, useState } from "react";
 
 const buildRows = (data, t) => {
-  return data?.map?.((item, i) => ({
+  return data?.map?.(({ metadata, ...item }, i) => ({
     id: item.id,
     count: i,
-    thumbnail: item.thumbnail,
+    thumbnail: metadata.thumbnail,
     contentType: t(item.contentType),
-    title: item.title,
+    title: metadata.title,
     date: moment(item.timestamp?.toDate?.()).format("MMM DD, YY - HH:mm"),
     visibility: item.status,
     views: item.views,
@@ -133,7 +133,8 @@ const ContentTable = () => {
     if (profile?.id && !data) {
       dispatch(fetchUserContent())
         .then(({ payload }) => setData(payload?.result))
-        .then(() => setLoading(false));
+        .then(() => setLoading(false))
+        .catch((err) => console.log(err));
     }
   }, [profile]);
 

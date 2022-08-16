@@ -1,18 +1,15 @@
 import { Button, useTheme } from "@mui/material";
 import React from "react";
 
-const GreenButton = ({
-  children,
-  variant,
-  size,
-  fullWidth,
-  sx = {},
-  ...other
-}) => {
+const GreenButton = (
+  { children, variant, size, fullWidth, sx = {}, ...other },
+  ref
+) => {
   const theme = useTheme();
 
   return (
     <Button
+      ref={ref}
       fullWidth={fullWidth}
       variant="contained"
       sx={{
@@ -45,4 +42,4 @@ const GreenButton = ({
   );
 };
 
-export default GreenButton;
+export default React.forwardRef(GreenButton);

@@ -3,6 +3,7 @@ import {
   Collapse,
   Container,
   List,
+  ListItem,
   ListItemButton,
   ListItemIcon,
   ListItemSecondaryAction,
@@ -16,11 +17,13 @@ import BookmarkIcon from "@mui/icons-material/Bookmark";
 
 const Content = ({ course }) => {
   const { carriculum = {} } = course;
-  const [open, setOpen] = useState(null);
+  const [open, setOpen] = useState(0);
 
   return (
     <List>
       {Object.values(carriculum).map((section, i) => {
+        const documents = Object.values(section?.documents || {});
+
         return (
           <React.Fragment key={i}>
             <ListItemButton
@@ -28,26 +31,27 @@ const Content = ({ course }) => {
               sx={{
                 bgcolor: "background.paper",
                 borderRadius: "8px",
-                mb: 2,
+                mb: 1,
                 boxShadow: "0px 2px 10px rgba(24, 39, 75, 0.05)",
               }}
             >
-              <ListItemIcon sx={{ minWidth: 20, mr: 1 }}>
+              {/* <ListItemIcon sx={{ minWidth: 20, mr: 1 }}>
                 <BookmarkIcon fontSize="small" sx={{ color: "primary.main" }} />
-              </ListItemIcon>
+              </ListItemIcon> */}
               <ListItemText primary={section.title} />
               {open === i ? <ExpandLess /> : <ExpandMore />}
             </ListItemButton>
 
             <Collapse in={open == i} timeout="auto" unmountOnExit>
-              <Container>
-                <Typography variant="body2" sx={{ mb: 2 }}>
-                  {section.description}
-                </Typography>
+              <Box sx={{ px: 1 }}>
+                <Typography variant="body2">{section.description}</Typography>
 
                 <List component="div" disablePadding>
-                  {Object.values(section?.documents || {}).map((_doc, i) => (
-                    <ListItemButton key={i} sx={{ pl: 4 }}>
+                  {documents.map((_doc, i) => (
+                    <ListItem
+                      key={i}
+                      sx={{ pl: 4, mb: i === documents?.length - 1 ? 2 : 0 }}
+                    >
                       <ListItemIcon sx={{ minWidth: 20, mr: 1 }}>
                         <BookmarkIcon
                           fontSize="small"
@@ -63,10 +67,10 @@ const Content = ({ course }) => {
                           {_doc.duration} minutes
                         </Typography>
                       </ListItemSecondaryAction>
-                    </ListItemButton>
+                    </ListItem>
                   ))}
                 </List>
-              </Container>
+              </Box>
             </Collapse>
           </React.Fragment>
         );

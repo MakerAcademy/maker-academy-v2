@@ -1,12 +1,15 @@
 import GreenButton from "@components/buttons/GreenButton";
 import FormTextField from "@components/formFields/FormTextField";
 import Title from "@components/Title";
+import { FIREBASE_ERRORS } from "@constants/";
+import { CommonContext } from "@context/commonContext";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { handleGoogleLogin, handleLogin } from "@lib/auth";
 import GoogleIcon from "@mui/icons-material/Google";
 import { Divider, Stack, Typography } from "@mui/material";
 import Router from "next/router";
 import { useSnackbar } from "notistack";
+import { useContext } from "react";
 import { Bounce } from "react-awesome-reveal";
 import { useForm } from "react-hook-form";
 import * as Yup from "yup";
@@ -14,6 +17,7 @@ import { SocialButton } from "./RegisterForm";
 
 const LoginForm = () => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const { setCommonState } = useContext(CommonContext);
 
   // form validation rules
   const validationSchema = Yup.object().shape({
@@ -31,13 +35,7 @@ const LoginForm = () => {
     handleLogin(email, password)
       .then((res) => {
         setCommonState({
-          loadingOverlay: [
-            "Creating User...",
-            "Generating Profile...",
-            "Finalizing...",
-            "Finalizing...",
-            "Finalizing...",
-          ],
+          loadingOverlay: ["Logging in..."],
         });
 
         setTimeout(() => {
@@ -47,7 +45,7 @@ const LoginForm = () => {
       })
       .catch((err) => {
         if (err?.message) {
-          enqueueSnackbar(JSON.stringify(err || {}), {
+          enqueueSnackbar(FIREBASE_ERRORS[err?.message], {
             variant: "error",
             autoHideDuration: 4000,
             onClose: () => Router.push("/login"),

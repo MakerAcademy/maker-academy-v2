@@ -13,6 +13,7 @@ export const lightTheme = {
       grey4: grey[400],
       grey5: grey[500],
       grey6: grey[600],
+      grey9: grey[900],
     },
     text: {
       primary: "#425466",
@@ -21,6 +22,7 @@ export const lightTheme = {
     },
     background: {
       default: "#F6FAF9",
+      dark: "#333333",
       gradient1:
         "linear-gradient(335deg, rgba(245,252,239,1) 13%, rgba(250,255,247,1) 38%, rgba(255,255,255,1) 100%)",
     },

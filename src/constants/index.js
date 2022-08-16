@@ -61,3 +61,8 @@ export const DASHBOARD_BREADCRUMBS = {
 };
 
 export const LANGUAGES = ["en", "fr", "es", "ru", "ar", "zh", "hi", "sw"];
+
+export const FIREBASE_ERRORS = {
+  "Firebase: Error (auth/wrong-password).":
+    "Wrong Password. Please try again or login with Google",
+};

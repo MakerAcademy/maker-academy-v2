@@ -111,7 +111,8 @@ const ContentDocument = ({ data = {} }) => {
             <Box
               sx={{
                 position: "relative",
-                minHeight: 300,
+                height: "100%",
+                minHeight: 260,
                 width: "100%",
                 mb: 3,
               }}

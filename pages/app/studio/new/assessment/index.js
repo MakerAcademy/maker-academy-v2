@@ -1,7 +1,11 @@
 import Title from "@components/Title";
 import { withProtectedUser } from "@hoc/routes";
+import { submitAssessment } from "@lib/assessment";
 import { Box, Typography } from "@mui/material";
+import { cleanObject } from "@utils/helpers";
 import dynamic from "next/dynamic";
+import Router from "next/router";
+import { useSnackbar } from "notistack";
 import React from "react";
 
 const AssessmentForm = dynamic(
@@ -11,9 +15,30 @@ const AssessmentForm = dynamic(
   }
 );
 
-const Assessment = () => {
+const Assessment = ({ profile }) => {
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+
   const handleAssessmentSubmit = async (data) => {
-    console.log(data);
+    const _key = enqueueSnackbar("Submitting Assessment...", {
+      variant: "default",
+    });
+
+    const res = await submitAssessment(profile?.id, cleanObject(data))
+      .then(() => {
+        closeSnackbar(_key);
+        enqueueSnackbar("Success", {
+          variant: "success",
+          autoHideDuration: 2000,
+          onClose: () => Router.push("/app/studio"),
+        });
+      })
+      .catch((err) => {
+        enqueueSnackbar("Error", {
+          variant: "error",
+          autoHideDuration: 2000,
+          onClose: () => Router.push("/app/studio"),
+        });
+      });
   };
 
   return (

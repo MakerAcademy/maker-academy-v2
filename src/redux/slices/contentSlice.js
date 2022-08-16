@@ -96,7 +96,7 @@ export const contentSlice = createSlice({
     },
     reset: (state, action) => {
       state.sort = "timestamp";
-      state.order = "asc";
+      state.order = "desc";
       state.searchTerm = "";
       state.empty = false;
     },

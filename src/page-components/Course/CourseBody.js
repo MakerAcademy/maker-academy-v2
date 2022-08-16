@@ -15,15 +15,21 @@ import {
 import { grey } from "@mui/material/colors";
 import hex from "@utils/hexTransparency";
 import Router from "next/router";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Content from "./ContentTab";
 import Overview from "./OverviewTab";
+import DefaultCourseImage from "@assets/images/misc/course-default.png";
+import CourseBreadcrumbs from "./CourseBreadcrumbs";
+import CourseMetadata from "./CourseMetadata";
+import { CommonContext } from "@context/commonContext";
 
 const CourseBody = ({ course = {} }) => {
+  const theme = useTheme();
+  const [disabled, setDisabled] = useState(false);
   const [tabValue, setTabValue] = useState(0);
   const { profile } = useAppSelector((state) => state.profile);
+  const { setCommonState } = useContext(CommonContext);
 
-  const theme = useTheme();
   const {
     title,
     description,
@@ -43,12 +49,22 @@ const CourseBody = ({ course = {} }) => {
 
   const handleClick = async () => {
     const _route = `/course/${id}/learn`;
+
+    setDisabled(true);
+
     if (isUserEnrolled) {
       Router.push(_route);
     } else {
-      enrollToCourse(id, profile?.id).then((res) => {
-        Router.push(_route);
+      setCommonState({
+        loadingOverlay: ["Enrolling..."],
       });
+
+      setTimeout(() => {
+        setCommonState({ loadingOverlay: null });
+        enrollToCourse(id, profile?.id).then((res) => {
+          Router.push(_route);
+        });
+      }, 3000);
     }
   };
 
@@ -58,18 +74,52 @@ const CourseBody = ({ course = {} }) => {
       <Container maxWidth="md" sx={{ py: 3 }}>
         <Box spacing={2}>
           {/* Breadcrumbs */}
-          <Typography sx={{ mb: 2 }}>{`Home > Courses > ${title}`}</Typography>
+          <CourseBreadcrumbs title={title} />
 
           {/* Image */}
           <Paper
             sx={{
               mb: 4,
-              height: 240,
+              height: 180,
               borderRadius: "24px",
+              position: "relative",
               boxShadow:
                 "0px 8px 18px -6px rgba(24, 39, 75, 0.12), 0px 12px 42px -4px rgba(24, 39, 75, 0.12)",
+              [theme.breakpoints.up("md")]: {
+                height: 240,
+              },
             }}
-          ></Paper>
+          >
+            <Box
+              sx={{
+                position: "absolute",
+                top: 20,
+                left: 20,
+                bgcolor: "primary.grey9",
+                color: "text.invert",
+                py: 1,
+                px: 1.2,
+                borderRadius: "6px",
+              }}
+            >
+              <Typography variant="body2">{category}</Typography>
+            </Box>
+
+            <img
+              src={DefaultCourseImage}
+              alt="Course Thumbnail"
+              style={{
+                height: "100%",
+                width: "100%",
+                objectFit: "cover",
+                borderRadius: "inherit",
+              }}
+            />
+          </Paper>
+
+          <Box sx={{ mb: 2 }}>
+            <CourseMetadata {...course} />
+          </Box>
 
           {/* Title */}
           <Title variant={{ xs: "h4", md: "h2" }} sx={{ mb: 2 }}>
@@ -117,11 +167,13 @@ const CourseBody = ({ course = {} }) => {
         <Button
           fullWidth
           variant="contained"
+          disabled={disabled}
           onClick={handleClick}
           sx={{
             py: 3,
             color: "#fff",
             borderRadius: 0,
+            cursor: disabled ? "wait" : "pointer",
           }}
         >
           <Typography variant="h6">

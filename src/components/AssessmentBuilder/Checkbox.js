@@ -32,12 +32,6 @@ const CheckboxOptions = ({ control, name, ...other }) => {
   return (
     <Stack spacing={2}>
       <Stack direction="row" spacing={1}>
-        <FormTextField
-          control={control}
-          name={`${name}.answer`}
-          label="Correct Answer"
-          placeholder="Comma separated answers (maker, blockchain)"
-        />
         {/* TODO - Props */}
         {/* <Button onClick={toggleDrawer}>Props</Button> */}
       </Stack>
@@ -54,6 +48,13 @@ const CheckboxOptions = ({ control, name, ...other }) => {
         )}
         control={control}
         {...other}
+      />
+
+      <FormTextField
+        control={control}
+        name={`${name}.answer`}
+        label="Correct Answer"
+        placeholder="Comma separated answers (maker, blockchain)"
       />
 
       <Drawer
