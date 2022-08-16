@@ -102,11 +102,16 @@ export const getCourseWithContent = async (cid, seperate) => {
                   ...docSnap.data(),
                   timestamp:
                     contentData.timestamp?.toDate?.()?.toString() || null,
+                  updatedTimestamp:
+                    contentData.updatedTimestamp?.toDate?.()?.toString() ||
+                    null,
                 },
               }
             : docSnap.data()),
           ...contentData,
           timestamp: contentData.timestamp?.toDate?.()?.toString() || null,
+          updatedTimestamp:
+            contentData.updatedTimestamp?.toDate?.()?.toString() || null,
         };
 
         return docObj;

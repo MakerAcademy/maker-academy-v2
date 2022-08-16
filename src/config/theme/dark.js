@@ -10,6 +10,8 @@ export const darkTheme = {
       grey1: grey[900],
       grey2: grey[800],
       grey3: grey[700],
+      grey4: grey[600],
+      grey5: grey[500],
       grey6: grey[400],
     },
     text: {

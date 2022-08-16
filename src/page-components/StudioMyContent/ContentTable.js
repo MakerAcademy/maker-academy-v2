@@ -107,7 +107,7 @@ const buildColumns = (t) => {
           <GreenButton
             size="small"
             href={
-              params.row.contentType === "courses"
+              params.row.contentType === "course"
                 ? `/course/${params.id}`
                 : `/document/${params.id}`
             }

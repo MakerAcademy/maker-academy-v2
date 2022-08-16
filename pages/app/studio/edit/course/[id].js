@@ -21,10 +21,8 @@ const editableFields = [
   // "markdown",
 ];
 
-const EditCoursePage = ({ response, course, profile, user }) => {
+const EditCoursePage = ({ course, profile, user }) => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-
-  console.log(course);
 
   if (!course) return <ErrorPage />;
 
@@ -35,8 +33,8 @@ const EditCoursePage = ({ response, course, profile, user }) => {
 
     const res = await submitCourseEditRequest(
       profile?.id,
-      cleanObject({ ...data, contentId: response.id }),
-      response?.id
+      cleanObject({ ...data, contentId: course.id }),
+      course?.id
     )
       .then(() => {
         closeSnackbar(_key);

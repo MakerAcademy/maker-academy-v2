@@ -22,10 +22,12 @@ import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import { useRouter } from "next/router";
+import { useAppSelector } from "@hooks/useRedux";
 
 const DRAWER_WIDTH = 280;
 
 const LearnContentDrawer = ({ course }) => {
+  const { profile } = useAppSelector((state) => state.profile);
   const { title, carriculum = {} } = course;
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up("xl"));
@@ -154,7 +156,13 @@ const LearnContentDrawer = ({ course }) => {
                                 <ListItemIcon sx={{ minWidth: 20, mr: 0.6 }}>
                                   <BookmarkIcon
                                     fontSize="small"
-                                    sx={{ color: "primary.main" }}
+                                    sx={{
+                                      color: profile?.readDocuments?.includes(
+                                        _doc.docId
+                                      )
+                                        ? "primary.main"
+                                        : "primary.grey4",
+                                    }}
                                   />
                                 </ListItemIcon>
                                 <ListItemText

@@ -35,10 +35,9 @@ const CourseBody = ({ course = {} }) => {
     views,
     enrolledUsers,
     carriculum,
+    learningOutcomes = [],
     id,
   } = course;
-
-  // console.log(course);
 
   const isUserEnrolled = profile?.enrolledCourses?.includes?.(id);
 

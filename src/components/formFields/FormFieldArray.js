@@ -22,6 +22,7 @@ const FormFieldArray = ({
   enableDragAndDrop,
   RenderListItem,
   RenderHeader,
+  withDivider,
 }) => {
   const fieldArray = useFieldArray({
     control,
@@ -59,7 +60,7 @@ const FormFieldArray = ({
         </Stack>
       )}
 
-      <Divider sx={{ mb: 2 }} />
+      {withDivider && <Divider sx={{ mb: 2 }} />}
 
       {!list && (
         <Stack spacing={2}>
