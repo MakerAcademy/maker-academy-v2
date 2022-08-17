@@ -7,6 +7,7 @@ export const lightTheme = {
     mode: "light",
     primary: {
       main: "#1ABC9C",
+      dark: "#0c6e5a",
       grey1: grey[100],
       grey2: grey[200],
       grey3: grey[300],

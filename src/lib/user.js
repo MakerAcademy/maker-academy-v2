@@ -56,12 +56,14 @@ export const getUser = async (uid) => {
 export const updateContact = async (cid, data = {}) => {
   try {
     const docRef = doc(db, "contacts", cid);
-    const payload = cleanObject({
+    const payload = {
       ...data,
+    };
+
+    await updateDoc(docRef, {
+      ...cleanObject(payload),
       updateTimestamp: serverTimestamp(),
     });
-
-    await updateDoc(docRef, payload);
 
     return { success: true, payload };
   } catch (error) {

@@ -25,9 +25,8 @@ export const submitDocument = async (cid, data = {}) => {
       ...data,
       author: cid,
       id: docRef.id,
-      timestamp: serverTimestamp(),
     };
-    const docRes = await setDoc(docRef, docPayload);
+    const docRes = await setDoc(docRef, cleanObject(docPayload));
 
     //searchable term
     let _searchTerm = `${data?.title || ""} ${data?.brand || ""} ${
@@ -51,7 +50,6 @@ export const submitDocument = async (cid, data = {}) => {
       likes: 0,
       views: 0,
       status: "pending",
-      timestamp: serverTimestamp(),
       private: !!data?.private,
       filters: {
         brand: data?.brand || "none",
@@ -68,7 +66,10 @@ export const submitDocument = async (cid, data = {}) => {
         duration: data?.duration || "",
       },
     };
-    const contentRes = await setDoc(contentRef, contentPayload);
+    const contentRes = await setDoc(contentRef, {
+      ...cleanObject(contentPayload),
+      timestamp: serverTimestamp(),
+    });
 
     return { success: true, payload: { ...data, id: contentRef.id } };
   } catch (error) {
@@ -94,7 +95,8 @@ export const getDocumentWithContent = async (cid, seperate) => {
             ? {
                 document: {
                   ...docSnap.data(),
-                  timestamp: contentData.timestamp?.toDate()?.toString(),
+                  timestamp:
+                    contentData.timestamp?.toDate?.()?.toString?.() || null,
                   updatedTimestamp:
                     contentData?.updatedTimestamp?.toDate?.()?.toString?.() ||
                     null,
@@ -102,7 +104,7 @@ export const getDocumentWithContent = async (cid, seperate) => {
               }
             : docSnap.data()),
           ...contentData,
-          timestamp: contentData.timestamp?.toDate()?.toString(),
+          timestamp: contentData.timestamp?.toDate?.()?.toString?.() || null,
           updatedTimestamp:
             contentData?.updatedTimestamp?.toDate?.()?.toString?.() || null,
         };
@@ -134,7 +136,7 @@ export const getUserDocuments = async (uid) => {
     const q = query(
       docsRef,
       where("author", "==", uid),
-      where("contentType", "==", "document")
+      where("contentType", "in", ["document", "assessment"])
     );
 
     const querySnapshot = await getDocs(q);
@@ -144,19 +146,7 @@ export const getUserDocuments = async (uid) => {
       snapshotData.push(doc.data());
     });
 
-    let data = await Promise.all(
-      snapshotData.map(async (content, i) => {
-        const { contentType, published } = content;
-
-        const _fetch = await getDocument(published);
-
-        const { id, timestamp, ...rest } = _fetch;
-
-        return { ...content, ...rest };
-      })
-    );
-
-    return data;
+    return snapshotData;
   } catch (error) {
     console.log(error);
     return error;

@@ -69,7 +69,7 @@ const CarriculumDocs = ({ control, name, documents }) => {
                 ref={provided.innerRef}
               >
                 {fields.map(({ docId, id }, i) => {
-                  const _document = documents.find((j) => j.id === docId);
+                  const _document = documents?.find?.((j) => j.id === docId);
 
                   if (!_document) return null;
 
@@ -87,18 +87,16 @@ const CarriculumDocs = ({ control, name, documents }) => {
                           {...innerProvided.dragHandleProps}
                         >
                           <ListItemText
-                            primary={_document.title}
+                            primary={_document?.metadata?.title}
                             secondary={docId}
                           />
 
-                          <ListItemSecondaryAction>
-                            <IconButton
-                              size="small"
-                              onClick={() => handleRemoveDocument(i)}
-                            >
-                              <RemoveCircleIcon fontSize="small" />
-                            </IconButton>
-                          </ListItemSecondaryAction>
+                          <IconButton
+                            size="small"
+                            onClick={() => handleRemoveDocument(i)}
+                          >
+                            <RemoveCircleIcon fontSize="small" />
+                          </IconButton>
 
                           {provided.placeholder}
                         </ListItem>
@@ -122,7 +120,7 @@ const CarriculumDocs = ({ control, name, documents }) => {
         <DialogTitle>Select a document to add</DialogTitle>
         <DialogContent>
           <List>
-            {documents?.map((doc, i) => {
+            {documents?.map?.((doc, i) => {
               const alreadyAdded = fields.find((i) => i.docId === doc.id);
 
               return (
@@ -133,15 +131,18 @@ const CarriculumDocs = ({ control, name, documents }) => {
                       ? null
                       : handleAddDocument({
                           docId: doc.id,
-                          title: doc.title,
+                          title: doc?.metadata?.title,
                           contentType: doc.contentType,
-                          duration: doc.duration,
+                          duration: doc?.metadata?.duration,
                         })
                   }
                   button
                   disabled={!!alreadyAdded}
                 >
-                  <ListItemText primary={doc.title} secondary={doc.id} />
+                  <ListItemText
+                    primary={doc?.metadata?.title}
+                    secondary={doc.id}
+                  />
                 </ListItem>
               );
             })}

@@ -2,14 +2,37 @@ import ContentDocument from "@components/Document";
 import { NAVBAR_HEIGHT_DESKTOP, NAVBAR_HEIGHT_MOBILE } from "@constants/";
 import { withProtectedUser } from "@hoc/routes";
 import useDocRead from "@hooks/useDocRead";
+import { getAssessmentWithContent } from "@lib/assessment";
 import { getCourseWithContent } from "@lib/course";
 import { getDocumentWithContent } from "@lib/document";
 import { Box, Container, useTheme } from "@mui/material";
+import AssessmentPage from "@page-components/Assessment";
 import LearnContentDrawer from "@page-components/Course/LearnContentDrawer";
+import ErrorPage from "@page-components/Error";
 import { useEffect } from "react";
 
 const LearnContent = ({ course, document: _document }) => {
   const theme = useTheme();
+
+  const contentType = _document?.contentType;
+
+  if (!contentType) return <ErrorPage />;
+
+  if (contentType === "assessment")
+    return (
+      <Box
+        sx={{
+          maxWidth: "100vw",
+          position: "relative",
+          pt: `${NAVBAR_HEIGHT_MOBILE}px`,
+          [theme.breakpoints.up("md")]: {
+            pt: `${NAVBAR_HEIGHT_DESKTOP}px`,
+          },
+        }}
+      >
+        <AssessmentPage assessment={_document} />
+      </Box>
+    );
 
   return (
     <Box
@@ -54,14 +77,18 @@ export const getServerSideProps = withProtectedUser(
         return { redirect: { destination: "/content" } };
       }
 
-      const docFound = Object.values(course?.carriculum).find((i) => {
-        // console.log(Object.values(i.documents));
-        return Object.values(i.documents)?.find((j) => j.docId === docId);
+      const _docFound = Object.values(course?.carriculum).find((item) => {
+        return Object.values(item.documents)?.find((j) => j.docId === docId);
       });
+      const docFound = _docFound?.documents?.find((j) => j.docId === docId);
 
       let document = {};
+
       if (docFound) {
-        document = await getDocumentWithContent(docId);
+        document =
+          docFound.contentType === "document"
+            ? await getDocumentWithContent(docId)
+            : await getAssessmentWithContent(docId);
       } else {
         return { redirect: { destination: `/course/${courseId}` } };
       }

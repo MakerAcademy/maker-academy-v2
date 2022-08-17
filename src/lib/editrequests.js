@@ -118,7 +118,6 @@ export const submitDocumentEditRequest = async (cid, data = {}, contentId) => {
       id: erRef.id,
       contentType: "document",
       status: "pending",
-      timestamp: serverTimestamp(),
       filters: {
         brand: data?.brand || "none",
         searchTerm: _searchTerm,
@@ -134,7 +133,10 @@ export const submitDocumentEditRequest = async (cid, data = {}, contentId) => {
         duration: data?.duration || "",
       },
     };
-    const erRes = await setDoc(erRef, erPayload);
+    const erRes = await setDoc(erRef, {
+      ...cleanObject(erPayload),
+      updatedTimestamp: serverTimestamp(),
+    });
 
     return { success: true, payload: { ...data, id: erRef.id } };
   } catch (error) {
@@ -177,7 +179,6 @@ export const submitCourseEditRequest = async (cid, data = {}, contentId) => {
       id: erRef.id,
       contentType: "document",
       status: "pending",
-      timestamp: serverTimestamp(),
       metadata: {
         level: data?.level || "",
         title: data?.title || "",
@@ -193,7 +194,10 @@ export const submitCourseEditRequest = async (cid, data = {}, contentId) => {
         level: data?.level || "",
       },
     };
-    const erRes = await setDoc(erRef, erPayload);
+    const erRes = await setDoc(erRef, {
+      ...cleanObject(erPayload),
+      timestamp: serverTimestamp(),
+    });
 
     return { success: true, payload: { ...data, id: erRef.id } };
   } catch (error) {
@@ -213,9 +217,12 @@ export const acceptEditRequest = async (data) => {
       metadata,
       published,
       private: !!data?.private,
-      updatedTimestamp: serverTimestamp(),
     };
-    await updateDoc(contentRef, contentPayload, { merge: true });
+    await updateDoc(
+      contentRef,
+      { ...cleanObject(contentPayload), updatedTimestamp: serverTimestamp() },
+      { merge: true }
+    );
 
     await deleteDoc(doc(db, "edit_requests", id));
 

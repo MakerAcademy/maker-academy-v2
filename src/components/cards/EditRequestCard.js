@@ -13,7 +13,12 @@ import {
 import { useState } from "react";
 
 const EditRequestCard = (props) => {
-  const { thumbnail, contentType, id, title, shortDescription } = props;
+  const {
+    thumbnail,
+    contentType,
+    id,
+    metadata: { title, shortDescription, description },
+  } = props;
 
   const theme = useTheme();
   const [showOpenBtn, setShowOpenBtn] = useState(false);

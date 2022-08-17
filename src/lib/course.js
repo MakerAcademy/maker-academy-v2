@@ -20,7 +20,6 @@ export const submitCourse = async (cid, data = {}) => {
       ...data,
       author: cid,
       id: docRef.id,
-      timestamp: serverTimestamp(),
     };
     const docRes = await setDoc(docRef, docPayload);
 
@@ -47,7 +46,6 @@ export const submitCourse = async (cid, data = {}) => {
       views: 0,
       enrolledUsers: 0,
       status: "pending",
-      timestamp: serverTimestamp(),
       private: !!data?.private,
       filters: {
         brand: data?.brand || "none",
@@ -64,7 +62,10 @@ export const submitCourse = async (cid, data = {}) => {
         duration: data?.duration || "",
       },
     };
-    const contentRes = await setDoc(contentRef, cleanObject(contentPayload));
+    const contentRes = await setDoc(contentRef, {
+      ...cleanObject(contentPayload),
+      timestamp: serverTimestamp(),
+    });
 
     return { success: true, payload: { ...data, id: contentRef.id } };
   } catch (error) {

@@ -29,9 +29,10 @@ export const submitAssessment = async (cid, _data = {}) => {
       questions: _questions,
       author: cid,
       id: docRef.id,
-      timestamp: serverTimestamp(),
     };
-    const docRes = await setDoc(docRef, cleanObject(docPayload));
+    const docRes = await setDoc(docRef, {
+      ...cleanObject(docPayload),
+    });
 
     // Save answers
     const answersRef = doc(db, "assessments", docRef.id, "answers", "answers");
@@ -50,7 +51,6 @@ export const submitAssessment = async (cid, _data = {}) => {
       views: 0,
       enrolledUsers: 0,
       status: "pending",
-      timestamp: serverTimestamp(),
       private: true,
       metadata: {
         level: data?.level || null,
@@ -61,11 +61,54 @@ export const submitAssessment = async (cid, _data = {}) => {
         totalQuestions: data?.questions?.length || 0,
       },
     };
-    const contentRes = await setDoc(contentRef, cleanObject(contentPayload));
+    const contentRes = await setDoc(contentRef, {
+      ...cleanObject(contentPayload),
+      timestamp: serverTimestamp(),
+    });
 
     return { success: true, payload: { ...data, id: contentRef.id } };
   } catch (error) {
     console.log(error);
     return error;
+  }
+};
+
+export const getAssessmentWithContent = async (cid, seperate) => {
+  try {
+    const contentRef = doc(db, "content", cid);
+    const contentSnap = await getDoc(contentRef);
+
+    if (contentSnap.exists()) {
+      const contentData = contentSnap.data();
+
+      const docRef = doc(db, "assessments", contentData.published);
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        const docObj = {
+          ...(seperate
+            ? {
+                document: {
+                  ...docSnap.data(),
+                  timestamp:
+                    contentData.timestamp?.toDate?.()?.toString?.() || null,
+                  updatedTimestamp:
+                    contentData?.updatedTimestamp?.toDate?.()?.toString?.() ||
+                    null,
+                },
+              }
+            : docSnap.data()),
+          ...contentData,
+          timestamp: contentData.timestamp?.toDate?.()?.toString?.() || null,
+          updatedTimestamp:
+            contentData?.updatedTimestamp?.toDate?.()?.toString?.() || null,
+        };
+
+        return docObj;
+      }
+    }
+  } catch (error) {
+    console.log("cid", cid, "No such assessment!");
+    throw error;
   }
 };
