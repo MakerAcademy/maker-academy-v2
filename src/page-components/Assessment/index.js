@@ -1,6 +1,6 @@
 import QuestionRenderer from "@components/AssessmentQuestions";
 import GreenButton from "@components/buttons/GreenButton";
-import { Box, Stack } from "@mui/material";
+import { Box, Container, Stack } from "@mui/material";
 import { useState } from "react";
 import Progress from "./Progress";
 
@@ -33,65 +33,70 @@ const AssessmentPage = ({ assessment }) => {
 
   return (
     <Box>
-      <Stack
-        alignItems="center"
-        justifyContent="center"
-        sx={{ minHeight: "85vh" }}
-        spacing={2}
-      >
-        <Progress
-          questions={assessment?.questions}
-          answers={answers}
-          qnNumber={qnNumber}
-        />
+      <Container maxWidth="lg">
+        <Stack
+          alignItems="center"
+          justifyContent="center"
+          sx={{ minHeight: "81vh" }}
+          spacing={2}
+        >
+          <Progress
+            questions={assessment?.questions}
+            answers={answers}
+            qnNumber={qnNumber}
+          />
 
-        <QuestionRenderer
-          question={currentQuestion}
-          handleSave={handleSave}
-          nextQuestion={qnNumber < totalLength - 1 ? nextQuestion : null}
-          previousQuestion={qnNumber !== 0 ? previousQuestion : null}
-          answer={answers[qnNumber]}
-        />
+          <QuestionRenderer
+            question={currentQuestion}
+            handleSave={handleSave}
+            nextQuestion={qnNumber < totalLength - 1 ? nextQuestion : null}
+            previousQuestion={qnNumber !== 0 ? previousQuestion : null}
+            answer={answers[qnNumber]}
+          />
 
-        <Box sx={{ pt: 5 }}>
-          {qnNumber === totalLength - 1 ? (
-            <Stack direction="row" spacing={2}>
-              <GreenButton
-                variant="outlined"
-                sx={{ minWidth: 150 }}
-                onClick={previousQuestion}
-                disabled={qnNumber == 0}
-              >
-                Previous
-              </GreenButton>
+          <Box sx={{ pt: 5 }}>
+            {qnNumber === totalLength - 1 ? (
+              <Stack direction="row" spacing={2}>
+                <GreenButton
+                  variant="outlined"
+                  sx={{ width: "100%", minWidth: { xs: 0, md: 150 } }}
+                  onClick={previousQuestion}
+                  disabled={qnNumber == 0}
+                >
+                  Previous
+                </GreenButton>
 
-              <GreenButton sx={{ minWidth: 150 }} onClick={handleSubmit}>
-                Submit
-              </GreenButton>
-            </Stack>
-          ) : (
-            <Stack direction="row" spacing={2}>
-              <GreenButton
-                variant="outlined"
-                sx={{ minWidth: 150 }}
-                onClick={previousQuestion}
-                disabled={qnNumber == 0}
-              >
-                Previous
-              </GreenButton>
+                <GreenButton
+                  sx={{ width: "100%", minWidth: { xs: 0, md: 150 } }}
+                  onClick={handleSubmit}
+                >
+                  Submit
+                </GreenButton>
+              </Stack>
+            ) : (
+              <Stack direction="row" spacing={2}>
+                <GreenButton
+                  variant="outlined"
+                  sx={{ width: "100%", minWidth: { xs: 0, md: 150 } }}
+                  onClick={previousQuestion}
+                  disabled={qnNumber == 0}
+                >
+                  Previous
+                </GreenButton>
 
-              <GreenButton
-                variant="outlined"
-                sx={{ minWidth: 150 }}
-                onClick={nextQuestion}
-                disabled={qnNumber === totalLength - 1}
-              >
-                Next
-              </GreenButton>
-            </Stack>
-          )}
-        </Box>
-      </Stack>
+                <GreenButton
+                  variant="outlined"
+                  sx={{ width: "100%", minWidth: { xs: 0, md: 150 } }}
+                  onClick={nextQuestion}
+                  disabled={qnNumber === totalLength - 1}
+                >
+                  Next
+                </GreenButton>
+              </Stack>
+            )}
+          </Box>
+        </Stack>
+      </Container>
     </Box>
   );
 };

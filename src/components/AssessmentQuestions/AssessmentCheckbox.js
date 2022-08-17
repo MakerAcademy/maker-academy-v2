@@ -45,11 +45,7 @@ const AssessmentCheckbox = ({ question, options, handleSave, answer = [] }) => {
               border: `1px solid ${theme.palette.primary.main}`,
               borderRadius: "10px",
               color: value?.includes(item) ? "text.invert" : "inherit",
-              width: 200,
-              [theme.breakpoints.up("md")]: {
-                // height: 180,
-                width: 400,
-              },
+              width: { xs: 250, sm: 350, md: 400 },
             }}
           >
             <Typography

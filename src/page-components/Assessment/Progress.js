@@ -16,6 +16,7 @@ const Progress = ({ questions, answers, qnNumber }) => {
         {questions.map((_, i) => {
           const hasAnswer =
             answers?.[`${i}`] !== null && answers?.[`${i}`] !== undefined;
+
           return (
             <Box
               key={i}
