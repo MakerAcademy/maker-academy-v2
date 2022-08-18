@@ -112,3 +112,37 @@ export const getAssessmentWithContent = async (cid, seperate) => {
     throw error;
   }
 };
+
+export const submitCompletedAssessment = async (cid, courseId, answers) => {
+  return console.log(answers);
+  try {
+    // Submit user assessment
+    const docRef = doc(collection(db, "submitted_assessments", cid, courseId));
+    const docPayload = {
+      ...answers,
+      id: docRef.id,
+      course: courseId,
+    };
+    const docRes = await setDoc(docRef, docPayload);
+
+    // new edit request
+    const erRef = doc(collection(db, "edit_requests"));
+    const erPayload = {
+      updateAuthor: cid,
+      author: data.author,
+      contentId,
+      published: docRef.id,
+      id: erRef.id,
+      contentType: "document",
+      status: "pending",
+    };
+    const erRes = await setDoc(erRef, {
+      ...cleanObject(erPayload),
+      updatedTimestamp: serverTimestamp(),
+    });
+    return { success: true };
+  } catch (error) {
+    console.log("error", error);
+    throw error;
+  }
+};

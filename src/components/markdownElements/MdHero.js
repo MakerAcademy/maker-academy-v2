@@ -1,11 +1,5 @@
-import {
-  HeadingRenderer,
-  ParagraphRenderer,
-} from "@components/Document/MarkdownBody";
+import MarkdownBody from "@components/Document/MarkdownBody";
 import { Box, Stack, useTheme } from "@mui/material";
-import React from "react";
-import ReactMarkdown from "react-markdown";
-import rehypeRaw from "rehype-raw";
 
 const MdHero = ({ data }) => {
   const theme = useTheme();
@@ -38,44 +32,7 @@ const MdHero = ({ data }) => {
       }}
     >
       <Box sx={{ px: 2, color: _textColor }}>
-        <ReactMarkdown
-          rehypePlugins={[rehypeRaw]}
-          components={{
-            h1: (_props) =>
-              HeadingRenderer({
-                ..._props,
-                sx: { mt: 0, mb: 1, color: _textColor },
-              }),
-            h2: (_props) =>
-              HeadingRenderer({
-                ..._props,
-                sx: { mt: 0, mb: 1, color: _textColor },
-              }),
-            h3: (_props) =>
-              HeadingRenderer({
-                ..._props,
-                sx: { mt: 0, mb: 1, color: _textColor },
-              }),
-            h4: (_props) =>
-              HeadingRenderer({
-                ..._props,
-                sx: { mt: 0, mb: 1, color: _textColor },
-              }),
-            h5: (_props) =>
-              HeadingRenderer({
-                ..._props,
-                sx: { mt: 0, mb: 1, color: _textColor },
-              }),
-            h6: (_props) =>
-              HeadingRenderer({
-                ..._props,
-                sx: { mt: 0, mb: 1, color: _textColor },
-              }),
-            p: ParagraphRenderer,
-          }}
-        >
-          {body}
-        </ReactMarkdown>
+        <MarkdownBody markdown={body} headingStyle={{ color: _textColor }} />
       </Box>
     </Stack>
   );

@@ -139,7 +139,13 @@ const ContentDocument = ({ data = {} }) => {
             <DocMetadata {...document} />
 
             {/* Markdown Body */}
-            <MarkdownBody markdown={markdown} />
+            <Box
+              sx={{
+                minHeight: "50vh",
+              }}
+            >
+              <MarkdownBody markdown={markdown} />
+            </Box>
 
             {/* <NextPreviousButton {...next} {...previous} /> */}
           </Stack>

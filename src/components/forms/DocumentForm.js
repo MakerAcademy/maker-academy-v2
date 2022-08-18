@@ -50,6 +50,7 @@ const DocumentForm = ({
     useForm(formOptions);
 
   const onSubmit = (data, e) => {
+    // return console.log(data);
     setDisabled(true);
     propsHandleSubmit(cleanObject(data));
   };

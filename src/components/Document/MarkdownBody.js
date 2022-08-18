@@ -1,7 +1,6 @@
 import MarkdownComponent from "@components/markdownElements";
-import MdVoteResults from "@components/markdownElements/MdVoteResults";
 import Title from "@components/Title";
-import { Box, Typography } from "@mui/material";
+import { Box, Divider, Typography } from "@mui/material";
 import { flattenChildren } from "@utils/helperFunctions";
 import { createSlug } from "@utils/markdown";
 import React from "react";
@@ -17,74 +16,106 @@ import RemarkMathPlugin from "remark-math";
 //   return React.createElement("h" + props.level, { id: slug }, props.children);
 // }
 
-export const HeadingRenderer = (props) => {
+const HeadingRenderer = (props) => {
   const level = props.level;
 
   var children = React.Children.toArray(props.children);
+  if (children?.[0]?.props?.children) {
+    children = React.Children.toArray(children?.[0]?.props?.children);
+  }
   var text = children.reduce(flattenChildren, "");
   var slug = createSlug(text);
 
-  const isBigText = level <= 5;
+  const isBigText = [1, 2].includes(level);
   const align = props.align || "center";
 
   return (
-    <>
-      <Fade triggerOnce>
-        <Title
-          variant={`h${level}`}
-          sx={{
-            my: isBigText ? 2 : 1.2,
-            py: isBigText && 0.5,
-            textAlign: isBigText && align,
-            color: "text.title",
-            ...(props.sx || {}),
-          }}
-          id={slug}
-        >
-          {props.children}
-        </Title>
-      </Fade>
-    </>
+    <Fade triggerOnce>
+      <Title
+        variant={`h${level}`}
+        sx={{
+          my: isBigText ? 2 : 1.2,
+          py: isBigText && 0.5,
+          // pt: 3,
+          textAlign: isBigText && align,
+          color: "text.title",
+          ...(props.sx || {}),
+        }}
+        id={slug}
+      >
+        {props.children}
+      </Title>
+    </Fade>
   );
 };
 
-export const ParagraphRenderer = (props) => {
+const ParagraphRenderer = (props) => {
   return (
-    <Typography sx={{ pb: 0.5, whiteSpace: "pre-line" }}>
-      {props.children}
-    </Typography>
+    <Fade triggerOnce>
+      <Typography sx={{ pb: 0.5, whiteSpace: "pre-line", ...(props.sx || {}) }}>
+        {props.children}
+      </Typography>
+    </Fade>
   );
 };
 
 const CustomRenderer = (props) => {
   if (props.className?.includes("math")) {
-    return <MarkdownComponent value={props.children[0]} />;
+    return (
+      <Fade triggerOnce>
+        <MarkdownComponent value={props.children[0]} />
+      </Fade>
+    );
   }
 
   return <div>{props.children}</div>;
 };
 
-const MarkdownBody = ({ markdown }) => {
+const BreakRenderer = () => {
+  return <Box my={2} />;
+};
+
+const ImageRenderer = (props) => {
   return (
-    <Box
-      sx={{
-        minHeight: "50vh",
-        "& img": {
-          // maxWidth: "90%",
-        },
-      }}
-    >
+    <Fade triggerOnce>
+      <img
+        loading="lazy"
+        src={props.src}
+        alt={props.alt}
+        style={{ width: "100%", objectFit: "contain" }}
+      />
+    </Fade>
+  );
+};
+
+const LineBreakRenderer = () => {
+  return <Divider sx={{ my: 3 }} />;
+};
+
+const MarkdownBody = ({ markdown, headingStyle = {}, paragraphStyle = {} }) => {
+  return (
+    <Box>
       <ReactMarkdown
         rehypePlugins={[RemarkMathPlugin, rehypeRaw]}
         components={{
-          h1: HeadingRenderer,
-          h2: HeadingRenderer,
-          h3: HeadingRenderer,
-          h4: HeadingRenderer,
-          h5: HeadingRenderer,
-          h6: HeadingRenderer,
-          p: ParagraphRenderer,
+          h1: (_props) =>
+            HeadingRenderer({ ..._props, sx: { ...headingStyle } }),
+          h2: (_props) =>
+            HeadingRenderer({ ..._props, sx: { ...headingStyle } }),
+          h3: (_props) =>
+            HeadingRenderer({ ..._props, sx: { ...headingStyle } }),
+          h4: (_props) =>
+            HeadingRenderer({ ..._props, sx: { ...headingStyle } }),
+          h5: (_props) =>
+            HeadingRenderer({ ..._props, sx: { ...headingStyle } }),
+          h6: (_props) =>
+            HeadingRenderer({ ..._props, sx: { ...headingStyle } }),
+          p: (_props) =>
+            ParagraphRenderer({ ..._props, sx: { ...paragraphStyle } }),
           div: CustomRenderer,
+          br: BreakRenderer,
+          img: ImageRenderer,
+          hr: LineBreakRenderer,
         }}
       >
         {markdown}
@@ -93,4 +124,4 @@ const MarkdownBody = ({ markdown }) => {
   );
 };
 
-export default MarkdownBody;
+export default React.memo(MarkdownBody);

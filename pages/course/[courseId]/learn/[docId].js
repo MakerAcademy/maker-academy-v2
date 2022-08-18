@@ -1,7 +1,6 @@
 import ContentDocument from "@components/Document";
 import { NAVBAR_HEIGHT_DESKTOP, NAVBAR_HEIGHT_MOBILE } from "@constants/";
 import { withProtectedUser } from "@hoc/routes";
-import useDocRead from "@hooks/useDocRead";
 import { getAssessmentWithContent } from "@lib/assessment";
 import { getCourseWithContent } from "@lib/course";
 import { getDocumentWithContent } from "@lib/document";
@@ -9,7 +8,6 @@ import { Box, Container, useTheme } from "@mui/material";
 import AssessmentPage from "@page-components/Assessment";
 import LearnContentDrawer from "@page-components/Course/LearnContentDrawer";
 import ErrorPage from "@page-components/Error";
-import { useEffect } from "react";
 
 const LearnContent = ({ course, document: _document }) => {
   const theme = useTheme();

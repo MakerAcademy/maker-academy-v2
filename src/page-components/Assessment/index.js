@@ -1,12 +1,20 @@
 import QuestionRenderer from "@components/AssessmentQuestions";
 import GreenButton from "@components/buttons/GreenButton";
+import { useAppSelector } from "@hooks/useRedux";
+import { submitCompletedAssessment } from "@lib/assessment";
 import { Box, Container, Stack } from "@mui/material";
+import { useRouter } from "next/router";
+import { useSnackbar } from "notistack";
 import { useState } from "react";
 import Progress from "./Progress";
 
 const AssessmentPage = ({ assessment }) => {
   const [qnNumber, setQnNumber] = useState(0);
   const [answers, setAnswers] = useState({});
+
+  const { profile } = useAppSelector((state) => state.profile);
+  const { query } = useRouter();
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   const currentQuestion = assessment?.questions?.[qnNumber];
   const totalLength = assessment?.questions?.length;
@@ -27,8 +35,29 @@ const AssessmentPage = ({ assessment }) => {
     setAnswers({ ...answers, [qnNumber]: _value });
   };
 
-  const handleSubmit = () => {
-    console.log(answers);
+  const handleSubmit = async () => {
+    const { courseId, docId } = query;
+
+    const _key = enqueueSnackbar("Submitting Assessment...", {
+      variant: "default",
+    });
+
+    await submitCompletedAssessment(profile?.id, courseId, docId, answers)
+      .then(() => {
+        closeSnackbar(_key);
+        enqueueSnackbar("Success", {
+          variant: "success",
+          autoHideDuration: 2000,
+          // onClose: () => Router.push("/app/studio"),
+        });
+      })
+      .catch((err) => {
+        enqueueSnackbar("Error", {
+          variant: "error",
+          autoHideDuration: 2000,
+          // onClose: () => Router.push("/app/studio"),
+        });
+      });
   };
 
   return (

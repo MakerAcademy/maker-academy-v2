@@ -64,11 +64,11 @@ const DocMetadata = ({
           Published {moment(timestamp?.toDate?.()).format("ll")}
         </Typography>
 
-        {updatedTimestamp && (
+        {/* {updatedTimestamp && (
           <Typography variant="body2">
             Updated {moment(updatedTimestamp).format("ll")}
           </Typography>
-        )}
+        )} */}
 
         {/* Duration */}
         <Stack direction="row" alignItems="center" spacing={0.5}>

@@ -90,7 +90,10 @@ export const addChapters = (data) => {
 
 // It removes # from the given string. And it shortens the string if its longer than "stringLimit".
 export const createTitle = (string, stringLimit) => {
-  const rawTitle = string.replace(/^#+\s/g, "").replaceAll("\n", "");
+  const rawTitle = string
+    .replace(/^#+\s/g, "")
+    .replaceAll("\n", "")
+    .replaceAll("*", "");
 
   if (rawTitle?.length >= stringLimit)
     return `${rawTitle.slice(0, stringLimit)}..`;
@@ -104,8 +107,9 @@ export const createSlug = (text) => {
   const _text = text
     ?.toLowerCase?.()
     .replace(/\W/g, "-")
-    .replace(/^-+|-+$/g, "");
-    
+    .replace(/^-+|-+$/g, "")
+    .replace(/\-+/g, "-");
+
   return _text || text;
 };
 

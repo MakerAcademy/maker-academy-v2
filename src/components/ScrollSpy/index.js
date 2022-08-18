@@ -66,7 +66,6 @@ const ScrollSpy = ({ title, data }) => {
 
               return (
                 <Link
-                  id="abc"
                   href={`#${item.slug}`}
                   color="inherit"
                   underline="none"

@@ -135,7 +135,7 @@ export const submitDocumentEditRequest = async (cid, data = {}, contentId) => {
     };
     const erRes = await setDoc(erRef, {
       ...cleanObject(erPayload),
-      updatedTimestamp: serverTimestamp(),
+      timestamp: serverTimestamp(),
     });
 
     return { success: true, payload: { ...data, id: erRef.id } };
