@@ -32,17 +32,25 @@ const AssessmentPage = ({ assessment }) => {
   };
 
   const handleSave = (_value) => {
-    setAnswers({ ...answers, [qnNumber]: _value });
+    setAnswers({ ...answers, [currentQuestion?.index]: _value });
   };
 
   const handleSubmit = async () => {
     const { courseId, docId } = query;
 
+    // return console.log(answers);
+
     const _key = enqueueSnackbar("Submitting Assessment...", {
       variant: "default",
     });
 
-    await submitCompletedAssessment(profile?.id, courseId, docId, answers)
+    await submitCompletedAssessment(
+      profile?.id,
+      courseId,
+      docId,
+      assessment?.published,
+      answers
+    )
       .then(() => {
         closeSnackbar(_key);
         enqueueSnackbar("Success", {
@@ -78,8 +86,6 @@ const AssessmentPage = ({ assessment }) => {
           <QuestionRenderer
             question={currentQuestion}
             handleSave={handleSave}
-            nextQuestion={qnNumber < totalLength - 1 ? nextQuestion : null}
-            previousQuestion={qnNumber !== 0 ? previousQuestion : null}
             answer={answers[qnNumber]}
           />
 

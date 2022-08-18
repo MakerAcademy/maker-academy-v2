@@ -113,11 +113,29 @@ export const getAssessmentWithContent = async (cid, seperate) => {
   }
 };
 
-export const submitCompletedAssessment = async (cid, courseId, answers) => {
-  return console.log(answers);
+export const submitCompletedAssessment = async (
+  cid,
+  courseId,
+  assessmentId,
+  publishedId,
+  answers
+) => {
+  // return console.log(answers);
   try {
+    console.log(publishedId);
+    // Get answers
+    const answersRef = await getDoc(
+      doc(collection(db, `assessments/${publishedId}`, "answers"))
+    );
+    const answers = answersRef.data?.();
+    console.log(answers, answersRef);
+
+    return { success: true };
+
     // Submit user assessment
-    const docRef = doc(collection(db, "submitted_assessments", cid, courseId));
+    const docRef = doc(
+      collection(db, "submitted_assessments", cid, assessmentId)
+    );
     const docPayload = {
       ...answers,
       id: docRef.id,
@@ -145,4 +163,16 @@ export const submitCompletedAssessment = async (cid, courseId, answers) => {
     console.log("error", error);
     throw error;
   }
+};
+
+const gradeAnswers = (questions, answers, submission) => {
+  const correctAnswers = answers.map((an, i) => {
+    if (typeof an === "string") {
+      return submission[i] === an ? 1 : 0;
+    } else if (typeof an === "object") {
+      return isArrayEqual(an, submission[i]) ? 1 : 0;
+    }
+  });
+
+  return correctAnswers;
 };
