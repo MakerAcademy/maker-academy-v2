@@ -1,4 +1,5 @@
 import { db } from "@config/firebase";
+import { isArrayEqual } from "@utils/helperFunctions";
 import { cleanObject } from "@utils/helpers";
 import {
   setDoc,
@@ -122,42 +123,39 @@ export const submitCompletedAssessment = async (
 ) => {
   // return console.log(answers);
   try {
-    console.log(publishedId);
     // Get answers
     const answersRef = await getDoc(
-      doc(collection(db, `assessments/${publishedId}`, "answers"))
+      doc(db, "assessments", publishedId, "answers", "answers")
     );
-    const answers = answersRef.data?.();
-    console.log(answers, answersRef);
+    const fetchedAnswers = answersRef.data?.();
 
-    return { success: true };
+    const graded = gradeAnswers(fetchedAnswers?.answers, answers);
+
+    const sum = graded.reduce((acc, item) => {
+      return acc + item.points;
+    }, 0);
 
     // Submit user assessment
-    const docRef = doc(
-      collection(db, "submitted_assessments", cid, assessmentId)
-    );
+    const docRef = doc(collection(db, "submitted_assessments"));
     const docPayload = {
-      ...answers,
+      totalPoints: sum,
+      answers: graded,
       id: docRef.id,
       course: courseId,
+      cid,
+      assessmentId,
     };
-    const docRes = await setDoc(docRef, docPayload);
-
-    // new edit request
-    const erRef = doc(collection(db, "edit_requests"));
-    const erPayload = {
-      updateAuthor: cid,
-      author: data.author,
-      contentId,
-      published: docRef.id,
-      id: erRef.id,
-      contentType: "document",
-      status: "pending",
-    };
-    const erRes = await setDoc(erRef, {
-      ...cleanObject(erPayload),
-      updatedTimestamp: serverTimestamp(),
+    const docRes = await setDoc(docRef, {
+      ...cleanObject(docPayload),
+      timestamp: serverTimestamp(),
     });
+
+    // Add to users submitted assessment
+    const userRef = doc(db, "contacts", cid);
+    await updateDoc(userRef, {
+      submittedAssessments: arrayUnion(assessmentId),
+    });
+
     return { success: true };
   } catch (error) {
     console.log("error", error);
@@ -165,14 +163,28 @@ export const submitCompletedAssessment = async (
   }
 };
 
-const gradeAnswers = (questions, answers, submission) => {
+const gradeAnswers = (answers, submission) => {
   const correctAnswers = answers.map((an, i) => {
-    if (typeof an === "string") {
-      return submission[i] === an ? 1 : 0;
-    } else if (typeof an === "object") {
-      return isArrayEqual(an, submission[i]) ? 1 : 0;
+    const usersAns = submission[an?.index];
+
+    const _data = {
+      index: an?.index,
+      answer: usersAns,
+      correctAnswer: an.answer,
+    };
+
+    if (typeof an.answer === "string") {
+      return usersAns === an.answer
+        ? { ..._data, points: 1 }
+        : { ..._data, points: 0 };
+    } else if (typeof an.answer === "object") {
+      return isArrayEqual(an.answer, usersAns)
+        ? { ..._data, points: 1 }
+        : { ..._data, points: 0 };
     }
   });
+
+  console.log(correctAnswers);
 
   return correctAnswers;
 };

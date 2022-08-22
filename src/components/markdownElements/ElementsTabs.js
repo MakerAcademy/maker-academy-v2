@@ -59,6 +59,13 @@ const ELEMENTS = [
     image:
       "https://media.sproutsocial.com/uploads/2017/02/10x-featured-social-media-image-size.png",
   },
+  {
+    label: "code",
+    value:
+      '$$\ncomponent: code\nlanguage: javascript\ncode: {{\nconsole.log("Hello World!")\n}}\n$$',
+    image:
+      "https://media.sproutsocial.com/uploads/2017/02/10x-featured-social-media-image-size.png",
+  },
 ];
 
 const ElementsTabs = () => {

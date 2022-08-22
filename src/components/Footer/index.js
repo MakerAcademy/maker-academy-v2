@@ -2,6 +2,7 @@ import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import {
+  Box,
   Container,
   IconButton,
   Stack,
@@ -36,48 +37,58 @@ const LandingFooter = ({}) => {
   const isDark = theme.palette.mode === "dark";
 
   return (
-    <Container maxWidth="xl" sx={{ py: 3 }}>
-      <Stack
-        direction={{ xs: "column", md: "row" }}
-        spacing={3}
-        alignItems="center"
-        justifyContent="space-between"
-        sx={
-          {
-            // backgroundColor: "#14005C",
-            // color: theme.palette.common.white,
-          }
-        }
-      >
-        {/* Logo */}
-        <Link href="/" passHref>
-          <img
-            src={theme.palette.mode === "light" ? FullLogoBlack : FullLogoWhite}
-            alt="Maker Academy Logo"
-            style={{
-              height: "100%",
-              maxHeight: "25px",
-              objectFit: "contain",
-            }}
-          />
-        </Link>
-
-        {/* Rights */}
-        <Typography variant="body2">All rights Maker Academy 2022</Typography>
-
-        {/* Socials */}
+    <Box
+      sx={{
+        bgcolor: "background.default",
+        zIndex: theme.zIndex.drawer + 1,
+        position: "absolute",
+        width: "100%",
+      }}
+    >
+      <Container maxWidth="xl" sx={{ py: 3 }}>
         <Stack
-          spacing={2}
-          direction="row"
-          justifyContent="center"
+          direction={{ xs: "column", md: "row" }}
+          spacing={3}
           alignItems="center"
+          justifyContent="space-between"
+          sx={
+            {
+              // backgroundColor: "#14005C",
+              // color: theme.palette.common.white,
+            }
+          }
         >
-          {socials.map((item, i) => (
-            <Link href={item.link} key={i} passHref>
-              <IconButton>
-                {item.icon && <item.icon fontSize="small" />}
+          {/* Logo */}
+          <Link href="/" passHref>
+            <img
+              src={
+                theme.palette.mode === "light" ? FullLogoBlack : FullLogoWhite
+              }
+              alt="Maker Academy Logo"
+              style={{
+                height: "100%",
+                maxHeight: "25px",
+                objectFit: "contain",
+              }}
+            />
+          </Link>
 
-                {/* {item.svg && (
+          {/* Rights */}
+          <Typography variant="body2">All rights Maker Academy 2022</Typography>
+
+          {/* Socials */}
+          <Stack
+            spacing={2}
+            direction="row"
+            justifyContent="center"
+            alignItems="center"
+          >
+            {socials.map((item, i) => (
+              <Link href={item.link} key={i} passHref>
+                <IconButton>
+                  {item.icon && <item.icon fontSize="small" />}
+
+                  {/* {item.svg && (
                     <Image
                       src={item.svg}
                       alt="Discord"
@@ -89,12 +100,13 @@ const LandingFooter = ({}) => {
                       }}
                     />
                   )} */}
-              </IconButton>
-            </Link>
-          ))}
+                </IconButton>
+              </Link>
+            ))}
+          </Stack>
         </Stack>
-      </Stack>
-    </Container>
+      </Container>
+    </Box>
   );
 };
 

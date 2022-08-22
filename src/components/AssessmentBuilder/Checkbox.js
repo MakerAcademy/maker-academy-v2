@@ -1,10 +1,15 @@
+import FormCheckbox from "@components/formFields/FormCheckbox";
 import FormFieldArray from "@components/formFields/FormFieldArray";
+import FormSelectField from "@components/formFields/FormSelectField";
 import FormTextField from "@components/formFields/FormTextField";
 import { Button, Drawer, Stack, Typography } from "@mui/material";
 import React, { useState } from "react";
+import { useWatch } from "react-hook-form";
 
 const CheckboxOptions = ({ control, name, ...other }) => {
   const [propsDrawer, setPropsDrawer] = useState(null);
+
+  const _question = useWatch({ control, name });
 
   const toggleDrawer = (event) => {
     if (
@@ -50,11 +55,11 @@ const CheckboxOptions = ({ control, name, ...other }) => {
         {...other}
       />
 
-      <FormTextField
-        control={control}
+      <FormCheckbox
         name={`${name}.answer`}
         label="Correct Answer"
-        placeholder="Comma separated answers (maker, blockchain)"
+        control={control}
+        options={_question?.options}
       />
 
       <Drawer

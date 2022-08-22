@@ -1,4 +1,5 @@
 import GreenButton from "@components/buttons/GreenButton";
+import MarkdownBody from "@components/Document/MarkdownBody";
 import FormCheckbox from "@components/formFields/FormCheckbox";
 import FormMarkdown from "@components/formFields/FormMarkdown";
 import FormSelectField from "@components/formFields/FormSelectField";
@@ -6,7 +7,7 @@ import FormTextField from "@components/formFields/FormTextField";
 import { CONTENT_CATEGORIES } from "@constants/";
 import { BRANDS, CONTENT_DIFFICULTY_LEVELS } from "@constants/";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Box, Divider, Stack, Typography } from "@mui/material";
+import { Box, Divider, Grid, Stack, Typography, useTheme } from "@mui/material";
 import { cleanObject } from "@utils/helpers";
 import useTranslation from "next-translate/useTranslation";
 import { useState } from "react";
@@ -19,6 +20,7 @@ const DocumentForm = ({
   values = { private: false },
   editableFields,
 }) => {
+  const theme = useTheme();
   const [disabled, setDisabled] = useState(false);
 
   const isEditable = (_name) => {
@@ -60,6 +62,7 @@ const DocumentForm = ({
   // };
 
   const _image = useWatch({ control, name: "markdownValue" });
+  const _markdown = useWatch({ control, name: "markdown" });
 
   // console.log(_image);
 
@@ -130,12 +133,31 @@ const DocumentForm = ({
           />
         </Stack>
 
-        <FormMarkdown
-          placeholder="Write your document content here..."
-          name="markdown"
-          control={control}
-          disabled={!isEditable("markdown") || disabled}
-        />
+        <Grid container spacing={2}>
+          <Grid item xs={12} md={6} lg={7}>
+            <FormMarkdown
+              placeholder="Write your document content here..."
+              name="markdown"
+              control={control}
+              disabled={!isEditable("markdown") || disabled}
+            />
+          </Grid>
+
+          <Grid item xs={12} md={6} lg={5}>
+            <Box
+              sx={{
+                overflow: "scroll",
+                width: "100%",
+                height: 550,
+                [theme.breakpoints.up("xl")]: {
+                  height: 750,
+                },
+              }}
+            >
+              <MarkdownBody markdown={_markdown} />
+            </Box>
+          </Grid>
+        </Grid>
 
         <Stack
           justifyContent="flex-end"

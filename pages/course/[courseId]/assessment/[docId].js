@@ -1,30 +1,29 @@
-import ContentDocument from "@components/Document";
-import CourseDocument from "@components/Document/CourseDocument";
 import { NAVBAR_HEIGHT_DESKTOP, NAVBAR_HEIGHT_MOBILE } from "@constants/";
 import { withProtectedUser } from "@hoc/routes";
+import { getAssessmentWithContent } from "@lib/assessment";
 import { getCourseWithContent } from "@lib/course";
-import { getDocumentWithContent } from "@lib/document";
-import { Box, Container, Stack, useTheme } from "@mui/material";
-import LearnContentDrawer from "@page-components/Course/LearnContentDrawer";
+import { Box, useTheme } from "@mui/material";
+import AssessmentPage from "@page-components/Assessment";
 import ErrorPage from "@page-components/Error";
 
-const LearnContent = ({ course, document: _document }) => {
+const LearnContent = ({ course, assessment }) => {
   const theme = useTheme();
 
-  const contentType = _document?.contentType;
-
-  if (!contentType) return <ErrorPage />;
+  if (!assessment) return <ErrorPage />;
 
   return (
-    <Stack direction="row">
-      <LearnContentDrawer course={course} />
-
-      <Box sx={{ width: "100%" }}>
-        <Container maxWidth="md" sx={{ py: 8 }}>
-          <CourseDocument data={_document} hideScrollspy />
-        </Container>
-      </Box>
-    </Stack>
+    <Box
+      sx={{
+        maxWidth: "100vw",
+        position: "relative",
+        pt: `${NAVBAR_HEIGHT_MOBILE}px`,
+        [theme.breakpoints.up("md")]: {
+          pt: `${NAVBAR_HEIGHT_DESKTOP}px`,
+        },
+      }}
+    >
+      <AssessmentPage assessment={assessment} />
+    </Box>
   );
 };
 
@@ -34,7 +33,7 @@ export const getServerSideProps = withProtectedUser(
   async (context, { profile }) => {
     try {
       const courseId = context.params.courseId;
-      const docId = context.params.docId;
+      const docId = context.params.docIdId;
 
       const course = await getCourseWithContent(courseId);
 
@@ -47,16 +46,16 @@ export const getServerSideProps = withProtectedUser(
       });
       const docFound = _docFound?.documents?.find((j) => j.docId === docId);
 
-      let document = {};
+      let assessment = {};
 
       if (docFound) {
-        document = await getDocumentWithContent(docId);
+        assessment = await getAssessmentWithContent(docId);
       } else {
         return { redirect: { destination: `/course/${courseId}` } };
       }
 
       return {
-        props: { course, document: JSON.parse(JSON.stringify(document)) },
+        props: { course, assessment },
       };
     } catch (error) {
       console.log(1, error);

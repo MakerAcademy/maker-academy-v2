@@ -66,7 +66,7 @@ const MobileDrawer = ({ anchorEl, setAnchorEl }) => {
   );
 };
 
-const Navbar = ({ transparent }) => {
+const Navbar = ({ transparent, withElevation }) => {
   const theme = useTheme();
   const [anchorEl, setAnchorEl] = useState();
 
@@ -78,14 +78,14 @@ const Navbar = ({ transparent }) => {
 
   return (
     <AppBar
-      elevation={0}
+      elevation={withElevation ? 2 : 0}
       sx={{
         flexGrow: 1,
         backgroundColor: transparent
           ? "transparent"
           : theme.palette.background.default,
         width: "100%",
-        zIndex: 999,
+        // zIndex: theme.zIndex.drawer + 1,
         position: "absolute",
         // [theme.breakpoints.up("md")]: {
         //   position: fixed ? "fixed" : "absolute",

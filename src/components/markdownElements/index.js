@@ -1,5 +1,6 @@
 import React from "react";
 import MarkdownBox from "./MdBox";
+import MdCode from "./MdCode";
 import MdCollapse from "./MdCollapse";
 import MdCtaBox from "./MdCtaBox";
 import MdHero from "./MdHero";
@@ -105,6 +106,7 @@ MarkdownComponent.type = {
   hero: MdHero,
   cta_box: MdCtaBox,
   vote_results: MdVoteResults,
+  code: MdCode,
 };
 
 export default MarkdownComponent;

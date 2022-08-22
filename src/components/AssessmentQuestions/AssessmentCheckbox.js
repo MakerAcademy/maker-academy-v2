@@ -35,8 +35,6 @@ const AssessmentCheckbox = ({ question, options, handleSave, answer = [] }) => {
       <Stack spacing={2}>
         {options?.map?.((item, i) => (
           <Button
-            alignItems="center"
-            justifyContent="center"
             key={i}
             onClick={() => handleClick(item)}
             variant={value?.includes(item) ? "contained" : "outlined"}

@@ -15,6 +15,7 @@ const DocMetadata = ({
   duration,
   likes,
   views,
+  ...other
 }) => {
   const { profile } = useAppSelector((state) => state.profile);
 

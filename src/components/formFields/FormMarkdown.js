@@ -60,7 +60,7 @@ const FormMarkdown = ({ name, control, sx = {}, label, ...props }) => {
 
             <Editor
               // theme={theme.palette.mode}
-              previewStyle="vertical"
+              previewStyle="tab"
               initialEditType="markdown"
               plugins={[
                 colorSyntax,

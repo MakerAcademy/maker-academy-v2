@@ -52,7 +52,15 @@ const HeadingRenderer = (props) => {
 const ParagraphRenderer = (props) => {
   return (
     <Fade triggerOnce>
-      <Typography sx={{ pb: 0.5, whiteSpace: "pre-line", ...(props.sx || {}) }}>
+      <Typography
+        variant="body2"
+        sx={{
+          lineHeight: 1.7,
+          pb: 0.5,
+          whiteSpace: "pre-line",
+          ...(props.sx || {}),
+        }}
+      >
         {props.children}
       </Typography>
     </Fade>
@@ -71,10 +79,6 @@ const CustomRenderer = (props) => {
   return <div>{props.children}</div>;
 };
 
-const BreakRenderer = () => {
-  return <Box my={2} />;
-};
-
 const ImageRenderer = (props) => {
   return (
     <Fade triggerOnce>
@@ -88,13 +92,20 @@ const ImageRenderer = (props) => {
   );
 };
 
-const LineBreakRenderer = () => {
+const DividerRenderer = () => {
   return <Divider sx={{ my: 3 }} />;
 };
 
 const MarkdownBody = ({ markdown, headingStyle = {}, paragraphStyle = {} }) => {
   return (
-    <Box>
+    <Box
+      sx={{
+        height: "100%",
+        typography: "body2",
+        "& li": { mb: 1 },
+        // whiteSpace: "pre-line",
+      }}
+    >
       <ReactMarkdown
         rehypePlugins={[RemarkMathPlugin, rehypeRaw]}
         components={{
@@ -113,9 +124,8 @@ const MarkdownBody = ({ markdown, headingStyle = {}, paragraphStyle = {} }) => {
           p: (_props) =>
             ParagraphRenderer({ ..._props, sx: { ...paragraphStyle } }),
           div: CustomRenderer,
-          br: BreakRenderer,
           img: ImageRenderer,
-          hr: LineBreakRenderer,
+          hr: DividerRenderer,
         }}
       >
         {markdown}

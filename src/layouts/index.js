@@ -9,22 +9,20 @@ const LandingLayout = ({ children }) => {
   const theme = useTheme();
 
   const { pathname, query } = useRouter();
-  const transparent =
-    pathname === "/" ||
-    pathname === "/home" ||
-    query.docId ||
-    query.courseId ||
-    query.assessmentId;
+  const transparent = pathname === "/" || pathname === "/home";
+
+  const withElevation = query.courseId;
 
   return (
     <React.Fragment>
-      <Navbar transparent={transparent} />
+      <Navbar transparent={transparent} withElevation={withElevation} />
 
       <Box sx={{ pt: transparent ? 0 : `${NAVBAR_HEIGHT_DESKTOP}px` }}>
         {children}
       </Box>
 
       <Divider />
+
       <Footer />
     </React.Fragment>
   );

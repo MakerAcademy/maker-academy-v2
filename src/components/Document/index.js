@@ -19,7 +19,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import MarkdownBody from "./MarkdownBody";
 
-const ContentDocument = ({ data = {} }) => {
+const ContentDocument = ({ data = {}, hideScrollspy }) => {
   const { user } = useAppSelector((state) => state.user);
   const { profile } = useAppSelector((state) => state.profile);
 
@@ -91,15 +91,17 @@ const ContentDocument = ({ data = {} }) => {
   return (
     <Box>
       <Stack direction="row" spacing={5}>
-        <Hidden smDown>
-          {/* Left side scrollspy */}
-          {ids?.length > 0 && (
-            <Box sx={{ py: 5 }}>
-              {/* <BackButton sx={{ mb: { xs: 1, md: 2 } }} /> */}
-              <ScrollSpy title="Table of Content" data={ids} />
-            </Box>
-          )}
-        </Hidden>
+        {!hideScrollspy && (
+          <Hidden smDown>
+            {/* Left side scrollspy */}
+            {ids?.length > 0 && (
+              <Box sx={{ py: 5 }}>
+                {/* <BackButton sx={{ mb: { xs: 1, md: 2 } }} /> */}
+                <ScrollSpy title="Table of Content" data={ids} />
+              </Box>
+            )}
+          </Hidden>
+        )}
 
         {/* Right side content */}
         <Container maxWidth="md" sx={{ py: 5 }}>
