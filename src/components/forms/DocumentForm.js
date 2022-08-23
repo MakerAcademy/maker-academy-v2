@@ -146,6 +146,7 @@ const DocumentForm = ({
           <Grid item xs={12} md={6} lg={5}>
             <Box
               sx={{
+                p: 1,
                 overflow: "scroll",
                 width: "100%",
                 height: 550,
@@ -154,6 +155,8 @@ const DocumentForm = ({
                 },
               }}
             >
+              <Typography sx={{ mb: 2 }}>Preview</Typography>
+
               <MarkdownBody markdown={_markdown} />
             </Box>
           </Grid>

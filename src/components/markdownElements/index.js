@@ -4,19 +4,26 @@ import MdCode from "./MdCode";
 import MdCollapse from "./MdCollapse";
 import MdCtaBox from "./MdCtaBox";
 import MdHero from "./MdHero";
+import MdImage from "./MdImage";
 import MdQuote from "./MdQuote";
 import MdTooltip from "./MdTooltip";
+import MdVideo from "./MdVideo";
 import MdVoteResults from "./MdVoteResults";
 
 const _parseArray = (str) => {
   if (!str) return str;
 
-  if (str.startsWith("[") && str.endsWith("]")) {
-    var arr = JSON.parse(str.replace(/'/g, '"'));
-    return arr;
-  }
+  try {
+    if (str.startsWith("[") && str.endsWith("]")) {
+      var arr = JSON.parse(str.replace(/'/g, '"'));
+      return arr;
+    }
 
-  return str;
+    return str;
+  } catch (err) {
+    console.log(err);
+    return str;
+  }
 };
 
 const _parseBoolean = (str) => {
@@ -107,6 +114,8 @@ MarkdownComponent.type = {
   cta_box: MdCtaBox,
   vote_results: MdVoteResults,
   code: MdCode,
+  image: MdImage,
+  video: MdVideo,
 };
 
 export default MarkdownComponent;

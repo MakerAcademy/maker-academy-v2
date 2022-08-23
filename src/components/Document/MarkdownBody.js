@@ -1,6 +1,6 @@
 import MarkdownComponent from "@components/markdownElements";
 import Title from "@components/Title";
-import { Box, Divider, Typography } from "@mui/material";
+import { Box, Divider, Stack, Typography } from "@mui/material";
 import { flattenChildren } from "@utils/helperFunctions";
 import { createSlug } from "@utils/markdown";
 import React from "react";
@@ -50,6 +50,14 @@ const HeadingRenderer = (props) => {
 };
 
 const ParagraphRenderer = (props) => {
+  let style = {};
+
+  if (props.style) {
+    style = props.style;
+  } else if (typeof props === "object") {
+    style = { ...(props?.children?.[0]?.props?.style || {}) };
+  }
+
   return (
     <Fade triggerOnce>
       <Typography
@@ -59,6 +67,10 @@ const ParagraphRenderer = (props) => {
           pb: 0.5,
           whiteSpace: "pre-line",
           ...(props.sx || {}),
+          ...style,
+          "&: span": {
+            width: "100%",
+          },
         }}
       >
         {props.children}

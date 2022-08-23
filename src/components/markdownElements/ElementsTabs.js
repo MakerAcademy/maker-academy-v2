@@ -20,14 +20,14 @@ const ELEMENTS = [
   {
     label: "collapse",
     value:
-      "$$\ncomponent: collapse\ntitle: What is DAI?\ntext: Hello this works\nNew line here\nvariant: p\n$$",
+      "$$\ncomponent: collapse\ntitle: What is DAI?\nbody: {{\n**Markdown Body here**\nLine 1 normal\n}}\n$$",
     image:
       "https://media.sproutsocial.com/uploads/2017/02/10x-featured-social-media-image-size.png",
   },
   {
     label: "hero_1",
     value:
-      "$$\ncomponent: hero\nimage: https://static.gopro.com/assets/blta2b8522e5372af40/blt563ee3c5cea69e67/611bd591cf33c613b2c06df6/pdp-subscription-hero-image-1440-2x.jpg\nheight: 220\ninvertColor: true\nbody: {{\n### Header Text here\n**Line 1 bold**\nLine 1 normal\n}}\n$$",
+      "$$\ncomponent: hero\nimage: https://static.gopro.com/assets/blta2b8522e5372af40/blt563ee3c5cea69e67/611bd591cf33c613b2c06df6/pdp-subscription-hero-image-1440-2x.jpg\nheight: 220\ncolor: invert\nbody: {{\n### Header Text here\n**Line 1 bold**\nLine 1 normal\n}}\n$$",
     image:
       "https://media.sproutsocial.com/uploads/2017/02/10x-featured-social-media-image-size.png",
   },
@@ -48,14 +48,14 @@ const ELEMENTS = [
   {
     label: "cta_box",
     value:
-      "$$\ncomponent: cta_box\ntitle: MakerDao History\ndescription: Start here if you’re new to MakerDAO and the Academy.\nbuttonText: Learn More\nbuttonLink: #\n$$",
+      "$$\ncomponent: cta_box\ntitle: MakerDao History\ndescription: Start here if you're new to MakerDAO and the Academy.\nimage: https://interactive-examples.mdn.mozilla.net/media/cc0-images/grapefruit-slice-332-332.jpg\nbuttonText: Learn More\nbuttonLink: https://www.google.com/\n$$",
     image:
       "https://media.sproutsocial.com/uploads/2017/02/10x-featured-social-media-image-size.png",
   },
   {
     label: "vote_results",
     value:
-      "$$\ncomponent: vote_results\ntitle: Maker Vote\ndirection: horizontal\nlabels: [For, Against]\ndata: [1408, 643]\nshowLegend: true\n$$",
+      '$$\ncomponent: vote_results\ntitle: Maker Vote\ndirection: horizontal\nlabels: ["For", "Against"]\ndata: [1408, 643]\nshowLegend: true\n$$',
     image:
       "https://media.sproutsocial.com/uploads/2017/02/10x-featured-social-media-image-size.png",
   },
@@ -63,6 +63,20 @@ const ELEMENTS = [
     label: "code",
     value:
       '$$\ncomponent: code\nlanguage: javascript\ncode: {{\nconsole.log("Hello World!")\n}}\n$$',
+    image:
+      "https://media.sproutsocial.com/uploads/2017/02/10x-featured-social-media-image-size.png",
+  },
+  {
+    label: "image",
+    value:
+      "$$\ncomponent: image\nsrc: https://media.sproutsocial.com/uploads/2017/02/10x-featured-social-media-image-size.png\ntitle: An Image Title\nwidth: 100%\n$$",
+    image:
+      "https://media.sproutsocial.com/uploads/2017/02/10x-featured-social-media-image-size.png",
+  },
+  {
+    label: "video",
+    value:
+      "$$\ncomponent: video\nurl: https://www.youtube.com/watch?v=ysz5S6PUM-U\nwidth: 100%\nheight: 360\n$$",
     image:
       "https://media.sproutsocial.com/uploads/2017/02/10x-featured-social-media-image-size.png",
   },

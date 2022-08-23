@@ -7,6 +7,7 @@ const MdCtaBox = ({ data }) => {
   const {
     title,
     description,
+    image = "https://interactive-examples.mdn.mozilla.net/media/cc0-images/grapefruit-slice-332-332.jpg",
     buttonText = "Learn More",
     buttonLink = "#",
   } = data;
@@ -35,7 +36,7 @@ const MdCtaBox = ({ data }) => {
           </Stack>
 
           {/* Right Side */}
-          <Avatar sx={{ height: 120, width: 120 }} />
+          <Avatar src={image} sx={{ height: 120, width: 120 }} />
         </Stack>
       </Card>
     </Stack>

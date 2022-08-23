@@ -1,18 +1,26 @@
 import ElementsTabs from "@components/markdownElements/ElementsTabs";
-import { Box, Stack, Typography, useTheme } from "@mui/material";
+import {
+  Box,
+  Button,
+  IconButton,
+  Stack,
+  Typography,
+  useTheme,
+} from "@mui/material";
 import colorSyntax from "@toast-ui/editor-plugin-color-syntax";
 import "@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css";
 import "@toast-ui/editor-plugin-table-merged-cell/dist/toastui-editor-plugin-table-merged-cell.css";
 import "@toast-ui/editor/dist/toastui-editor.css";
 import { Editor } from "@toast-ui/react-editor";
 import Prism from "prismjs";
-import { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Controller } from "react-hook-form";
 import "tui-color-picker/dist/tui-color-picker.css";
 import "@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css";
 import tableMergedCell from "@toast-ui/editor-plugin-table-merged-cell";
 import "prismjs/themes/prism.css";
 import codeSyntaxHighlight from "@toast-ui/editor-plugin-code-syntax-highlight";
+import Close from "@mui/icons-material/Close";
 
 // const Editor = dynamic(
 //   () => import("@toast-ui/react-editor").then((m) => m.Editor),
@@ -20,8 +28,72 @@ import codeSyntaxHighlight from "@toast-ui/editor-plugin-code-syntax-highlight";
 // );
 
 const FormMarkdown = ({ name, control, sx = {}, label, ...props }) => {
+  const [commandsAdded, setCommandsAdded] = useState(false);
+  const [ButtonAdded, setButtonAdded] = useState(false);
   const theme = useTheme();
   const editor = useRef();
+
+  useEffect(() => {
+    if (editor && !commandsAdded) {
+      const _editor = editor?.current?.getInstance();
+
+      _editor.addCommand("markdown", "underline", function underline(data) {
+        const _text = _editor.getSelectedText();
+        _editor.insertText(
+          `<span style="text-decoration: underline;">${_text}</span>`
+        );
+      });
+
+      _editor.addCommand("markdown", "linebreak", function linebreak(data) {
+        _editor.insertText("<br />");
+      });
+
+      _editor.addCommand("markdown", "center", function center(data) {
+        const _text = _editor.getSelectedText();
+        _editor.insertText(`<p style="text-align: center;">${_text}</p>`);
+      });
+
+      _editor.insertToolbarItem(
+        { groupIndex: 0, itemIndex: 4 },
+        {
+          name: "underline",
+          tooltip: "Underline",
+          command: "underline",
+          text: "__",
+          className: "toastui-editor-toolbar-icons last",
+          style: { backgroundImage: "none" },
+        }
+      );
+
+      _editor.insertToolbarItem(
+        { groupIndex: 1, itemIndex: 0 },
+        {
+          name: "lineBreak",
+          tooltip: "Line Break",
+          command: "linebreak",
+          text: "BR",
+          className: "toastui-editor-toolbar-icons last",
+          style: { backgroundImage: "none" },
+        }
+      );
+
+      _editor.insertToolbarItem(
+        { groupIndex: 0, itemIndex: 5 },
+        {
+          name: "center",
+          tooltip: "Center Text",
+          command: "center",
+          text: "<ǁ>",
+          className: "toastui-editor-toolbar-icons last",
+          style: { backgroundImage: "none" },
+        }
+      );
+
+      setTimeout(() => {
+        setCommandsAdded(true);
+      }, 100);
+    }
+  }, [editor, commandsAdded]);
 
   return (
     <Stack
@@ -59,13 +131,20 @@ const FormMarkdown = ({ name, control, sx = {}, label, ...props }) => {
             {label && <Typography sx={{ pb: 1 }}>{label}</Typography>}
 
             <Editor
+              hideModeSwitch
               // theme={theme.palette.mode}
-              previewStyle="tab"
+              // previewStyle="tab"
               initialEditType="markdown"
               plugins={[
                 colorSyntax,
                 tableMergedCell,
                 [codeSyntaxHighlight, { highlighter: Prism }],
+              ]}
+              toolbarItems={[
+                ["heading", "bold", "italic"],
+                ["hr", "quote"],
+                ["ul", "ol", "task", "indent", "outdent"],
+                ["table", "link"],
               ]}
               {...props}
               {...field}

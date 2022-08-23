@@ -46,7 +46,10 @@ const MdQuote = ({ data }) => {
         ”
       </Typography>
 
-      <Stack alignItems="flex-end" sx={{ fontWeight: 600, width: "100%" }}>
+      <Stack
+        alignItems="flex-end"
+        sx={{ fontWeight: 600, width: "100%", mt: 2 }}
+      >
         {author}
       </Stack>
     </Card>
