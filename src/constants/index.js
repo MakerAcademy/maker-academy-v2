@@ -41,12 +41,19 @@ export const ASSESSMENT_QUESTION_TYPES = [
 export const BRANDS = ["maker_academy", "meta_analysis"];
 
 export const CONTENT_CATEGORIES = [
-  "makerdao",
-  "academy",
-  "defi",
-  "dai",
+  "tokenomics",
+  "governance",
+  "network_economics",
+  "trading",
+  "privacy",
+  "consensus",
   "blockchain",
-  "crypto",
+  "history",
+  "cryptography",
+  "smart_contracts",
+  "news",
+  "scaling",
+  "maker",
 ];
 
 export const DASHBOARD_BREADCRUMBS = {

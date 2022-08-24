@@ -13,7 +13,8 @@ import {
 import React, { useState } from "react";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
-import BookmarkIcon from "@mui/icons-material/Bookmark";
+import BookmarkIcon from "@mui/icons-material/BookmarkBorder";
+import AssessmentOutlinedIcon from "@mui/icons-material/AssessmentOutlined";
 
 const Content = ({ course }) => {
   const { carriculum = {} } = course;
@@ -53,10 +54,17 @@ const Content = ({ course }) => {
                       sx={{ pl: 4, mb: i === documents?.length - 1 ? 2 : 0 }}
                     >
                       <ListItemIcon sx={{ minWidth: 20, mr: 1 }}>
-                        <BookmarkIcon
-                          fontSize="small"
-                          sx={{ color: "primary.main" }}
-                        />
+                        {_doc.contentType === "document" ? (
+                          <BookmarkIcon
+                            fontSize="small"
+                            sx={{ color: "primary.main" }}
+                          />
+                        ) : (
+                          <AssessmentOutlinedIcon
+                            fontSize="small"
+                            sx={{ color: "primary.main" }}
+                          />
+                        )}
                       </ListItemIcon>
                       <ListItemText
                         primary={_doc.title}

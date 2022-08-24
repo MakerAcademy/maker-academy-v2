@@ -26,7 +26,8 @@ import {
 import { createSlug } from "@utils/markdown";
 import useTranslation from "next-translate/useTranslation";
 import Router, { useRouter } from "next/router";
-import { useEffect, useReducer, useState } from "react";
+import { useEffect, useReducer, useRef, useState } from "react";
+import FilterTooltip from "./FilterTooltip";
 
 const buildUrl = (filters, _type) => {
   const { contentType, categories, category, difficulty, author, searchTerm } =
@@ -86,6 +87,9 @@ const typeBtnCommonStyles = (theme, active) => {
       ? theme.palette.primary.main
       : theme.palette.primary.grey1,
     color: active ? theme.palette.common.white : "inherit",
+    "&: hover": {
+      color: theme.palette.common.white,
+    },
   };
 };
 
@@ -272,6 +276,7 @@ const FilterMenu = () => {
   const { query } = useRouter();
   const [filters, dispatch] = useReducer(reducer, initialFilters(query));
   const [filterOpen, setFilterOpen] = useState(false);
+  const openFilterBtnRef = useRef();
 
   const { t } = useTranslation("content");
 
@@ -311,7 +316,17 @@ const FilterMenu = () => {
 
   return (
     <Box sx={{ py: 2, background: theme.palette.background.gradient1 }}>
-      <Container maxWidth="lg">
+      <Container
+        maxWidth="lg"
+        sx={{
+          [theme.breakpoints.up("md")]: {
+            px: 8,
+          },
+          [theme.breakpoints.up("lg")]: {
+            px: 3,
+          },
+        }}
+      >
         <Stack
           direction={{ xs: "column", md: "row" }}
           alignItems="center"
@@ -324,6 +339,8 @@ const FilterMenu = () => {
 
             {/* all */}
             <Button
+              variant="contained"
+              disableElevation
               sx={typeBtnCommonStyles(
                 theme,
                 filters?.contentType === "all" || !filters?.contentType
@@ -335,6 +352,8 @@ const FilterMenu = () => {
 
             {/* documents */}
             <Button
+              variant="contained"
+              disableElevation
               sx={typeBtnCommonStyles(
                 theme,
                 filters?.contentType === "documents"
@@ -346,6 +365,8 @@ const FilterMenu = () => {
 
             {/* courses */}
             <Button
+              variant="contained"
+              disableElevation
               sx={typeBtnCommonStyles(
                 theme,
                 filters?.contentType === "courses"
@@ -368,6 +389,7 @@ const FilterMenu = () => {
 
           {/* Right side */}
           <Button
+            ref={openFilterBtnRef}
             onClick={triggerFilterDrawer}
             color="inherit"
             sx={{ textTransform: "inherit" }}
@@ -399,7 +421,7 @@ const FilterMenu = () => {
             </Hidden>
 
             {/* Categories */}
-            <Grid item xs={12} md={4}>
+            <Grid item xs={12} md={7}>
               <Typography variant="body2" sx={{ mb: 1 }}>
                 {!filters?.searchTerm ? t("categories") : t("category")}:
               </Typography>
@@ -435,45 +457,49 @@ const FilterMenu = () => {
               )}
             </Grid>
 
-            {/* Difficulty */}
-            <Grid item xs={12} md={4}>
-              <Typography variant="body2" sx={{ mb: 1 }}>
-                {t("difficulty")}:
-              </Typography>
+            <Grid item xs={12} md={5}>
+              <Stack spacing={3}>
+                {/* Difficulty */}
+                <Box>
+                  <Typography variant="body2" sx={{ mb: 1 }}>
+                    {t("difficulty")}:
+                  </Typography>
 
-              <Stack direction="row" flexWrap="wrap">
-                {CONTENT_DIFFICULTY_LEVELS.map((item, i) => (
-                  <StyledChip
-                    name="difficulty"
-                    label={t(item)}
-                    slug={item}
-                    key={i}
-                    filters={filters?.difficulty}
-                    dispatch={dispatch}
-                    toggle
-                  />
-                ))}
-              </Stack>
-            </Grid>
+                  <Stack direction="row" flexWrap="wrap">
+                    {CONTENT_DIFFICULTY_LEVELS.map((item, i) => (
+                      <StyledChip
+                        name="difficulty"
+                        label={t(item)}
+                        slug={item}
+                        key={i}
+                        filters={filters?.difficulty}
+                        dispatch={dispatch}
+                        toggle
+                      />
+                    ))}
+                  </Stack>
+                </Box>
 
-            {/* Creator */}
-            <Grid item xs={12} md={4}>
-              <Typography variant="body2" sx={{ mb: 1 }}>
-                {t("creator")}:
-              </Typography>
+                {/* Creator */}
+                <Box>
+                  <Typography variant="body2" sx={{ mb: 1 }}>
+                    {t("creator")}:
+                  </Typography>
 
-              <Stack direction="row" flexWrap="wrap">
-                {BRANDS.map((item, i) => (
-                  <StyledChip
-                    name="author"
-                    label={t(item)}
-                    slug={item}
-                    key={i}
-                    filters={filters?.author}
-                    dispatch={dispatch}
-                    toggle
-                  />
-                ))}
+                  <Stack direction="row" flexWrap="wrap">
+                    {BRANDS.map((item, i) => (
+                      <StyledChip
+                        name="author"
+                        label={t(item)}
+                        slug={item}
+                        key={i}
+                        filters={filters?.author}
+                        dispatch={dispatch}
+                        toggle
+                      />
+                    ))}
+                  </Stack>
+                </Box>
               </Stack>
             </Grid>
           </Grid>
@@ -499,6 +525,8 @@ const FilterMenu = () => {
           </Stack>
         </Collapse>
       </Container>
+
+      <FilterTooltip openFilterBtnRef={openFilterBtnRef} />
     </Box>
   );
 };

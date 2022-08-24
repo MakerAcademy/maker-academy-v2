@@ -6,6 +6,8 @@ import {
   Button,
   Card,
   Container,
+  Dialog,
+  DialogContent,
   Grid,
   Stack,
   Typography,
@@ -23,10 +25,13 @@ import {
   Service4LightIcon,
 } from "@page-components/Home/images";
 import useTranslation from "next-translate/useTranslation";
+import Router from "next/router";
+import { useState } from "react";
 import { Slide } from "react-awesome-reveal";
+import ReactPlayer from "react-player";
 
-const ActionButton = ({ text, Icon, reverse }) => (
-  <Button>
+const ActionButton = ({ text, Icon, reverse, ...other }) => (
+  <Button {...other}>
     <Stack
       spacing={1}
       direction="row"
@@ -49,15 +54,24 @@ const ServiceCard = ({
   title,
   description,
   image,
-  Btn,
+  btnText,
+  BtnIcon,
+  reverse,
   direction = "left",
   delay = 0,
+  btnProps = {},
 }) => {
+  const [hover, setHover] = useState(false);
+
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
 
   return (
-    <Box sx={{ height: "100%" }}>
+    <Box
+      sx={{ height: "100%" }}
+      onMouseEnter={(e) => setHover(true)}
+      onMouseLeave={(e) => setHover(false)}
+    >
       <Slide
         direction={direction}
         delay={delay}
@@ -113,8 +127,12 @@ const ServiceCard = ({
                 </Stack>
 
                 <Box>
-                  {Btn}
-                  {/* <Btn /> */}
+                  <ActionButton
+                    text={btnText}
+                    Icon={BtnIcon}
+                    reverse={reverse}
+                    {...btnProps}
+                  />
                 </Box>
               </Stack>
             </Grid>
@@ -133,6 +151,8 @@ const ServiceCard = ({
                     zIndex: 1,
                     height: 110,
                     width: 110,
+                    transform: `scale(${hover ? "1.1" : "1"})`,
+                    transition: "all .3s ease-in-out",
                   }}
                 />
               </Stack>
@@ -145,6 +165,8 @@ const ServiceCard = ({
 };
 
 const Section2 = () => {
+  const [demoDialogOpen, setDemoDialogOpen] = useState(false);
+
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
 
@@ -192,13 +214,12 @@ const Section2 = () => {
               title={t("section2_what_is_maker")}
               description={t("section2_learn_about_maker")}
               image={isDark ? Service1DarkIcon : Service1LightIcon}
-              Btn={
-                <ActionButton
-                  text={t("section2_play_video")}
-                  Icon={PlayArrowOutlinedIcon}
-                  reverse
-                />
-              }
+              btnText={t("section2_play_video")}
+              BtnIcon={PlayArrowOutlinedIcon}
+              reverse
+              btnProps={{
+                onClick: () => setDemoDialogOpen(true),
+              }}
             />
           </Grid>
 
@@ -208,13 +229,12 @@ const Section2 = () => {
               title={t("section2_advance_knowledge")}
               description={t("section2_tailored_programs")}
               image={isDark ? Service2DarkIcon : Service2LightIcon}
-              Btn={
-                <ActionButton
-                  text={t("section2_learn_more")}
-                  Icon={ArrowForwardOutlinedIcon}
-                />
-              }
+              btnText={t("section2_learn_more")}
+              BtnIcon={ArrowForwardOutlinedIcon}
               direction="right"
+              btnProps={{
+                onClick: () => Router.push("/content"),
+              }}
             />
           </Grid>
 
@@ -224,13 +244,12 @@ const Section2 = () => {
               title={t("section2_contribute")}
               description={t("section2_add_your_content")}
               image={isDark ? Service3DarkIcon : Service3LightIcon}
-              Btn={
-                <ActionButton
-                  text={t("section2_start_creating")}
-                  Icon={ArrowForwardOutlinedIcon}
-                />
-              }
+              btnText={t("section2_start_creating")}
+              BtnIcon={ArrowForwardOutlinedIcon}
               delay={100}
+              btnProps={{
+                onClick: () => Router.push("/content"),
+              }}
             />
           </Grid>
 
@@ -240,18 +259,43 @@ const Section2 = () => {
               title={t("section2_role_at_maker")}
               description={t("section2_want_to_contribute")}
               image={isDark ? Service4DarkIcon : Service4LightIcon}
-              Btn={
-                <ActionButton
-                  text={t("section2_view_roles")}
-                  Icon={ArrowForwardOutlinedIcon}
-                />
-              }
+              btnText={t("section2_view_roles")}
+              BtnIcon={ArrowForwardOutlinedIcon}
               direction="right"
               delay={100}
+              btnProps={{
+                onClick: () => Router.push("/content"),
+              }}
             />
           </Grid>
         </Grid>
       </Container>
+
+      <Dialog
+        fullWidth={true}
+        maxWidth={"md"}
+        onClose={() => setDemoDialogOpen(false)}
+        open={demoDialogOpen}
+        BackdropProps={{ sx: { backgroundColor: "rgba(0,0,0,0.7)" } }}
+        PaperProps={{
+          elevation: 0,
+          sx: {
+            background: "transparent",
+          },
+        }}
+      >
+        <DialogContent>
+          <ReactPlayer
+            url={
+              "https://www.youtube.com/watch?v=lupjOrsTs18&ab_channel=MakerDAOSES"
+            }
+            width="100%"
+            height={500}
+            playing
+            controls
+          />
+        </DialogContent>
+      </Dialog>
     </Box>
   );
 };

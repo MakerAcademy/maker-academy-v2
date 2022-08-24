@@ -48,9 +48,13 @@ const CourseBody = ({ course = {} }) => {
   const isUserEnrolled = profile?.enrolledCourses?.includes?.(id);
 
   const handleClick = async () => {
-    const _route = `/course/${id}/learn`;
-
     setDisabled(true);
+
+    if (!profile?.id) {
+      return Router.push("/login");
+    }
+
+    const _route = `/course/${id}/learn`;
 
     if (isUserEnrolled) {
       Router.push(_route);
@@ -163,25 +167,27 @@ const CourseBody = ({ course = {} }) => {
       </Container>
 
       {/* Start */}
-      {profile?.id && (
-        <Button
-          fullWidth
-          variant="contained"
-          disabled={disabled}
-          onClick={handleClick}
-          sx={{
-            py: 3,
-            color: "#fff",
-            borderRadius: 0,
-            cursor: disabled ? "wait" : "pointer",
-          }}
-        >
+      <Button
+        fullWidth
+        variant="contained"
+        disabled={disabled}
+        onClick={handleClick}
+        sx={{
+          py: 3,
+          color: "#fff",
+          borderRadius: 0,
+          cursor: disabled ? "wait" : "pointer",
+        }}
+      >
+        {profile?.id ? (
           <Typography variant="h6">
             {isUserEnrolled ? "Open Course" : "Start this course"}
           </Typography>
-          <ArrowForwardIcon sx={{ ml: 1 }} />
-        </Button>
-      )}
+        ) : (
+          <Typography variant="h6">{"Sign in to start this course"}</Typography>
+        )}
+        <ArrowForwardIcon sx={{ ml: 1 }} />
+      </Button>
     </Box>
   );
 };

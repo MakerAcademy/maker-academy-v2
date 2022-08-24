@@ -12,6 +12,7 @@ import {
   Button,
   Card,
   CardContent,
+  Chip,
   Divider,
   Stack,
   styled,
@@ -26,44 +27,14 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 
-const StyledRibbon = styled(Box)(({ theme }) => ({
-  position: "absolute",
-  overflow: "hidden",
-  color: "white",
-  width: 120,
-  height: 120,
-  zIndex: 3,
-  top: -5,
-  right: -5,
-
-  "& > p": {
-    left: 0,
-    top: 20,
-    transform: "rotate(45deg)",
-    position: "absolute",
-    display: "block",
-    width: 160,
-    whiteSpace: "pre-line",
-    padding: "3px 0",
-    backgroundColor: "#f5c562",
-    boxShadow: "0 5px 10px rgba(0, 0, 0, 0.192)",
-    color: "#fff",
-    textShadow: "0 1px 1px rgba(0,0,0,.2)",
-    textTransform: "uppercase",
-    textAlign: "center",
-    border: "2px dotted #fff",
-    outline: "4px solid  #f5c562",
-  },
-}));
-
-const Badge = ({ text }) => {
+const BrandBadge = ({ text }) => {
   const theme = useTheme();
 
   return (
     <Box
       sx={{
         position: "absolute",
-        bottom: 20,
+        bottom: 10,
         left: 0,
         backgroundColor: "primary.main",
         py: 1,
@@ -175,7 +146,33 @@ const ContentCard = ({
           </Box>
 
           {/* Brand */}
-          {brand && brand !== "none" && <Badge text={t(brand)} />}
+          {brand && brand !== "none" && <BrandBadge text={t(brand)} />}
+
+          {/* Category */}
+          <Chip
+            label={t(category)}
+            sx={{
+              position: "absolute",
+              top: 12,
+              left: 12,
+              bgcolor: "text.primary",
+              color: "text.invert",
+              borderRadius: 1,
+            }}
+          />
+
+          {/* Likes */}
+          <Chip
+            label={`${likes || 0} ${t("likes")}`}
+            sx={{
+              position: "absolute",
+              top: 12,
+              right: 12,
+              bgcolor: "text.invert",
+              color: "text.primary",
+              borderRadius: 1,
+            }}
+          />
         </Box>
 
         {/* Content */}

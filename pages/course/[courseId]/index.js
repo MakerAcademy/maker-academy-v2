@@ -21,7 +21,7 @@ const Course = ({ course }) => {
   }, []);
 
   return (
-    <Box sx={{ minHeight: "100vh", mt: `${NAVBAR_HEIGHT_DESKTOP + 20}px` }}>
+    <Box sx={{ minHeight: "100vh" }}>
       <CourseBody course={data} />
     </Box>
   );
@@ -40,7 +40,7 @@ export const getServerSideProps = withUser(async (context, { profile }) => {
     }
 
     return {
-      props: { course },
+      props: { course: JSON.parse(JSON.stringify(course)) },
     };
   } catch (error) {
     console.log(1, error);
