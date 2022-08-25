@@ -9,9 +9,10 @@ const LandingLayout = ({ children }) => {
   const theme = useTheme();
 
   const { pathname, query } = useRouter();
-  const transparent = pathname === "/" || pathname === "/home";
+  const transparent =
+    pathname === "/" || pathname === "/home" || pathname.startsWith("/about");
 
-  const withElevation = query.courseId;
+  const withElevation = query.courseId && query.docId;
 
   return (
     <React.Fragment>

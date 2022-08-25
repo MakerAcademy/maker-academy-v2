@@ -1,4 +1,3 @@
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import {
@@ -9,14 +8,30 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
+import { DiscordIcon } from "@page-components/Home/images";
 import { FullLogoBlack, FullLogoWhite } from "@utils/images";
+import Image from "next/image";
 import Link from "next/link";
 
 const socials = [
-  { label: "Twitter", icon: TwitterIcon, link: "#", color: "#00acee" },
-  { label: "Youtube", icon: YouTubeIcon, link: "#", color: "#c4302b" },
-  { label: "LinkedIn", icon: LinkedInIcon, link: "#", color: "#1f8cbf" },
-  // { label: "Discord", svg: DiscordIcon, link: "#", color: "#5865F2" },
+  {
+    label: "Twitter",
+    icon: TwitterIcon,
+    link: "https://discord.gg/FAQWbM5p",
+    color: "#00acee",
+  },
+  {
+    label: "Youtube",
+    icon: YouTubeIcon,
+    link: "https://www.youtube.com/watch?v=lupjOrsTs18&t=38s",
+    color: "#c4302b",
+  },
+  {
+    label: "Discord",
+    svg: DiscordIcon,
+    link: "https://discord.gg/FAQWbM5p",
+    color: "#5865F2",
+  },
 ];
 
 const ABOUT_ROUTES = [
@@ -84,24 +99,24 @@ const LandingFooter = ({}) => {
             alignItems="center"
           >
             {socials.map((item, i) => (
-              <Link href={item.link} key={i} passHref>
-                <IconButton>
-                  {item.icon && <item.icon fontSize="small" />}
+              <IconButton key={i} href={item.link} target="_blank">
+                {item.icon && (
+                  <item.icon fontSize="small" sx={{ color: item.color }} />
+                )}
 
-                  {/* {item.svg && (
-                    <Image
-                      src={item.svg}
-                      alt="Discord"
-                      height="25px"
-                      width="25px"
-                      objectFit="contain"
-                      style={{
-                        filter: "invert(0.9)",
-                      }}
-                    />
-                  )} */}
-                </IconButton>
-              </Link>
+                {item.svg && (
+                  <Image
+                    src={item.svg}
+                    alt="Discord"
+                    height="30px"
+                    width="30px"
+                    objectFit="contain"
+                    // style={{
+                    //   filter: "invert(0.9)",
+                    // }}
+                  />
+                )}
+              </IconButton>
             ))}
           </Stack>
         </Stack>

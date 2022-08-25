@@ -14,6 +14,7 @@ export const lightTheme = {
       grey4: grey[400],
       grey5: grey[500],
       grey6: grey[600],
+      grey8: grey[800],
       grey9: grey[900],
     },
     text: {
