@@ -1,21 +1,30 @@
+import { NAVBAR_HEIGHT_DESKTOP } from "@constants/";
 import { useAppSelector } from "@hooks/useRedux";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import {
   Box,
+  Button,
   Collapse,
   Drawer,
   Hidden,
+  IconButton,
   List,
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  Stack,
+  Tooltip,
+  Typography,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
+import MenuOpenIcon from "@mui/icons-material/MenuOpen";
+import useScrollPosition from "@hooks/useScrollPosition";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
 const DRAWER_WIDTH = 280;
 
@@ -23,7 +32,8 @@ const LearnContentDrawer = ({ course }) => {
   const { profile } = useAppSelector((state) => state.profile);
   const { title, carriculum = {} } = course;
   const theme = useTheme();
-  const isDesktop = useMediaQuery(theme.breakpoints.up("xl"));
+  const scrollPosition = useScrollPosition();
+  const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
 
   const { query } = useRouter();
 
@@ -34,11 +44,11 @@ const LearnContentDrawer = ({ course }) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [open, setOpen] = useState(docIdx);
 
-  useEffect(() => {
-    if (isDesktop) {
-      handleOpen();
-    }
-  }, [isDesktop]);
+  // useEffect(() => {
+  //   if (isDesktop) {
+  //     handleOpen();
+  //   }
+  // }, [isDesktop]);
 
   const handleOpen = () => {
     setDrawerOpen(true);
@@ -49,7 +59,34 @@ const LearnContentDrawer = ({ course }) => {
   };
 
   const Content = () => (
-    <Box sx={{ px: 2, py: 5 }}>
+    <Box
+      sx={{
+        px: 2,
+        py: 2,
+        [theme.breakpoints.up("md")]: {
+          marginTop:
+            scrollPosition > 0
+              ? `${
+                  scrollPosition > NAVBAR_HEIGHT_DESKTOP
+                    ? 0
+                    : NAVBAR_HEIGHT_DESKTOP - scrollPosition
+                }px`
+              : `${NAVBAR_HEIGHT_DESKTOP}px`,
+        },
+      }}
+    >
+      <Stack
+        direction="row"
+        alignItems="center"
+        justifyContent="space-between"
+        sx={{ mb: 1 }}
+      >
+        <Typography>Content</Typography>
+
+        <IconButton onClick={handleClose}>
+          <MenuOpenIcon />
+        </IconButton>
+      </Stack>
       <List>
         {Object.values(carriculum).map((section, i) => {
           return (
@@ -124,15 +161,39 @@ const LearnContentDrawer = ({ course }) => {
 
   return (
     <>
+      {!drawerOpen && (
+        <Tooltip title="Open course content">
+          <Button
+            onClick={handleOpen}
+            disableElevation
+            sx={{
+              bgcolor: "primary.grey2",
+              height: 100,
+              position: "fixed",
+              top: 140,
+              minWidth: 30,
+            }}
+          >
+            <KeyboardArrowRightIcon />
+          </Button>
+        </Tooltip>
+      )}
+
       <Hidden mdDown>
-        <Box
-          sx={{
-            minWidth: DRAWER_WIDTH,
-            borderRight: `1px solid ${theme.palette.primary.grey3}`,
+        <Drawer
+          anchor="left"
+          open={drawerOpen}
+          onClose={handleClose}
+          variant={isDesktop ? "persistent" : "temporary"}
+          PaperProps={{
+            elevation: 0,
+            sx: {
+              width: DRAWER_WIDTH,
+            },
           }}
         >
           <Content />
-        </Box>
+        </Drawer>
       </Hidden>
 
       <Hidden mdUp>

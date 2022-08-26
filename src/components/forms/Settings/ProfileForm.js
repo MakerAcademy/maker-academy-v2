@@ -37,8 +37,8 @@ const ProfileForm = ({ values, handleSubmit: propsHandleSubmit }) => {
     propsHandleSubmit(cleanObject({ ...data, profilePicture: null }));
   };
 
-  const image =
-    typeof _image === "object" ? URL.createObjectURL(_image) : _image;
+  const image = _image;
+  //typeof _image === "object" ? URL.createObjectURL(_image) : _image;
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

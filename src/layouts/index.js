@@ -14,9 +14,15 @@ const LandingLayout = ({ children }) => {
 
   const withElevation = query.courseId && query.docId;
 
+  const fixed = query.courseId && query.docId;
+
   return (
     <React.Fragment>
-      <Navbar transparent={transparent} withElevation={withElevation} />
+      <Navbar
+        transparent={transparent}
+        withElevation={withElevation}
+        fixed={fixed}
+      />
 
       <Box sx={{ pt: transparent ? 0 : `${NAVBAR_HEIGHT_DESKTOP}px` }}>
         {children}

@@ -66,7 +66,7 @@ const MobileDrawer = ({ anchorEl, setAnchorEl }) => {
   );
 };
 
-const Navbar = ({ transparent, withElevation }) => {
+const Navbar = ({ transparent, withElevation, fixed }) => {
   const theme = useTheme();
   const [anchorEl, setAnchorEl] = useState();
 
@@ -85,8 +85,9 @@ const Navbar = ({ transparent, withElevation }) => {
           ? "transparent"
           : theme.palette.background.default,
         width: "100%",
-        // zIndex: theme.zIndex.drawer + 1,
+        zIndex: theme.zIndex.drawer + 1,
         position: "absolute",
+        // position: fixed ? "fixed" : "absolute",
         // [theme.breakpoints.up("md")]: {
         //   position: fixed ? "fixed" : "absolute",
         // },
