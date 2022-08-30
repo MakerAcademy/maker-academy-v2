@@ -58,7 +58,7 @@ export const getServerSideProps = withProtectedUser(
       return {
         props: {
           course: JSON.parse(JSON.stringify(course)),
-          document: JSON.parse(JSON.stringify(document)),
+          document: JSON.parse(JSON.stringify(document?.response)),
         },
       };
     } catch (error) {

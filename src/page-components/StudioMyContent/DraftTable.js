@@ -1,7 +1,7 @@
 import GreenButton from "@components/buttons/GreenButton";
 import DashboardPaper from "@components/DashboardPaper";
 import { useAppSelector } from "@hooks/useRedux";
-import { deleteContent, listenUserContent } from "@lib/content";
+import { deleteDraft, listenUserDrafts, publishDraft } from "@lib/drafts";
 import EditIcon from "@mui/icons-material/Edit";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import { Box, Button, Stack, Typography } from "@mui/material";
@@ -11,16 +11,13 @@ import useTranslation from "next-translate/useTranslation";
 import { useEffect, useState } from "react";
 
 const buildRows = (data, t) => {
-  const rows = data?.map?.(({ metadata, ...item }, i) => ({
+  const rows = data?.map?.((item, i) => ({
     id: item.id,
     count: i,
-    thumbnail: metadata.thumbnail,
+    thumbnail: item.thumbnail,
     contentType: t(item.contentType),
-    title: metadata.title,
+    title: item.title,
     date: moment(item.timestamp?.toDate?.()).format("MMM DD, YY - HH:mm"),
-    visibility: item.status,
-    views: item.views,
-    likes: item?.likes || 0,
     data: item,
   }));
 
@@ -68,30 +65,9 @@ const buildColumns = (t) => {
       headerAlign: "center",
     },
     {
-      field: "visibility",
-      headerName: t("visibility"),
-      width: 150,
-      align: "center",
-      headerAlign: "center",
-    },
-    {
-      field: "views",
-      headerName: t("views"),
-      width: 100,
-      align: "center",
-      headerAlign: "center",
-    },
-    {
-      field: "likes",
-      headerName: t("likes"),
-      width: 100,
-      align: "center",
-      headerAlign: "center",
-    },
-    {
       field: "actions",
       headerName: "",
-      width: 400,
+      width: 450,
       align: "right",
       sortable: false,
       filterable: false,
@@ -100,7 +76,7 @@ const buildColumns = (t) => {
           <GreenButton
             size="small"
             variant="outlined"
-            href={`/app/studio/edit/${params.row.contentType}/${params.id}`}
+            href={`/app/studio/edit/${params.row.contentType}/${params.id}?draft=true`}
             target="_black"
             icon={<EditIcon sx={{ fontSize: 16 }} />}
           >
@@ -117,40 +93,42 @@ const buildColumns = (t) => {
             target="_black"
             icon={<OpenInNewIcon sx={{ fontSize: 16 }} />}
           >
-            {t("open")}
+            {t("preview")}
           </GreenButton>
 
-          {params.row.data.status === "pending" && (
-            <Button
-              variant="contained"
-              size="small"
-              color="error"
-              onClick={() =>
-                deleteContent(
-                  params.row.data.id,
-                  params.row.data.published,
-                  params.row.data.contentType
-                )
-              }
-              sx={{ height: 38, px: 3, borderRadius: "8px", fontWeight: 600 }}
-            >
-              {t("delete")}
-            </Button>
-          )}
+          <Button
+            variant="contained"
+            size="small"
+            onClick={() => publishDraft(params.row?.data)}
+            color="info"
+            sx={{ height: 38, px: 3, borderRadius: "8px", fontWeight: 600 }}
+          >
+            {t("publish")}
+          </Button>
+
+          <Button
+            variant="contained"
+            size="small"
+            color="error"
+            onClick={() => deleteDraft(params.row.data?.id)}
+            sx={{ height: 38, px: 3, borderRadius: "8px", fontWeight: 600 }}
+          >
+            {t("delete")}
+          </Button>
         </Stack>
       ),
     },
   ];
 };
 
-const ContentTable = () => {
+const DraftTable = () => {
   const [pageSize, setPageSize] = useState(10);
   const [data, setData] = useState(null);
   const { profile } = useAppSelector((state) => state.profile);
 
   useEffect(() => {
     if (profile?.id) {
-      const unsub = listenUserContent(profile?.id, setData);
+      const unsub = listenUserDrafts(profile?.id, setData);
 
       return () => unsub();
     }
@@ -159,13 +137,13 @@ const ContentTable = () => {
   const { t } = useTranslation("creator-studio");
 
   return (
-    <DashboardPaper sx={{ minHeight: 400 }}>
-      <Typography sx={{ mb: 3 }}>My Content</Typography>
+    <DashboardPaper>
+      <Typography sx={{ mb: 3 }}>Drafts</Typography>
 
       <DataGrid
         autoHeight
         rowHeight={70}
-        rows={buildRows(data || [], t)}
+        rows={buildRows(data, t)}
         columns={buildColumns(t)}
         pageSize={pageSize}
         onPageSizeChange={(i) => setPageSize(i)}
@@ -194,4 +172,4 @@ const ContentTable = () => {
   );
 };
 
-export default ContentTable;
+export default DraftTable;

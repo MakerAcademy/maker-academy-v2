@@ -8,6 +8,7 @@ import dynamic from "next/dynamic";
 import { useSnackbar } from "notistack";
 import Router from "next/router";
 import { cleanObject } from "@utils/helpers";
+import { submitDraft } from "@lib/drafts";
 
 const DocumentForm = dynamic(() => import("@forms/DocumentForm"), {
   ssr: false,
@@ -16,27 +17,29 @@ const DocumentForm = dynamic(() => import("@forms/DocumentForm"), {
 const NewDocument = ({ user, profile }) => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
-  const handleDocumentSubmit = async (data) => {
+  const handleDocumentSubmit = async (data, isDraft) => {
     const _key = enqueueSnackbar("Submitting Document...", {
       variant: "default",
     });
 
-    const res = await submitDocument(profile?.id, cleanObject(data))
-      .then(() => {
-        closeSnackbar(_key);
-        enqueueSnackbar("Success", {
-          variant: "success",
-          autoHideDuration: 2000,
-          onClose: () => Router.push("/app/studio"),
-        });
-      })
-      .catch((err) => {
-        enqueueSnackbar("Error", {
-          variant: "error",
-          autoHideDuration: 2000,
-          onClose: () => Router.push("/app/studio"),
-        });
+    try {
+      const res = !isDraft
+        ? await submitDocument(profile?.id, cleanObject(data))
+        : await submitDraft(profile?.id, cleanObject(data));
+
+      // closeSnackbar(_key);
+      enqueueSnackbar("Success", {
+        variant: "success",
+        autoHideDuration: 2000,
+        onClose: () => Router.push("/app/studio"),
       });
+    } catch (error) {
+      enqueueSnackbar("Error", {
+        variant: "error",
+        autoHideDuration: 2000,
+        onClose: () => Router.push("/app/studio"),
+      });
+    }
   };
 
   return (

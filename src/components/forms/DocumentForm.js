@@ -19,6 +19,7 @@ const DocumentForm = ({
   edit,
   values = { private: false },
   editableFields,
+  isDraft,
 }) => {
   const theme = useTheme();
   const [disabled, setDisabled] = useState(false);
@@ -52,9 +53,14 @@ const DocumentForm = ({
     useForm(formOptions);
 
   const onSubmit = (data, e) => {
-    // return console.log(data);
     setDisabled(true);
-    propsHandleSubmit(cleanObject(data));
+    const isDraft = e?.nativeEvent?.submitter?.name === "draft";
+
+    if (isDraft) {
+      propsHandleSubmit(cleanObject(data), true);
+    } else {
+      propsHandleSubmit(cleanObject(data));
+    }
   };
 
   // const handleDraftChange = ({ editor, markdown, html }) => {
@@ -186,9 +192,17 @@ const DocumentForm = ({
             sx={{ minWidth: 200 }}
           />
 
-          <GreenButton type="submit" disabled={disabled}>
-            {edit ? t("edit_document") : t("create_new_document")}
-          </GreenButton>
+          {edit && isDraft && (
+            <GreenButton name="draft" type="submit" disabled={disabled}>
+              {isDraft ? t("update_draft") : t("save_draft")}
+            </GreenButton>
+          )}
+
+          {!isDraft && (
+            <GreenButton type="submit" disabled={disabled}>
+              {edit ? t("edit_document") : t("create_new_document")}
+            </GreenButton>
+          )}
         </Stack>
       </Stack>
     </form>

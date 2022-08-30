@@ -1,7 +1,8 @@
 import DashboardPaper from "@components/DashboardPaper";
 import Title from "@components/Title";
 import { withProtectedUser } from "@hoc/routes";
-import { getDocumentWithContent } from "@lib/document";
+import { getDocumentWithContent, updateDocument } from "@lib/document";
+import { getDraft, updateDraft } from "@lib/drafts";
 import { submitDocumentEditRequest } from "@lib/editrequests";
 import { Box, Typography } from "@mui/material";
 import ErrorPage from "@page-components/Error";
@@ -21,8 +22,16 @@ const editableFields = [
   // "markdown",
 ];
 
-const EditDocumentPage = ({ response, document, profile, user }) => {
+const EditDocumentPage = ({
+  response = {},
+  isDraft,
+  document,
+  profile,
+  user,
+}) => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+
+  const { id: docId, status, published } = response;
 
   if (!document) return <ErrorPage />;
 
@@ -31,26 +40,38 @@ const EditDocumentPage = ({ response, document, profile, user }) => {
       variant: "default",
     });
 
-    const res = await submitDocumentEditRequest(
-      profile?.id,
-      cleanObject({ ...data, contentId: response.id }),
-      response?.id
-    )
-      .then(() => {
-        closeSnackbar(_key);
-        enqueueSnackbar("Success", {
-          variant: "success",
-          autoHideDuration: 2000,
-          onClose: () => Router.push("/app/studio"),
-        });
-      })
-      .catch((err) => {
-        enqueueSnackbar("Error", {
-          variant: "error",
-          autoHideDuration: 2000,
-          onClose: () => Router.push("/app/studio"),
-        });
+    try {
+      let res = null;
+
+      if (isDraft) {
+        res = await updateDraft(docId, cleanObject(data));
+      } else {
+        if (status === "pending") {
+          res = await updateDocument({ ...data, published, id: docId });
+        } else {
+          res = await submitDocumentEditRequest(
+            profile?.id,
+            cleanObject({ ...data, contentId: docId }),
+            docId,
+            published
+          );
+        }
+      }
+
+      closeSnackbar(_key);
+      enqueueSnackbar("Success", {
+        variant: "success",
+        autoHideDuration: 2000,
+        onClose: () => Router.push("/app/studio"),
       });
+    } catch (error) {
+      console.log(error);
+      enqueueSnackbar("Error", {
+        variant: "error",
+        autoHideDuration: 2000,
+        onClose: () => Router.push("/app/studio"),
+      });
+    }
   };
 
   const isRestricted = document.author !== profile?.id || user?.trustLevel < 4;
@@ -69,12 +90,17 @@ const EditDocumentPage = ({ response, document, profile, user }) => {
       </Typography>
 
       <DashboardPaper>
-        <DocumentForm
-          handleSubmit={handleDocumentSubmit}
-          values={document}
-          edit
-          editableFields={isRestricted ? editableFields : null}
-        />
+        {document?.id ? (
+          <DocumentForm
+            handleSubmit={handleDocumentSubmit}
+            values={document}
+            edit
+            editableFields={isRestricted ? editableFields : null}
+            isDraft={isDraft}
+          />
+        ) : (
+          <Typography>Document Not Found</Typography>
+        )}
       </DashboardPaper>
     </Box>
   );
@@ -83,10 +109,22 @@ const EditDocumentPage = ({ response, document, profile, user }) => {
 export const getServerSideProps = withProtectedUser(async (context) => {
   const docId = context.params.id;
 
-  const res = await getDocumentWithContent(docId, true);
+  const isDraft = context.query?.draft === "true";
+
+  const res = isDraft
+    ? await getDraft(docId, true)
+    : await getDocumentWithContent(docId, true);
 
   return {
-    props: { response: res, document: res?.document },
+    props: {
+      isDraft,
+      response: JSON.parse(JSON.stringify(cleanObject(res?.response))),
+      document: JSON.parse(
+        JSON.stringify(
+          cleanObject(isDraft ? res?.response : res?.response?.document)
+        )
+      ),
+    },
   };
 });
 

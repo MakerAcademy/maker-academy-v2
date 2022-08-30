@@ -33,12 +33,16 @@ export const getServerSideProps = withUser(async (context, { user }) => {
 
     const document = await getDocumentWithContent(docId);
 
-    if (document?.private && user?.trustLevel < 4) {
+    if (document?.response?.private && user?.trustLevel < 4) {
       return { redirect: { destination: "/content" } };
     }
 
     return {
-      props: { document },
+      props: {
+        document: JSON.parse(
+          JSON.stringify(cleanObject(document?.response || {}))
+        ),
+      },
     };
   } catch (error) {
     console.log(1, error);

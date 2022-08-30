@@ -84,10 +84,13 @@ export const listenUserEditRequests = (cid, callback) => {
   return unsub;
 };
 
-export const submitDocumentEditRequest = async (cid, data = {}, contentId) => {
+export const submitDocumentEditRequest = async (
+  cid,
+  data = {},
+  contentId,
+  oldPublished
+) => {
   try {
-    // return { success: true, payload: { ...data } };
-
     // Add to documents
     const docRef = doc(collection(db, "documents"));
     const docPayload = {
@@ -115,6 +118,7 @@ export const submitDocumentEditRequest = async (cid, data = {}, contentId) => {
       author: data.author,
       contentId,
       published: docRef.id,
+      oldPublished,
       id: erRef.id,
       contentType: "document",
       status: "pending",
@@ -208,7 +212,7 @@ export const submitCourseEditRequest = async (cid, data = {}, contentId) => {
 
 export const acceptEditRequest = async (data) => {
   try {
-    const { contentId, id, published, filters, metadata } = data;
+    const { contentId, id, published, filters, metadata, oldPublished } = data;
 
     // new content
     const contentRef = doc(db, "content", contentId);
@@ -226,6 +230,10 @@ export const acceptEditRequest = async (data) => {
 
     await deleteDoc(doc(db, "edit_requests", id));
 
+    if (fetchedContent?.published) {
+      await deleteDoc(doc(db, "documents", oldPublished));
+    }
+
     return { success: true };
   } catch (error) {
     console.log(error);
@@ -233,9 +241,10 @@ export const acceptEditRequest = async (data) => {
   }
 };
 
-export const declineEditRequest = async (id) => {
+export const declineEditRequest = async (id, published) => {
   try {
     await deleteDoc(doc(db, "edit_requests", id));
+    // await deleteDoc(doc(db, "documents", published));
 
     return { success: true };
   } catch (error) {

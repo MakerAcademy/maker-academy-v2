@@ -15,10 +15,23 @@ import {
   increment,
 } from "firebase/firestore";
 
+const generateSearchTerm = (data) => {
+  let _searchTerm = `${data?.title || ""} ${data?.brand || ""} ${
+    data?.shortDescription || ""
+  } ${data?.level || ""} ${data?.category || ""}`
+    ?.toLowerCase()
+    ?.replace(/[^a-zA-Z ]/g, "")
+    ?.split(" ")
+    ?.filter((i) => i?.length > 4);
+
+  //remove duplicate words
+  _searchTerm = Array.from(new Set(_searchTerm)).filter(Boolean);
+
+  return _searchTerm;
+};
+
 export const submitDocument = async (cid, data = {}) => {
   try {
-    // return { success: true, payload: { ...data } };
-
     // Add to documents
     const docRef = doc(collection(db, "documents"));
     const docPayload = {
@@ -29,18 +42,9 @@ export const submitDocument = async (cid, data = {}) => {
     const docRes = await setDoc(docRef, cleanObject(docPayload));
 
     //searchable term
-    let _searchTerm = `${data?.title || ""} ${data?.brand || ""} ${
-      data?.shortDescription || ""
-    } ${data?.level || ""} ${data?.category || ""}`
-      ?.toLowerCase()
-      ?.replace(/[^a-zA-Z ]/g, "")
-      ?.split(" ")
-      ?.filter((i) => i?.length > 4);
+    let _searchTerm = generateSearchTerm(data);
 
-    //remove duplicate words
-    _searchTerm = Array.from(new Set(_searchTerm)).filter(Boolean);
-
-    // new content
+    //new content
     const contentRef = doc(collection(db, "content"));
     const contentPayload = {
       author: cid,
@@ -78,6 +82,51 @@ export const submitDocument = async (cid, data = {}) => {
   }
 };
 
+export const updateDocument = async (data = {}) => {
+  try {
+    const { published, id, timestamp, updatedTimestamp, ...other } = data;
+
+    // Update Document
+    const docRef = doc(db, "documents", published);
+    const docPayload = {
+      ...other,
+    };
+    const docRes = await updateDoc(docRef, cleanObject(docPayload));
+
+    //searchable term
+    let _searchTerm = generateSearchTerm(data);
+
+    //new content
+    const contentRef = doc(db, "content", id);
+    const contentPayload = {
+      status: "pending",
+      filters: {
+        brand: data?.brand || "none",
+        searchTerm: _searchTerm,
+        category: data?.category || "",
+        level: data?.level || "",
+      },
+      metadata: {
+        level: data?.level || "",
+        title: data?.title || "",
+        brand: data?.brand || "",
+        shortDescription: data?.shortDescription || "",
+        category: data?.category || "",
+        duration: data?.duration || "",
+      },
+    };
+    const contentRes = await updateDoc(contentRef, {
+      ...cleanObject(contentPayload),
+      updatedTimestamp: serverTimestamp(),
+    });
+
+    return { success: true, payload: data };
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
 export const getDocumentWithContent = async (cid, seperate) => {
   try {
     const contentRef = doc(db, "content", cid);
@@ -109,7 +158,7 @@ export const getDocumentWithContent = async (cid, seperate) => {
             contentData?.updatedTimestamp?.toDate?.()?.toString?.() || null,
         };
 
-        return docObj;
+        return { success: true, response: docObj };
       }
     }
   } catch (error) {

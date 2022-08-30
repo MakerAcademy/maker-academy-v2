@@ -18,8 +18,6 @@ const EditRequests = () => {
     }
   }, []);
 
-  console.log(data);
-
   return (
     <DashboardPaper>
       <Typography sx={{ mb: 3 }}>Edit Requests</Typography>

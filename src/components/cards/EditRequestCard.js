@@ -17,6 +17,7 @@ const EditRequestCard = (props) => {
     thumbnail,
     contentType,
     id,
+    published,
     metadata: { title, shortDescription, description },
   } = props;
 
@@ -38,7 +39,7 @@ const EditRequestCard = (props) => {
   };
 
   const handleDecline = async () => {
-    declineEditRequest(id);
+    declineEditRequest(id, published);
   };
 
   return (

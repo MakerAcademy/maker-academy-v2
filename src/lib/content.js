@@ -1,6 +1,7 @@
 import { db } from "@config/firebase";
 import {
   collection,
+  deleteDoc,
   doc,
   getDoc,
   getDocs,
@@ -104,6 +105,26 @@ export const listenOneContent = (_id, callback) => {
   }
 };
 
+export const listenUserContent = (cid, callback) => {
+  const docsRef = collection(db, "content");
+
+  const q = query(docsRef, where("author", "==", cid));
+
+  const unsub = onSnapshot(q, (snapshot) => {
+    const result = [];
+
+    snapshot.docs.forEach((doc) => {
+      result.push({
+        ...doc.data(),
+        id: doc.id,
+      });
+    });
+    callback?.(result);
+  });
+
+  return unsub;
+};
+
 export const fetchOneContent = async (_id) => {
   try {
     const contentRef = doc(db, "content", _id);
@@ -173,5 +194,26 @@ export const approveRejectContent = async ({ id, approve }) => {
   } catch (error) {
     console.log(error);
     return error;
+  }
+};
+
+export const deleteContent = async (contentId, published, contentType) => {
+  // return console.log(contentId, published, contentType);
+
+  try {
+    await deleteDoc(doc(db, "content", contentId));
+
+    if (contentType === "document") {
+      await deleteDoc(doc(db, "documents", published));
+    } else if (contentType === "assessments") {
+      await deleteDoc(doc(db, "assessments", published));
+    } else if (contentType === "course") {
+      await deleteDoc(doc(db, "courses", published));
+    }
+
+    return { success: true };
+  } catch (error) {
+    console.log(error);
+    throw error;
   }
 };
