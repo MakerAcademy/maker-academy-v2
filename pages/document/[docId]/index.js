@@ -4,6 +4,7 @@ import { withUser } from "@hoc/routes";
 import { getDocumentWithContent } from "@lib/document";
 import { Box, Container, useTheme } from "@mui/material";
 import ErrorPage from "@page-components/Error";
+import { cleanObject } from "@utils/helpers";
 
 const Document = ({ document }) => {
   const theme = useTheme();
