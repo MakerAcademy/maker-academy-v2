@@ -31,6 +31,8 @@ export const TRUST_LEVELS = {
 
 export const CONTENT_DIFFICULTY_LEVELS = ["beginner", "intermediate", "expert"];
 
+export const BACKLOG_TYPES = ["bug_fix", "improvement", "feature"];
+
 export const ASSESSMENT_QUESTION_TYPES = [
   "radio",
   "checkbox",

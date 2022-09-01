@@ -10,6 +10,7 @@ const FormTextField = ({
   sx = {},
   variant = "outlined",
   label,
+  type = "text",
   ...props
 }) => {
   const theme = useTheme();
@@ -28,6 +29,7 @@ const FormTextField = ({
           variant={variant}
           label={label}
           multiline={multiline}
+          type={type}
           InputProps={{
             sx: {
               borderRadius: "8px",
@@ -50,6 +52,7 @@ const FormTextField = ({
           {...props}
           {...field}
           value={field.value || ""}
+          helperText={error && error.message}
         />
       )}
     />

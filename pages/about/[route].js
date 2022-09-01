@@ -1,6 +1,7 @@
 import { NAVBAR_HEIGHT_MOBILE } from "@constants/";
 import { Box, Button, Container, Tab, Tabs, useTheme } from "@mui/material";
 import AboutAcademyProposal from "@page-components/About/AcademyProposal";
+import AboutBacklog from "@page-components/About/Backlog";
 import AboutBudget from "@page-components/About/Budget";
 import AboutMission from "@page-components/About/Mission";
 import AboutStatusUpdates from "@page-components/About/StatusUpdates";
@@ -13,6 +14,7 @@ const routes = [
   { name: "mission", link: "/about/mission" },
   { name: "budget", link: "/about/budget" },
   { name: "academy_proposals", link: "/about/academy_proposals" },
+  { name: "backlog", link: "/about/backlog" },
   { name: "status_updates", link: "/about/status_updates" },
   { name: "team", link: "/about/team" },
 ];
@@ -88,12 +90,10 @@ const AboutUs = () => {
         <Tabs
           variant="scrollable"
           TabIndicatorProps={{ style: { display: "none" } }}
-          //   value={tabValue}
+          value={tabValue}
           onChange={(e, v) => setTabValue(v)}
         >
           {routes.map((item) => {
-            const isSelected = tabValue === item.link;
-
             return (
               <Tab
                 key={item.link}
@@ -101,9 +101,12 @@ const AboutUs = () => {
                 label={item.name}
                 sx={{
                   mx: 1,
-                  bgcolor: isSelected ? "primary.grey8" : "primary.grey1",
-                  color: isSelected ? "text.invert" : "text.primary",
+                  bgcolor: "primary.grey1",
                   borderRadius: "12px",
+                  "&.Mui-selected": {
+                    color: "text.invert",
+                    bgcolor: "primary.grey8",
+                  },
                 }}
               />
             );
@@ -122,6 +125,7 @@ AboutUs.type = {
   "/about/mission": AboutMission,
   "/about/budget": AboutBudget,
   "/about/academy_proposals": AboutAcademyProposal,
+  "/about/backlog": AboutBacklog,
   "/about/status_updates": AboutStatusUpdates,
   "/about/team": AboutTeam,
 };

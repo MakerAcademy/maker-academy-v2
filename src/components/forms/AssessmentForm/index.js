@@ -96,12 +96,12 @@ const AssessmentForm = ({
 
   // form validation rules
   const validationSchema = Yup.object().shape({
-    // title: Yup.string().required("Required"),
-    // description: Yup.string().required("Required"),
-    // level: Yup.string().required("Required"),
-    // category: Yup.string().required("Required"),
-    // duration: Yup.string().required("Required"),
-    // carriculum: Yup.array().required("required"),
+    title: Yup.string().required("Required"),
+    description: Yup.string().required("Required"),
+    level: Yup.string().required("Required"),
+    category: Yup.string().required("Required"),
+    duration: Yup.number().required("Required"),
+    questions: Yup.array().required("required"),
   });
 
   const formOptions = {

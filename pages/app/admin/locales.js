@@ -1,9 +1,9 @@
 import { withProtectedUser } from "@hoc/routes";
 import { listenLocales } from "@lib/locales";
 import { Box } from "@mui/material";
-import LocalesTable from "@page-components/AdminLocales/LocalesTable";
-import NewLocale from "@page-components/AdminLocales/NewLocale";
-import TabsAppbar from "@page-components/AdminLocales/TabsAppbar";
+import LocalesTable from "@page-components/Admin/AdminLocales/LocalesTable";
+import NewLocale from "@page-components/Admin/AdminLocales/NewLocale";
+import TabsAppbar from "@page-components/Admin/AdminLocales/TabsAppbar";
 import React, { useEffect, useState } from "react";
 
 function TabPanel(props) {

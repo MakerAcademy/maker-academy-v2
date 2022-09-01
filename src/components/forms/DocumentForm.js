@@ -36,12 +36,13 @@ const DocumentForm = ({
 
   // form validation rules
   const validationSchema = Yup.object().shape({
-    // title: Yup.string().required("Required"),
-    // description: Yup.string().required("Required"),
-    // level: Yup.string().required("Required"),
-    // category: Yup.string().required("Required"),
-    // duration: Yup.string().required("Required"),
-    // markdown: Yup.string().required("Required"),
+    title: Yup.string().required("Required"),
+    shortDescription: Yup.string().required("Required"),
+    description: Yup.string().required("Required"),
+    level: Yup.string().required("Required"),
+    category: Yup.string().required("Required"),
+    duration: Yup.number().required("Required"),
+    markdown: Yup.string().required("Required"),
   });
 
   const formOptions = {
@@ -192,7 +193,7 @@ const DocumentForm = ({
             sx={{ minWidth: 200 }}
           />
 
-          {edit && isDraft && (
+          {((edit && isDraft) || (!edit && !isDraft)) && (
             <GreenButton name="draft" type="submit" disabled={disabled}>
               {isDraft ? t("update_draft") : t("save_draft")}
             </GreenButton>

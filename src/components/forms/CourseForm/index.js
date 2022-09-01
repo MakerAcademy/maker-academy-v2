@@ -28,11 +28,13 @@ const CourseForm = ({
   // form validation rules
   const validationSchema = Yup.object().shape({
     title: Yup.string().required("Required"),
+    shortDescription: Yup.string().required("Required"),
     description: Yup.string().required("Required"),
     level: Yup.string().required("Required"),
     category: Yup.string().required("Required"),
-    duration: Yup.string().required("Required"),
+    duration: Yup.number().required("Required"),
     carriculum: Yup.array().required("required"),
+    learningOutcomes: Yup.array().required("required"),
   });
 
   const formOptions = {
@@ -40,7 +42,7 @@ const CourseForm = ({
     defaultValues: values,
   };
 
-  const { handleSubmit, reset, control, getValues, setValue } =
+  const { handleSubmit, reset, control, getValues, setValue, formState } =
     useForm(formOptions);
 
   const onSubmit = (data, e) => {
@@ -53,14 +55,13 @@ const CourseForm = ({
   //   setValue("markdownValue", markdown);
   // };
 
-  const _image = useWatch({ control, name: "markdownValue" });
+  // const _image = useWatch({ control, name: "markdownValue" });
 
   // console.log(_image);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       {/* Basic Information */}
-
       <DashboardPaper>
         <Stack spacing={3}>
           <Stack spacing={2}>

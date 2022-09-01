@@ -56,7 +56,7 @@ const FormRadioGroup = ({
             ))}
           </RadioGroup>
 
-          <FormHelperText error={props?.helperText || error?.message}>
+          <FormHelperText error={!!props?.helperText || !!error?.message}>
             {props?.helperText || error?.message}
           </FormHelperText>
         </FormControl>

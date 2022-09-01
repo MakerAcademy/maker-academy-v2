@@ -1,26 +1,18 @@
 import ElementsTabs from "@components/markdownElements/ElementsTabs";
-import {
-  Box,
-  Button,
-  IconButton,
-  Stack,
-  Typography,
-  useTheme,
-} from "@mui/material";
+import { Box, FormHelperText, Stack, Typography, useTheme } from "@mui/material";
+import codeSyntaxHighlight from "@toast-ui/editor-plugin-code-syntax-highlight";
+import "@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css";
 import colorSyntax from "@toast-ui/editor-plugin-color-syntax";
 import "@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css";
+import tableMergedCell from "@toast-ui/editor-plugin-table-merged-cell";
 import "@toast-ui/editor-plugin-table-merged-cell/dist/toastui-editor-plugin-table-merged-cell.css";
 import "@toast-ui/editor/dist/toastui-editor.css";
 import { Editor } from "@toast-ui/react-editor";
 import Prism from "prismjs";
-import React, { useEffect, useRef, useState } from "react";
+import "prismjs/themes/prism.css";
+import { useEffect, useRef, useState } from "react";
 import { Controller } from "react-hook-form";
 import "tui-color-picker/dist/tui-color-picker.css";
-import "@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css";
-import tableMergedCell from "@toast-ui/editor-plugin-table-merged-cell";
-import "prismjs/themes/prism.css";
-import codeSyntaxHighlight from "@toast-ui/editor-plugin-code-syntax-highlight";
-import Close from "@mui/icons-material/Close";
 
 // const Editor = dynamic(
 //   () => import("@toast-ui/react-editor").then((m) => m.Editor),
@@ -159,7 +151,9 @@ const FormMarkdown = ({ name, control, sx = {}, label, ...props }) => {
               ref={editor}
               // toolbarItems={["bold"]}
             />
-            {error && <Typography>{error}</Typography>}
+            <FormHelperText error={!!props?.helperText || !!error?.message}>
+              {props?.helperText || error?.message}
+            </FormHelperText>
           </Box>
         )}
       />

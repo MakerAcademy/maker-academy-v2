@@ -1,5 +1,6 @@
 import {
   FormControl,
+  FormHelperText,
   InputLabel,
   MenuItem,
   Select,
@@ -52,6 +53,7 @@ const FormSelectField = ({
               {...props}
               {...field}
               value={field.value || ""}
+              sx={{ maxHeight: 45 }}
             >
               {options?.map((item) => (
                 <MenuItem key={item} value={item}>
@@ -59,6 +61,10 @@ const FormSelectField = ({
                 </MenuItem>
               ))}
             </Select>
+
+            <FormHelperText error={!!props?.helperText || !!error?.message}>
+              {props?.helperText || error?.message}
+            </FormHelperText>
           </FormControl>
         );
       }}

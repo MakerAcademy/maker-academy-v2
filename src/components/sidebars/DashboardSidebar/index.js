@@ -60,13 +60,22 @@ const MENU_ITEMS = [
     trustLevel: 4,
     text: "admin",
     icon: AdminPanelSettingsIcon,
+    nestedItems: [
+      {
+        link: "/app/admin/pending_content",
+        trustLevel: 4,
+        text: "pending_content",
+        icon: GTranslateOutlinedIcon,
+      },
+      {
+        link: "/app/admin/locales",
+        trustLevel: 4,
+        text: "locales",
+        icon: GTranslateOutlinedIcon,
+      },
+    ],
   },
-  {
-    link: "/app/admin/locales",
-    trustLevel: 4,
-    text: "locales",
-    icon: GTranslateOutlinedIcon,
-  },
+
   {
     link: "/app/settings",
     trustLevel: 1,

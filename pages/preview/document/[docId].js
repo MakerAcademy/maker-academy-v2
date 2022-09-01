@@ -2,11 +2,12 @@ import ContentDocument from "@components/Document/index";
 import { NAVBAR_HEIGHT_DESKTOP, NAVBAR_HEIGHT_MOBILE } from "@constants/";
 import { withUser } from "@hoc/routes";
 import { getDocumentWithContent } from "@lib/document";
+import { getDraft } from "@lib/drafts";
 import { Box, Container, Typography, useTheme } from "@mui/material";
 import ErrorPage from "@page-components/Error";
 import { cleanObject } from "@utils/helpers";
 
-const Document = ({ document }) => {
+const PreviewDocument = ({ document }) => {
   const theme = useTheme();
 
   if (!document) return <ErrorPage />;
@@ -21,44 +22,48 @@ const Document = ({ document }) => {
         },
       }}
     >
-      <Typography variant="h6" sx={{ mb: 3 }}>
-        PREVIEW
+      <Typography variant="h6" sx={{ mb: 3, textAlign: "center" }}>
+        ----- PREVIEW -----
       </Typography>
-      <ContentDocument data={document} />
+
+      <ContentDocument data={document} previewMode />
     </Container>
   );
 };
 
-export default Document;
+export default PreviewDocument;
 
 export const getServerSideProps = withUser(
   async (context, { user, profile }) => {
     try {
       const docId = context.params.docId;
 
-      const document = await getDocumentWithContent(docId);
+      const isDraft = context.query?.draft === "true";
 
-      if (
-        document?.response?.status === "draft" &&
-        (document?.response?.author === profile?.id || user?.trustLevel < 4)
-      ) {
+      const res = isDraft
+        ? await getDraft(docId)
+        : await getDocumentWithContent(docId, true);
+
+      // const document = await getDraft(docId);
+
+      const document = isDraft ? res?.response : res?.response?.document;
+
+      if (document?.author !== profile?.id && user?.trustLevel < 4) {
         return {
           redirect: {
-            destination: profile?.private ? "/content" : `/document/${docId}`,
+            destination: "/app/studio",
           },
         };
       }
 
       return {
         props: {
-          document: JSON.parse(
-            JSON.stringify(cleanObject(document?.response || {}))
-          ),
+          document: JSON.parse(JSON.stringify(cleanObject(document))),
         },
       };
     } catch (error) {
       console.log(1, error);
-      return { redirect: { destination: "/content" } };
+      return { redirect: { destination: "/app/studio" } };
     }
   }
 );

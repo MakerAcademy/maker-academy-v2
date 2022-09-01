@@ -182,6 +182,31 @@ export const getPendingContent = async () => {
   }
 };
 
+export const listenPendingContent = (callback) => {
+  try {
+    const docsRef = collection(db, "content");
+
+    const q = query(docsRef, where("status", "==", "pending"));
+
+    const unsub = onSnapshot(q, (snapshot) => {
+      const result = [];
+
+      snapshot.docs.forEach((doc) => {
+        result.push({
+          ...doc.data(),
+          id: doc.id,
+        });
+      });
+      callback?.(result);
+    });
+
+    return unsub;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
 export const approveRejectContent = async ({ id, approve }) => {
   try {
     const docRef = doc(db, "content", id);

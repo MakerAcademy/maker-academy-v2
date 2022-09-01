@@ -19,7 +19,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import MarkdownBody from "./MarkdownBody";
 
-const ContentDocument = ({ data = {}, hideScrollspy }) => {
+const ContentDocument = ({ data = {}, hideScrollspy, previewMode }) => {
   const { user } = useAppSelector((state) => state.user);
   const { profile } = useAppSelector((state) => state.profile);
 
@@ -50,7 +50,7 @@ const ContentDocument = ({ data = {}, hideScrollspy }) => {
   const hasUserRead = profile?.readDocuments?.includes?.(id);
 
   useEffect(() => {
-    if (profile?.id && !hasUserRead && read) {
+    if (profile?.id && !hasUserRead && read && !previewMode) {
       updateUserReadDocument(profile?.id, id);
     }
   }, [profile, read]);
@@ -138,7 +138,7 @@ const ContentDocument = ({ data = {}, hideScrollspy }) => {
             <Typography>{description}</Typography>
 
             {/* Details */}
-            <DocMetadata {...document} />
+            {!previewMode && <DocMetadata {...document} />}
 
             {/* Markdown Body */}
             <Box
