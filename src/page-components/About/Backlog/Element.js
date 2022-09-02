@@ -35,7 +35,7 @@ const Element = ({ title, description, id, index, status, issue_type }) => {
   };
 
   return (
-    <>
+    <Box sx={{ bgcolor: "primary.grey3", borderRadius: 3 }}>
       <Draggable draggableId={id} index={index}>
         {(provided, snapshot) => (
           <Paper
@@ -44,10 +44,17 @@ const Element = ({ title, description, id, index, status, issue_type }) => {
             snapshot={snapshot}
             {...provided.draggableProps}
             {...provided.dragHandleProps}
-            sx={{ p: 2, borderRadius: 3, cursor: "pointer" }}
+            sx={{
+              p: 2,
+              borderRadius: 3,
+              cursor: "pointer",
+              boxShadow: "0px 2px 10px rgba(24, 39, 75, 0.15)",
+            }}
             onClick={() => setDialogOpen(true)}
           >
-            <Typography sx={{ mb: 2 }}>{title}</Typography>
+            <Typography sx={{ mb: 2 }} variant="body2">
+              {title}
+            </Typography>
 
             <Stack
               direction="row"
@@ -97,7 +104,7 @@ const Element = ({ title, description, id, index, status, issue_type }) => {
           )}
         </Stack>
       </Dialog>
-    </>
+    </Box>
   );
 };
 

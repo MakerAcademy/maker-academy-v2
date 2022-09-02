@@ -114,6 +114,7 @@ export const updateDocument = async (data = {}) => {
         category: data?.category || "",
         duration: data?.duration || "",
       },
+      private: !!data?.private,
     };
     const contentRes = await updateDoc(contentRef, {
       ...cleanObject(contentPayload),

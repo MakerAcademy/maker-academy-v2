@@ -47,7 +47,7 @@ const AboutBacklog = () => {
   return (
     <Box>
       {/* Mission */}
-      <Title variant={{ xs: "h4", md: "h3" }} sx={{ mb: { xs: 3, md: 4 } }}>
+      <Title variant={{ xs: "h4", md: "h3" }} sx={{ mb: 2 }}>
         Backlog
       </Title>
 
