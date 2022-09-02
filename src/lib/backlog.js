@@ -2,6 +2,7 @@ import { db } from "@config/firebase";
 import { cleanObject } from "@utils/helpers";
 import {
   collection,
+  deleteDoc,
   doc,
   getDoc,
   onSnapshot,
@@ -81,4 +82,15 @@ export const listenBacklogs = (callback) => {
   });
 
   return unsub;
+};
+
+export const deleteBacklog = async (id) => {
+  try {
+    await deleteDoc(doc(db, "backlogs", id));
+
+    return { success: true };
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
 };
