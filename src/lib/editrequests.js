@@ -136,6 +136,7 @@ export const submitDocumentEditRequest = async (
         category: data?.category || "",
         duration: data?.duration || "",
       },
+      private: !!data?.private,
     };
     const erRes = await setDoc(erRef, {
       ...cleanObject(erPayload),
