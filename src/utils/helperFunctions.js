@@ -76,3 +76,39 @@ export const parseLineBreaks = (str = "") => {
   if (!str) return "";
   return str.replaceAll(" \\n ", "\n").replaceAll("\\n", "\n");
 };
+
+export const extractFileInObject = (obj) => {
+  const _obj = {};
+  for (const [_key, _value] of Object.entries(obj)) {
+    // console.log(_key, _value);
+    if (_value instanceof File) {
+      obj[_key] = null;
+      _obj[_key] = _value;
+    }
+  }
+
+  return { files: _obj, obj };
+};
+
+export const validateFileType = (file, restrict = {}) => {
+  if (!file) return false;
+
+  const { type, maxSize } = restrict;
+
+  const fileTypes = {
+    images: ["image/png", "image/jpg", "image/jpeg"],
+    pdf: ["application/pdf"],
+  };
+
+  if (type && !fileTypes[type]?.includes?.(file?.[0]?.type)) {
+    console.log("Wrong File Type");
+    return false;
+  }
+
+  if (maxSize && file?.[0]?.size > maxSize * 1e6) {
+    console.log("File size too big");
+    return false;
+  }
+
+  return true;
+};

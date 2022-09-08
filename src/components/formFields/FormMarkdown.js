@@ -1,5 +1,11 @@
 import ElementsTabs from "@components/markdownElements/ElementsTabs";
-import { Box, FormHelperText, Stack, Typography, useTheme } from "@mui/material";
+import {
+  Box,
+  FormHelperText,
+  Stack,
+  Typography,
+  useTheme,
+} from "@mui/material";
 import codeSyntaxHighlight from "@toast-ui/editor-plugin-code-syntax-highlight";
 import "@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css";
 import colorSyntax from "@toast-ui/editor-plugin-color-syntax";
@@ -112,10 +118,13 @@ const FormMarkdown = ({ name, control, sx = {}, label, ...props }) => {
                 minHeight: "inherit !important",
                 backgroundColor: "#fff",
               },
-              "&.toastui-editor-defaultUI": {
+              "& .toastui-editor-defaultUI": {
                 minHeight: "inherit !important",
               },
-              "&.toastui-editor-mode-switch": { display: "none" },
+              // "&.toastui-editor-mode-switch": { display: "none" },
+              "& .toastui-editor-md-preview": { display: "none !important" },
+              "& .toastui-editor-md-splitter": { display: "none !important" },
+              "& .toastui-editor.md-mode": { width: "100% !important" },
               ...sx,
             }}
             data-color-mode={theme.palette.mode}
@@ -125,7 +134,7 @@ const FormMarkdown = ({ name, control, sx = {}, label, ...props }) => {
             <Editor
               hideModeSwitch
               // theme={theme.palette.mode}
-              // previewStyle="tab"
+              previewStyle={"vertical"}
               initialEditType="markdown"
               plugins={[
                 colorSyntax,
@@ -135,7 +144,7 @@ const FormMarkdown = ({ name, control, sx = {}, label, ...props }) => {
               toolbarItems={[
                 ["heading", "bold", "italic"],
                 ["hr", "quote"],
-                ["ul", "ol", "task", "indent", "outdent"],
+                ["ul", "ol", "task"],
                 ["table", "link"],
               ]}
               {...props}

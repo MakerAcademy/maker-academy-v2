@@ -1,4 +1,5 @@
 import { db } from "@config/firebase";
+import { extractFileInObject } from "@utils/helperFunctions";
 import { cleanObject } from "@utils/helpers";
 import {
   setDoc,
@@ -14,6 +15,7 @@ import {
   arrayRemove,
   increment,
 } from "firebase/firestore";
+import { uploadFile } from "./storage";
 
 const generateSearchTerm = (data) => {
   let _searchTerm = `${data?.title || ""} ${data?.brand || ""} ${
@@ -32,17 +34,21 @@ const generateSearchTerm = (data) => {
 
 export const submitDocument = async (cid, data = {}) => {
   try {
+    const { obj, files } = extractFileInObject(data);
+
+    // return console.log(obj, files);
+
     // Add to documents
     const docRef = doc(collection(db, "documents"));
     const docPayload = {
-      ...data,
+      ...obj,
       author: cid,
       id: docRef.id,
     };
     const docRes = await setDoc(docRef, cleanObject(docPayload));
 
     //searchable term
-    let _searchTerm = generateSearchTerm(data);
+    let _searchTerm = generateSearchTerm(obj);
 
     //new content
     const contentRef = doc(collection(db, "content"));
@@ -54,20 +60,23 @@ export const submitDocument = async (cid, data = {}) => {
       likes: 0,
       views: 0,
       status: "pending",
-      private: !!data?.private,
+      private: !!obj?.private,
       filters: {
-        brand: data?.brand || "none",
+        brand: obj?.brand || "none",
         searchTerm: _searchTerm,
-        category: data?.category || "",
-        level: data?.level || "",
+        category: obj?.category || "",
+        level: obj?.level || "",
       },
       metadata: {
-        level: data?.level || "",
-        title: data?.title || "",
-        brand: data?.brand || "",
-        shortDescription: data?.shortDescription || "",
-        category: data?.category || "",
-        duration: data?.duration || "",
+        level: obj?.level || "",
+        title: obj?.title || "",
+        brand: obj?.brand || "",
+        shortDescription: obj?.shortDescription || "",
+        category: obj?.category || "",
+        duration: obj?.duration || "",
+        thumbnail:
+          obj?.thumbnail ||
+          "https://prod-discovery.edx-cdn.org/media/course/image/0e575a39-da1e-4e33-bb3b-e96cc6ffc58e-8372a9a276c1.png",
       },
     };
     const contentRes = await setDoc(contentRef, {
@@ -75,16 +84,41 @@ export const submitDocument = async (cid, data = {}) => {
       timestamp: serverTimestamp(),
     });
 
-    return { success: true, payload: { ...data, id: contentRef.id } };
+    // Upload files
+    if (files && Object.keys(files)) {
+      for await (const [key, value] of Object.entries(files)) {
+        const extension = value?.name?.split(".")?.[1];
+
+        await uploadFile(
+          `/content/${contentRef.id}/${key}.${extension}`,
+          value
+        ).then(async (res) => {
+          if (res?.success) {
+            await updateDoc(docRef, { [key]: res?.metadata?.downloadURL });
+            await updateDoc(
+              contentRef,
+              {
+                [`metadata.${key}`]: res?.metadata?.downloadURL,
+              },
+              { merge: true }
+            );
+          }
+        });
+      }
+    }
+
+    return { success: true, payload: { ...obj, id: contentRef.id } };
   } catch (error) {
     console.log(error);
     return error;
   }
 };
 
-export const updateDocument = async (data = {}) => {
+export const updateDocument = async (data = {}, disableUpdatedTimestamp) => {
   try {
-    const { published, id, timestamp, updatedTimestamp, ...other } = data;
+    const { obj, files } = extractFileInObject(data);
+
+    const { published, id, timestamp, updatedTimestamp, ...other } = obj;
 
     // Update Document
     const docRef = doc(db, "documents", published);
@@ -94,32 +128,60 @@ export const updateDocument = async (data = {}) => {
     const docRes = await updateDoc(docRef, cleanObject(docPayload));
 
     //searchable term
-    let _searchTerm = generateSearchTerm(data);
+    let _searchTerm = generateSearchTerm(obj);
 
     //new content
     const contentRef = doc(db, "content", id);
     const contentPayload = {
       status: "pending",
       filters: {
-        brand: data?.brand || "none",
+        brand: obj?.brand || "none",
         searchTerm: _searchTerm,
-        category: data?.category || "",
-        level: data?.level || "",
+        category: obj?.category || "",
+        level: obj?.level || "",
       },
       metadata: {
-        level: data?.level || "",
-        title: data?.title || "",
-        brand: data?.brand || "",
-        shortDescription: data?.shortDescription || "",
-        category: data?.category || "",
-        duration: data?.duration || "",
+        level: obj?.level || "",
+        title: obj?.title || "",
+        brand: obj?.brand || "",
+        shortDescription: obj?.shortDescription || "",
+        category: obj?.category || "",
+        duration: obj?.duration || "",
+        thumbnail:
+          obj?.thumbnail ||
+          "https://prod-discovery.edx-cdn.org/media/course/image/0e575a39-da1e-4e33-bb3b-e96cc6ffc58e-8372a9a276c1.png",
       },
-      private: !!data?.private,
+      private: !!obj?.private,
     };
     const contentRes = await updateDoc(contentRef, {
       ...cleanObject(contentPayload),
-      updatedTimestamp: serverTimestamp(),
+      ...(disableUpdatedTimestamp
+        ? {}
+        : { updatedTimestamp: serverTimestamp() }),
     });
+
+    // Upload files
+    if (files && Object.keys(files)) {
+      for await (const [key, value] of Object.entries(files)) {
+        const extension = value?.name?.split(".")?.[1];
+
+        await uploadFile(
+          `/content/${contentRef.id}/${key}.${extension}`,
+          value
+        ).then(async (res) => {
+          if (res?.success) {
+            await updateDoc(docRef, { [key]: res?.metadata?.downloadURL });
+            await updateDoc(
+              contentRef,
+              {
+                [`metadata.${key}`]: res?.metadata?.downloadURL,
+              },
+              { merge: true }
+            );
+          }
+        });
+      }
+    }
 
     return { success: true, payload: data };
   } catch (error) {
@@ -162,6 +224,8 @@ export const getDocumentWithContent = async (cid, seperate) => {
         return { success: true, response: docObj };
       }
     }
+
+    return { error: true };
   } catch (error) {
     console.log("cid", cid, "No such document!");
     throw error;

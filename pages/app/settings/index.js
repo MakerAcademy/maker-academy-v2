@@ -1,13 +1,15 @@
 import DashboardPaper from "@components/DashboardPaper";
 import { withProtectedUser } from "@hoc/routes";
 import { useAppDispatch, useAppSelector } from "@hooks/useRedux";
+import { uploadFile } from "@lib/storage";
 import { updateContact } from "@lib/user";
 import { Box, Tab, Tabs } from "@mui/material";
-import { updateUserProfile } from "@redux/slices/profileSlice";
+import { updateUserProfile } from "@redux/slices/contactSlice";
+import { fileInObject } from "@utils/helperFunctions";
 import useTranslation from "next-translate/useTranslation";
 import dynamic from "next/dynamic";
 import { useSnackbar } from "notistack";
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 
 const ProfileForm = dynamic(
   () => import("@components/forms/Settings/ProfileForm"),
@@ -38,16 +40,12 @@ const Profile = () => {
   };
 
   const handleProfileSubmit = async (data) => {
-    const res = await updateContact(profile?.id, data)
-      .then(() => {
-        dispatch(updateUserProfile());
-      })
-      .then(() => {
-        enqueueSnackbar("Updated!", {
-          variant: "success",
-          autoHideDuration: 2000,
-        });
+    const res = await updateContact(profile?.id, data).then(() => {
+      enqueueSnackbar("Updated!", {
+        variant: "success",
+        autoHideDuration: 2000,
       });
+    });
   };
 
   return (

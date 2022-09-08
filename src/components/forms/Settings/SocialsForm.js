@@ -72,6 +72,15 @@ const ProfileForm = ({ values, handleSubmit: propsHandleSubmit }) => {
 
         <Grid item xs={12} md={6}>
           <FormTextField
+            name="socials.instagram"
+            label="Instagram"
+            control={control}
+            placeholder="@colby_anderson"
+          />
+        </Grid>
+
+        <Grid item xs={12} md={6}>
+          <FormTextField
             name="socials.telegram"
             label="Telegram"
             control={control}

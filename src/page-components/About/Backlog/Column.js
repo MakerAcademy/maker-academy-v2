@@ -1,10 +1,13 @@
 import Title from "@components/Title";
 import { Box, Stack, Typography } from "@mui/material";
+import useTranslation from "next-translate/useTranslation";
 import React from "react";
 import { Droppable } from "react-beautiful-dnd";
 import Element from "./Element";
 
 const Column = ({ elements, title }) => {
+  const { t } = useTranslation("about");
+
   return (
     <Box
       sx={{
@@ -14,7 +17,7 @@ const Column = ({ elements, title }) => {
         borderRadius: "16px",
       }}
     >
-      <Title sx={{ mb: 3 }}>{title}</Title>
+      <Title sx={{ mb: 3 }}>{t(title)}</Title>
 
       <Droppable droppableId={`${title}`}>
         {(provided) => (

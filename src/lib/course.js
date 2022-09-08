@@ -1,4 +1,5 @@
 import { db } from "@config/firebase";
+import { extractFileInObject } from "@utils/helperFunctions";
 import { cleanObject } from "@utils/helpers";
 import {
   setDoc,
@@ -11,29 +12,38 @@ import {
   increment,
   arrayRemove,
 } from "firebase/firestore";
+import { uploadFile } from "./storage";
+
+const generateSearchTerm = (data) => {
+  let _searchTerm = `${data?.title || ""} ${data?.brand || ""} ${
+    data?.shortDescription || ""
+  } ${data?.level || ""} ${data?.category || ""}`
+    ?.toLowerCase()
+    ?.replace(/[^a-zA-Z ]/g, "")
+    ?.split(" ")
+    ?.filter((i) => i?.length > 4);
+
+  //remove duplicate words
+  _searchTerm = Array.from(new Set(_searchTerm)).filter(Boolean);
+
+  return _searchTerm;
+};
 
 export const submitCourse = async (cid, data = {}) => {
   try {
+    const { obj, files } = extractFileInObject(data);
+
     // Add to courses
     const docRef = doc(collection(db, "courses"));
     const docPayload = {
-      ...data,
+      ...obj,
       author: cid,
       id: docRef.id,
     };
     const docRes = await setDoc(docRef, docPayload);
 
     //searchable term
-    let _searchTerm = `${data?.title || ""} ${data?.brand || ""} ${
-      data?.shortDescription || ""
-    } ${data?.level || ""} ${data?.category || ""}`
-      ?.toLowerCase()
-      ?.replace(/[^a-zA-Z ]/g, "")
-      ?.split(" ")
-      ?.filter((i) => i?.length > 4);
-
-    //remove duplicate words
-    _searchTerm = Array.from(new Set(_searchTerm)).filter(Boolean);
+    let _searchTerm = generateSearchTerm(obj);
 
     // new content
     const contentRef = doc(collection(db, "content"));
@@ -46,20 +56,23 @@ export const submitCourse = async (cid, data = {}) => {
       views: 0,
       enrolledUsers: 0,
       status: "pending",
-      private: !!data?.private,
+      private: !!obj?.private,
       filters: {
-        brand: data?.brand || "none",
+        brand: obj?.brand || "none",
         searchTerm: _searchTerm,
-        category: data?.category || "",
-        level: data?.level || "",
+        category: obj?.category || "",
+        level: obj?.level || "",
       },
       metadata: {
-        level: data?.level || "",
-        title: data?.title || "",
-        brand: data?.brand || "",
-        shortDescription: data?.shortDescription || "",
-        category: data?.category || "",
-        duration: data?.duration || "",
+        level: obj?.level || "",
+        title: obj?.title || "",
+        brand: obj?.brand || "",
+        shortDescription: obj?.shortDescription || "",
+        category: obj?.category || "",
+        duration: obj?.duration || "",
+        thumbnail:
+          obj?.thumbnail ||
+          "https://prod-discovery.edx-cdn.org/media/course/image/0e575a39-da1e-4e33-bb3b-e96cc6ffc58e-8372a9a276c1.png",
       },
     };
     const contentRes = await setDoc(contentRef, {
@@ -67,7 +80,30 @@ export const submitCourse = async (cid, data = {}) => {
       timestamp: serverTimestamp(),
     });
 
-    return { success: true, payload: { ...data, id: contentRef.id } };
+    // Upload files
+    if (files && Object.keys(files)) {
+      for await (const [key, value] of Object.entries(files)) {
+        const extension = value?.name?.split(".")?.[1];
+
+        await uploadFile(
+          `/content/${contentRef.id}/${key}.${extension}`,
+          value
+        ).then(async (res) => {
+          if (res?.success) {
+            await updateDoc(docRef, { [key]: res?.metadata?.downloadURL });
+            await updateDoc(
+              contentRef,
+              {
+                [`metadata.${key}`]: res?.metadata?.downloadURL,
+              },
+              { merge: true }
+            );
+          }
+        });
+      }
+    }
+
+    return { success: true, payload: { ...obj, id: contentRef.id } };
   } catch (error) {
     console.log(error);
     return error;

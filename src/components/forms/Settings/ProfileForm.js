@@ -2,6 +2,7 @@ import GreenButton from "@components/buttons/GreenButton";
 import FormDropzone from "@components/formFields/FormDropzone";
 import FormTextField from "@components/formFields/FormTextField";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { uploadFile } from "@lib/storage";
 import {
   Avatar,
   Divider,
@@ -34,17 +35,25 @@ const ProfileForm = ({ values, handleSubmit: propsHandleSubmit }) => {
 
   const onSubmit = (data, e) => {
     // reset(); // reset after form submit
-    propsHandleSubmit(cleanObject({ ...data, profilePicture: null }));
+    propsHandleSubmit({ ...data });
   };
 
-  const image = _image;
-  //typeof _image === "object" ? URL.createObjectURL(_image) : _image;
+  const image =
+    typeof _image === "object" && _image instanceof File
+      ? URL.createObjectURL(_image)
+      : _image;
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       {/* Upload File */}
       <Stack spacing={3} sx={{ mb: 3 }}>
-        <FormDropzone name="profilePicture" control={control} exists={!!image}>
+        <FormDropzone
+          name="profilePicture"
+          control={control}
+          exists={!!image}
+          accept="image/*"
+          restrict={{ type: "images", maxSize: 1 }}
+        >
           <Stack
             direction={{ xs: "column", md: "row" }}
             spacing={2}
@@ -58,7 +67,7 @@ const ProfileForm = ({ values, handleSubmit: propsHandleSubmit }) => {
               </Typography>
 
               <Typography variant="caption">
-                PNG or JPG no bigger than 2mb
+                PNG or JPG no bigger than 1mb
               </Typography>
 
               <Typography variant="caption">

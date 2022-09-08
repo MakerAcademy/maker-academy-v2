@@ -20,6 +20,7 @@
     "firebase-functions": "^3.14.1",
     "glob": "^8.0.3",
     "moment": "^2.29.3",
+    "moment-timezone": "^0.5.37",
     "nodemailer": "^6.7.5"
   },
   "devDependencies": {

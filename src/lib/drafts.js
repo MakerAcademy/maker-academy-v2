@@ -1,4 +1,5 @@
 import { db } from "@config/firebase";
+import { extractFileInObject } from "@utils/helperFunctions";
 import { cleanObject } from "@utils/helpers";
 import {
   setDoc,
@@ -21,18 +22,36 @@ import { submitDocument } from "./document";
 
 export const submitDraft = async (cid, data = {}) => {
   try {
+    const { obj, files } = extractFileInObject(data);
+
     // new content
     const contentRef = doc(collection(db, "drafts"));
     const contentPayload = {
       author: cid,
       id: contentRef.id,
       contentType: "document",
-      ...data,
+      ...obj,
     };
     const contentRes = await setDoc(contentRef, {
       ...cleanObject(contentPayload),
       timestamp: serverTimestamp(),
     });
+
+    // Upload files
+    if (files && Object.keys(files)) {
+      for await (const [key, value] of Object.entries(files)) {
+        const extension = value?.name?.split(".")?.[1];
+
+        await uploadFile(
+          `/content/${contentRef.id}/${key}.${extension}`,
+          value
+        ).then(async (res) => {
+          if (res?.success) {
+            await updateDoc(contentRef, { [key]: res?.metadata?.downloadURL });
+          }
+        });
+      }
+    }
 
     return { success: true, payload: { ...data, id: contentRef.id } };
   } catch (error) {
@@ -43,10 +62,27 @@ export const submitDraft = async (cid, data = {}) => {
 
 export const updateDraft = async (docId, data = {}) => {
   try {
+    const { obj, files } = extractFileInObject(data);
+
     const _ref = doc(db, "drafts", docId);
     await updateDoc(_ref, {
-      ...data,
+      ...obj,
     });
+
+    // Upload files
+    if (files && Object.keys(files)) {
+      for await (const [key, value] of Object.entries(files)) {
+        const extension = value?.name?.split(".")?.[1];
+
+        await uploadFile(`/content/${_ref.id}/${key}.${extension}`, value).then(
+          async (res) => {
+            if (res?.success) {
+              await updateDoc(_ref, { [key]: res?.metadata?.downloadURL });
+            }
+          }
+        );
+      }
+    }
 
     return { success: true, payload: data };
   } catch (error) {

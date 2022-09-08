@@ -26,6 +26,7 @@
     "@toast-ui/editor-plugin-table-merged-cell": "^3.1.0",
     "@toast-ui/react-editor": "^3.1.7",
     "axios": "^0.27.2",
+    "echarts": "^5.3.3",
     "echarts-for-react": "^3.0.2",
     "firebase": "^9.8.3",
     "firebase-admin": "^10.3.0",

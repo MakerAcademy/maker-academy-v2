@@ -1,12 +1,14 @@
 import GreenButton from "@components/buttons/GreenButton";
 import MarkdownBody from "@components/Document/MarkdownBody";
 import FormCheckbox from "@components/formFields/FormCheckbox";
+import FormDropzone from "@components/formFields/FormDropzone";
 import FormMarkdown from "@components/formFields/FormMarkdown";
 import FormSelectField from "@components/formFields/FormSelectField";
 import FormTextField from "@components/formFields/FormTextField";
 import { CONTENT_CATEGORIES } from "@constants/";
 import { BRANDS, CONTENT_DIFFICULTY_LEVELS } from "@constants/";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useAppSelector } from "@hooks/useRedux";
 import { Box, Divider, Grid, Stack, Typography, useTheme } from "@mui/material";
 import { cleanObject } from "@utils/helpers";
 import useTranslation from "next-translate/useTranslation";
@@ -23,9 +25,11 @@ const DocumentForm = ({
 }) => {
   const theme = useTheme();
   const [disabled, setDisabled] = useState(false);
+  const { user } = useAppSelector((state) => state.user);
 
   const isEditable = (_name) => {
     if (!editableFields?.length) return true;
+    if (user?.trustLevel > 3) return true;
 
     if (editableFields?.includes(_name)) return true;
 
@@ -54,6 +58,7 @@ const DocumentForm = ({
     useForm(formOptions);
 
   const onSubmit = (data, e) => {
+    // console.log(data);
     setDisabled(true);
     const isDraft = e?.nativeEvent?.submitter?.name === "draft";
 
@@ -68,7 +73,7 @@ const DocumentForm = ({
   //   setValue("markdownValue", markdown);
   // };
 
-  const _image = useWatch({ control, name: "markdownValue" });
+  const _thumbnail = useWatch({ control, name: "thumbnail" });
   const _markdown = useWatch({ control, name: "markdown" });
 
   // console.log(_image);
@@ -81,6 +86,16 @@ const DocumentForm = ({
 
           <Divider />
         </Stack>
+
+        <FormDropzone
+          name="thumbnail"
+          label="Thumbnail"
+          control={control}
+          accept="image/*"
+          restrict={{ type: "images", maxSize: 3 }}
+          acceptedFilesTitle="(PNG or JPG no bigger than 3mb)"
+          exists={!!_thumbnail}
+        />
 
         <FormTextField
           name="title"

@@ -23,7 +23,7 @@ export const updateUserProfile = createAsyncThunk(
   }
 );
 
-export const profileSlice = createSlice({
+export const contactSlice = createSlice({
   name: "profile",
   initialState,
   reducers: {
@@ -43,6 +43,6 @@ export const profileSlice = createSlice({
   },
 });
 
-export const { setProfile } = profileSlice.actions;
+export const { setProfile } = contactSlice.actions;
 
-export default profileSlice.reducer;
+export default contactSlice.reducer;

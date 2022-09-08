@@ -31,13 +31,13 @@ const NewDocument = ({ user, profile }) => {
       enqueueSnackbar("Success", {
         variant: "success",
         autoHideDuration: 2000,
-        onClose: () => Router.push("/app/studio"),
+        // onClose: () => Router.push("/app/studio"),
       });
     } catch (error) {
       enqueueSnackbar("Error", {
         variant: "error",
         autoHideDuration: 2000,
-        onClose: () => Router.push("/app/studio"),
+        // onClose: () => Router.push("/app/studio"),
       });
     }
   };

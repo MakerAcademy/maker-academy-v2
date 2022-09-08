@@ -12,9 +12,11 @@ import {
   where,
   onSnapshot,
 } from "@firebase/firestore";
+import { extractFileInObject } from "@utils/helperFunctions";
 import { cleanObject } from "@utils/helpers";
+import { uploadFile } from "./storage";
 
-export const listenContact = (uid, callback) => {
+export const listenContactWithUid = (uid, callback) => {
   const q = query(
     collection(db, "contacts"),
     where("uid", "==", uid),
@@ -23,6 +25,24 @@ export const listenContact = (uid, callback) => {
 
   const unsub = onSnapshot(q, (snap) => {
     callback?.(snap?.docs?.[0]?.data?.());
+  });
+
+  return unsub;
+};
+
+export const listenContacts = (callback) => {
+  const q = query(collection(db, "contacts"));
+
+  const unsub = onSnapshot(q, (snapshot) => {
+    const result = [];
+
+    snapshot.docs.forEach((doc) => {
+      result.push({
+        ...doc.data(),
+        id: doc.id,
+      });
+    });
+    callback?.(result);
   });
 
   return unsub;
@@ -53,20 +73,65 @@ export const getUser = async (uid) => {
   }
 };
 
-export const updateContact = async (cid, data = {}) => {
+export const listenUsers = (callback) => {
+  const q = query(collection(db, "users"));
+
+  const unsub = onSnapshot(q, (snapshot) => {
+    const result = [];
+
+    snapshot.docs.forEach((doc) => {
+      result.push({
+        ...doc.data(),
+        id: doc.id,
+      });
+    });
+    callback?.(result);
+  });
+
+  return unsub;
+};
+
+export const updateContact = async (
+  cid,
+  data = {},
+  disableUpdatedTimestamp
+) => {
   try {
+    const { obj, files } = extractFileInObject(data);
+
     const docRef = doc(db, "contacts", cid);
     const payload = {
-      ...data,
+      ...obj,
     };
 
     await updateDoc(docRef, {
       ...cleanObject(payload),
-      updateTimestamp: serverTimestamp(),
+      ...(disableUpdatedTimestamp
+        ? {}
+        : { updatedTimestamp: serverTimestamp() }),
+    }).then(async () => {
+      for await (const [key, value] of Object.entries(files)) {
+        const extension = value?.name?.split(".")?.[1];
+
+        await uploadFile(`/contacts/${cid}/${key}.${extension}`, value).then(
+          async (res) => {
+            if (res?.success) {
+              await updateContact(
+                cid,
+                {
+                  [key]: res?.metadata?.downloadURL,
+                },
+                true
+              );
+            }
+          }
+        );
+      }
     });
 
     return { success: true, payload };
   } catch (error) {
+    console.log(error);
     return error;
   }
 };

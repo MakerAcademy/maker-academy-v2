@@ -49,8 +49,6 @@ const ContentCards = ({ query }) => {
     dispatch(fetchContentData({ merge: true, ...fetchQueries }));
   };
 
-  console.log(content);
-
   return (
     <Box>
       <Grid container spacing={4}>

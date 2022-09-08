@@ -1,0 +1,72 @@
+[debug] [2022-09-08T15:18:30.602Z] ----------------------------------------------------------------------
+[debug] [2022-09-08T15:18:30.603Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Sam\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js init
+[debug] [2022-09-08T15:18:30.604Z] CLI Version:   11.6.0
+[debug] [2022-09-08T15:18:30.604Z] Platform:      win32
+[debug] [2022-09-08T15:18:30.604Z] Node Version:  v16.15.1
+[debug] [2022-09-08T15:18:30.605Z] Time:          Thu Sep 08 2022 11:18:30 GMT-0400 (Eastern Daylight Time)
+[debug] [2022-09-08T15:18:30.605Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2022-09-08T15:18:30.659Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2022-09-08T15:18:30.660Z] > authorizing via signed-in user (salmanfazal@academy.makerdao.network)
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  D:\projects\maker\maker-academy
+
+Before we get started, keep in mind:
+
+  * You are initializing within an existing Firebase project directory
+
+[info] 
+=== Project Setup
+[info] 
+[info] First, let's associate this project directory with a Firebase project.
+[info] You can create multiple project aliases by running firebase use --add, 
+[info] but for now we'll just set up a default project.
+[info] 
+[debug] [2022-09-08T15:18:41.711Z] Using project from CLI flag: maker-academy-c22f7
+[debug] [2022-09-08T15:18:41.713Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/maker-academy-c22f7 [none]
+[debug] [2022-09-08T15:18:42.105Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/maker-academy-c22f7 200
+[debug] [2022-09-08T15:18:42.105Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/maker-academy-c22f7 {"projectId":"maker-academy-c22f7","projectNumber":"730186335095","displayName":"maker-academy","name":"projects/maker-academy-c22f7","resources":{"hostingSite":"maker-academy-c22f7","storageBucket":"maker-academy-c22f7.appspot.com","locationId":"us-central"},"state":"ACTIVE","etag":"1_77384607-b3b6-4021-992b-bc8b5eb18923"}
+[info] i  Using project maker-academy-c22f7 (maker-academy) 
+[info] 
+=== Firestore Setup
+[debug] [2022-09-08T15:18:42.111Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/maker-academy-c22f7/services/firestore.googleapis.com [none]
+[debug] [2022-09-08T15:18:42.504Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/maker-academy-c22f7/services/firestore.googleapis.com 200
+[debug] [2022-09-08T15:18:42.504Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/maker-academy-c22f7/services/firestore.googleapis.com [omitted]
+[debug] [2022-09-08T15:18:42.504Z] >>> [apiv2][query] GET https://appengine.googleapis.com/v1/apps/maker-academy-c22f7 [none]
+[debug] [2022-09-08T15:18:42.926Z] <<< [apiv2][status] GET https://appengine.googleapis.com/v1/apps/maker-academy-c22f7 200
+[debug] [2022-09-08T15:18:42.926Z] <<< [apiv2][body] GET https://appengine.googleapis.com/v1/apps/maker-academy-c22f7 {"name":"apps/maker-academy-c22f7","id":"maker-academy-c22f7","authDomain":"gmail.com","locationId":"us-central","codeBucket":"staging.maker-academy-c22f7.appspot.com","servingStatus":"SERVING","defaultHostname":"maker-academy-c22f7.uc.r.appspot.com","defaultBucket":"maker-academy-c22f7.appspot.com","serviceAccount":"maker-academy-c22f7@appspot.gserviceaccount.com","gcrDomain":"us.gcr.io","databaseType":"CLOUD_FIRESTORE","featureSettings":{"splitHealthChecks":true,"useContainerOptimizedOs":true}}
+[debug] [2022-09-08T15:18:42.926Z] database_type: CLOUD_FIRESTORE
+[debug] [2022-09-08T15:18:42.927Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2022-09-08T15:18:42.927Z] > authorizing via signed-in user (salmanfazal@academy.makerdao.network)
+[debug] [2022-09-08T15:18:42.927Z] [iam] checking project maker-academy-c22f7 for permissions ["firebase.projects.get"]
+[debug] [2022-09-08T15:18:42.927Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/maker-academy-c22f7:testIamPermissions [none]
+[debug] [2022-09-08T15:18:42.927Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/maker-academy-c22f7:testIamPermissions x-goog-quota-user=projects/maker-academy-c22f7
+[debug] [2022-09-08T15:18:42.928Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/maker-academy-c22f7:testIamPermissions {"permissions":["firebase.projects.get"]}
+[debug] [2022-09-08T15:18:43.243Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/maker-academy-c22f7:testIamPermissions 200
+[debug] [2022-09-08T15:18:43.243Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/maker-academy-c22f7:testIamPermissions {"permissions":["firebase.projects.get"]}
+[info] 
+[info] Firestore Security Rules allow you to define how and when to allow
+[info] requests. You can keep these rules in your project directory
+[info] and publish them with firebase deploy.
+[info] 
+[debug] [2022-09-08T15:18:51.082Z] >>> [apiv2][query] GET https://firebaserules.googleapis.com/v1/projects/maker-academy-c22f7/releases pageSize=10&pageToken=
+[debug] [2022-09-08T15:18:51.445Z] <<< [apiv2][status] GET https://firebaserules.googleapis.com/v1/projects/maker-academy-c22f7/releases 200
+[debug] [2022-09-08T15:18:51.445Z] <<< [apiv2][body] GET https://firebaserules.googleapis.com/v1/projects/maker-academy-c22f7/releases {"releases":[{"name":"projects/maker-academy-c22f7/releases/cloud.firestore","rulesetName":"projects/maker-academy-c22f7/rulesets/50bd2fbd-4a6b-4786-9512-a334ffdfa415","createTime":"2022-06-20T15:39:22.131893Z","updateTime":"2022-07-19T13:04:33.129296Z"},{"name":"projects/maker-academy-c22f7/releases/firebase.storage/maker-academy-c22f7.appspot.com","rulesetName":"projects/maker-academy-c22f7/rulesets/02ee3d93-adc0-4bfd-9a1f-f4431d7fa570","createTime":"2022-09-07T18:15:36.709477Z","updateTime":"2022-09-07T18:15:42.987234Z"}]}
+[debug] [2022-09-08T15:18:51.454Z] Found ruleset: projects/maker-academy-c22f7/rulesets/50bd2fbd-4a6b-4786-9512-a334ffdfa415
+[debug] [2022-09-08T15:18:51.455Z] >>> [apiv2][query] GET https://firebaserules.googleapis.com/v1/projects/maker-academy-c22f7/rulesets/50bd2fbd-4a6b-4786-9512-a334ffdfa415 [none]
+[debug] [2022-09-08T15:18:51.722Z] <<< [apiv2][status] GET https://firebaserules.googleapis.com/v1/projects/maker-academy-c22f7/rulesets/50bd2fbd-4a6b-4786-9512-a334ffdfa415 200
+[debug] [2022-09-08T15:18:51.722Z] <<< [apiv2][body] GET https://firebaserules.googleapis.com/v1/projects/maker-academy-c22f7/rulesets/50bd2fbd-4a6b-4786-9512-a334ffdfa415 [omitted]
+[info] 
+[info] Firestore indexes allow you to perform complex queries while
+[info] maintaining performance that scales with the size of the result
+[info] set. You can keep index definitions in your project directory
+[info] and publish them with firebase deploy.
+[info] 

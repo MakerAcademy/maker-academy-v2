@@ -1,6 +1,7 @@
 import GreenButton from "@components/buttons/GreenButton";
 import DashboardPaper from "@components/DashboardPaper";
 import FormCheckbox from "@components/formFields/FormCheckbox";
+import FormDropzone from "@components/formFields/FormDropzone";
 import FormSelectField from "@components/formFields/FormSelectField";
 import FormTextField from "@components/formFields/FormTextField";
 import { CONTENT_CATEGORIES } from "@constants/";
@@ -55,7 +56,7 @@ const CourseForm = ({
   //   setValue("markdownValue", markdown);
   // };
 
-  // const _image = useWatch({ control, name: "markdownValue" });
+  const _thumbnail = useWatch({ control, name: "thumbnail" });
 
   // console.log(_image);
 
@@ -69,6 +70,16 @@ const CourseForm = ({
 
             <Divider />
           </Stack>
+
+          <FormDropzone
+            name="thumbnail"
+            label="Thumbnail"
+            control={control}
+            accept="image/*"
+            restrict={{ type: "images", maxSize: 3 }}
+            acceptedFilesTitle="(PNG or JPG no bigger than 3mb)"
+            exists={!!_thumbnail}
+          />
 
           <FormTextField
             name="title"

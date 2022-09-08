@@ -11,14 +11,16 @@ import {
 import storage from "redux-persist/lib/storage";
 import themeSlice from "@redux/slices/themeSlice";
 import userSlice from "@redux/slices/userSlice";
-import profileSlice from "@redux/slices/profileSlice";
+import contactSlice from "@redux/slices/contactSlice";
+import profilesSlice from "@redux/slices/profilesSlice";
 import globalSlice from "@redux/slices/globalSlice";
 import contentSlice from "@redux/slices/contentSlice";
 
 const reducers = combineReducers({
   theme: themeSlice,
   user: userSlice,
-  profile: profileSlice,
+  profile: contactSlice,
+  profiles: profilesSlice,
   content: contentSlice,
   global: globalSlice,
 });

@@ -1,20 +1,36 @@
 /* eslint-disable no-unused-vars */
-import { Box, Stack, useTheme } from "@mui/material";
+import { Box, Stack, Typography, useTheme } from "@mui/material";
+import { validateFileType } from "@utils/helperFunctions";
 import React, { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import { Controller } from "react-hook-form";
+import CloudUploadOutlinedIcon from "@mui/icons-material/CloudUploadOutlined";
+import Title from "@components/Title";
 
-const Dropzone = ({ onChange, multiple, children, exists, ...rest }) => {
+const Dropzone = ({
+  onChange,
+  multiple,
+  children,
+  exists,
+  restrict,
+  acceptedFilesTitle,
+  ...rest
+}) => {
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
 
-  const onDrop = useCallback((acceptedFiles) => {
-    // Do something with the files
-    console.log({ acceptedFiles });
-    onChange?.(multiple ? acceptedFiles : acceptedFiles[0]);
+  const onDrop = useCallback((file) => {
+    if (!multiple) {
+      if (validateFileType(file, restrict)) {
+        onChange?.(file?.[0]);
+      }
+    }
   }, []);
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+    multiple: !!multiple,
+  });
 
   if (children) {
     return (
@@ -31,16 +47,28 @@ const Dropzone = ({ onChange, multiple, children, exists, ...rest }) => {
       justifyContent="center"
       {...getRootProps()}
       sx={{
-        border: `1px solid ${theme.palette.primary.main}`,
-        height: 100,
-        borderRadius: "8px",
+        border: `2px solid ${theme.palette.primary.main}`,
+        borderStyle: "dashed",
+        minHeight: 120,
+        borderRadius: "12px",
         p: 2,
         backgroundColor: exists && (isDark ? "green" : "lime"),
       }}
     >
-      {/* {isDragActive && <Typography>Drop the files here ...</Typography>} */}
+      <CloudUploadOutlinedIcon sx={{ mb: 0.5, fontSize: 48 }} />
 
-      {children}
+      <Typography sx={{ fontWeight: 600 }}>
+        {"Drag & drop to upload"}
+      </Typography>
+      <Typography variant="caption">or browse</Typography>
+
+      {acceptedFilesTitle && (
+        <Typography variant="caption" sx={{ mt: 0.5 }}>
+          {acceptedFilesTitle}
+        </Typography>
+      )}
+
+      {isDragActive && <Typography>Drop the files here ...</Typography>}
     </Stack>
   );
 };

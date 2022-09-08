@@ -7,14 +7,11 @@ import {
   AppBar,
   Box,
   Container,
-  Divider,
   Drawer,
   Hidden,
   IconButton,
-  Menu,
   MenuItem,
   Stack,
-  ThemeProvider,
   useTheme,
 } from "@mui/material";
 import { FullLogoBlack, FullLogoWhite } from "@utils/images";
@@ -26,8 +23,8 @@ import MenuButtons from "./MenuButtons";
 
 const MENU_ITEMS = [
   { name: "content", link: "/content" },
-  { name: "programs", link: "/programs" },
-  { name: "contribute", link: "/contribute" },
+  { name: "about", link: "/about/mission" },
+  { name: "profiles", link: "/profiles" },
   // { name: "creator", link: "/content" },
 ];
 

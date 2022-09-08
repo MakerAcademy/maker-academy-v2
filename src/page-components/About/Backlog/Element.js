@@ -16,12 +16,14 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import useTranslation from "next-translate/useTranslation";
 import React, { useState } from "react";
 import { Draggable } from "react-beautiful-dnd";
 
 const Element = ({ title, description, id, index, status, issue_type }) => {
   const [dialogOpen, setDialogOpen] = useState(false);
   const { user } = useAppSelector((state) => state.user);
+  const { t } = useTranslation("about");
 
   const handleStatusChange = (e, v) => {
     const _value = e.target.value;
@@ -62,9 +64,9 @@ const Element = ({ title, description, id, index, status, issue_type }) => {
               alignItems="center"
               spacing={2}
             >
-              <Chip label={issue_type} size="small" />
+              <Chip label={t(issue_type)} size="small" />
 
-              <Typography variant="caption">{status}</Typography>
+              <Typography variant="caption">{t(status)}</Typography>
             </Stack>
           </Paper>
         )}

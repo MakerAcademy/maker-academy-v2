@@ -7,6 +7,7 @@ import AboutMission from "@page-components/About/Mission";
 import AboutStatusUpdates from "@page-components/About/StatusUpdates";
 import AboutTeam from "@page-components/About/Team";
 import { BlurSection1, BlurSection2 } from "@page-components/Home/images";
+import useTranslation from "next-translate/useTranslation";
 import Router, { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 
@@ -21,6 +22,7 @@ const routes = [
 
 const AboutUs = () => {
   const { asPath } = useRouter();
+  const { t } = useTranslation("about");
 
   const [tabValue, setTabValue] = useState(asPath);
   const theme = useTheme();
@@ -98,7 +100,7 @@ const AboutUs = () => {
               <Tab
                 key={item.link}
                 value={item.link}
-                label={item.name}
+                label={t(item.name)}
                 sx={{
                   mx: 1,
                   bgcolor: "primary.grey1",

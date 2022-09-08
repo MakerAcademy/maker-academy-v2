@@ -13,14 +13,25 @@ export const cleanObject = (data) => {
   }
 
   return Object.keys(data).reduce(function (accumulator, key) {
-    const isObject = data[key] !== null && typeof data[key] === "object";
-    let value = isObject ? cleanObject(data[key]) : data[key];
+    const _val = data[key];
+
+    const isObject =
+      _val !== null &&
+      !(
+        typeof window !== "undefined" &&
+        (_val instanceof File || _val instanceof Blob)
+      ) &&
+      typeof _val === "object";
+
+    let value = isObject ? cleanObject(_val) : _val;
     const isEmptyObject = isObject && !Object.keys(value).length;
+
     if (value === undefined) {
       // || isEmptyObject
       return accumulator;
     }
-    if (Array.isArray(data[key])) {
+
+    if (Array.isArray(_val)) {
       value = Object.values(value);
     }
 

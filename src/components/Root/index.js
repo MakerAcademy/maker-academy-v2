@@ -4,15 +4,15 @@ import { auth } from "@firebase";
 import { useAppDispatch, useAppSelector } from "@hooks/useRedux";
 import LandingLayout from "@layouts/";
 import DashboardLayout from "@layouts/Dashboard";
-import { getContact, getUser, listenContact } from "@lib/user";
+import { getContact, getUser, listenContactWithUid } from "@lib/user";
 import { CssBaseline, ThemeProvider } from "@mui/material";
-import { setProfile, updateUserProfile } from "@redux/slices/profileSlice";
+import { setProfile, updateUserProfile } from "@redux/slices/contactSlice";
 import { setUser } from "@redux/slices/userSlice";
 import { onAuthStateChanged } from "firebase/auth";
 import { useRouter } from "next/router";
 import nookies from "nookies";
 import { SnackbarProvider } from "notistack";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
 const EmptyLayout = ({ children }) => (
   <React.Fragment>{children}</React.Fragment>
@@ -96,7 +96,7 @@ const Root = ({ children }) => {
 
   useEffect(() => {
     if (user) {
-      const unsub = listenContact(user?.uid, (userProfile) => {
+      const unsub = listenContactWithUid(user?.uid, (userProfile) => {
         dispatch(setProfile(userProfile));
         nookies.destroy(null, "profile");
         nookies.set(null, "profile", JSON.stringify(userProfile), {
