@@ -8,6 +8,9 @@ export const lightTheme = {
     primary: {
       main: "#1ABC9C",
       dark: "#0c6e5a",
+      invert: "#FFF",
+    },
+    grey: {
       grey1: grey[100],
       grey2: grey[200],
       grey3: grey[300],

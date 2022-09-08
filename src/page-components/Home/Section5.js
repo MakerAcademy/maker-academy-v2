@@ -194,7 +194,7 @@ const Section5 = () => {
                           <Typography variant="body2" sx={{ fontWeight: 600 }}>
                             {name}
                           </Typography>
-                          <Typography variant="body2" color="primary.grey4">
+                          <Typography variant="body2" color="grey.grey4">
                             @{username}
                           </Typography>
                         </Stack>

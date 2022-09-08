@@ -38,7 +38,7 @@ const AboutTeam = () => {
               {/* Image */}
               <Box
                 sx={{
-                  bgcolor: "primary.grey3",
+                  bgcolor: "grey.grey3",
                   height: 150,
                   borderTopLeftRadius: "inherit",
                   borderTopRightRadius: "inherit",
@@ -47,7 +47,7 @@ const AboutTeam = () => {
 
               <Stack spacing={1} sx={{ p: 2 }}>
                 <Typography sx={{ fontWeight: 600 }}>{item.name}</Typography>
-                <Typography color="primary.grey5">{item.title}</Typography>
+                <Typography color="grey.grey5">{item.title}</Typography>
               </Stack>
             </Paper>
           </Grid>

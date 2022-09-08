@@ -94,7 +94,7 @@ const LearnContentDrawer = ({ course }) => {
               <ListItemButton
                 onClick={() => (open === i ? setOpen(null) : setOpen(i))}
                 sx={{
-                  bgcolor: "primary.grey1",
+                  bgcolor: "grey.grey1",
                   borderRadius: "8px",
                   mb: 1,
                   boxShadow: "0px 2px 10px rgba(24, 39, 75, 0.02)",
@@ -137,7 +137,7 @@ const LearnContentDrawer = ({ course }) => {
                                 _doc.docId
                               )
                                 ? "primary.main"
-                                : "primary.grey4",
+                                : "grey.grey4",
                             }}
                           />
                         </ListItemIcon>
@@ -167,7 +167,7 @@ const LearnContentDrawer = ({ course }) => {
             onClick={handleOpen}
             disableElevation
             sx={{
-              bgcolor: "primary.grey2",
+              bgcolor: "grey.grey2",
               height: 100,
               position: "fixed",
               top: 140,

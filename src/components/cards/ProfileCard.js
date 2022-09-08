@@ -26,6 +26,9 @@ const ProfileCard = ({
 }) => {
   const theme = useTheme();
 
+  const name =
+    firstName || lastName ? `${firstName} ${lastName}` : email?.split("@")?.[0];
+
   return (
     <Card
       elevation={0}
@@ -36,31 +39,35 @@ const ProfileCard = ({
         boxShadow: "0px 12px 24px -4px rgba(145, 158, 171, 0.12)",
         borderRadius: "16px",
         cursor: "pointer",
+        transition: "all .4s ease",
+        "&:hover": {
+          transform: "translateY(-7px)",
+          boxShadow: "rgba(0, 0, 0, 0.15) 0px 5px 15px",
+        },
       }}
       onClick={() => Router.push(`/u/${id}`)}
     >
-      <IconButton
+      {/* <IconButton
         sx={{ position: "absolute", top: 10, right: 10 }}
         size="small"
       >
         <MoreVertIcon fontSize="small" />
-      </IconButton>
+      </IconButton> */}
 
       <Stack
         alignItems="center"
         justifyContent="center"
-        spacing={2}
         sx={{
           minHeight: 250,
         }}
       >
-        <Avatar src={profilePicture} sx={{ height: 64, width: 64 }} />
+        <Avatar src={profilePicture} sx={{ height: 68, width: 68, mb: 2 }} />
 
-        <Title>
-          {firstName} {lastName}
-        </Title>
+        <Title sx={{ mb: 1 }}>{name}</Title>
 
-        <Typography variant="body2">{title}</Typography>
+        <Typography variant="body2" sx={{ mb: 1.5 }}>
+          {title}
+        </Typography>
 
         <Stack
           direction="row"
@@ -68,59 +75,59 @@ const ProfileCard = ({
           alignItems="center"
           justifyContent="space-between"
         >
-          {socials?.facebook && (
-            <IconButton
-              size="small"
-              sx={{ color: "#4267B2" }}
-              href={`https://www.facebook.com/${socials.facebook}`}
-              target="_blank"
-            >
-              <FacebookIcon fontSize="small" />
-            </IconButton>
-          )}
+          <IconButton
+            size="small"
+            sx={{ color: "#4267B2" }}
+            href={`https://www.facebook.com/${socials?.facebook}`}
+            target="_blank"
+            disabled={!socials?.facebook}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <FacebookIcon fontSize="small" />
+          </IconButton>
 
-          {socials?.instagram && (
-            <IconButton
-              size="small"
-              sx={{ color: "#CA295F" }}
-              href={`https://www.instagram.com/${socials.instagram}`}
-              target="_blank"
-            >
-              <InstagramIcon fontSize="small" />
-            </IconButton>
-          )}
+          <IconButton
+            size="small"
+            sx={{ color: "#CA295F" }}
+            href={`https://www.instagram.com/${socials?.instagram}`}
+            target="_blank"
+            disabled={!socials?.instagram}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <InstagramIcon fontSize="small" />
+          </IconButton>
 
-          {socials?.linkedin && (
-            <IconButton
-              size="small"
-              sx={{ color: "#0e76a8 " }}
-              href={`https://www.linkedin.com/${socials.linkedin}`}
-              target="_blank"
-            >
-              <LinkedInIcon fontSize="small" />
-            </IconButton>
-          )}
+          <IconButton
+            size="small"
+            sx={{ color: "#0e76a8 " }}
+            href={`https://www.linkedin.com/${socials?.linkedin}`}
+            target="_blank"
+            disabled={!socials?.linkedin}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <LinkedInIcon fontSize="small" />
+          </IconButton>
 
-          {socials?.twitter && (
-            <IconButton
-              size="small"
-              sx={{ color: "#00ACEE" }}
-              href={`https://www.twitter.com/${socials.twitter}`}
-              target="_blank"
-            >
-              <TwitterIcon fontSize="small" />
-            </IconButton>
-          )}
+          <IconButton
+            size="small"
+            sx={{ color: "#00ACEE" }}
+            href={`https://www.twitter.com/${socials?.twitter}`}
+            target="_blank"
+            disabled={!socials?.twitter}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <TwitterIcon fontSize="small" />
+          </IconButton>
 
-          {socials?.publicEmail && (
-            <IconButton
-              size="small"
-              href={`mailto:${socials.publicEmail}`}
-              target="_blank"
-            >
-              <AlternateEmailIcon fontSize="small" />
-            </IconButton>
-          )}
+          <IconButton
+            size="small"
+            href={`mailto:${socials?.publicEmail}`}
+            target="_blank"
+            disabled={!socials?.publicEmail}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <AlternateEmailIcon fontSize="small" />
+          </IconButton>
         </Stack>
       </Stack>
     </Card>

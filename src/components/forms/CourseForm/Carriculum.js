@@ -89,7 +89,7 @@ const CourseCarriculum = ({ control, name }) => {
                       {(innerProvided) => (
                         <Box
                           sx={{
-                            border: `1px solid ${theme.palette.primary.grey2}`,
+                            border: `1px solid ${theme.palette.grey.grey2}`,
                             borderRadius: 3,
                             mb: 3,
                           }}
@@ -100,7 +100,7 @@ const CourseCarriculum = ({ control, name }) => {
                             direction="row"
                             alignItems="center"
                             sx={{
-                              bgcolor: "primary.grey1",
+                              bgcolor: "grey.grey1",
                               p: 1,
                               borderTopLeftRadius: "inherit",
                               borderTopRightRadius: "inherit",

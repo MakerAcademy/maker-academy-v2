@@ -85,7 +85,7 @@ const typeBtnCommonStyles = (theme, active) => {
     borderRadius: "12px",
     backgroundColor: active
       ? theme.palette.primary.main
-      : theme.palette.primary.grey1,
+      : theme.palette.grey.grey1,
     color: active ? theme.palette.common.white : "inherit",
     "&: hover": {
       color: theme.palette.common.white,
@@ -104,7 +104,7 @@ const StyledSearch = ({ value, dispatch, ...other }) => {
   //           width: 40,
   //           height: 40,
   //           minWidth: 40,
-  //           backgroundColor: theme.palette.primary.grey1,
+  //           backgroundColor: theme.palette.grey.grey1,
 
   //           color: "inherit",
   //           borderRadius: "12px",
@@ -183,9 +183,9 @@ const StyledChip = ({ name, label, slug, filters, dispatch, toggle }) => {
         mr: 1,
         mb: 1,
         borderRadius: 1,
-        backgroundColor: "primary.grey2",
+        backgroundColor: "grey.grey2",
         cursor: "pointer",
-        "& :hover": { backgroundColor: "primary.grey1" },
+        "& :hover": { backgroundColor: "grey.grey1" },
       }}
       onClick={handleClick}
     >

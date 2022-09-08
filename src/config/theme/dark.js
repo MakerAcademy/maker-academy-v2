@@ -7,6 +7,9 @@ export const darkTheme = {
     mode: "dark",
     primary: {
       main: "#1AAB9B",
+      invert: "#425466",
+    },
+    grey: {
       grey1: grey[900],
       grey2: grey[800],
       grey3: grey[700],

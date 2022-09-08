@@ -10,7 +10,7 @@ const MdQuote = ({ data }) => {
       sx={{
         py: 3,
         px: 4,
-        bgcolor: "primary.grey2",
+        bgcolor: "grey.grey2",
         textAlign: "center",
         borderRadius: "10px",
       }}
@@ -20,7 +20,7 @@ const MdQuote = ({ data }) => {
         component="span"
         sx={{
           fontSize: 40,
-          color: "primary.grey6",
+          color: "grey.grey6",
           verticalAlign: "middle",
           lineHeight: 0,
           mr: 1,
@@ -37,7 +37,7 @@ const MdQuote = ({ data }) => {
         component="span"
         sx={{
           fontSize: 40,
-          color: "primary.grey6",
+          color: "grey.grey6",
           verticalAlign: "middle",
           lineHeight: 0,
           ml: 1,

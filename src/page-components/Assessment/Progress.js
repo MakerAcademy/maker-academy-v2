@@ -7,7 +7,7 @@ const Progress = ({ questions, answers, qnNumber }) => {
       <Typography
         variant="caption"
         sx={{ textAlign: "center", pb: 2 }}
-        color="primary.grey5"
+        color="grey.grey5"
       >
         Question {qnNumber + 1} / {questions?.length}
       </Typography>
@@ -29,7 +29,7 @@ const Progress = ({ questions, answers, qnNumber }) => {
                     ? "text.primary"
                     : hasAnswer
                     ? "primary.main"
-                    : "primary.grey3",
+                    : "grey.grey3",
               })}
             ></Box>
           );

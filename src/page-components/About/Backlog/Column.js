@@ -12,7 +12,7 @@ const Column = ({ elements, title }) => {
     <Box
       sx={{
         height: "100%",
-        // bgcolor: "primary.grey2",
+        // bgcolor: "grey.grey2",
         p: 3,
         borderRadius: "16px",
       }}

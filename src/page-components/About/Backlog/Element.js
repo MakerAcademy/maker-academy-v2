@@ -37,7 +37,7 @@ const Element = ({ title, description, id, index, status, issue_type }) => {
   };
 
   return (
-    <Box sx={{ bgcolor: "primary.grey3", borderRadius: 3 }}>
+    <Box sx={{ bgcolor: "grey.grey3", borderRadius: 3 }}>
       <Draggable draggableId={id} index={index}>
         {(provided, snapshot) => (
           <Paper

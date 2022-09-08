@@ -176,10 +176,10 @@ const ContentTable = () => {
             backgroundColor: "red",
           },
           "& .MuiDataGrid-columnHeaders": {
-            bgcolor: "primary.grey1",
+            bgcolor: "grey.grey1",
           },
           "& .MuiDataGrid-columnSeparator": {
-            color: "primary.grey1",
+            color: "grey.grey1",
           },
           "& .MuiDataGrid-columnHeaderTitle": {
             textTransform: "uppercase",

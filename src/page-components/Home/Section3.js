@@ -93,7 +93,7 @@ const Section3 = () => {
               key={i}
               label={t(item)}
               sx={{
-                backgroundColor: `${theme.palette.primary.grey1}`,
+                backgroundColor: `${theme.palette.grey.grey1}`,
                 textTransform: "inherit",
                 fontSize: "18px",
                 fontWeight: 500,

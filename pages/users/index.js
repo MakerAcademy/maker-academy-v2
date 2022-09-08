@@ -2,12 +2,10 @@ import GreenButton from "@components/buttons/GreenButton";
 import ProfileCard from "@components/cards/ProfileCard";
 import Title from "@components/Title";
 import { useAppDispatch, useAppSelector } from "@hooks/useRedux";
-import { listenProfiles } from "@lib/profile";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
-import { Container, Grid, Stack, TextField, Typography } from "@mui/material";
+import { Container, Grid, Stack, Typography } from "@mui/material";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
-import { fetchContentData } from "@redux/slices/contentSlice";
-import { fetchProfilesData, setProfiles } from "@redux/slices/profilesSlice";
+import { fetchProfilesData } from "@redux/slices/profilesSlice";
 import useTranslation from "next-translate/useTranslation";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -17,7 +15,7 @@ const breadcrumbs = [
     Home
   </Link>,
   <Typography key="3" color="text.primary">
-    Profiles
+    Users
   </Typography>,
 ];
 
@@ -39,7 +37,7 @@ const Profiles = () => {
 
   const fetchQueries = {
     searchTerm: searchTerm,
-    limit: 5,
+    limit: 20,
   };
 
   useEffect(() => {

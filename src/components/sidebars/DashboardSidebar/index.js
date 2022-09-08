@@ -111,7 +111,7 @@ const UpgradeBox = () => (
         p: 2.5,
         borderRadius: 2,
         position: "relative",
-        bgcolor: "primary.grey1",
+        bgcolor: "grey.grey1",
       }}
     >
       <img
@@ -178,7 +178,7 @@ const Content = () => {
               alignItems: "center",
               p: theme.spacing(2, 2.5),
               borderRadius: "12px",
-              bgcolor: "primary.grey2",
+              bgcolor: "grey.grey2",
             }}
           >
             <Avatar src={profile?.photoURL} alt="photoURL" />

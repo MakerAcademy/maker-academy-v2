@@ -56,7 +56,7 @@ const AboutStatusUpdates = () => {
               {item.title}
             </Typography>
 
-            <Typography color="primary.grey5">{item.description}</Typography>
+            <Typography color="grey.grey5">{item.description}</Typography>
           </Paper>
         ))}
       </Stack>

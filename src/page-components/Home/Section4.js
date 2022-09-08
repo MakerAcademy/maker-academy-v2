@@ -82,7 +82,7 @@ const Section4 = () => {
           borderRadius: 2,
           background: isDark
             ? theme.palette.background.gradient1
-            : theme.palette.primary.grey1,
+            : theme.palette.grey.grey1,
           p: { xs: 4, md: 6 },
         }}
       >

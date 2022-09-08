@@ -53,6 +53,7 @@ export const getContact = async (cid) => {
     const q = await getDoc(doc(db, `contacts/${cid}`));
     return q.data?.();
   } catch (error) {
+    console.log(error);
     return error;
   }
 };

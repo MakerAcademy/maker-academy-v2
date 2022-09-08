@@ -103,11 +103,11 @@ const AboutUs = () => {
                 label={t(item.name)}
                 sx={{
                   mx: 1,
-                  bgcolor: "primary.grey1",
+                  bgcolor: "grey.grey1",
                   borderRadius: "12px",
                   "&.Mui-selected": {
                     color: "text.invert",
-                    bgcolor: "primary.grey8",
+                    bgcolor: "grey.grey8",
                   },
                 }}
               />

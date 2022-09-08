@@ -10,7 +10,7 @@ import { getFirestore } from "firebase/firestore";
 
 import { getStorage } from "firebase/storage";
 
-const dev = {
+const firebaseConfigDev = {
   apiKey: "AIzaSyA_p9itKDj7PuilMKxf97JcXyIlgbe1zYE",
   authDomain: "maker-academy-dev.firebaseapp.com",
   projectId: "maker-academy-dev",

@@ -78,7 +78,7 @@ const CarriculumDocs = ({ control, name, documents }) => {
                       {(innerProvided) => (
                         <ListItem
                           sx={{
-                            border: `1px solid ${theme.palette.primary.grey2}`,
+                            border: `1px solid ${theme.palette.grey.grey2}`,
                             borderRadius: 3,
                             mb: 3,
                           }}

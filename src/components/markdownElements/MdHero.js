@@ -25,7 +25,7 @@ const MdHero = ({ data }) => {
         borderRadius: "24px",
         width: "100%",
         background: `url(${_image})`,
-        backgroundColor: "primary.grey3",
+        backgroundColor: "grey.grey3",
         minHeight: `${height}px`,
         backgroundPosition: "center",
         backgroundSize: "cover",

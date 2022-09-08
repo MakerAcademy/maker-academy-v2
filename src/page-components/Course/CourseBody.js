@@ -99,7 +99,7 @@ const CourseBody = ({ course = {} }) => {
                 position: "absolute",
                 top: 20,
                 left: 20,
-                bgcolor: "primary.grey9",
+                bgcolor: "grey.grey9",
                 color: "text.invert",
                 py: 1,
                 px: 1.2,
@@ -143,7 +143,7 @@ const CourseBody = ({ course = {} }) => {
                 borderRadius: "12px",
                 textTransform: "inherit",
                 color: grey[700],
-                backgroundColor: `${theme.palette.primary.grey1}`,
+                backgroundColor: `${theme.palette.grey.grey1}`,
                 fontWeight: 400,
               },
               "& .Mui-selected": {

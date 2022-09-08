@@ -10,7 +10,7 @@ const MarkdownBox = ({ data }) => {
         px: 3,
         py: 2,
         my: 2,
-        bgcolor: "primary.grey2",
+        bgcolor: "grey.grey2",
         borderRadius: "10px",
         textAlign: align,
       }}

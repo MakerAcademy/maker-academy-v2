@@ -28,13 +28,13 @@ const MdCollapse = ({ data }) => {
         direction="row"
         alignItems="center"
         justifyContent="space-between"
-        sx={{ bgcolor: "primary.grey1", p: 2 }}
+        sx={{ bgcolor: "grey.grey1", p: 2 }}
       >
         <Typography>{title}</Typography>
         <IconButton
           size="small"
           onClick={triggerCollapse}
-          sx={{ bgcolor: "primary.grey2" }}
+          sx={{ bgcolor: "grey.grey2" }}
         >
           {open ? (
             <RemoveIcon sx={{ fontSize: 16 }} />
@@ -46,7 +46,7 @@ const MdCollapse = ({ data }) => {
 
       <Collapse
         in={open}
-        sx={{ border: `2px solid ${theme.palette.primary.grey1}`, p: 1.5 }}
+        sx={{ border: `2px solid ${theme.palette.grey.grey1}`, p: 1.5 }}
       >
         <MarkdownBody markdown={body} headingStyle={{ mt: 0 }} />
       </Collapse>
