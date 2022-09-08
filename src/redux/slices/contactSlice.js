@@ -1,4 +1,4 @@
-import { getContact } from "@lib/user";
+import { getContactFromUid } from "@lib/user";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
@@ -15,7 +15,7 @@ export const updateUserProfile = createAsyncThunk(
       },
     } = getState();
 
-    const userProfile = await getContact(payload?.uid || uid);
+    const userProfile = await getContactFromUid(payload?.uid || uid);
 
     const result = userProfile;
 

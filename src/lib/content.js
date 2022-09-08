@@ -182,6 +182,31 @@ export const getPendingContent = async () => {
   }
 };
 
+export const listenPublishedContent = (callback) => {
+  try {
+    const docsRef = collection(db, "content");
+
+    const q = query(docsRef, where("status", "==", "published"));
+
+    const unsub = onSnapshot(q, (snapshot) => {
+      const result = [];
+
+      snapshot.docs.forEach((doc) => {
+        result.push({
+          ...doc.data(),
+          id: doc.id,
+        });
+      });
+      callback?.(result);
+    });
+
+    return unsub;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
 export const listenPendingContent = (callback) => {
   try {
     const docsRef = collection(db, "content");

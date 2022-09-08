@@ -5,6 +5,8 @@ module.exports = {
     "*": ["common"],
     "/": ["home"],
     "/content": ["content"],
+    "rgx:^/document": ["content"],
+    "rgx:^/course": ["content"],
     "/about/[route]": ["about"],
     "rgx:^/app": ["dashboard"],
   },

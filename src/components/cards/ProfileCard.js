@@ -13,8 +13,10 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
+import Router from "next/router";
 
 const ProfileCard = ({
+  id,
   firstName,
   lastName,
   socials,
@@ -33,7 +35,9 @@ const ProfileCard = ({
         position: "relative",
         boxShadow: "0px 12px 24px -4px rgba(145, 158, 171, 0.12)",
         borderRadius: "16px",
+        cursor: "pointer",
       }}
+      onClick={() => Router.push(`/u/${id}`)}
     >
       <IconButton
         sx={{ position: "absolute", top: 10, right: 10 }}

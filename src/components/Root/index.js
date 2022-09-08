@@ -4,7 +4,7 @@ import { auth } from "@firebase";
 import { useAppDispatch, useAppSelector } from "@hooks/useRedux";
 import LandingLayout from "@layouts/";
 import DashboardLayout from "@layouts/Dashboard";
-import { getContact, getUser, listenContactWithUid } from "@lib/user";
+import { getContactFromUid, getUser, listenContactWithUid } from "@lib/user";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { setProfile, updateUserProfile } from "@redux/slices/contactSlice";
 import { setUser } from "@redux/slices/userSlice";
@@ -58,7 +58,7 @@ const Root = ({ children }) => {
 
       const token = await _user.getIdToken();
 
-      const userProfile = await getContact(_user?.uid);
+      const userProfile = await getContactFromUid(_user?.uid);
       // dispatch(setProfile(userProfile));
 
       dispatch(updateUserProfile({ uid: _user?.uid }));

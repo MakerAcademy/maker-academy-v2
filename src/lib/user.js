@@ -48,7 +48,16 @@ export const listenContacts = (callback) => {
   return unsub;
 };
 
-export const getContact = async (uid) => {
+export const getContact = async (cid) => {
+  try {
+    const q = await getDoc(doc(db, `contacts/${cid}`));
+    return q.data?.();
+  } catch (error) {
+    return error;
+  }
+};
+
+export const getContactFromUid = async (uid) => {
   try {
     const q = query(
       collection(db, "contacts"),

@@ -62,6 +62,18 @@ const MENU_ITEMS = [
     icon: AdminPanelSettingsIcon,
     nestedItems: [
       {
+        link: "/app/admin/pending_content",
+        trustLevel: 4,
+        text: "pending_content",
+        icon: GTranslateOutlinedIcon,
+      },
+      {
+        link: "/app/admin/published_content",
+        trustLevel: 4,
+        text: "published_content",
+        icon: GTranslateOutlinedIcon,
+      },
+      {
         link: "/app/admin/users",
         trustLevel: 4,
         text: "users",
@@ -71,12 +83,6 @@ const MENU_ITEMS = [
         link: "/app/admin/contacts",
         trustLevel: 4,
         text: "contacts",
-        icon: GTranslateOutlinedIcon,
-      },
-      {
-        link: "/app/admin/pending_content",
-        trustLevel: 4,
-        text: "pending_content",
         icon: GTranslateOutlinedIcon,
       },
       {

@@ -223,9 +223,9 @@ export const getDocumentWithContent = async (cid, seperate) => {
 
         return { success: true, response: docObj };
       }
+    } else {
+      throw "Doc not found";
     }
-
-    return { error: true };
   } catch (error) {
     console.log("cid", cid, "No such document!");
     throw error;

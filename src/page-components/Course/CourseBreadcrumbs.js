@@ -10,7 +10,7 @@ const CourseBreadcrumbs = ({ title }) => {
         separator={<NavigateNextIcon fontSize="small" />}
         aria-label="breadcrumb"
       >
-        <Link href="/" passHref>
+        {/* <Link href="/" passHref>
           <Typography
             sx={{
               cursor: "pointer",
@@ -21,7 +21,7 @@ const CourseBreadcrumbs = ({ title }) => {
           >
             Home
           </Typography>
-        </Link>
+        </Link> */}
 
         <Link href="/content?contentType=courses" passHref>
           <Typography

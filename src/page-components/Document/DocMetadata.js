@@ -6,6 +6,7 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import TimerIcon from "@mui/icons-material/Timer";
 import { Button, Stack, Typography } from "@mui/material";
 import moment from "moment";
+import useTranslation from "next-translate/useTranslation";
 
 const DocMetadata = ({
   id,
@@ -17,6 +18,7 @@ const DocMetadata = ({
   views,
   ...other
 }) => {
+  const { t } = useTranslation("content");
   const { profile } = useAppSelector((state) => state.profile);
 
   // console.log(timestamp);
@@ -57,12 +59,12 @@ const DocMetadata = ({
           }}
         >
           <DescriptionIcon sx={{ fontSize: 17 }} />
-          <Typography variant="body2">{level}</Typography>
+          <Typography variant="body2">{t(level)}</Typography>
         </Stack>
 
         {/* Timestamps */}
         <Typography variant="body2">
-          Published {moment(timestamp?.toDate?.()).format("ll")}
+          {t("published")} {moment(timestamp?.toDate?.()).format("ll")}
         </Typography>
 
         {/* {updatedTimestamp && (
@@ -74,13 +76,17 @@ const DocMetadata = ({
         {/* Duration */}
         <Stack direction="row" alignItems="center" spacing={0.5}>
           <TimerIcon sx={{ fontSize: 18 }} />
-          <Typography variant="body2">{duration} mins</Typography>
+          <Typography variant="body2">
+            {duration} {t("minutes")}
+          </Typography>
         </Stack>
 
         {/* Likes */}
         <Stack direction="row" alignItems="center" spacing={0.5}>
           <FavoriteIcon sx={{ fontSize: 18 }} />
-          <Typography variant="body2">{likes || 0} likes</Typography>
+          <Typography variant="body2">
+            {likes || 0} {t("likes")}
+          </Typography>
         </Stack>
       </Stack>
 
@@ -107,7 +113,7 @@ const DocMetadata = ({
                 <FavoriteBorderIcon sx={{ fontSize: 18 }} />
               )}
               <Typography variant="body2">
-                {hasUserLiked ? "unlike" : "like"}
+                {hasUserLiked ? t("unlike") : t("like")}
               </Typography>
             </Stack>
           </Button>
