@@ -117,7 +117,7 @@ const ActionButtons = () => {
           <MenuItem
             onClick={() => {
               setUserAnchorEl(null);
-              Router.push("/app/studio");
+              Router.push("/app/settings");
             }}
           >
             <Typography variant="body2">{t("profile")}</Typography>
@@ -127,7 +127,7 @@ const ActionButtons = () => {
             <MenuItem
               onClick={() => {
                 setUserAnchorEl(null);
-                Router.push("/app/admin");
+                Router.push("/app/admin/pending_content");
               }}
             >
               <Typography variant="body2">{t("admin")}</Typography>
