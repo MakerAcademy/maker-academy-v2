@@ -231,9 +231,9 @@ export const acceptEditRequest = async (data) => {
 
     await deleteDoc(doc(db, "edit_requests", id));
 
-    if (fetchedContent?.published) {
-      await deleteDoc(doc(db, "documents", oldPublished));
-    }
+    // if (fetchedContent?.published) {
+    //   await deleteDoc(doc(db, "documents", oldPublished));
+    // }
 
     return { success: true };
   } catch (error) {

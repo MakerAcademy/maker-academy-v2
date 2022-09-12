@@ -1,6 +1,6 @@
 import FormTextField from "@components/formFields/FormTextField";
 import { useAppSelector } from "@hooks/useRedux";
-import { getUserDocuments } from "@lib/document";
+import { getAllDocumentsAdmin, getUserDocuments } from "@lib/document";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import MenuIcon from "@mui/icons-material/Menu";
 import {
@@ -27,6 +27,7 @@ const CourseCarriculum = ({ control, name }) => {
   const theme = useTheme();
 
   const { profile } = useAppSelector((state) => state.profile);
+  const { user } = useAppSelector((state) => state.user);
 
   const fieldArray = useFieldArray({
     control,
@@ -46,7 +47,11 @@ const CourseCarriculum = ({ control, name }) => {
 
   useEffect(() => {
     const timer = setTimeout(async () => {
-      const data = await getUserDocuments(profile?.id);
+      const data =
+        user?.trustlevel > 3
+          ? await getAllDocumentsAdmin()
+          : await getUserDocuments(profile?.id);
+
       setDocuments(data);
     }, 1000);
     return () => clearTimeout(timer);

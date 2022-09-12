@@ -13,9 +13,10 @@ import {
 
 export const getProfiles = async (params = {}) => {
   const {
-    sort: _sort = "created",
+    sort: _sort = "level",
     order: _order = "desc",
     limit: _limit,
+    role,
     startAfter: _startAfter,
     searchTerm,
   } = params;
@@ -32,6 +33,9 @@ export const getProfiles = async (params = {}) => {
       queryConstraints.push(
         where("filters.searchTerm", "array-contains-any", _term)
       );
+    }
+    if (role) {
+      queryConstraints.push(where("role", "==", role));
     }
 
     const q = query(docsRef, orderBy(_sort, _order), ...queryConstraints);

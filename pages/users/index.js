@@ -1,14 +1,70 @@
 import GreenButton from "@components/buttons/GreenButton";
 import ProfileCard from "@components/cards/ProfileCard";
 import Title from "@components/Title";
+import { CONTACT_ROLES } from "@constants/index";
 import { useAppDispatch, useAppSelector } from "@hooks/useRedux";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
-import { Container, Grid, Stack, Typography } from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
+import {
+  Box,
+  Button,
+  Container,
+  Grid,
+  InputAdornment,
+  Menu,
+  MenuItem,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import { fetchProfilesData } from "@redux/slices/profilesSlice";
 import useTranslation from "next-translate/useTranslation";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import useScrollPosition from "@hooks/useScrollPosition";
+import useDebounce from "@hooks/useDebounce";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+
+const StyledSearch = (props) => {
+  return (
+    <Box
+      sx={{
+        ".MuiFilledInput-root": {
+          borderRadius: "12px !important",
+        },
+        ":focus-within > .MuiFormControl-root": {
+          width: "350px !important",
+        },
+      }}
+    >
+      <TextField
+        hiddenLabel
+        variant="filled"
+        size="small"
+        sx={(theme) => ({
+          ml: 1,
+          width: 120,
+          height: 40,
+          transition: theme.transitions.create("width"),
+          //   "& input::placeholder": {
+          //     fontSize: "1rem",
+          //   },
+        })}
+        InputProps={{
+          disableUnderline: true,
+          startAdornment: (
+            <InputAdornment position="start">
+              <SearchIcon fontSize="small" />
+            </InputAdornment>
+          ),
+        }}
+        {...props}
+      />
+    </Box>
+  );
+};
 
 const breadcrumbs = [
   <Link underline="hover" key="1" href="/" passHref>
@@ -20,7 +76,11 @@ const breadcrumbs = [
 ];
 
 const Profiles = () => {
+  const [anchorEl, setAnchorEl] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
+  const debouncedSearch = useDebounce(searchTerm, 500);
+  const [userRoleFilter, setUserRoleFilter] = useState("show_all");
+  const scrollPosition = useScrollPosition();
   const dispatch = useAppDispatch();
   const {
     profiles,
@@ -33,33 +93,62 @@ const Profiles = () => {
     empty,
     lastVisible,
   } = useAppSelector((state) => state.profiles);
-  const { t } = useTranslation("profiles");
+  const { t } = useTranslation("users");
+
+  useEffect(() => {
+    if (!!anchorEl) {
+      setAnchorEl(null);
+    }
+  }, [scrollPosition]);
 
   const fetchQueries = {
     searchTerm: searchTerm,
-    limit: 20,
+    limit: 12,
+    role: userRoleFilter === "show_all" ? null : userRoleFilter,
   };
 
   useEffect(() => {
     dispatch(fetchProfilesData(fetchQueries));
-  }, []);
+  }, [debouncedSearch, userRoleFilter]);
 
   const fetchMoreProfiles = () => {
     dispatch(fetchProfilesData({ merge: true, ...fetchQueries }));
+  };
+
+  const handleMenuSelect = (item) => {
+    setUserRoleFilter(item);
+    setAnchorEl(null);
   };
 
   return (
     <Container sx={{ py: 5 }} maxWidth="lg">
       <Breadcrumbs
         separator={<NavigateNextIcon fontSize="small" />}
-        sx={{ mb: 5 }}
+        sx={{ mb: 3 }}
       >
         {breadcrumbs}
       </Breadcrumbs>
 
-      {/* <Stack direction="row" alignItems="center" justifyContent="space-between">
-        <TextField />
-      </Stack> */}
+      <Stack
+        direction="row"
+        alignItems="center"
+        justifyContent="space-between"
+        sx={{ mb: 3 }}
+      >
+        <StyledSearch
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+
+        <Button onClick={(e) => setAnchorEl(e.currentTarget)}>
+          Role: {t(userRoleFilter)}
+          {!!anchorEl ? (
+            <KeyboardArrowUpIcon fontSize="small" sx={{ ml: 1 }} />
+          ) : (
+            <KeyboardArrowDownIcon fontSize="small" sx={{ ml: 1 }} />
+          )}
+        </Button>
+      </Stack>
 
       <Grid container spacing={3}>
         {profiles?.map?.((item, i) => (
@@ -87,8 +176,25 @@ const Profiles = () => {
           </GreenButton>
         )}
 
-        {empty && <Title variant="h6"> {t("no_data")} </Title>}
+        {empty && <Title variant="h6">{t("no_data")}</Title>}
       </Stack>
+
+      <Menu
+        anchorEl={anchorEl}
+        open={!!anchorEl}
+        onClose={() => setAnchorEl(null)}
+        disableScrollLock={true}
+      >
+        <MenuItem onClick={() => handleMenuSelect("show_all")}>
+          {t("show_all")}
+        </MenuItem>
+
+        {CONTACT_ROLES.map((item) => (
+          <MenuItem key={item} onClick={() => handleMenuSelect(item)}>
+            {t(item)}
+          </MenuItem>
+        ))}
+      </Menu>
     </Container>
   );
 };

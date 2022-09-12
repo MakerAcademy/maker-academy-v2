@@ -77,7 +77,11 @@ const ProfileCard = ({
         >
           <IconButton
             size="small"
-            sx={{ color: "#4267B2" }}
+            sx={{
+              color: socials?.facebook
+                ? "#4267B2"
+                : `${theme.palette.grey.grey2} !important`,
+            }}
             href={`https://www.facebook.com/${socials?.facebook}`}
             target="_blank"
             disabled={!socials?.facebook}
@@ -88,7 +92,11 @@ const ProfileCard = ({
 
           <IconButton
             size="small"
-            sx={{ color: "#CA295F" }}
+            sx={{
+              color: socials?.instagram
+                ? "#CA295F"
+                : `${theme.palette.grey.grey2} !important`,
+            }}
             href={`https://www.instagram.com/${socials?.instagram}`}
             target="_blank"
             disabled={!socials?.instagram}
@@ -99,7 +107,11 @@ const ProfileCard = ({
 
           <IconButton
             size="small"
-            sx={{ color: "#0e76a8 " }}
+            sx={{
+              color: socials?.linkedin
+                ? "#0e76a8"
+                : `${theme.palette.grey.grey2} !important`,
+            }}
             href={`https://www.linkedin.com/${socials?.linkedin}`}
             target="_blank"
             disabled={!socials?.linkedin}
@@ -110,7 +122,11 @@ const ProfileCard = ({
 
           <IconButton
             size="small"
-            sx={{ color: "#00ACEE" }}
+            sx={{
+              color: socials?.twitter
+                ? "#00ACEE"
+                : `${theme.palette.grey.grey2} !important`,
+            }}
             href={`https://www.twitter.com/${socials?.twitter}`}
             target="_blank"
             disabled={!socials?.twitter}
@@ -125,6 +141,11 @@ const ProfileCard = ({
             target="_blank"
             disabled={!socials?.publicEmail}
             onClick={(e) => e.stopPropagation()}
+            sx={{
+              color: socials?.publicEmail
+                ? "primary.main"
+                : `${theme.palette.grey.grey2} !important`,
+            }}
           >
             <AlternateEmailIcon fontSize="small" />
           </IconButton>

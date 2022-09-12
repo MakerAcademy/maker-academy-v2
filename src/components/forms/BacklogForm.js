@@ -18,7 +18,7 @@ const BacklogForm = ({
   const theme = useTheme();
   const [disabled, setDisabled] = useState(false);
 
-  const { t } = useTranslation("creator-studio");
+  const { t } = useTranslation("about");
 
   // form validation rules
   const validationSchema = Yup.object().shape({

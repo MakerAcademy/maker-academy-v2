@@ -67,15 +67,13 @@ const buildColumns = (t) => {
             {t("edit")}
           </GreenButton>
 
-          {/* <GreenButton
+          <GreenButton
             size="small"
             icon={<OpenInNewIcon sx={{ fontSize: 16 }} />}
-            onClick={() =>
-              approveRejectContent({ id: params.id, approve: true })
-            }
+            onClick={() => console.log(123)}
           >
             {t("accept")}
-          </GreenButton> */}
+          </GreenButton>
 
           {params.row.data.status === "pending" && (
             <Button

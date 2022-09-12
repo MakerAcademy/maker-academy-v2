@@ -1,18 +1,24 @@
 import BacklogForm from "@components/forms/BacklogForm";
 import Title from "@components/Title";
+import { CommonContext } from "@context/commonContext";
 import { useAppSelector } from "@hooks/useRedux";
 import { submitBacklog } from "@lib/backlog";
-import AddIcon from "@mui/icons-material/Add";
-import { Box, Dialog, Drawer, Fab, Tooltip } from "@mui/material";
+import { Box, Dialog } from "@mui/material";
 import { cleanObject } from "@utils/helpers";
 import { useSnackbar } from "notistack";
-import { useState } from "react";
+import { useContext } from "react";
 import Board from "./Board";
 
 const AboutBacklog = () => {
-  const [dialogOpen, setDialogOpen] = useState(false);
   const { profile } = useAppSelector((state) => state.profile);
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const { commonState, setCommonState } = useContext(CommonContext);
+
+  const dialogOpen = !!commonState.backlogDialogOpen;
+
+  const setDialogOpen = (v) => {
+    setCommonState({ backlogDialogOpen: !!v });
+  };
 
   const handleBacklogSubmit = async (data) => {
     const _key = enqueueSnackbar("Creating Ticket...", {
@@ -52,17 +58,6 @@ const AboutBacklog = () => {
       </Title>
 
       <Board />
-
-      <Tooltip title="Create ticket">
-        <Fab
-          color="primary"
-          size="medium"
-          onClick={() => setDialogOpen(true)}
-          sx={{ position: "fixed", right: 20, bottom: 20, zIndex: 9999 }}
-        >
-          <AddIcon />
-        </Fab>
-      </Tooltip>
 
       <Dialog
         open={dialogOpen}

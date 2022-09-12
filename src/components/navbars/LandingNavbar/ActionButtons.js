@@ -42,7 +42,7 @@ const ActionButtons = () => {
           <IconButton onClick={(e) => setUserAnchorEl(e.currentTarget)}>
             <Avatar
               // sx={{ width: 32, height: 32 }}
-              src={user?.displayImage}
+              src={user?.displayImage || profile?.profilePicture}
             />
           </IconButton>
         </Tooltip>

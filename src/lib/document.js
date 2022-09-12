@@ -267,6 +267,29 @@ export const getUserDocuments = async (uid) => {
   }
 };
 
+export const getAllDocumentsAdmin = async (uid) => {
+  try {
+    const docsRef = collection(db, "content");
+
+    const q = query(
+      docsRef,
+      where("contentType", "in", ["document", "assessment"])
+    );
+
+    const querySnapshot = await getDocs(q);
+
+    const snapshotData = [];
+    querySnapshot.forEach(async (doc) => {
+      snapshotData.push(doc.data());
+    });
+
+    return snapshotData;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
 export const likeDocument = async (contentId, cid) => {
   try {
     const _ref = doc(db, "contacts", cid);

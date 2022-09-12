@@ -96,26 +96,6 @@ const typeBtnCommonStyles = (theme, active) => {
 const StyledSearch = ({ value, dispatch, ...other }) => {
   const [isActive, setIsActive] = useState(false);
 
-  //   if (!isActive) {
-  //     return (
-  //       <Button
-  //         onClick={() => setIsActive(true)}
-  //         sx={(theme) => ({
-  //           width: 40,
-  //           height: 40,
-  //           minWidth: 40,
-  //           backgroundColor: theme.palette.grey.grey1,
-
-  //           color: "inherit",
-  //           borderRadius: "12px",
-  //           cursor: "pointer",
-  //         })}
-  //       >
-  //         <SearchIcon fontSize="small" />
-  //       </Button>
-  //     );
-  //   }
-
   return (
     <Box
       sx={{

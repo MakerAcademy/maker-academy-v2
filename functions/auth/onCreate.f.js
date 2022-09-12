@@ -8,6 +8,7 @@ export default functions.auth.user().onCreate(async (userRecord) => {
   const {
     email,
     uid,
+    displayImage,
     creationTime: created = moment().format(),
   } = userRecord || {};
   const creationTime = moment(created);
@@ -100,8 +101,19 @@ export default functions.auth.user().onCreate(async (userRecord) => {
   // ---------- User Profile ----------
 
   // ---------- Contact Profile ----------
-  const firstName = displayName.substr(0, displayName.indexOf(" "));
-  const lastName = displayName.substr(displayName.indexOf(" ") + 1);
+  const username = email.split("@")[0];
+
+  const emailFirstHalf = username.substr(0, username.length / 2);
+  const emailSecondHalf = username.substr(username.length / 2);
+
+  const firstName =
+    displayName.substr(0, displayName.indexOf(" ")) || emailFirstHalf;
+  const lastName =
+    displayName.substr(displayName.indexOf(" ") + 1) || emailSecondHalf;
+
+  let _searchTerm = `${firstName} ${lastName} ${email}`
+    .toLowerCase()
+    .split(" ");
 
   await contactRef.set({
     uid,
@@ -109,7 +121,11 @@ export default functions.auth.user().onCreate(async (userRecord) => {
     created,
     firstName,
     lastName,
+    level: 1,
+    profilePicture: displayImage,
+    role: "student",
     id: contactRef.id,
+    filters: { searchTerm: _searchTerm },
   });
   // ---------- Contact Profile ----------
 

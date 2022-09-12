@@ -1,28 +1,25 @@
 import GreenButton from "@components/buttons/GreenButton";
 import DashboardPaper from "@components/DashboardPaper";
-import { useAppSelector } from "@hooks/useRedux";
-import {
-  approveRejectContent,
-  deleteContent,
-  listenUserContent,
-} from "@lib/content";
+import { approveRejectContent } from "@lib/content";
+import { updateContact } from "@lib/user";
 import EditIcon from "@mui/icons-material/Edit";
-import OpenInNewIcon from "@mui/icons-material/OpenInNew";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { Box, Button, Stack, Typography } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import moment from "moment";
 import useTranslation from "next-translate/useTranslation";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 const buildRows = (data, t) => {
   const rows = data?.map?.(({ ...item }, i) => ({
-    id: item.id,
+    id: item.id || i,
     count: i,
     profilePicture: item.profilePicture,
-    firstName: item.firstName,
-    lastName: item.lastName,
-    email: item.email,
-    title: item.title,
+    firstName: item.firstName || "",
+    lastName: item.lastName || "",
+    email: item.email || "",
+    title: item.title || "",
     enrolledCourses: item.enrolledCourses?.length || 0,
     readDocuments: item.readDocuments?.length || 0,
     created: moment(item.created?.toDate?.()).format("MMM DD, YY - HH:mm"),
@@ -72,7 +69,7 @@ const buildColumns = (t) => {
     {
       field: "actions",
       headerName: "",
-      width: 200,
+      width: 300,
       align: "right",
       sortable: false,
       filterable: false,
@@ -87,6 +84,36 @@ const buildColumns = (t) => {
           >
             {t("edit")}
           </GreenButton>
+
+          <Stack direction="row" alignItems="center">
+            <Button
+              sx={{ minWidth: 40 }}
+              onClick={() =>
+                updateContact(
+                  params.row.id,
+                  { level: (params.row.data.level || 1) - 1 },
+                  true
+                )
+              }
+            >
+              <KeyboardArrowDownIcon fontSize="small" />
+            </Button>
+
+            <Typography variant="body2">{params.row.data.level}</Typography>
+
+            <Button
+              sx={{ minWidth: 40 }}
+              onClick={() => {
+                updateContact(
+                  params.row.id,
+                  { level: (params.row.data.level || 1) + 1 },
+                  true
+                );
+              }}
+            >
+              <KeyboardArrowUpIcon fontSize="small" />
+            </Button>
+          </Stack>
 
           {/* <GreenButton
             size="small"
@@ -118,8 +145,18 @@ const buildColumns = (t) => {
 };
 
 const ContactsTable = ({ data }) => {
+  // const [rows, setRows] = useState(null);
+  // const [columns, setColumns] = useState(null);
   const [pageSize, setPageSize] = useState(10);
   const { t } = useTranslation("creator-studio");
+
+  const rows = useMemo(() => buildRows(data || [], t), [data]);
+
+  console.log("rows", rows);
+
+  //   useEffect(() => {
+  // setColumns()
+  //   }, [data])
 
   return (
     <DashboardPaper sx={{ minHeight: 600 }}>
@@ -128,7 +165,7 @@ const ContactsTable = ({ data }) => {
       <DataGrid
         autoHeight
         rowHeight={70}
-        rows={buildRows(data || [], t)}
+        rows={rows}
         columns={buildColumns(t)}
         pageSize={pageSize}
         onPageSizeChange={(i) => setPageSize(i)}

@@ -2,7 +2,13 @@ import GreenButton from "@components/buttons/GreenButton";
 import FormTextField from "@components/formFields/FormTextField";
 import Title from "@components/Title";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Grid, Stack, Typography, useTheme } from "@mui/material";
+import {
+  Grid,
+  InputAdornment,
+  Stack,
+  Typography,
+  useTheme,
+} from "@mui/material";
 import { cleanObject } from "@utils/helpers";
 import { useForm, useWatch } from "react-hook-form";
 import * as Yup from "yup";
@@ -57,7 +63,12 @@ const ProfileForm = ({ values, handleSubmit: propsHandleSubmit }) => {
             name="socials.facebook"
             label="Facebook"
             control={control}
-            placeholder="@colby_anderson"
+            placeholder="colby_anderson"
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">@</InputAdornment>
+              ),
+            }}
           />
         </Grid>
 
@@ -66,7 +77,12 @@ const ProfileForm = ({ values, handleSubmit: propsHandleSubmit }) => {
             name="socials.twitter"
             label="Twitter"
             control={control}
-            placeholder="@colby_anderson"
+            placeholder="colby_anderson"
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">@</InputAdornment>
+              ),
+            }}
           />
         </Grid>
 
@@ -75,7 +91,12 @@ const ProfileForm = ({ values, handleSubmit: propsHandleSubmit }) => {
             name="socials.instagram"
             label="Instagram"
             control={control}
-            placeholder="@colby_anderson"
+            placeholder="colby_anderson"
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">@</InputAdornment>
+              ),
+            }}
           />
         </Grid>
 
@@ -84,7 +105,12 @@ const ProfileForm = ({ values, handleSubmit: propsHandleSubmit }) => {
             name="socials.telegram"
             label="Telegram"
             control={control}
-            placeholder="@colby_anderson"
+            placeholder="colby_anderson"
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">@</InputAdornment>
+              ),
+            }}
           />
         </Grid>
 
@@ -93,7 +119,12 @@ const ProfileForm = ({ values, handleSubmit: propsHandleSubmit }) => {
             name="socials.linkedin"
             label="LinkedIn"
             control={control}
-            placeholder="@colby_anderson"
+            placeholder="colby_anderson"
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">@</InputAdornment>
+              ),
+            }}
           />
         </Grid>
 
@@ -111,6 +142,7 @@ const ProfileForm = ({ values, handleSubmit: propsHandleSubmit }) => {
         <GreenButton
           variant="navbar"
           type="submit"
+          size="small"
           sx={{
             minWidth: 200,
           }}

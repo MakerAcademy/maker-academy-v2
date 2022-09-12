@@ -30,6 +30,22 @@ export const listenContactWithUid = (uid, callback) => {
   return unsub;
 };
 
+export const getContacts = async () => {
+  const querySnapshot = await getDocs(collection(db, "contacts"));
+
+  const result = [];
+
+  querySnapshot.forEach((doc) => {
+    // doc.data() is never undefined for query doc snapshots
+    result.push({
+      ...doc.data(),
+      id: doc.id,
+    });
+  });
+
+  return result;
+};
+
 export const listenContacts = (callback) => {
   const q = query(collection(db, "contacts"));
 
@@ -107,11 +123,22 @@ export const updateContact = async (
   disableUpdatedTimestamp
 ) => {
   try {
+    const contact = await getContact(cid);
+
     const { obj, files } = extractFileInObject(data);
 
     const docRef = doc(db, "contacts", cid);
+
+    const firstName = obj?.firstName || contact?.firstName;
+    const lastName = obj?.lastName || contact?.lastName;
+    const email = obj?.email || contact?.email;
+    let _searchTerm = `${firstName || ""} ${lastName || ""} ${email || ""}`
+      .toLowerCase()
+      .split(" ");
+
     const payload = {
       ...obj,
+      filters: { searchTerm: _searchTerm },
     };
 
     await updateDoc(docRef, {

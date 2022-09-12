@@ -15,15 +15,23 @@ import {
   Select,
   Stack,
   Typography,
+  useTheme,
 } from "@mui/material";
 import useTranslation from "next-translate/useTranslation";
 import React, { useState } from "react";
 import { Draggable } from "react-beautiful-dnd";
 
+const ISSUE_TYPE_NUMBER = {
+  bug_fix: "bug",
+  improvement: "improvement",
+  feature: "feature",
+};
+
 const Element = ({ title, description, id, index, status, issue_type }) => {
   const [dialogOpen, setDialogOpen] = useState(false);
   const { user } = useAppSelector((state) => state.user);
   const { t } = useTranslation("about");
+  const theme = useTheme();
 
   const handleStatusChange = (e, v) => {
     const _value = e.target.value;
@@ -38,7 +46,7 @@ const Element = ({ title, description, id, index, status, issue_type }) => {
 
   return (
     <Box sx={{ bgcolor: "grey.grey3", borderRadius: 3 }}>
-      <Draggable draggableId={id} index={index}>
+      <Draggable draggableId={id} index={index} isDragDisabled>
         {(provided, snapshot) => (
           <Paper
             elevation={0}
@@ -55,6 +63,13 @@ const Element = ({ title, description, id, index, status, issue_type }) => {
             onClick={() => setDialogOpen(true)}
           >
             <Typography sx={{ mb: 2 }} variant="body2">
+              <Typography
+                component="span"
+                variant="body2"
+                sx={{ fontWeight: 600, mr: 0.5 }}
+              >
+                {t(ISSUE_TYPE_NUMBER[issue_type])} {index + 1}:
+              </Typography>
               {title}
             </Typography>
 
@@ -64,7 +79,14 @@ const Element = ({ title, description, id, index, status, issue_type }) => {
               alignItems="center"
               spacing={2}
             >
-              <Chip label={t(issue_type)} size="small" />
+              <Chip
+                label={t(issue_type)}
+                size="small"
+                sx={{
+                  border: `2px solid ${theme.palette.primary.main}`,
+                  fontSize: 14,
+                }}
+              />
 
               <Typography variant="caption">{t(status)}</Typography>
             </Stack>
@@ -86,21 +108,21 @@ const Element = ({ title, description, id, index, status, issue_type }) => {
           {user?.trustLevel > 3 && (
             <Stack direction="row" justifyContent="flex-end" spacing={2}>
               <FormControl size="small" sx={{ minWidth: 170 }}>
-                <InputLabel>Status</InputLabel>
+                <InputLabel>{t("status")}</InputLabel>
                 <Select
                   value={status}
-                  label="Status"
+                  label={t("status")}
                   onChange={handleStatusChange}
                 >
-                  <MenuItem value={"open"}>open</MenuItem>
-                  <MenuItem value={"development"}>development</MenuItem>
-                  <MenuItem value={"review"}>review</MenuItem>
-                  <MenuItem value={"done"}>done</MenuItem>
+                  <MenuItem value={"open"}>{t("open")}</MenuItem>
+                  <MenuItem value={"development"}>{t("development")}</MenuItem>
+                  <MenuItem value={"review"}>{t("review")}</MenuItem>
+                  <MenuItem value={"done"}>{t("done")}</MenuItem>
                 </Select>
               </FormControl>
 
               <Button color="error" variant="outlined" onClick={handleDelete}>
-                Delete
+                {t("delete")}
               </Button>
             </Stack>
           )}

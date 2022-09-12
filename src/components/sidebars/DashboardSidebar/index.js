@@ -20,6 +20,7 @@ import { setGlobalState } from "@redux/slices/globalSlice";
 import { FullLogoBlack, FullLogoWhite } from "@utils/images";
 import Link from "next/link";
 import MenuItems from "./MenuItems";
+import useTranslation from "next-translate/useTranslation";
 
 const MENU_ITEMS = [
   {
@@ -139,6 +140,8 @@ const Content = () => {
   const { profile } = useAppSelector((state) => state.profile);
   const theme = useTheme();
 
+  const { t } = useTranslation("common");
+
   return (
     <Box
       sx={{
@@ -181,12 +184,14 @@ const Content = () => {
               bgcolor: "grey.grey2",
             }}
           >
-            <Avatar src={profile?.photoURL} alt="photoURL" />
+            <Avatar src={profile?.profilePicture} alt="photoURL" />
+
             <Box sx={{ ml: 2 }}>
               <Typography variant="body2" sx={{ fontWeight: 600 }}>
                 {profile?.firstName} {profile?.lastName}
               </Typography>
-              <Typography variant="body2">{profile?.title}</Typography>
+
+              <Typography variant="caption">{t(profile?.role)}</Typography>
             </Box>
           </Box>
         </Link>

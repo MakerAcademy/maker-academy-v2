@@ -54,8 +54,16 @@ const Profile = () => {
         <Tabs value={tabValue} onChange={handleChange}>
           <Tab label={t("profile")} sx={{ textTransform: "inherit" }} />
           <Tab label={t("social_media")} sx={{ textTransform: "inherit" }} />
-          <Tab label={t("password")} sx={{ textTransform: "inherit" }} />
-          <Tab label={t("personal_data")} sx={{ textTransform: "inherit" }} />
+          <Tab
+            label={t("password")}
+            sx={{ textTransform: "inherit" }}
+            disabled
+          />
+          <Tab
+            label={t("personal_data")}
+            sx={{ textTransform: "inherit" }}
+            disabled
+          />
         </Tabs>
       </Box>
 

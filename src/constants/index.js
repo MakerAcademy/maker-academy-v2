@@ -75,3 +75,15 @@ export const FIREBASE_ERRORS = {
   "Firebase: Error (auth/wrong-password).":
     "Wrong Password. Please try again or login with Google",
 };
+
+export const CONTACT_ROLES = [
+  "full_stack_developer",
+  "frontend_developer",
+  "backend_developer",
+  "solidity_engineer",
+  "data_scientist",
+  "financial_engineer",
+  "uiux_designer",
+  "product_manager",
+  "student",
+];

@@ -30,7 +30,7 @@ const buildRows = (data, t) => {
 
 const buildColumns = (t) => {
   return [
-    //   { field: "id", headerName: "ID", width: 70 },
+      { field: "id", headerName: "ID", width: 100 },
     {
       field: "thumbnail",
       headerName: t("thumbnail"),
