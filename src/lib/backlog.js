@@ -1,4 +1,5 @@
 import { db } from "@config/firebase";
+import { extractFileInObject } from "@utils/helperFunctions";
 import { cleanObject } from "@utils/helpers";
 import {
   collection,
@@ -12,23 +13,49 @@ import {
   updateDoc,
   where,
 } from "firebase/firestore";
+import { uploadFile } from "./storage";
 
 export const submitBacklog = async (cid, data = {}) => {
   try {
-    // new content
-    const contentRef = doc(collection(db, "backlogs"));
-    const contentPayload = {
+    const { obj, files } = extractFileInObject(data);
+
+    // new backlog
+    const docRef = doc(collection(db, "backlogs"));
+    const payload = {
       author: cid,
-      id: contentRef.id,
+      id: docRef.id,
       status: "open",
-      ...data,
+      ...obj,
     };
-    const contentRes = await setDoc(contentRef, {
-      ...cleanObject(contentPayload),
+    const docRes = await setDoc(docRef, {
+      ...cleanObject(payload),
       timestamp: serverTimestamp(),
     });
 
-    return { success: true, payload: { ...data, id: contentRef.id } };
+    // Upload files
+    if (files && Object.keys(files)) {
+      for await (const [key, value] of Object.entries(files)) {
+        const extension = value?.name?.split(".")?.[1];
+
+        await uploadFile(
+          `/backlogs/${docRef.id}/${key}.${extension}`,
+          value
+        ).then(async (res) => {
+          if (res?.success) {
+            await updateDoc(docRef, { [key]: res?.metadata?.downloadURL });
+            await updateDoc(
+              docRef,
+              {
+                [`metadata.${key}`]: res?.metadata?.downloadURL,
+              },
+              { merge: true }
+            );
+          }
+        });
+      }
+    }
+
+    return { success: true, payload: { ...obj, id: docRef.id } };
   } catch (error) {
     console.log(error);
     return error;

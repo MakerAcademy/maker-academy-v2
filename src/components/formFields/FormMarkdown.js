@@ -25,7 +25,14 @@ import "tui-color-picker/dist/tui-color-picker.css";
 //   { ssr: false }
 // );
 
-const FormMarkdown = ({ name, control, sx = {}, label, ...props }) => {
+const FormMarkdown = ({
+  name,
+  control,
+  removeComponents,
+  sx = {},
+  label,
+  ...props
+}) => {
   const [commandsAdded, setCommandsAdded] = useState(false);
   const [ButtonAdded, setButtonAdded] = useState(false);
   const theme = useTheme();
@@ -101,9 +108,10 @@ const FormMarkdown = ({ name, control, sx = {}, label, ...props }) => {
         [theme.breakpoints.up("xl")]: {
           minHeight: 600,
         },
+        ...sx,
       }}
     >
-      <ElementsTabs />
+      {!removeComponents && <ElementsTabs />}
 
       <Controller
         name={name}
@@ -125,7 +133,6 @@ const FormMarkdown = ({ name, control, sx = {}, label, ...props }) => {
               "& .toastui-editor-md-preview": { display: "none !important" },
               "& .toastui-editor-md-splitter": { display: "none !important" },
               "& .toastui-editor.md-mode": { width: "100% !important" },
-              ...sx,
             }}
             data-color-mode={theme.palette.mode}
           >

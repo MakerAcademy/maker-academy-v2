@@ -1,13 +1,17 @@
-import BacklogForm from "@components/forms/BacklogForm";
 import Title from "@components/Title";
 import { CommonContext } from "@context/commonContext";
 import { useAppSelector } from "@hooks/useRedux";
 import { submitBacklog } from "@lib/backlog";
 import { Box, Dialog } from "@mui/material";
 import { cleanObject } from "@utils/helpers";
+import dynamic from "next/dynamic";
 import { useSnackbar } from "notistack";
 import { useContext } from "react";
 import Board from "./Board";
+
+const BacklogForm = dynamic(() => import("@forms/BacklogForm"), {
+  ssr: false,
+});
 
 const AboutBacklog = () => {
   const { profile } = useAppSelector((state) => state.profile);

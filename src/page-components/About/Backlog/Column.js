@@ -1,13 +1,11 @@
-import Title from "@components/Title";
 import { CommonContext } from "@context/commonContext";
-import { Box, Button, Paper, Stack, Typography } from "@mui/material";
-import useTranslation from "next-translate/useTranslation";
-import React, { useContext } from "react";
-import { Droppable } from "react-beautiful-dnd";
-import Element from "./Element";
-import PestControlIcon from "@mui/icons-material/PestControl";
 import ElectricBoltIcon from "@mui/icons-material/ElectricBolt";
 import LightbulbIcon from "@mui/icons-material/Lightbulb";
+import PestControlIcon from "@mui/icons-material/PestControl";
+import { Box, Button, Paper, Stack, Typography } from "@mui/material";
+import useTranslation from "next-translate/useTranslation";
+import { useContext } from "react";
+import Element from "./Element";
 
 const ISSUE_TYPE_TITLE = {
   bug_fix: "bugs",
@@ -67,21 +65,23 @@ const Column = ({ elements, title }) => {
     >
       <Header title={title} />
 
-      <Droppable droppableId={`${title}`}>
-        {(provided) => (
-          <Stack
-            spacing={2}
-            {...provided.droppableProps}
-            ref={provided.innerRef}
-          >
-            {elements?.map?.((item, i) => (
-              <Element key={i} {...item} index={i} />
-            ))}
-
-            {provided.placeholder}
-          </Stack>
-        )}
-      </Droppable>
+      <Stack
+        spacing={2}
+        sx={{
+          maxHeight: "100vh",
+          overflowY: "scroll",
+          px: 1,
+          ml: -1,
+          width: "107%",
+          "&::-webkit-scrollbar": {
+            display: "none",
+          },
+        }}
+      >
+        {elements?.map?.((item, i) => (
+          <Element key={i} values={item} index={i} />
+        ))}
+      </Stack>
     </Box>
   );
 };

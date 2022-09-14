@@ -17,6 +17,7 @@ const FormSelectField = ({
   variant = "outlined",
   label,
   fullWidth = true,
+  t,
   ...props
 }) => {
   const theme = useTheme();
@@ -57,7 +58,7 @@ const FormSelectField = ({
             >
               {options?.map((item) => (
                 <MenuItem key={item} value={item}>
-                  {item}
+                  {t ? t(item) : item}
                 </MenuItem>
               ))}
             </Select>

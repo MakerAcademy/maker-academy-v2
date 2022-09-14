@@ -170,6 +170,7 @@ const ProfileForm = ({ values, handleSubmit: propsHandleSubmit }) => {
                   bgcolor: _role === item ? "grey.grey2" : "inherit",
                   cursor: "pointer",
                   p: 2,
+                  mb: 2,
                   minHeight: 85,
                   width: 110,
                   display: "flex",
