@@ -33,7 +33,7 @@ const LoginContent = ({}) => {
         </Fade>
 
         <Fade direction="down" triggerOnce duration={1000}>
-          <Typography sx={{ fontWeight: 400, pb: 3 }}>
+          <Typography sx={{ fontWeight: 300, pb: 3 }}>
             By logging in for Maker Academy, you agree to our{" "}
             <StyledDialogButton onClick={() => setTermsDialog(true)}>
               Terms of Use

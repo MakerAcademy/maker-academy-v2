@@ -1,3 +1,5 @@
+import { FullLogoWhite } from "@utils/images";
+
 export const COMMON_CONTEXT_STORAGE = "COMMON_STORAGE_PERSIST";
 export const THEME_CONTEXT_STORAGE = "MAKER ACADEMY THEME";
 export const NAVBAR_HEIGHT_DESKTOP = 80;
@@ -42,8 +44,6 @@ export const ASSESSMENT_QUESTION_TYPES = [
   // "file",
 ];
 
-export const BRANDS = ["maker_academy", "meta_analysis"];
-
 export const CONTENT_CATEGORIES = [
   "tokenomics",
   "governance",
@@ -58,6 +58,7 @@ export const CONTENT_CATEGORIES = [
   "news",
   "scaling",
   "maker",
+  "insurance",
 ];
 
 export const DASHBOARD_BREADCRUMBS = {
@@ -89,3 +90,47 @@ export const CONTACT_ROLES = [
   "product_manager",
   "student",
 ];
+
+export const BRANDS = [
+  "maker_academy",
+  "sustainable_ecosystem_scaling",
+  "protocol_engineering",
+  "risk",
+  "oracles",
+  "risk",
+  "Oracles",
+  "real_world_finance",
+  "Growth",
+  "protocol_engineering",
+  "govalpha",
+  "sustainable_ecosystem_scaling",
+  "governance_communications",
+  "dai_foundation",
+  "development_ux",
+  "starknet_Engineering",
+  "strategic_happiness",
+  "collateral_engineering_services",
+  "data_insights",
+  "deco_fixed_rate",
+  "immunefi_security",
+  "sidestream_auction_services",
+  "techops",
+  "strategic_finance",
+  "core_unit_archive",
+  "events",
+];
+
+export const CONTENT_CARD_BRAND_STYLES = {
+  maker_academy: {
+    color: "#1AAB9B",
+    logo: FullLogoWhite,
+  },
+  sustainable_ecosystem_scaling: {
+    color: "#000000",
+    logo: FullLogoWhite,
+  },
+  protocol_engineering: {
+    color: "#555555",
+    logo: FullLogoWhite,
+  },
+};

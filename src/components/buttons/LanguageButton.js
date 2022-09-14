@@ -7,6 +7,7 @@ import {
   MenuItem,
   Typography,
   Tooltip,
+  useTheme,
 } from "@mui/material";
 import useTranslation from "next-translate/useTranslation";
 import React, { useState } from "react";
@@ -34,6 +35,7 @@ export const handleLanguageChange = async (lang, router, pathname) => {
 };
 
 const LanguageMenu = ({ fullWidth, sx = {}, ...other }) => {
+  const theme = useTheme();
   const [langAnchor, setLangAnchor] = useState(null);
 
   const { t, lang } = useTranslation("common");
@@ -53,7 +55,12 @@ const LanguageMenu = ({ fullWidth, sx = {}, ...other }) => {
             sx={{ width: "100%" }}
           >
             <Typography>{t("change_language")}</Typography>
-            <TranslateIcon fontSize="small" />
+            <TranslateIcon
+              fontSize="small"
+              sx={{
+                color: theme.palette.text.primary,
+              }}
+            />
           </Stack>
         </Button>
       )}
@@ -67,7 +74,11 @@ const LanguageMenu = ({ fullWidth, sx = {}, ...other }) => {
             sx={{ ...sx }}
             {...other}
           >
-            <TranslateIcon />
+            <TranslateIcon
+              sx={{
+                color: theme.palette.text.primary,
+              }}
+            />
           </IconButton>
         </Tooltip>
       )}

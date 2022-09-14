@@ -144,7 +144,7 @@ const CourseBody = ({ course = {} }) => {
                 textTransform: "inherit",
                 color: grey[700],
                 backgroundColor: `${theme.palette.grey.grey1}`,
-                fontWeight: 400,
+                fontWeight: 300,
               },
               "& .Mui-selected": {
                 color: theme.palette.primary.main,

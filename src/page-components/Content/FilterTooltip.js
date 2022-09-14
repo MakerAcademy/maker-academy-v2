@@ -10,11 +10,13 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
+import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import useSWR, { mutate } from "swr";
 
 const FilterTooltip = ({ openFilterBtnRef }) => {
   const theme = useTheme();
+  const router = useRouter();
 
   const { data } = useSWR("filterTooltipDisplayed", (key) => {
     const value = localStorage.getItem(key);
@@ -26,7 +28,9 @@ const FilterTooltip = ({ openFilterBtnRef }) => {
     mutate("filterTooltipDisplayed", true);
   };
 
-  const open = data === null;
+  console.log(router);
+
+  const open = data === null && router.pathname === "/content";
 
   const top = openFilterBtnRef?.current?.offsetTop;
   const left = openFilterBtnRef?.current?.offsetLeft;
@@ -35,6 +39,8 @@ const FilterTooltip = ({ openFilterBtnRef }) => {
     if (open) document.body.style.overflow = "hidden";
     else document.body.style.overflow = "visible";
   }, [open]);
+
+  if (!open) return null;
 
   return (
     <Backdrop

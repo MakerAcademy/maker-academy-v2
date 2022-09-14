@@ -1,5 +1,5 @@
 const themeTypography = {
-  fontFamily: "-apple-system, BlinkMacSystemFont, sans-serif",
+  fontFamily: "SF, sans-serif",
   htmlFontSize: 16,
   fontSize: 16,
   caption: {
@@ -12,7 +12,7 @@ const themeTypography = {
   },
   body1: {
     fontSize: "1.15rem",
-    fontWeight: 500,
+    fontWeight: 400,
     lineHeight: 1.2,
   },
   h6: {

@@ -1,52 +1,61 @@
-import GreenButton from "@components/buttons/GreenButton";
-import Title from "@components/Title";
+import { CONTENT_CARD_BRAND_STYLES } from "@constants/index";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import AssessmentOutlinedIcon from "@mui/icons-material/AssessmentOutlined";
-import FavoriteIcon from "@mui/icons-material/Favorite";
 import FeedOutlinedIcon from "@mui/icons-material/FeedOutlined";
 import SubscriptionsOutlinedIcon from "@mui/icons-material/SubscriptionsOutlined";
-import VisibilityIcon from "@mui/icons-material/Visibility";
 import {
-  Avatar,
   Box,
-  Button,
-  Card,
   CardContent,
   Chip,
-  Divider,
   Stack,
-  styled,
   Tooltip,
   Typography,
   useTheme,
 } from "@mui/material";
-import { blue, green, red, yellow } from "@mui/material/colors";
-import moment from "moment";
+import { yellow } from "@mui/material/colors";
 import useTranslation from "next-translate/useTranslation";
-import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from "react";
+import { useState } from "react";
+import ContentBrandBanner from "@assets/images/misc/contentBrandBanenr.svg";
+import FeedIcon from "@mui/icons-material/Feed";
 
-const BrandBadge = ({ text }) => {
+const BrandBadge = ({ name, text }) => {
   const theme = useTheme();
 
+  const _item = CONTENT_CARD_BRAND_STYLES[name];
+
+  const _logo = CONTENT_CARD_BRAND_STYLES[name].logo || text;
+
   return (
-    <Box
-      sx={{
-        position: "absolute",
-        bottom: 10,
-        left: 0,
-        backgroundColor: "primary.main",
-        py: 1,
-        pl: 1,
-        pr: 2,
-        minWidth: 80,
-        clipPath: "polygon(0% 0%, 85% 0, 100% 49%, 85% 99%, 0% 100%)",
-      }}
-    >
-      <Typography variant="body2" sx={{ color: theme.palette.common.white }}>
-        {text}
-      </Typography>
+    <Box sx={{ position: "absolute", bottom: 10, left: 0 }}>
+      <Box sx={{ position: "relative" }}>
+        <img
+          src={ContentBrandBanner}
+          alt="banner"
+          style={{
+            minHeight: "35px",
+            minWidth: "120px",
+            position: "relative",
+            top: 0,
+            left: 0,
+          }}
+        />
+
+        <img
+          src={_logo}
+          alt={text}
+          style={{
+            position: "absolute",
+            top: "25%",
+            left: "48%",
+            transform: "translate(-50%, 0%)",
+            height: "100%",
+            width: "100%",
+            maxHeight: "17px",
+            objectFit: "contain",
+          }}
+        />
+      </Box>
     </Box>
   );
 };
@@ -146,7 +155,9 @@ const ContentCard = ({
           </Box>
 
           {/* Brand */}
-          {brand && brand !== "none" && <BrandBadge text={t(brand)} />}
+          {brand && brand !== "none" && (
+            <BrandBadge name={brand} text={t(brand)} />
+          )}
 
           {/* Category */}
           <Chip
@@ -155,8 +166,8 @@ const ContentCard = ({
               position: "absolute",
               top: 12,
               left: 12,
-              bgcolor: "text.primary",
-              color: "text.invert",
+              bgcolor: "background.dark",
+              color: "common.white",
               borderRadius: 1,
             }}
           />
@@ -168,8 +179,8 @@ const ContentCard = ({
               position: "absolute",
               top: 12,
               right: 12,
-              bgcolor: "text.invert",
-              color: "text.primary",
+              bgcolor: "common.white",
+              color: "background.dark",
               borderRadius: 1,
             }}
           />
@@ -177,10 +188,10 @@ const ContentCard = ({
 
         {/* Content */}
         <CardContent sx={{ flex: 1 }}>
-          <Stack spacing={2} sx={{ height: "100%" }}>
+          <Stack sx={{ height: "100%", gap: "12px" }}>
             {/* Title */}
             <Typography
-              sx={{ fontWeight: "500 !important", lineHeight: "25px" }}
+              sx={{ fontWeight: 500, lineHeight: "25px", color: "text.title" }}
             >
               {title}
             </Typography>
@@ -193,8 +204,8 @@ const ContentCard = ({
                   placement="right"
                 >
                   <Typography
-                    variant="body2"
                     sx={{
+                      fontWeight: 400,
                       maxHeight: 44,
                       overflow: "hidden",
                       textOverflow: "ellipsis",
@@ -216,30 +227,30 @@ const ContentCard = ({
               spacing={1}
               justifyContent="space-between"
               alignItems="center"
-              sx={{ mt: 2, width: "100%" }}
+              sx={{ mt: 1, width: "100%" }}
               flexWrap="wrap"
             >
               {/* Type */}
               {contentType === "document" ? (
-                <Stack direction="row" alignItems="center" spacing={0.3}>
-                  <FeedOutlinedIcon sx={{ fontSize: 18 }} />
-                  <Typography variant="body2" sx={{ fontSize: 14 }}>
+                <Stack direction="row" alignItems="center" spacing={0.5}>
+                  <FeedIcon sx={{ fontSize: 22 }} />
+                  <Typography variant="body2" sx={{ pt: 0.15 }}>
                     {t("article")}
                   </Typography>
                 </Stack>
               ) : (
-                <Stack direction="row" alignItems="center" spacing={0.3}>
-                  <SubscriptionsOutlinedIcon sx={{ fontSize: 18 }} />
-                  <Typography variant="body2" sx={{ fontSize: 14 }}>
+                <Stack direction="row" alignItems="center" spacing={0.5}>
+                  <SubscriptionsOutlinedIcon sx={{ fontSize: 22 }} />
+                  <Typography variant="body2" sx={{ pt: 0.15 }}>
                     {t("course")}
                   </Typography>
                 </Stack>
               )}
 
               {/* Duration */}
-              <Stack direction="row" alignItems="center" spacing={0.3}>
-                <AccessTimeIcon sx={{ fontSize: 18 }} />
-                <Typography variant="body2" sx={{ fontSize: 14 }}>
+              <Stack direction="row" alignItems="center" spacing={0.5}>
+                <AccessTimeIcon sx={{ fontSize: 22 }} />
+                <Typography variant="body2" sx={{ pt: 0.15 }}>
                   {duration} min
                 </Typography>
               </Stack>
@@ -248,11 +259,11 @@ const ContentCard = ({
               <Stack
                 direction="row"
                 alignItems="center"
-                spacing={0.3}
+                spacing={0.5}
                 sx={{ color: yellow[900] }}
               >
-                <AssessmentOutlinedIcon sx={{ fontSize: 20 }} />
-                <Typography variant="body2" sx={{ fontSize: 14 }}>
+                <AssessmentOutlinedIcon sx={{ fontSize: 22 }} />
+                <Typography variant="body2" sx={{ pt: 0.15 }}>
                   {t(level)}
                 </Typography>
               </Stack>

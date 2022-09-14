@@ -104,24 +104,28 @@ const Navbar = ({ transparent, withElevation, fixed }) => {
           }}
         >
           {/* Logo */}
-          <Link href="/" passHref>
-            <img
-              src={
-                theme.palette.mode === "light" ? FullLogoBlack : FullLogoWhite
-              }
-              alt="Maker Academy Logo"
-              style={{
-                height: "100%",
-                maxHeight: "35px",
-                objectFit: "contain",
-                cursor: "pointer",
-              }}
-            />
-          </Link>
+          <Box sx={{ flex: 1 }}>
+            <Link href="/" passHref>
+              <img
+                src={
+                  theme.palette.mode === "light" ? FullLogoBlack : FullLogoWhite
+                }
+                alt="Maker Academy Logo"
+                style={{
+                  height: "100%",
+                  maxHeight: "35px",
+                  objectFit: "contain",
+                  cursor: "pointer",
+                }}
+              />
+            </Link>
+          </Box>
 
           <Hidden mdDown>
             {/* Menu Buttons */}
-            <MenuButtons menuItems={MENU_ITEMS} theme={theme} />
+            <Box sx={{ mr: 4 }}>
+              <MenuButtons menuItems={MENU_ITEMS} theme={theme} />
+            </Box>
 
             {/* Other Buttons */}
             <ActionButtons />

@@ -93,7 +93,7 @@ const MenuItems = ({ items = [] }) => {
                       : {}),
 
                     ...(isActiveLink && activeSubLink > -1
-                      ? { fontWeight: 400, backgroundColor: "transparent" }
+                      ? { fontWeight: 300, backgroundColor: "transparent" }
                       : {}),
                   }}
                   secondaryAction={

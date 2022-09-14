@@ -8,7 +8,7 @@ const MenuButtons = ({ menuItems = [], theme }) => {
   return (
     <Stack
       direction={{ xs: "column", md: "row" }}
-      spacing={{ xs: 3, lg: 6 }}
+      spacing={{ xs: 3, lg: 4 }}
       alignItems="center"
     >
       {menuItems.map(({ name, link }, i) => (
@@ -19,7 +19,7 @@ const MenuButtons = ({ menuItems = [], theme }) => {
               color: theme.palette.text.primary,
               fontSize: 20,
               textTransform: "inherit",
-              fontWeight: 400,
+              fontWeight: 500,
               "&:hover": {
                 color: theme.palette.primary.main,
               },

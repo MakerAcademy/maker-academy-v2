@@ -126,14 +126,16 @@ const ServiceCard = ({
                   </Typography>
                 </Stack>
 
-                <Box>
-                  <ActionButton
-                    text={btnText}
-                    Icon={BtnIcon}
-                    reverse={reverse}
-                    {...btnProps}
-                  />
-                </Box>
+                {btnText && (
+                  <Box>
+                    <ActionButton
+                      text={btnText}
+                      Icon={BtnIcon}
+                      reverse={reverse}
+                      {...btnProps}
+                    />
+                  </Box>
+                )}
               </Stack>
             </Grid>
 
@@ -244,8 +246,8 @@ const Section2 = () => {
               title={t("section2_contribute")}
               description={t("section2_add_your_content")}
               image={isDark ? Service3DarkIcon : Service3LightIcon}
-              btnText={t("section2_start_creating")}
-              BtnIcon={ArrowForwardOutlinedIcon}
+              // btnText={t("section2_start_creating")}
+              // BtnIcon={ArrowForwardOutlinedIcon}
               delay={100}
               btnProps={{
                 onClick: () => Router.push("/content"),
@@ -259,8 +261,8 @@ const Section2 = () => {
               title={t("section2_role_at_maker")}
               description={t("section2_want_to_contribute")}
               image={isDark ? Service4DarkIcon : Service4LightIcon}
-              btnText={t("section2_view_roles")}
-              BtnIcon={ArrowForwardOutlinedIcon}
+              // btnText={t("section2_view_roles")}
+              // BtnIcon={ArrowForwardOutlinedIcon}
               direction="right"
               delay={100}
               btnProps={{
