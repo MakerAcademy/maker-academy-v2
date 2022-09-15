@@ -1,8 +1,10 @@
 import ContentCard from "@components/cards/ContentCard";
+import Title from "@components/Title";
+import { getHomepageContent } from "@lib/homepage";
 import { Box, Container, Grid, Tab, Tabs, useTheme } from "@mui/material";
 import hex from "@utils/hexTransparency";
 import useTranslation from "next-translate/useTranslation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Zoom } from "react-awesome-reveal";
 import { BlurSection3 } from "./images";
 
@@ -37,6 +39,7 @@ const TABS = [
 ];
 
 const Section3 = () => {
+  const [data, setData] = useState(DUMMY_CONTENT);
   const theme = useTheme();
   const [tabValue, setTabValue] = useState(0);
 
@@ -45,6 +48,12 @@ const Section3 = () => {
   const handleTabChange = (e, i) => {
     setTabValue(i);
   };
+
+  useEffect(() => {
+    getHomepageContent().then((res) => {
+      setData(res.payload);
+    });
+  }, []);
 
   return (
     <Box sx={{ my: 15, position: "relative" }}>
@@ -74,7 +83,7 @@ const Section3 = () => {
         }}
       >
         {/* Tabs */}
-        <Tabs
+        {/* <Tabs
           value={tabValue}
           onChange={handleTabChange}
           variant="scrollable"
@@ -101,18 +110,27 @@ const Section3 = () => {
               }}
             />
           ))}
-        </Tabs>
+        </Tabs> */}
+
+        <Title
+          variant={{ xs: "h3", md: "h2" }}
+          sx={{ mb: { xs: 3, md: 5 }, textAlign: "center" }}
+        >
+          {t("section3_recent_releases")}
+        </Title>
 
         {/* Content */}
-        <Grid container spacing={3}>
-          {DUMMY_CONTENT.map((item, i) => (
-            <Grid item xs={12} md={4} key={i}>
-              <Zoom delay={100 * i} triggerOnce>
-                <ContentCard {...item} />
-              </Zoom>
-            </Grid>
-          ))}
-        </Grid>
+        <Box>
+          <Grid container spacing={4}>
+            {data.map((item, i) => (
+              <Grid item xs={12} md={4} key={i}>
+                <Zoom delay={100 * i} triggerOnce style={{ height: "100%" }}>
+                  <ContentCard {...item} />
+                </Zoom>
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
       </Container>
     </Box>
   );

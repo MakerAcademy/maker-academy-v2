@@ -11,7 +11,7 @@ export const darkTheme = {
       invert: "#425466",
     },
     grey: {
-      grey1: grey[900],
+      grey1: '#24252A',
       grey2: grey[800],
       grey3: grey[700],
       grey4: grey[600],

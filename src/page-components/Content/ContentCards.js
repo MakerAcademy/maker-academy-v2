@@ -2,11 +2,10 @@ import GreenButton from "@components/buttons/GreenButton";
 import ContentCard from "@components/cards/ContentCard";
 import Title from "@components/Title";
 import { useAppDispatch, useAppSelector } from "@hooks/useRedux";
-import { Box, Button, Container, Grid, Stack } from "@mui/material";
+import { Box, Grid, Stack } from "@mui/material";
 import { fetchContentData } from "@redux/slices/contentSlice";
 import useTranslation from "next-translate/useTranslation";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 const ContentCards = ({ query }) => {
   const {

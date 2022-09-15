@@ -12,7 +12,7 @@ export const lightTheme = {
       invert: "#FFF",
     },
     grey: {
-      grey1: grey[100],
+      grey1: '#F9F9FA',
       grey2: grey[200],
       grey3: grey[300],
       grey4: grey[400],

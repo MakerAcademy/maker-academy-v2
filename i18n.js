@@ -3,7 +3,7 @@ module.exports = {
   defaultLocale: "en",
   pages: {
     "*": ["common"],
-    "/": ["home"],
+    "/": ["home", "content"],
     "/content": ["content"],
     "rgx:^/users": ["users"],
     "rgx:^/document": ["content"],

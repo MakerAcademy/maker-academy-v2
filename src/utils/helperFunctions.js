@@ -22,6 +22,11 @@ export const flattenChildren = (text, child) => {
     : React.Children.toArray(child.props.children).reduce(flatten, text);
 };
 
+export const validateEmail = (email) => {
+  var re = /\S+@\S+\.\S+/;
+  return re.test(email);
+};
+
 export const isArrayEqual = (array1, array2) => {
   if (typeof array1 !== "object" || typeof array2 !== "object") return false;
 

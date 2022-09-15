@@ -28,7 +28,7 @@ const LandingLayout = ({ children }) => {
         {children}
       </Box>
 
-      <Divider />
+      {/* <Divider /> */}
 
       <Footer />
     </React.Fragment>

@@ -1,154 +1,217 @@
 import Title from "@components/Title";
-import { useAppSelector } from "@hooks/useRedux";
+import { Masonry } from "@mui/lab";
 import {
+  Avatar,
   Box,
-  Button,
   Container,
+  IconButton,
+  Paper,
   Stack,
-  Tooltip,
   Typography,
   useTheme,
 } from "@mui/material";
-import {
-  DiscordIcon,
-  ForumIcon,
-  MAIcon,
-  MAWhiteIcon,
-  TwitterIcon,
-} from "@page-components/Home/images";
 import useTranslation from "next-translate/useTranslation";
-import Image from "next/image";
-import { Bounce, Fade } from "react-awesome-reveal";
+import React from "react";
+import { Fade, JackInTheBox } from "react-awesome-reveal";
+import { BlurSection4 } from "./images";
+import TwitterIcon from "@mui/icons-material/Twitter";
 
-const SocialButton = ({
-  icon,
-  text,
-  color,
-  tooltip,
-  delay = 0,
-  href,
-  newTab,
-}) => (
-  <Tooltip title={tooltip}>
-    <Button
-      sx={{ textTransform: "inherit" }}
-      href={href}
-      target={newTab ? "_blank" : "_self"}
-    >
-      <Bounce delay={delay} triggerOnce>
-        <Stack spacing={0.5} justifyContent="center" alignItems="center">
-          <Box sx={{ height: "100%", width: 55 }}>
-            <Image
-              src={icon}
-              alt={text}
-              layout="responsive"
-              objectFit="contain"
-              height="60px"
-              width="100%"
-            />
-          </Box>
-          <Typography variant="body2" sx={{ color, fontWeight: 600 }}>
-            {text}
-          </Typography>
-        </Stack>
-      </Bounce>
-    </Button>
-  </Tooltip>
-);
+const testimonials = [
+  {
+    height: 222,
+    testimonial:
+      "I love the @MakerAcademy and it's a great source of information for anyone looking to get invloved in the MakerDAO community.",
+    avatar: "",
+    name: "John",
+    username: "web3dev",
+  },
+  {
+    height: 165,
+    testimonial: "I love the @MakerAcademy and it's a great source",
+    avatar: "",
+    name: "John",
+    username: "web3dev",
+  },
+  {
+    height: 222,
+    testimonial:
+      "I love the @MakerAcademy and it's a great source of information for anyone looking to get invloved in the MakerDAO community.",
+    avatar: "",
+    name: "John",
+    username: "web3dev",
+  },
+  {
+    height: 222,
+    testimonial:
+      "I love the @MakerAcademy and it's a great source of information for anyone looking to get invloved in the MakerDAO community.",
+    avatar: "",
+    name: "John",
+    username: "web3dev",
+  },
+  {
+    height: 280,
+    testimonial:
+      "I love the @MakerAcademy and it's a great source of information for anyone looking to get invloved in the MakerDAO community. efnjwefniolwefnfwenklfnwek wfenfowenfwenf wfennlfwefnlefw",
+    avatar: "",
+    name: "John",
+    username: "web3dev",
+  },
+  {
+    height: 222,
+    testimonial:
+      "I love the @MakerAcademy and it's a great source of information for anyone looking to get invloved in the MakerDAO community.",
+    avatar: "",
+    name: "John",
+    username: "web3dev",
+  },
+  {
+    height: 222,
+    testimonial:
+      "I love the @MakerAcademy and it's a great source of information for anyone looking to get invloved in the MakerDAO community.",
+    avatar: "",
+    name: "John",
+    username: "web3dev",
+  },
+  {
+    height: 222,
+    testimonial:
+      "I love the @MakerAcademy and it's a great source of information for anyone looking to get invloved in the MakerDAO community.",
+    avatar: "",
+    name: "John",
+    username: "web3dev",
+  },
+];
 
 const Section4 = () => {
   const theme = useTheme();
-  const isDark = theme.palette.mode === "dark";
-
-  const { profile } = useAppSelector((state) => state.profile);
-
   const { t } = useTranslation("home");
 
   return (
-    <Container
-      maxWidth="lg"
-      sx={{
-        py: 5,
-        [theme.breakpoints.up("md")]: {
-          px: 10,
-        },
-        [theme.breakpoints.up("lg")]: {
-          px: 3,
-        },
-      }}
-    >
-      <Box
-        sx={{
-          borderRadius: 2,
-          background: isDark
-            ? theme.palette.background.gradient1
-            : theme.palette.grey.grey1,
-          p: { xs: 4, md: 6 },
+    <Box sx={{ my: 10, position: "relative" }}>
+      <img
+        loading="lazy"
+        src={BlurSection4}
+        alt="Blur 3"
+        style={{
+          maxWidth: "100%",
+          position: "absolute",
+          top: -50,
+          right: 0,
+          zIndex: -1,
+          // filter: "blur(10px)",
         }}
+      />
+
+      <Container
+        maxWidth="lg"
+        sx={(theme) => ({
+          [theme.breakpoints.up("md")]: {
+            px: 10,
+          },
+          [theme.breakpoints.up("lg")]: {
+            px: 3,
+          },
+        })}
       >
-        <Stack
-          spacing={4}
-          justifyContent="center"
-          alignItems="center"
-          sx={{ textAlign: "center" }}
-        >
+        <Stack alignItems="center" spacing={4}>
           <Fade triggerOnce>
-            <Title variant="h2" sx={{ color: "text.title" }}>
-              {t("section4_learn_contribute_innovate")}
+            <Title
+              variant="h2"
+              sx={{ textAlign: "center", color: "text.title" }}
+            >
+              {t("section4_what_people_say")}
             </Title>
           </Fade>
 
           <Fade delay={100} triggerOnce>
-            <Typography sx={{ maxWidth: 920 }}>
+            <Typography sx={{ textAlign: "center", maxWidth: 750 }}>
               {t("section4_description")}
             </Typography>
           </Fade>
 
-          <Stack
-            direction="row"
-            justifyContent="center"
-            spacing={{ xs: 2, sm: 4, md: 5 }}
-            sx={{ pt: 2 }}
-            flexWrap="wrap"
+          <Masonry
+            columns={{ xs: 1, sm: 2, md: 3, lg: 4 }}
+            spacing={3}
+            sx={{ pt: 3 }}
           >
-            <SocialButton
-              text="Discord"
-              icon={DiscordIcon}
-              color="#7289DA"
-              href={"https://discord.gg/FAQWbM5p"}
-              newTab
-              tooltip={"Join Our Discord Channel"}
-            />
+            {testimonials.map(
+              ({ height, testimonial, name, username }, index) => {
+                const _testimonial = testimonial.split("@MakerAcademy");
 
-            {/* <SocialButton
-              text={t("section4_forum")}
-              icon={ForumIcon}
-              color="text.title"
-              delay={50}
-            /> */}
+                return (
+                  <JackInTheBox key={index} delay={50 * index} triggerOnce>
+                    <Paper
+                      elevation={0}
+                      sx={{
+                        position: "relative",
+                        minHeight: height,
+                        borderRadius: "24px",
+                        // boxShadow: "10px 12px 141px rgba(126, 129, 164, 0.2)",
+                        p: 3,
+                      }}
+                    >
+                      <Box sx={{ pb: 5 }}>
+                        <Typography variant="body2" component="span">
+                          {_testimonial[0]?.trim()}&nbsp;
+                        </Typography>
 
-            <SocialButton
-              text="Twitter"
-              icon={TwitterIcon}
-              color="#4AA1EC"
-              delay={100}
-              href={"https://discord.gg/FAQWbM5p"}
-              newTab
-              tooltip={"Check out our Twitter page"}
-            />
+                        <Typography
+                          variant="body2"
+                          component="span"
+                          color="primary"
+                          sx={{
+                            cursor: "pointer",
+                            "&:hover": {
+                              textDecoration: "underline",
+                            },
+                          }}
+                        >
+                          MakerAcademy
+                        </Typography>
 
-            <SocialButton
-              text={t("section4_join")}
-              icon={isDark ? MAWhiteIcon : MAIcon}
-              color="text.primary"
-              delay={150}
-              href={profile?.id ? "/content" : "/login"}
-              tooltip={"Sign up to the Maker platform"}
-            />
-          </Stack>
+                        <Typography variant="body2" component="span">
+                          &nbsp;{_testimonial[1]?.trim() || ""}
+                        </Typography>
+                      </Box>
+
+                      <Stack
+                        direction="row"
+                        alignItems="center"
+                        spacing={1}
+                        sx={{
+                          pr: 2,
+                          position: "absolute",
+                          bottom: theme.spacing(3),
+                          width: "-webkit-fill-available",
+                        }}
+                      >
+                        <Avatar
+                          src="https://cdn.icon-icons.com/icons2/1879/PNG/512/iconfinder-1-avatar-2754574_120513.png"
+                          sx={{ height: 45, width: 45 }}
+                        />
+
+                        <Stack sx={{ flex: 1 }}>
+                          <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                            {name}
+                          </Typography>
+                          <Typography variant="body2" color="grey.grey4">
+                            @{username}
+                          </Typography>
+                        </Stack>
+
+                        <IconButton size="small" color="primary">
+                          <TwitterIcon fontSize="small" />
+                        </IconButton>
+                      </Stack>
+                    </Paper>
+                  </JackInTheBox>
+                );
+              }
+            )}
+          </Masonry>
         </Stack>
-      </Box>
-    </Container>
+      </Container>
+    </Box>
   );
 };
 
