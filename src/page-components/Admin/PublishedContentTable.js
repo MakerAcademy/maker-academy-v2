@@ -1,18 +1,54 @@
 import GreenButton from "@components/buttons/GreenButton";
+import ConfirmationDialog from "@components/ConfirmationDialog";
 import DashboardPaper from "@components/DashboardPaper";
-import { useAppSelector } from "@hooks/useRedux";
-import {
-  approveRejectContent,
-  deleteContent,
-  listenUserContent,
-} from "@lib/content";
+import { deleteContent } from "@lib/content";
 import EditIcon from "@mui/icons-material/Edit";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import { Box, Button, Stack, Typography } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import moment from "moment";
 import useTranslation from "next-translate/useTranslation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+
+const DeleteButton = ({ params }) => {
+  const [open, setOpen] = useState(false);
+  const { t } = useTranslation("creator-studio");
+
+  const handleAccept = () => {
+    deleteContent(
+      params.row.data.id,
+      params.row.data.published,
+      params.row.data.contentType
+    ).then(() => {
+      setOpen(true);
+    });
+  };
+
+  return (
+    <>
+      <Button
+        variant="contained"
+        size="small"
+        color="error"
+        onClick={() => setOpen(true)}
+        sx={{ height: 38, px: 3, borderRadius: "8px", fontWeight: 600 }}
+      >
+        {t("delete")}
+      </Button>
+
+      <ConfirmationDialog
+        open={open}
+        handleAccept={handleAccept}
+        handleReject={() => setOpen(false)}
+        title={`Delete ${params.row.data.title}`}
+        description={`Are you sure you want to delete this ${params.row.data.contentType}?`}
+        acceptText="Delete"
+        rejectText="No"
+        acceptColor="error"
+      />
+    </>
+  );
+};
 
 const buildRows = (data, t) => {
   const rows = data?.map?.(({ metadata, ...item }, i) => ({
@@ -22,7 +58,7 @@ const buildRows = (data, t) => {
     contentType: t(item.contentType),
     title: metadata.title,
     date: moment(item.timestamp?.toDate?.()).format("MMM DD, YY - HH:mm"),
-    data: item,
+    data: { ...item, ...metadata },
   }));
 
   return rows || [];
@@ -30,7 +66,7 @@ const buildRows = (data, t) => {
 
 const buildColumns = (t) => {
   return [
-      { field: "id", headerName: "ID", width: 100 },
+    { field: "id", headerName: "ID", width: 100 },
     {
       field: "thumbnail",
       headerName: t("thumbnail"),
@@ -96,21 +132,7 @@ const buildColumns = (t) => {
             {t("open")}
           </GreenButton>
 
-          <Button
-            variant="contained"
-            size="small"
-            color="error"
-            onClick={() =>
-              deleteContent(
-                params.row.data.id,
-                params.row.data.published,
-                params.row.data.contentType
-              )
-            }
-            sx={{ height: 38, px: 3, borderRadius: "8px", fontWeight: 600 }}
-          >
-            {t("delete")}
-          </Button>
+          <DeleteButton params={params} />
         </Stack>
       ),
     },

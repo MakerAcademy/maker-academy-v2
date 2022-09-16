@@ -2,6 +2,7 @@ const themeTypography = {
   fontFamily: "SF, sans-serif",
   htmlFontSize: 16,
   fontSize: 16,
+  fontWeight: 400,
   caption: {
     fontSize: "0.85rem",
     fontWeight: 400,

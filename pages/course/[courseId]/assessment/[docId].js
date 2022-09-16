@@ -33,7 +33,7 @@ export const getServerSideProps = withProtectedUser(
   async (context, { profile }) => {
     try {
       const courseId = context.params.courseId;
-      const docId = context.params.docIdId;
+      const docId = context.params.docId;
 
       const course = await getCourseWithContent(courseId);
 
@@ -51,7 +51,7 @@ export const getServerSideProps = withProtectedUser(
       if (docFound) {
         assessment = await getAssessmentWithContent(docId);
       } else {
-        return { redirect: { destination: `/course/${courseId}` } };
+        // return { redirect: { destination: `/course/${courseId}` } };
       }
 
       return {

@@ -14,7 +14,6 @@ import {
   getLevel,
   parseDepths,
 } from "@utils/markdown";
-import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import MarkdownBody from "./MarkdownBody";
@@ -119,13 +118,18 @@ const ContentDocument = ({ data = {}, hideScrollspy, previewMode }) => {
                 mb: 3,
               }}
             >
-              <Image
+              <img
                 src={thumbnail}
-                loader={() => thumbnail}
                 alt={title}
-                layout="fill"
-                objectFit="cover"
+                onError={(e) => {
+                  e.target.src =
+                    "https://thumbs.dreamstime.com/b/bitcoin-banner-golden-digital-currency-cryptocurrency-futuristic-money-technology-worldwide-network-concept-vector-206771631.jpg";
+                  return true;
+                }}
                 style={{
+                  height: "100%",
+                  width: "100%",
+                  objectFit: "cover",
                   borderRadius: "12px",
                 }}
               />
