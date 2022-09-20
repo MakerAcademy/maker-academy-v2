@@ -16,8 +16,11 @@ const Title = ({ sx = {}, variant = "h6", children, ...other }) => {
 
   return (
     <Typography
-      variant={typeof variant !== "object" ? variant : "h6"}
+      variant={
+        typeof variant !== "object" ? variant : variant === "h7" ? "h6" : "h6"
+      }
       sx={{
+        fontWeight: 600,
         color: "text.title",
         typography: typeof _variant === "object" && _variant,
         ...sx,

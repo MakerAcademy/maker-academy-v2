@@ -14,6 +14,13 @@ const components = {
       fontSize: "1rem",
     },
   },
+  MuiTooltip: {
+    styleOverrides: {
+      tooltip: {
+        fontWeight: 400,
+      },
+    },
+  },
 };
 
 export default components;

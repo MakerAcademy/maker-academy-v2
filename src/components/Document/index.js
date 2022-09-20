@@ -1,10 +1,21 @@
 import ScrollSpy from "@components/ScrollSpy";
 import Title from "@components/Title";
+import { BRANDS, CONTENT_CARD_BRAND_STYLES } from "@constants/index";
 import useDocRead from "@hooks/useDocRead";
 import { useAppSelector } from "@hooks/useRedux";
 import { listenOneContent } from "@lib/content";
 import { updateUserReadDocument } from "@lib/document";
-import { Box, Container, Hidden, Stack, Typography } from "@mui/material";
+import { getContact } from "@lib/user";
+import {
+  Avatar,
+  Box,
+  Container,
+  Hidden,
+  Stack,
+  Typography,
+  useTheme,
+} from "@mui/material";
+import { grey } from "@mui/material/colors";
 import DocMetadata from "@page-components/Document/DocMetadata";
 import {
   addChapters,
@@ -14,13 +25,61 @@ import {
   getLevel,
   parseDepths,
 } from "@utils/markdown";
+import useTranslation from "next-translate/useTranslation";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import MarkdownBody from "./MarkdownBody";
 
+export const AuthorInBanner = ({ author, brand }) => {
+  const [name, setName] = useState(brand);
+
+  useEffect(() => {
+    if (!brand && author) {
+      getContact(author).then((res) => {
+        setName(`${res.firstName || ""} ${res.lastName || ""}`);
+      });
+    }
+  }, []);
+
+  return (
+    <Box
+      sx={{
+        position: "absolute",
+        right: "20px",
+        bottom: "20px",
+        bgcolor: "white",
+        borderRadius: "24px",
+        px: 2,
+        py: 1.5,
+      }}
+    >
+      <Stack direction="row" alignItems="center" spacing={1}>
+        <Avatar
+          src={CONTENT_CARD_BRAND_STYLES[brand]}
+          sx={{ height: "40px", width: "40px" }}
+        />
+
+        <Stack>
+          <Typography
+            variant="body2"
+            sx={{ fontWeight: 300, color: grey[500] }}
+          >
+            Author
+          </Typography>
+          <Typography variant="body2" sx={{ fontWeight: 500 }}>
+            {name}
+          </Typography>
+        </Stack>
+      </Stack>
+    </Box>
+  );
+};
+
 const ContentDocument = ({ data = {}, hideScrollspy, previewMode }) => {
   const { user } = useAppSelector((state) => state.user);
   const { profile } = useAppSelector((state) => state.profile);
+  const { t } = useTranslation("content");
+  const theme = useTheme();
 
   const [document, setDocument] = useState(data);
   const [ids, setIds] = useState([]);
@@ -36,6 +95,7 @@ const ContentDocument = ({ data = {}, hideScrollspy, previewMode }) => {
     duration,
     markdown,
     timestamp,
+    category,
     updatedTimestamp,
     contributors,
     level,
@@ -130,9 +190,30 @@ const ContentDocument = ({ data = {}, hideScrollspy, previewMode }) => {
                   height: "100%",
                   width: "100%",
                   objectFit: "cover",
-                  borderRadius: "12px",
+                  borderRadius: "24px",
+                  maxHeight: "300px",
+                  boxShadow: theme.palette.boxShadows.shadow6,
                 }}
               />
+
+              <AuthorInBanner author="oPnHYU4OSFihf6MIG8T7" />
+
+              <Stack
+                alignItems="center"
+                justifyContent="center"
+                sx={{
+                  bgcolor: "#333333",
+                  color: "white",
+                  borderRadius: "6px",
+                  position: "absolute",
+                  top: "20px",
+                  left: "20px",
+                  px: 1,
+                  py: 0.7,
+                }}
+              >
+                <Typography variant="caption">{t(category)}</Typography>
+              </Stack>
             </Box>
 
             {/* Title */}

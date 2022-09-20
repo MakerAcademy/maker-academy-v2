@@ -10,7 +10,10 @@ const LandingLayout = ({ children }) => {
 
   const { pathname, query } = useRouter();
   const transparent =
-    pathname === "/" || pathname === "/home" || pathname.startsWith("/about");
+    pathname === "/" ||
+    pathname === "/home" ||
+    pathname.startsWith("/about") ||
+    pathname.startsWith("/content");
 
   const withElevation = query.courseId && query.docId;
 

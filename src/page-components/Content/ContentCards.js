@@ -50,6 +50,10 @@ const ContentCards = ({ query }) => {
 
   return (
     <Box>
+      <Title variant={{ xs: "h5", md: "h4" }} sx={{ mb: 2 }}>
+        All Content ({content?.length || 0})
+      </Title>
+
       <Grid container spacing={4}>
         {content?.length > 0 &&
           content.map((item, i) => (

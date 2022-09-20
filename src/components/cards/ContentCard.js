@@ -217,7 +217,7 @@ const ContentCard = ({
                   <Typography
                     // variant="body2"
                     sx={{
-                      fontWeight: 400,
+                      fontWeight: 300,
                       maxHeight: 44,
                       overflow: "hidden",
                       textOverflow: "ellipsis",

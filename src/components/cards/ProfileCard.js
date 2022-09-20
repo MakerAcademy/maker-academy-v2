@@ -3,7 +3,6 @@ import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import {
   Avatar,
@@ -47,13 +46,6 @@ const ProfileCard = ({
       }}
       onClick={() => Router.push(`/u/${id}`)}
     >
-      {/* <IconButton
-        sx={{ position: "absolute", top: 10, right: 10 }}
-        size="small"
-      >
-        <MoreVertIcon fontSize="small" />
-      </IconButton> */}
-
       <Stack
         alignItems="center"
         justifyContent="center"

@@ -79,7 +79,9 @@ const LearnContentDrawer = ({ course }) => {
         direction="row"
         alignItems="center"
         justifyContent="space-between"
-        sx={{ mb: 1 }}
+        sx={{
+          mb: 1,
+        }}
       >
         <Typography>Content</Typography>
 
@@ -87,6 +89,7 @@ const LearnContentDrawer = ({ course }) => {
           <MenuOpenIcon />
         </IconButton>
       </Stack>
+
       <List>
         {Object.values(carriculum).map((section, i) => {
           return (
@@ -188,6 +191,9 @@ const LearnContentDrawer = ({ course }) => {
           PaperProps={{
             elevation: 0,
             sx: {
+              "&::-webkit-scrollbar": {
+                display: "none",
+              },
               width: DRAWER_WIDTH,
             },
           }}
@@ -206,6 +212,9 @@ const LearnContentDrawer = ({ course }) => {
             PaperProps={{
               elevation: 0,
               sx: {
+                "&::-webkit-scrollbar": {
+                  display: "none",
+                },
                 width: DRAWER_WIDTH,
               },
             }}

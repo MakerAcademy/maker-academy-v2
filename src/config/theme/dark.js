@@ -11,7 +11,7 @@ export const darkTheme = {
       invert: "#425466",
     },
     grey: {
-      grey1: '#24252A',
+      grey1: "#24252A",
       grey2: grey[800],
       grey3: grey[700],
       grey4: grey[600],
@@ -31,6 +31,16 @@ export const darkTheme = {
       paper: "rgba(46,48,53,1)",
       gradient1:
         "linear-gradient(87deg, rgba(46,48,53,1) 0%, rgba(46,48,53,1) 46%, rgba(49,52,58,1) 100%)",
+    },
+    boxShadows: {
+      shadow1: "0px 1px 2px rgba(0, 0, 0, 0.12)",
+      shadow2: "0px 8px 16px rgba(0, 0, 0, 0.12)",
+      shadow3: "0px 12px 24px -4px rgba(0, 0, 0, 0.12)",
+      shadow4: "0px 16px 32px -4px rgba(0, 0, 0, 0.12)",
+      shadow5: "0px 20px 40px -4px rgba(0, 0, 0, 0.12)",
+      shadow6: "0px 24px 48px rgba(0, 0, 0, 0.2)",
+      shadow7: "0px 24px 48px rgba(0, 0, 0, 0.2)",
+      shadow8: "0px 24px 48px rgba(0, 0, 0, 0.2)",
     },
   },
   components,

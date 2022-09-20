@@ -74,19 +74,19 @@ const ScrollSpy = ({ title, data }) => {
                   <ListItem
                     button
                     sx={{
-                      py: 1.5,
+                      py: 1,
                       [theme.breakpoints.up("md")]: {
                         ml,
                       },
                     }}
                   >
                     <Stack direction="row" spacing={1}>
-                      <Typography variant={"body2"} sx={{ fontWeight: 500 }}>
+                      <Typography variant={"body2"} sx={{ fontWeight: 400 }}>
                         {item.chapter}.
                       </Typography>
 
                       <Hidden mdDown>
-                        <Typography variant={"body2"} sx={{ fontWeight: 500 }}>
+                        <Typography variant={"body2"} sx={{ fontWeight: 400 }}>
                           {item.title}
                         </Typography>
                       </Hidden>

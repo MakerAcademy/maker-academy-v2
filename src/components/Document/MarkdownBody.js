@@ -19,6 +19,9 @@ import RemarkMathPlugin from "remark-math";
 const HeadingRenderer = (props) => {
   const level = props.level;
 
+  const _variant = props.level + 1;
+  const _fontSize = _variant === 2 ? "2.6rem" : null;
+
   var children = React.Children.toArray(props.children);
   if (children?.[0]?.props?.children) {
     children = React.Children.toArray(children?.[0]?.props?.children);
@@ -27,17 +30,18 @@ const HeadingRenderer = (props) => {
   var slug = createSlug(text);
 
   const isBigText = [1, 2].includes(level);
-  const align = props.align || "center";
+  const align = props.align || "left";
 
   return (
     <Fade triggerOnce>
       <Title
-        variant={`h${level}`}
+        variant={`h${_variant}`}
         sx={{
           my: isBigText ? 2 : 1.2,
           py: isBigText && 0.5,
+          fontSize: _fontSize,
           // pt: 3,
-          textAlign: isBigText && align,
+          textAlign: align,
           color: "text.title",
           ...(props.sx || {}),
         }}

@@ -295,216 +295,212 @@ const FilterMenu = () => {
   };
 
   return (
-    <Box sx={{ py: 2, background: theme.palette.background.gradient1 }}>
-      <Container
-        maxWidth="lg"
-        sx={{
-          [theme.breakpoints.up("md")]: {
-            px: 8,
-          },
-          [theme.breakpoints.up("lg")]: {
-            px: 3,
-          },
-        }}
+    <Box
+    // sx={{
+    //   [theme.breakpoints.up("md")]: {
+    //     px: 8,
+    //   },
+    //   [theme.breakpoints.up("lg")]: {
+    //     px: 3,
+    //   },
+    // }}
+    >
+      <Stack
+        direction={{ xs: "column", md: "row" }}
+        alignItems="center"
+        justifyContent="space-between"
+        spacing={2}
       >
-        <Stack
-          direction={{ xs: "column", md: "row" }}
-          alignItems="center"
-          justifyContent="space-between"
-          spacing={2}
-        >
-          {/* Left side */}
-          <Stack direction="row" alignItems="center" spacing={1}>
-            <Typography sx={{ pr: 2 }}>Type:</Typography>
+        {/* Left side */}
+        <Stack direction="row" alignItems="center" spacing={1}>
+          <Typography sx={{ pr: 2 }}>Type:</Typography>
 
-            {/* all */}
-            <Button
-              variant="contained"
-              disableElevation
-              sx={typeBtnCommonStyles(
-                theme,
-                filters?.contentType === "all" || !filters?.contentType
-              )}
-              onClick={() => handleTypeChange("all")}
-            >
-              {t("all")}
-            </Button>
-
-            {/* documents */}
-            <Button
-              variant="contained"
-              disableElevation
-              sx={typeBtnCommonStyles(
-                theme,
-                filters?.contentType === "documents"
-              )}
-              onClick={() => handleTypeChange("documents")}
-            >
-              {t("articles")}
-            </Button>
-
-            {/* courses */}
-            <Button
-              variant="contained"
-              disableElevation
-              sx={typeBtnCommonStyles(
-                theme,
-                filters?.contentType === "courses"
-              )}
-              onClick={() => handleTypeChange("courses")}
-            >
-              {t("courses")}
-            </Button>
-
-            <Hidden smDown>
-              {filterOpen && (
-                <StyledSearch
-                  value={filters?.searchTerm || ""}
-                  dispatch={dispatch}
-                  placeholder={t("search")}
-                />
-              )}
-            </Hidden>
-          </Stack>
-
-          {/* Right side */}
+          {/* all */}
           <Button
-            ref={openFilterBtnRef}
-            onClick={triggerFilterDrawer}
-            color="inherit"
-            sx={{ textTransform: "inherit" }}
+            variant="contained"
+            disableElevation
+            sx={typeBtnCommonStyles(
+              theme,
+              filters?.contentType === "all" || !filters?.contentType
+            )}
+            onClick={() => handleTypeChange("all")}
           >
-            <Stack direction="row" alignItems="center" spacing={0.5}>
-              <Typography>
-                {filterOpen ? t("close_filter") : t("open_filter")}
-              </Typography>
-
-              {filterOpen ? (
-                <KeyboardArrowUpIcon sx={{ fontSize: 16 }} />
-              ) : (
-                <KeyboardArrowDownIcon sx={{ fontSize: 16 }} />
-              )}
-            </Stack>
+            {t("all")}
           </Button>
+
+          {/* documents */}
+          <Button
+            variant="contained"
+            disableElevation
+            sx={typeBtnCommonStyles(
+              theme,
+              filters?.contentType === "documents"
+            )}
+            onClick={() => handleTypeChange("documents")}
+          >
+            {t("articles")}
+          </Button>
+
+          {/* courses */}
+          <Button
+            variant="contained"
+            disableElevation
+            sx={typeBtnCommonStyles(theme, filters?.contentType === "courses")}
+            onClick={() => handleTypeChange("courses")}
+          >
+            {t("courses")}
+          </Button>
+
+          <Hidden smDown>
+            {filterOpen && (
+              <StyledSearch
+                value={filters?.searchTerm || ""}
+                dispatch={dispatch}
+                placeholder={t("search")}
+              />
+            )}
+          </Hidden>
         </Stack>
 
-        <Collapse in={filterOpen} timeout="auto" unmountOnExit>
-          <Grid container spacing={5} sx={{ py: 5 }}>
-            <Hidden smUp>
-              <Grid item xs={12}>
-                <StyledSearch
-                  placeholder={t("search")}
-                  value={filters?.searchTerm || ""}
-                  dispatch={dispatch}
-                />
-              </Grid>
-            </Hidden>
+        {/* Right side */}
+        <Button
+          ref={openFilterBtnRef}
+          onClick={triggerFilterDrawer}
+          color="inherit"
+          sx={{ textTransform: "inherit" }}
+        >
+          <Stack direction="row" alignItems="center" spacing={0.5}>
+            <Typography>
+              {filterOpen ? t("close_filter") : t("open_filter")}
+            </Typography>
 
-            {/* Categories */}
-            <Grid item xs={12} md={7}>
-              <Typography variant="body2" sx={{ mb: 1 }}>
-                {!filters?.searchTerm ? t("categories") : t("category")}:
-              </Typography>
+            {filterOpen ? (
+              <KeyboardArrowUpIcon sx={{ fontSize: 16 }} />
+            ) : (
+              <KeyboardArrowDownIcon sx={{ fontSize: 16 }} />
+            )}
+          </Stack>
+        </Button>
+      </Stack>
 
-              {filters?.searchTerm ? (
+      <Collapse in={filterOpen} timeout="auto" unmountOnExit>
+        <Grid container spacing={5} sx={{ py: 5 }}>
+          <Hidden smUp>
+            <Grid item xs={12}>
+              <StyledSearch
+                placeholder={t("search")}
+                value={filters?.searchTerm || ""}
+                dispatch={dispatch}
+              />
+            </Grid>
+          </Hidden>
+
+          {/* Categories */}
+          <Grid item xs={12} md={6}>
+            <Stack spacing={3}>
+              {/* Difficulty */}
+              <Box>
+                <Typography variant="body2" sx={{ mb: 1 }}>
+                  {t("difficulty")}:
+                </Typography>
+
                 <Stack direction="row" flexWrap="wrap">
-                  {CONTENT_CATEGORIES.map((item, i) => (
+                  {CONTENT_DIFFICULTY_LEVELS.map((item, i) => (
                     <StyledChip
-                      name="category"
+                      name="difficulty"
                       label={t(item)}
                       slug={item}
                       key={i}
-                      filters={filters?.category}
+                      filters={filters?.difficulty}
                       dispatch={dispatch}
                       toggle
                     />
                   ))}
                 </Stack>
-              ) : (
-                <Stack direction="row" flexWrap="wrap">
-                  {CONTENT_CATEGORIES.map((item, i) => (
-                    <StyledChip
-                      name="categories"
-                      label={t(item)}
-                      slug={item}
-                      key={i}
-                      filters={filters?.categories}
-                      dispatch={dispatch}
-                      toggle={!!filters?.searchTerm}
-                    />
-                  ))}
-                </Stack>
-              )}
-            </Grid>
+              </Box>
 
-            <Grid item xs={12} md={5}>
-              <Stack spacing={3}>
-                {/* Difficulty */}
-                <Box>
-                  <Typography variant="body2" sx={{ mb: 1 }}>
-                    {t("difficulty")}:
-                  </Typography>
+              <Box>
+                <Typography variant="body2" sx={{ mb: 1 }}>
+                  {!filters?.searchTerm ? t("categories") : t("category")}:
+                </Typography>
 
+                {filters?.searchTerm ? (
                   <Stack direction="row" flexWrap="wrap">
-                    {CONTENT_DIFFICULTY_LEVELS.map((item, i) => (
+                    {CONTENT_CATEGORIES.map((item, i) => (
                       <StyledChip
-                        name="difficulty"
+                        name="category"
                         label={t(item)}
                         slug={item}
                         key={i}
-                        filters={filters?.difficulty}
+                        filters={filters?.category}
                         dispatch={dispatch}
                         toggle
                       />
                     ))}
                   </Stack>
-                </Box>
-
-                {/* Creator */}
-                <Box>
-                  <Typography variant="body2" sx={{ mb: 1 }}>
-                    {t("creator")}:
-                  </Typography>
-
+                ) : (
                   <Stack direction="row" flexWrap="wrap">
-                    {BRANDS.map((item, i) => (
+                    {CONTENT_CATEGORIES.map((item, i) => (
                       <StyledChip
-                        name="author"
+                        name="categories"
                         label={t(item)}
                         slug={item}
                         key={i}
-                        filters={filters?.author}
+                        filters={filters?.categories}
                         dispatch={dispatch}
-                        toggle
+                        toggle={!!filters?.searchTerm}
                       />
                     ))}
                   </Stack>
-                </Box>
-              </Stack>
-            </Grid>
+                )}
+              </Box>
+            </Stack>
           </Grid>
 
-          <Stack
-            direction="row"
-            alignItems="center"
-            justifyContent="flex-end"
-            spacing={2}
-            sx={{ pb: 1 }}
-          >
-            <GreenButton size="small" onClick={() => handleApplyFilter()}>
-              {t("apply_filters")}
-            </GreenButton>
+          <Grid item xs={12} md={6}>
+            {/* Creator */}
+            <Box>
+              <Typography variant="body2" sx={{ mb: 1 }}>
+                {t("creator")}:
+              </Typography>
 
-            <GreenButton
-              variant="outlined"
-              size="small"
-              onClick={() => dispatch({ type: "RESET" })}
-            >
-              {t("clear_filters")}
-            </GreenButton>
-          </Stack>
-        </Collapse>
-      </Container>
+              <Stack direction="row" flexWrap="wrap">
+                {BRANDS.map((item, i) => (
+                  <StyledChip
+                    name="author"
+                    label={t(item)}
+                    slug={item}
+                    key={i}
+                    filters={filters?.author}
+                    dispatch={dispatch}
+                    toggle
+                  />
+                ))}
+              </Stack>
+            </Box>
+          </Grid>
+        </Grid>
+
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="flex-end"
+          spacing={2}
+          sx={{ pb: 1 }}
+        >
+          <GreenButton size="small" onClick={() => handleApplyFilter()}>
+            {t("apply_filters")}
+          </GreenButton>
+
+          <GreenButton
+            variant="outlined"
+            size="small"
+            onClick={() => dispatch({ type: "RESET" })}
+          >
+            {t("clear_filters")}
+          </GreenButton>
+        </Stack>
+      </Collapse>
 
       <FilterTooltip openFilterBtnRef={openFilterBtnRef} />
     </Box>

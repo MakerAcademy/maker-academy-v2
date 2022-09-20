@@ -32,29 +32,30 @@ const MENU_ITEMS = [
   {
     trustLevel: 2,
     text: "creator_studio",
+    link: "/app/studio",
     icon: OndemandVideoIcon,
-    nestedItems: [
-      {
-        link: "/app/studio",
-        trustLevel: 2,
-        text: "my_content",
-      },
-      {
-        link: "/app/studio/new/document",
-        trustLevel: 2,
-        text: "new_document",
-      },
-      {
-        link: "/app/studio/new/course",
-        trustLevel: 2,
-        text: "new_course",
-      },
-      {
-        link: "/app/studio/new/assessment",
-        trustLevel: 2,
-        text: "new_assessment",
-      },
-    ],
+    // nestedItems: [
+    //   {
+    //     link: "/app/studio",
+    //     trustLevel: 2,
+    //     text: "my_content",
+    //   },
+    //   {
+    //     link: "/app/studio/new/document",
+    //     trustLevel: 2,
+    //     text: "new_document",
+    //   },
+    //   {
+    //     link: "/app/studio/new/course",
+    //     trustLevel: 2,
+    //     text: "new_course",
+    //   },
+    //   {
+    //     link: "/app/studio/new/assessment",
+    //     trustLevel: 2,
+    //     text: "new_assessment",
+    //   },
+    // ],
   },
   {
     link: "/app/admin",
@@ -179,19 +180,29 @@ const Content = () => {
             sx={{
               display: "flex",
               alignItems: "center",
-              p: theme.spacing(2, 2.5),
-              borderRadius: "12px",
+              borderRadius: "24px",
+              px: 2,
+              py: 1.5,
               bgcolor: "grey.grey2",
             }}
           >
-            <Avatar src={profile?.profilePicture} alt="photoURL" />
+            <Avatar
+              src={profile?.profilePicture}
+              alt="photoURL"
+              sx={{ height: "40px", width: "40px" }}
+            />
 
-            <Box sx={{ ml: 2 }}>
-              <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                {profile?.firstName} {profile?.lastName}
+            <Box sx={{ ml: 1 }}>
+              <Typography
+                variant="body2"
+                sx={{ fontWeight: 300, color: "grey.grey6" }}
+              >
+                {t(profile?.role)}
               </Typography>
 
-              <Typography variant="caption">{t(profile?.role)}</Typography>
+              <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                {profile?.firstName} {profile?.lastName}
+              </Typography>
             </Box>
           </Box>
         </Link>

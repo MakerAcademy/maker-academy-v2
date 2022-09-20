@@ -126,6 +126,11 @@ const LandingFooter = ({}) => {
         style={{
           position: "absolute",
           zIndex: -1,
+          left: 0,
+          height: "120%",
+          width: "100%",
+          objectFit: "contain",
+          objectPosition: "left",
         }}
       />
 

@@ -13,7 +13,7 @@ const GreenButton = (
       fullWidth={fullWidth}
       variant="contained"
       sx={{
-        fontWeight: 600,
+        fontWeight: 500,
         backgroundColor:
           variant == "outlined" ? "transparent" : theme.palette.primary.main,
         border: `2px solid ${theme.palette.primary.main}`,

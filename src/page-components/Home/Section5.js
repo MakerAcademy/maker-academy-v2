@@ -73,8 +73,9 @@ const Section5 = () => {
           style={{
             position: "absolute",
             zIndex: -1,
-            width: "100%",
-            // filter: "blur(50px)",
+            objectPosition: "left",
+            objectFit: "contain",
+            filter: "blur(20px)",
           }}
         />
 
