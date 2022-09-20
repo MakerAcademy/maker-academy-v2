@@ -74,7 +74,7 @@ const AssessmentPage = ({ assessment }) => {
         <Stack
           alignItems="center"
           justifyContent="center"
-          sx={{ minHeight: "81vh" }}
+          sx={{ minHeight: "70vh" }}
           spacing={2}
         >
           <Progress

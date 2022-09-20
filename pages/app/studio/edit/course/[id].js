@@ -68,14 +68,12 @@ const EditCoursePage = ({ course, profile, user }) => {
         Qui aliqua Lorem nisi quis ut nisi ad excepteur sit eiusmod velit.
       </Typography>
 
-      <DashboardPaper>
-        <CourseForm
-          handleSubmit={handleCourseSubmit}
-          values={course}
-          edit
-          editableFields={isRestricted ? editableFields : null}
-        />
-      </DashboardPaper>
+      <CourseForm
+        handleSubmit={handleCourseSubmit}
+        values={course}
+        edit
+        editableFields={isRestricted ? editableFields : null}
+      />
     </Box>
   );
 };

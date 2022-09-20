@@ -2,8 +2,10 @@ import { NAVBAR_HEIGHT_DESKTOP, NAVBAR_HEIGHT_MOBILE } from "@constants/";
 import { withProtectedUser } from "@hoc/routes";
 import { getAssessmentWithContent } from "@lib/assessment";
 import { getCourseWithContent } from "@lib/course";
-import { Box, useTheme } from "@mui/material";
+import { Box, Container, Paper, Stack, useTheme } from "@mui/material";
 import AssessmentPage from "@page-components/Assessment";
+import CourseBreadrumbsNav from "@page-components/Course/CourseBreadrumbsNav";
+import LearnContentDrawer from "@page-components/Course/LearnContentDrawer";
 import ErrorPage from "@page-components/Error";
 
 const LearnContent = ({ course, assessment }) => {
@@ -12,18 +14,27 @@ const LearnContent = ({ course, assessment }) => {
   if (!assessment) return <ErrorPage />;
 
   return (
-    <Box
-      sx={{
-        maxWidth: "100vw",
-        position: "relative",
-        pt: `${NAVBAR_HEIGHT_MOBILE}px`,
-        [theme.breakpoints.up("md")]: {
-          pt: `${NAVBAR_HEIGHT_DESKTOP}px`,
-        },
-      }}
-    >
-      <AssessmentPage assessment={assessment} />
-    </Box>
+    <>
+      <Box>
+        <LearnContentDrawer course={course} />
+      </Box>
+
+      <Box
+        sx={{
+          maxWidth: "100vw",
+        }}
+      >
+        <Container maxWidth="md" sx={{ mt: 8 }}>
+          <CourseBreadrumbsNav
+            course={course}
+            _document={assessment}
+            type="assessment"
+          />
+        </Container>
+
+        <AssessmentPage assessment={assessment} />
+      </Box>
+    </>
   );
 };
 

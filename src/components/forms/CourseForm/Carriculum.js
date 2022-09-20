@@ -48,7 +48,7 @@ const CourseCarriculum = ({ control, name }) => {
   useEffect(() => {
     const timer = setTimeout(async () => {
       const data =
-        user?.trustlevel > 3
+        user?.trustLevel > 3
           ? await getAllDocumentsAdmin()
           : await getUserDocuments(profile?.id);
 

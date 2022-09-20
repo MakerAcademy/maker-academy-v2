@@ -183,7 +183,7 @@ const Content = () => {
               borderRadius: "24px",
               px: 2,
               py: 1.5,
-              bgcolor: "grey.grey2",
+              bgcolor: "grey.grey1",
             }}
           >
             <Avatar
@@ -258,7 +258,7 @@ const DashboardSidebar = () => {
           PaperProps={{
             sx: {
               width: DASHBOARD_SIDE_DRAWER_WIDTH,
-              bgcolor: "background.default",
+              bgcolor: "background.main",
             },
           }}
         >

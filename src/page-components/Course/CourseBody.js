@@ -22,6 +22,7 @@ import DefaultCourseImage from "@assets/images/misc/course-default.png";
 import CourseBreadcrumbs from "./CourseBreadcrumbs";
 import CourseMetadata from "./CourseMetadata";
 import { CommonContext } from "@context/commonContext";
+import { AuthorInBanner } from "@components/Document";
 
 const CourseBody = ({ course = {} }) => {
   const theme = useTheme();
@@ -34,12 +35,13 @@ const CourseBody = ({ course = {} }) => {
     title,
     description,
     category,
-    brand,
+    metadata,
     level,
     duration,
     likes,
     views,
     enrolledUsers,
+    author,
     carriculum,
     learningOutcomes = [],
     id,
@@ -119,6 +121,8 @@ const CourseBody = ({ course = {} }) => {
                 borderRadius: "inherit",
               }}
             />
+
+            <AuthorInBanner author={author} brand={metadata?.brand} />
           </Paper>
 
           <Box sx={{ mb: 2 }}>

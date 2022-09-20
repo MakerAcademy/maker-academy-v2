@@ -28,6 +28,7 @@ export const lightTheme = {
     },
     background: {
       default: "#F6FAF9",
+      main: "#fff",
       dark: "#333333",
       gradient1:
         "linear-gradient(335deg, rgba(245,252,239,1) 13%, rgba(250,255,247,1) 38%, rgba(255,255,255,1) 100%)",

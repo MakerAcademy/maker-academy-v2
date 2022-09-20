@@ -100,7 +100,7 @@ const ContentDocument = ({ data = {}, hideScrollspy, previewMode }) => {
     contributors,
     level,
     views,
-    likes,
+    metadata,
     author,
     thumbnail = "https://thumbs.dreamstime.com/b/bitcoin-banner-golden-digital-currency-cryptocurrency-futuristic-money-technology-worldwide-network-concept-vector-206771631.jpg",
   } = document || {};
@@ -196,7 +196,7 @@ const ContentDocument = ({ data = {}, hideScrollspy, previewMode }) => {
                 }}
               />
 
-              <AuthorInBanner author="oPnHYU4OSFihf6MIG8T7" />
+              <AuthorInBanner author={author} brand={metadata?.brand} />
 
               <Stack
                 alignItems="center"

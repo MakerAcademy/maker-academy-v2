@@ -27,6 +27,7 @@ export const darkTheme = {
     },
     background: {
       default: "#1A1B1F",
+      main: "#2F3237",
       dark: "#333333",
       paper: "rgba(46,48,53,1)",
       gradient1:

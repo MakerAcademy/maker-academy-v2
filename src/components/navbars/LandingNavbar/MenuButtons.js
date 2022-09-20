@@ -20,6 +20,7 @@ const MenuButtons = ({ menuItems = [], theme }) => {
               fontSize: 20,
               textTransform: "inherit",
               fontWeight: 500,
+              // fontWeight: "heavy",
               "&:hover": {
                 color: theme.palette.primary.main,
               },

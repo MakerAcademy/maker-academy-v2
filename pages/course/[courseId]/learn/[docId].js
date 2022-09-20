@@ -1,10 +1,9 @@
-import ContentDocument from "@components/Document";
 import CourseDocument from "@components/Document/CourseDocument";
-import { NAVBAR_HEIGHT_DESKTOP, NAVBAR_HEIGHT_MOBILE } from "@constants/";
 import { withProtectedUser } from "@hoc/routes";
 import { getCourseWithContent } from "@lib/course";
 import { getDocumentWithContent } from "@lib/document";
 import { Box, Container, Stack, useTheme } from "@mui/material";
+import CourseBreadrumbsNav from "@page-components/Course/CourseBreadrumbsNav";
 import LearnContentDrawer from "@page-components/Course/LearnContentDrawer";
 import ErrorPage from "@page-components/Error";
 
@@ -21,6 +20,10 @@ const LearnContent = ({ course, document: _document }) => {
 
       <Box sx={{ width: "100%" }}>
         <Container maxWidth="md" sx={{ py: 8 }}>
+          <Box sx={{ mb: 3 }}>
+            <CourseBreadrumbsNav course={course} _document={_document} />
+          </Box>
+
           <CourseDocument data={_document} hideScrollspy />
         </Container>
       </Box>
