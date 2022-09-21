@@ -3,7 +3,7 @@ import Hero1 from "@assets/images/misc/components/hero1.png";
 import Quote from "@assets/images/misc/components/quote.png";
 import Box from "@assets/images/misc/components/box.png";
 import CTABox from "@assets/images/misc/components/cta.png";
-import Vote from "@assets/images/misc/components/Vote.png";
+import Vote from "@assets/images/misc/components/vote.png";
 import Vid from "@assets/images/misc/components/vid.png";
 import Img from "@assets/images/misc/components/img.png";
 import Code from "@assets/images/misc/components/code.png";
