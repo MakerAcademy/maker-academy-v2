@@ -13,7 +13,7 @@ const useDocRead = (_read, delay = 100) => {
 
         if (
           documentHeight <= windowHeight ||
-          scrollPosition > (documentHeight - windowHeight) / 2
+          scrollPosition > (documentHeight - windowHeight) / 3
         ) {
           setRead(true);
         }

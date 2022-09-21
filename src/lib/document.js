@@ -17,7 +17,7 @@ import {
 } from "firebase/firestore";
 import { uploadFile } from "./storage";
 
-const generateSearchTerm = (data) => {
+export const generateDocumentSearchTerm = (data) => {
   let _searchTerm = `${data?.title || ""} ${data?.brand || ""} ${
     data?.shortDescription || ""
   } ${data?.level || ""} ${data?.category || ""}`
@@ -48,7 +48,7 @@ export const submitDocument = async (cid, data = {}) => {
     const docRes = await setDoc(docRef, cleanObject(docPayload));
 
     //searchable term
-    let _searchTerm = generateSearchTerm(obj);
+    let _searchTerm = generateDocumentSearchTerm(obj);
 
     //new content
     const contentRef = doc(collection(db, "content"));
@@ -128,7 +128,7 @@ export const updateDocument = async (data = {}, disableUpdatedTimestamp) => {
     const docRes = await updateDoc(docRef, cleanObject(docPayload));
 
     //searchable term
-    let _searchTerm = generateSearchTerm(obj);
+    let _searchTerm = generateDocumentSearchTerm(obj);
 
     //update content
     const contentRef = doc(db, "content", id);

@@ -1,12 +1,15 @@
 import ContentCard from "@components/cards/ContentCard";
 import DashboardPaper from "@components/DashboardPaper";
 import { withProtectedUser } from "@hoc/routes";
+import { useAppSelector } from "@hooks/useRedux";
 import { getDashboardUserContent } from "@lib/content";
 import { Grid, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 
-const LikedDocuments = ({ profile, user }) => {
+const LikedDocuments = () => {
   const [data, setData] = useState(null);
+
+  const { profile } = useAppSelector((state) => state.profile);
 
   useEffect(() => {
     getDashboardUserContent({

@@ -7,6 +7,7 @@ import {
   Box,
   CardContent,
   Chip,
+  LinearProgress,
   Stack,
   Tooltip,
   Typography,
@@ -69,6 +70,7 @@ const ContentCard = ({
   views = 0,
   likes = 0,
   metadata = {},
+  progress,
 }) => {
   const theme = useTheme();
   const { t } = useTranslation("content");
@@ -234,52 +236,78 @@ const ContentCard = ({
             )}
 
             {/* Meta data */}
-            <Stack
-              direction="row"
-              spacing={1}
-              justifyContent="space-between"
-              alignItems="center"
-              sx={{ mt: 1, width: "100%" }}
-              flexWrap="wrap"
-            >
-              {/* Type */}
-              {contentType === "document" ? (
-                <Stack direction="row" alignItems="center" spacing={0.5}>
-                  <FeedIcon sx={{ fontSize: 22 }} />
-                  <Typography variant="body2" sx={{ pt: 0.15 }}>
-                    {t("article")}
-                  </Typography>
-                </Stack>
-              ) : (
-                <Stack direction="row" alignItems="center" spacing={0.5}>
-                  <SubscriptionsOutlinedIcon sx={{ fontSize: 22 }} />
-                  <Typography variant="body2" sx={{ pt: 0.15 }}>
-                    {t("course")}
-                  </Typography>
-                </Stack>
-              )}
-
-              {/* Duration */}
-              <Stack direction="row" alignItems="center" spacing={0.5}>
-                <AccessTimeIcon sx={{ fontSize: 22 }} />
-                <Typography variant="body2" sx={{ pt: 0.15 }}>
-                  {duration} min
-                </Typography>
-              </Stack>
-
-              {/* Level */}
+            {typeof progress === "undefined" && (
               <Stack
                 direction="row"
+                spacing={1}
+                justifyContent="space-between"
                 alignItems="center"
-                spacing={0.5}
-                sx={{ color: yellow[900] }}
+                sx={{ mt: 1, width: "100%" }}
+                flexWrap="wrap"
               >
-                <AssessmentOutlinedIcon sx={{ fontSize: 22 }} />
-                <Typography variant="body2" sx={{ pt: 0.15 }}>
-                  {t(level)}
-                </Typography>
+                {/* Type */}
+                {contentType === "document" ? (
+                  <Stack direction="row" alignItems="center" spacing={0.5}>
+                    <FeedIcon sx={{ fontSize: 22 }} />
+                    <Typography variant="body2" sx={{ pt: 0.15 }}>
+                      {t("article")}
+                    </Typography>
+                  </Stack>
+                ) : (
+                  <Stack direction="row" alignItems="center" spacing={0.5}>
+                    <SubscriptionsOutlinedIcon sx={{ fontSize: 22 }} />
+                    <Typography variant="body2" sx={{ pt: 0.15 }}>
+                      {t("course")}
+                    </Typography>
+                  </Stack>
+                )}
+
+                {/* Duration */}
+                <Stack direction="row" alignItems="center" spacing={0.5}>
+                  <AccessTimeIcon sx={{ fontSize: 22 }} />
+                  <Typography variant="body2" sx={{ pt: 0.15 }}>
+                    {duration} min
+                  </Typography>
+                </Stack>
+
+                {/* Level */}
+                <Stack
+                  direction="row"
+                  alignItems="center"
+                  spacing={0.5}
+                  sx={{ color: yellow[900] }}
+                >
+                  <AssessmentOutlinedIcon sx={{ fontSize: 22 }} />
+                  <Typography variant="body2" sx={{ pt: 0.15 }}>
+                    {t(level)}
+                  </Typography>
+                </Stack>
               </Stack>
-            </Stack>
+            )}
+
+            {typeof progress !== "undefined" && (
+              <Box sx={{ position: "relative", pt: 1 }}>
+                <LinearProgress
+                  variant="determinate"
+                  value={progress || 0}
+                  sx={{ height: "18px", borderRadius: "4px" }}
+                />
+
+                <Typography
+                  variant="caption"
+                  sx={{
+                    fontWeight: 500,
+                    position: "absolute",
+                    top: "6px",
+                    left: "50%",
+                    transform: `translate(-50%, 0%)`,
+                    // color: "black",
+                  }}
+                >
+                  {progress || 0}%
+                </Typography>
+              </Box>
+            )}
           </Stack>
         </CardContent>
       </Stack>

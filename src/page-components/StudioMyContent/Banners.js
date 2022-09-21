@@ -60,7 +60,7 @@ const CustomCard = ({
           </Link>
         </Stack>
 
-        <Hidden lgDown>
+        {/* <Hidden lgDown>
           <img
             src={image}
             alt={title}
@@ -70,7 +70,7 @@ const CustomCard = ({
               objectFit: "contain",
             }}
           />
-        </Hidden>
+        </Hidden> */}
       </Stack>
     </Box>
   );

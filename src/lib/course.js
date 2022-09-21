@@ -14,7 +14,7 @@ import {
 } from "firebase/firestore";
 import { uploadFile } from "./storage";
 
-const generateSearchTerm = (data) => {
+export const generateCourseSearchTerm = (data) => {
   let _searchTerm = `${data?.title || ""} ${data?.brand || ""} ${
     data?.shortDescription || ""
   } ${data?.level || ""} ${data?.category || ""}`
@@ -42,8 +42,10 @@ export const submitCourse = async (cid, data = {}) => {
     };
     const docRes = await setDoc(docRef, docPayload);
 
+    const _allDocs = obj?.carriculum?.flatMap?.((n) => n.documents);
+
     //searchable term
-    let _searchTerm = generateSearchTerm(obj);
+    let _searchTerm = generateCourseSearchTerm(obj);
 
     // new content
     const contentRef = doc(collection(db, "content"));
@@ -70,6 +72,7 @@ export const submitCourse = async (cid, data = {}) => {
         shortDescription: obj?.shortDescription || "",
         category: obj?.category || "",
         duration: obj?.duration || "",
+        allDocuments: _allDocs || [],
         thumbnail:
           obj?.thumbnail ||
           "https://prod-discovery.edx-cdn.org/media/course/image/0e575a39-da1e-4e33-bb3b-e96cc6ffc58e-8372a9a276c1.png",

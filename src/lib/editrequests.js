@@ -1,4 +1,5 @@
 import { db } from "@config/firebase";
+import { extractFileInObject } from "@utils/helperFunctions";
 import { cleanObject } from "@utils/helpers";
 import {
   setDoc,
@@ -16,8 +17,9 @@ import {
   deleteDoc,
   onSnapshot,
 } from "firebase/firestore";
-import { getCourse } from "./course";
-import { getDocument } from "./document";
+import { generateCourseSearchTerm, getCourse } from "./course";
+import { generateDocumentSearchTerm, getDocument } from "./document";
+import { uploadFile } from "./storage";
 
 export const getUserEditRequests = async (cid) => {
   try {
@@ -91,6 +93,8 @@ export const submitDocumentEditRequest = async (
   oldPublished
 ) => {
   try {
+    const { obj, files } = extractFileInObject(data);
+
     // Add to documents
     const docRef = doc(collection(db, "documents"));
     const docPayload = {
@@ -100,16 +104,7 @@ export const submitDocumentEditRequest = async (
     const docRes = await setDoc(docRef, docPayload);
 
     //searchable term
-    let _searchTerm = `${data?.title || ""} ${data?.brand || ""} ${
-      data?.shortDescription || ""
-    } ${data?.level || ""} ${data?.category || ""}`
-      ?.toLowerCase()
-      ?.replace(/[^a-zA-Z ]/g, "")
-      ?.split(" ")
-      ?.filter((i) => i?.length > 4);
-
-    //remove duplicate words
-    _searchTerm = Array.from(new Set(_searchTerm)).filter(Boolean);
+    let _searchTerm = generateDocumentSearchTerm(obj);
 
     // new edit request
     const erRef = doc(collection(db, "edit_requests"));
@@ -143,6 +138,29 @@ export const submitDocumentEditRequest = async (
       timestamp: serverTimestamp(),
     });
 
+    // Upload files
+    if (files && Object.keys(files)) {
+      for await (const [key, value] of Object.entries(files)) {
+        const extension = value?.name?.split(".")?.[1];
+
+        await uploadFile(
+          `/content/${erRes.id}/${key}.${extension}`,
+          value
+        ).then(async (res) => {
+          if (res?.success) {
+            await updateDoc(docRef, { [key]: res?.metadata?.downloadURL });
+            await updateDoc(
+              erRes,
+              {
+                [`metadata.${key}`]: res?.metadata?.downloadURL,
+              },
+              { merge: true }
+            );
+          }
+        });
+      }
+    }
+
     return { success: true, payload: { ...data, id: erRef.id } };
   } catch (error) {
     console.log(error);
@@ -152,57 +170,74 @@ export const submitDocumentEditRequest = async (
 
 export const submitCourseEditRequest = async (cid, data = {}, contentId) => {
   try {
-    // return { success: true, payload: { ...data } };
+    const { obj, files } = extractFileInObject(data);
 
     // Add to documents
     const docRef = doc(collection(db, "courses"));
     const docPayload = {
-      ...data,
+      ...obj,
       id: docRef.id,
     };
     const docRes = await setDoc(docRef, docPayload);
 
-    //searchable term
-    let _searchTerm = `${data?.title || ""} ${data?.brand || ""} ${
-      data?.shortDescription || ""
-    } ${data?.level || ""} ${data?.category || ""}`
-      ?.toLowerCase()
-      ?.replace(/[^a-zA-Z ]/g, "")
-      ?.split(" ")
-      ?.filter((i) => i?.length > 4);
+    const _allDocs = obj?.carriculum?.flatMap?.((n) => n.documents);
 
-    //remove duplicate words
-    _searchTerm = Array.from(new Set(_searchTerm)).filter(Boolean);
+    //searchable term
+    let _searchTerm = generateCourseSearchTerm(obj);
 
     // new edit request
     const erRef = doc(collection(db, "edit_requests"));
     const erPayload = {
       updateAuthor: cid,
-      author: data.author,
+      author: obj.author,
       contentId,
       published: docRef.id,
       id: erRef.id,
       contentType: "document",
       status: "pending",
       metadata: {
-        level: data?.level || "",
-        title: data?.title || "",
-        brand: data?.brand || "",
-        shortDescription: data?.shortDescription || "",
-        category: data?.category || "",
-        duration: data?.duration || "",
+        level: obj?.level || "",
+        title: obj?.title || "",
+        brand: obj?.brand || "",
+        shortDescription: obj?.shortDescription || "",
+        category: obj?.category || "",
+        duration: obj?.duration || "",
+        allDocuments: _allDocs || [],
       },
       filters: {
-        brand: data?.brand || "none",
+        brand: obj?.brand || "none",
         searchTerm: _searchTerm,
-        category: data?.category || "",
-        level: data?.level || "",
+        category: obj?.category || "",
+        level: obj?.level || "",
       },
     };
     const erRes = await setDoc(erRef, {
       ...cleanObject(erPayload),
       timestamp: serverTimestamp(),
     });
+
+    // Upload files
+    if (files && Object.keys(files)) {
+      for await (const [key, value] of Object.entries(files)) {
+        const extension = value?.name?.split(".")?.[1];
+
+        await uploadFile(
+          `/content/${erRef.id}/${key}.${extension}`,
+          value
+        ).then(async (res) => {
+          if (res?.success) {
+            await updateDoc(docRef, { [key]: res?.metadata?.downloadURL });
+            await updateDoc(
+              erRef,
+              {
+                [`metadata.${key}`]: res?.metadata?.downloadURL,
+              },
+              { merge: true }
+            );
+          }
+        });
+      }
+    }
 
     return { success: true, payload: { ...data, id: erRef.id } };
   } catch (error) {

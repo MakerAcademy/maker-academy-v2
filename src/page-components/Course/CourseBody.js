@@ -56,7 +56,11 @@ const CourseBody = ({ course = {} }) => {
       return Router.push("/login");
     }
 
-    const _route = `/course/${id}/learn`;
+    const _first = metadata.allDocuments?.[0];
+
+    const _route = `/course/${id}/${
+      _first?.contentType === "assessment" ? "assessment" : "learn"
+    }/${_first?.docId || ""}`;
 
     if (isUserEnrolled) {
       Router.push(_route);
