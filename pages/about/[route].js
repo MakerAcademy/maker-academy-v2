@@ -1,5 +1,14 @@
 import { NAVBAR_HEIGHT_MOBILE } from "@constants/";
-import { Box, Button, Container, Tab, Tabs, useTheme } from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  Stack,
+  Tab,
+  Tabs,
+  Typography,
+  useTheme,
+} from "@mui/material";
 import AboutAcademyProposal from "@page-components/About/AcademyProposal";
 import AboutBacklog from "@page-components/About/Backlog";
 import AboutBudget from "@page-components/About/Budget";
@@ -10,14 +19,28 @@ import { BlurSection1, BlurSection2 } from "@page-components/Home/images";
 import useTranslation from "next-translate/useTranslation";
 import Router, { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
+import ModeStandbyIcon from "@mui/icons-material/ModeStandby";
+import PointOfSaleIcon from "@mui/icons-material/PointOfSale";
+import GradingIcon from "@mui/icons-material/Grading";
+import AssignmentIcon from "@mui/icons-material/Assignment";
+import SystemUpdateAltIcon from "@mui/icons-material/SystemUpdateAlt";
+import Diversity3Icon from "@mui/icons-material/Diversity3";
 
 const routes = [
-  { name: "mission", link: "/about/mission" },
-  { name: "budget", link: "/about/budget" },
-  { name: "academy_proposals", link: "/about/academy_proposals" },
-  { name: "backlog", link: "/about/backlog" },
-  { name: "status_updates", link: "/about/status_updates" },
-  { name: "team", link: "/about/team" },
+  { name: "mission", link: "/about/mission", icon: ModeStandbyIcon },
+  { name: "budget", link: "/about/budget", icon: PointOfSaleIcon },
+  {
+    name: "academy_proposals",
+    link: "/about/academy_proposals",
+    icon: GradingIcon,
+  },
+  { name: "backlog", link: "/about/backlog", icon: AssignmentIcon },
+  {
+    name: "status_updates",
+    link: "/about/status_updates",
+    icon: SystemUpdateAltIcon,
+  },
+  { name: "team", link: "/about/team", icon: Diversity3Icon },
 ];
 
 const AboutUs = () => {
@@ -100,7 +123,15 @@ const AboutUs = () => {
               <Tab
                 key={item.link}
                 value={item.link}
-                label={t(item.name)}
+                // label={t(item.name)}
+                label={
+                  <Stack direction="row" alignItems="center" spacing={1}>
+                    <item.icon sx={{ fontSize: 20 }} />
+                    <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                      {t(item.name)}
+                    </Typography>
+                  </Stack>
+                }
                 sx={{
                   mx: 1,
                   bgcolor: "grey.grey1",

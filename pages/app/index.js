@@ -1,14 +1,17 @@
 import { withProtectedUser } from "@hoc/routes";
 import { Box } from "@mui/material";
 import Banners from "@page-components/Dashboard/Banners";
+import CourseProgress from "@page-components/Dashboard/CourseProgress";
+import LikedDocuments from "@page-components/Dashboard/LikedDocuments";
 
 const Dashboard = () => {
   return (
     <Box>
       <Box sx={{ mb: 5 }}>
-        <Banners />
+        <CourseProgress />
       </Box>
-      Coming soon ...
+
+      <LikedDocuments />
     </Box>
   );
 };

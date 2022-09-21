@@ -130,7 +130,7 @@ export const updateDocument = async (data = {}, disableUpdatedTimestamp) => {
     //searchable term
     let _searchTerm = generateSearchTerm(obj);
 
-    //new content
+    //update content
     const contentRef = doc(db, "content", id);
     const contentPayload = {
       status: "pending",

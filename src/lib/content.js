@@ -90,6 +90,41 @@ export const getContent = async (params) => {
   }
 };
 
+export const getDashboardUserContent = async (params) => {
+  const {
+    sort: _sort = "timestamp",
+    order: _order = "desc",
+    limit: _limit = 10,
+    contentType,
+    docIds,
+  } = params;
+
+  try {
+    const docsRef = collection(db, "content");
+
+    const queryConstraints = [];
+    queryConstraints.push(where("status", "==", "published"));
+    if (_limit) queryConstraints.push(limit(_limit));
+    if (contentType)
+      queryConstraints.push(where("contentType", "==", contentType));
+    if (docIds) queryConstraints.push(where("id", "in", docIds));
+
+    const q = query(docsRef, orderBy(_sort, _order), ...queryConstraints);
+
+    const querySnapshot = await getDocs(q);
+
+    const snapshotData = [];
+    querySnapshot.forEach(async (doc) => {
+      snapshotData.push(doc.data());
+    });
+
+    return snapshotData;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
 export const listenOneContent = (_id, callback) => {
   try {
     const docRef = doc(db, "content", _id);

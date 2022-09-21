@@ -74,6 +74,60 @@ export const submitAssessment = async (cid, _data = {}) => {
   }
 };
 
+export const updateAssessment = async (_data = {}, disableUpdatedTimestamp) => {
+  try {
+    const { questions, ...data } = _data;
+    const { id, published } = _data;
+
+    // Add to assessments
+    const docRef = doc(db, "assessments", published);
+
+    const _questions =
+      questions?.map(({ answer, ...i }, idx) => ({ ...i, index: idx })) || [];
+    const _answers =
+      questions?.map((i, idx) => ({ answer: i.answer || "", index: idx })) ||
+      [];
+
+    const docPayload = {
+      ...data,
+      questions: _questions,
+    };
+    const docRes = await updateDoc(docRef, cleanObject(docPayload));
+
+    // Save answers
+    const answersRef = doc(db, "assessments", published, "answers", "answers");
+    const answersRes = await updateDoc(
+      answersRef,
+      cleanObject({ answers: _answers })
+    );
+
+    // update content
+    const contentRef = doc(db, "content", id);
+    const contentPayload = {
+      private: true,
+      metadata: {
+        level: data?.level || null,
+        title: data?.title || null,
+        description: data?.description || null,
+        category: data?.category || null,
+        duration: data?.duration || null,
+        totalQuestions: data?.questions?.length || 0,
+      },
+    };
+    const contentRes = await updateDoc(contentRef, {
+      ...cleanObject(contentPayload),
+      ...(disableUpdatedTimestamp
+        ? {}
+        : { updatedTimestamp: serverTimestamp() }),
+    });
+
+    return { success: true, payload: { ...data, id: contentRef.id } };
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
 export const getAssessmentWithContent = async (cid, seperate) => {
   try {
     const contentRef = doc(db, "content", cid);
