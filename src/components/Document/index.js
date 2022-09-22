@@ -26,11 +26,13 @@ import {
   parseDepths,
 } from "@utils/markdown";
 import useTranslation from "next-translate/useTranslation";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import MarkdownBody from "./MarkdownBody";
 
 export const AuthorInBanner = ({ author, brand }) => {
+  const theme = useTheme();
   const [name, setName] = useState(brand);
 
   useEffect(() => {
@@ -42,36 +44,42 @@ export const AuthorInBanner = ({ author, brand }) => {
   }, []);
 
   return (
-    <Box
-      sx={{
-        position: "absolute",
-        right: "20px",
-        bottom: "20px",
-        bgcolor: "white",
-        borderRadius: "24px",
-        px: 2,
-        py: 1.5,
-      }}
-    >
-      <Stack direction="row" alignItems="center" spacing={1}>
-        <Avatar
-          src={CONTENT_CARD_BRAND_STYLES[brand]}
-          sx={{ height: "40px", width: "40px" }}
-        />
+    <Link passHref href={`/u/${author}`} target="_blank">
+      <Box
+        sx={{
+          cursor: "pointer",
+          position: "absolute",
+          right: "20px",
+          bottom: "20px",
+          bgcolor: "white",
+          borderRadius: "24px",
+          px: 2,
+          py: 1.5,
+          "&:hover": {
+            boxShadow: theme.palette.boxShadows.shadow1,
+          },
+        }}
+      >
+        <Stack direction="row" alignItems="center" spacing={1}>
+          <Avatar
+            src={CONTENT_CARD_BRAND_STYLES[brand]}
+            sx={{ height: "40px", width: "40px" }}
+          />
 
-        <Stack>
-          <Typography
-            variant="body2"
-            sx={{ fontWeight: 300, color: grey[500] }}
-          >
-            Author
-          </Typography>
-          <Typography variant="body2" sx={{ fontWeight: 500 }}>
-            {name}
-          </Typography>
+          <Stack>
+            <Typography
+              variant="body2"
+              sx={{ fontWeight: 300, color: grey[500] }}
+            >
+              Author
+            </Typography>
+            <Typography variant="body2" sx={{ fontWeight: 500 }}>
+              {name}
+            </Typography>
+          </Stack>
         </Stack>
-      </Stack>
-    </Box>
+      </Box>
+    </Link>
   );
 };
 
