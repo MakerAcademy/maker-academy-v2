@@ -1,7 +1,11 @@
 import { NAVBAR_HEIGHT_MOBILE } from "@constants/";
+import AssignmentIcon from "@mui/icons-material/Assignment";
+import BarChartIcon from "@mui/icons-material/BarChart";
+import CampaignIcon from "@mui/icons-material/Campaign";
+import Diversity3Icon from "@mui/icons-material/Diversity3";
+import StarIcon from "@mui/icons-material/Star";
 import {
   Box,
-  Button,
   Container,
   Stack,
   Tab,
@@ -18,27 +22,21 @@ import AboutTeam from "@page-components/About/Team";
 import { BlurSection1, BlurSection2 } from "@page-components/Home/images";
 import useTranslation from "next-translate/useTranslation";
 import Router, { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
-import ModeStandbyIcon from "@mui/icons-material/ModeStandby";
-import PointOfSaleIcon from "@mui/icons-material/PointOfSale";
-import GradingIcon from "@mui/icons-material/Grading";
-import AssignmentIcon from "@mui/icons-material/Assignment";
-import SystemUpdateAltIcon from "@mui/icons-material/SystemUpdateAlt";
-import Diversity3Icon from "@mui/icons-material/Diversity3";
+import { useEffect, useState } from "react";
 
 const routes = [
-  { name: "mission", link: "/about/mission", icon: ModeStandbyIcon },
-  { name: "budget", link: "/about/budget", icon: PointOfSaleIcon },
-  {
-    name: "academy_proposals",
-    link: "/about/academy_proposals",
-    icon: GradingIcon,
-  },
+  { name: "mission", link: "/about/mission", icon: StarIcon },
+  { name: "budget", link: "/about/budget", icon: BarChartIcon },
+  // {
+  //   name: "academy_proposals",
+  //   link: "/about/academy_proposals",
+  //   icon: CreateNewFolderIcon,
+  // },
   { name: "backlog", link: "/about/backlog", icon: AssignmentIcon },
   {
     name: "status_updates",
     link: "/about/status_updates",
-    icon: SystemUpdateAltIcon,
+    icon: CampaignIcon,
   },
   { name: "team", link: "/about/team", icon: Diversity3Icon },
 ];

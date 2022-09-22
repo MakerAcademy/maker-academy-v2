@@ -10,13 +10,6 @@ const ProfileForm = dynamic(() => import("@components/forms/ProfileForm"), {
   ssr: false,
 });
 
-const SocialsForm = dynamic(
-  () => import("@components/forms/Settings/SocialsForm"),
-  {
-    ssr: false,
-  }
-);
-
 const Profile = () => {
   const dispatch = useAppDispatch();
   const { profile } = useAppSelector((state) => state.profile);
