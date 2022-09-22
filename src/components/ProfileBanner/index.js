@@ -72,6 +72,7 @@ const SocialLink = ({ href = "#", Icon, text, disabled, color, ...other }) => (
 );
 
 const ProfileBanner = ({
+  coverPicture,
   profilePicture,
   name,
   bio,
@@ -98,6 +99,7 @@ const ProfileBanner = ({
           bgcolor: "grey.grey2",
           height: 230,
           p: 3,
+          position: "relative",
           borderRadius: "12px 12px 0 0",
           [theme.breakpoints.up("md")]: {
             p: 5,
@@ -105,12 +107,36 @@ const ProfileBanner = ({
           },
         }}
       >
+        <Box
+          sx={{
+            left: 0,
+            top: 0,
+            bottom: 0,
+            right: 0,
+            //   bgcolor: "red",
+            position: "absolute",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          {coverPicture ? (
+            <img
+              src={coverPicture}
+              alt="Cover Photo"
+              style={{ height: "100%", width: "100%", objectFit: "cover" }}
+            />
+          ) : (
+            <></>
+          )}
+        </Box>
+
         {/* Image and name */}
         <Stack
           direction={{ xs: "column", md: "row" }}
           alignItems={{ md: "flex-end" }}
           spacing={{ xs: 3, md: 5 }}
-          sx={{ height: "100%" }}
+          sx={{ height: "100%", zIndex: 999 }}
         >
           <Avatar
             src={profilePicture}
@@ -132,6 +158,7 @@ const ProfileBanner = ({
       {/* Bottom white */}
       <Box
         sx={{
+          borderTop: `4px solid ${theme.palette.grey.grey2}`,
           bgcolor: "primary.invert",
           borderBottomLeftRadius: "20px",
           borderBottomRightRadius: "20px",

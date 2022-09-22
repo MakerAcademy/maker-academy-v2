@@ -31,6 +31,7 @@ const buildRows = (data, t) => {
 
 const buildColumns = (t) => {
   return [
+    { field: "id", headerName: t("cid"), width: 150 },
     {
       field: "profilePicture",
       headerName: t("profile_picture"),
@@ -75,6 +76,16 @@ const buildColumns = (t) => {
       filterable: false,
       renderCell: (params) => (
         <Stack direction="row" alignItems="center" spacing={1}>
+          <GreenButton
+            size="small"
+            variant="outlined"
+            href={`/u/${params.id}`}
+            target="_black"
+            icon={<EditIcon sx={{ fontSize: 16 }} />}
+          >
+            {t("open")}
+          </GreenButton>
+
           <GreenButton
             size="small"
             variant="outlined"
@@ -151,8 +162,6 @@ const ContactsTable = ({ data }) => {
   const { t } = useTranslation("creator-studio");
 
   const rows = useMemo(() => buildRows(data || [], t), [data]);
-
-  console.log("rows", rows);
 
   //   useEffect(() => {
   // setColumns()
