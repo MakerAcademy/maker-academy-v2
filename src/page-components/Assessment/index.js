@@ -21,6 +21,10 @@ const reducer = (state, action) => {
         ...state,
         [_key]: action.payload,
       };
+    case "CHANGE_ALL":
+      return {
+        ...action.payload,
+      };
 
     default:
       return state;
@@ -116,6 +120,10 @@ const AssessmentPage = ({ assessment }) => {
             return { ...acc, [item.index]: item.answer };
           }, {});
           // setAnswers(_answers); FIX
+          dispatch({
+            type: "CHANGE_ALL",
+            payload: _answers,
+          });
         }
       );
 
@@ -168,7 +176,7 @@ const AssessmentPage = ({ assessment }) => {
 
                 <GreenButton
                   sx={{ width: "100%", minWidth: { xs: 0, md: 150 } }}
-                  onClick={() => (isSubmitted ? handleSubmit() : null)}
+                  onClick={() => (!isSubmitted ? handleSubmit() : null)}
                   disabled={!!isSubmitted}
                 >
                   Submit

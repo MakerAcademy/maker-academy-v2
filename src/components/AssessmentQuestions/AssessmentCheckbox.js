@@ -15,6 +15,7 @@ const AssessmentCheckbox = ({
   const theme = useTheme();
 
   const handleClick = (item) => {
+    if (submitted) return null;
     const _ans = answer?.includes?.(item)
       ? answer.filter((i) => i !== item)
       : [...answer, item];
@@ -39,7 +40,7 @@ const AssessmentCheckbox = ({
         {options?.map?.((item, i) => (
           <Button
             key={i}
-            onClick={() => (submitted ? null : handleClick(item))}
+            onClick={() => handleClick(item)}
             variant={answer?.includes(item) ? "contained" : "outlined"}
             // disabled={disabled}
             sx={{
@@ -77,10 +78,6 @@ const AssessmentCheckbox = ({
                 correctAnswer?.includes(item) && (
                   <CheckCircleIcon fontSize="small" />
                 )}
-
-              {/* {submitted &&
-                value?.includes(item) &&
-                correctAnswer?.includes(item) && <CheckCircleIcon />} */}
             </Stack>
           </Button>
         ))}

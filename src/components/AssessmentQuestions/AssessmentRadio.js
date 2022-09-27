@@ -1,6 +1,8 @@
 import Title from "@components/Title";
 import { Button, Stack, Typography, useTheme } from "@mui/material";
 import React from "react";
+import CancelIcon from "@mui/icons-material/Cancel";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
 const AssessmentRadio = ({
   question,
@@ -8,10 +10,15 @@ const AssessmentRadio = ({
   handleChange,
   answer,
   index,
+  submitted,
+  correctAnswer,
 }) => {
   const theme = useTheme();
 
+  console.log(correctAnswer);
+
   const handleClick = (item) => {
+    if (submitted) return null;
     handleChange?.(index, item);
   };
 
@@ -49,13 +56,32 @@ const AssessmentRadio = ({
               width: { xs: 250, sm: 350, md: 400 },
             }}
           >
-            <Typography
-              sx={{
-                textAlign: "left",
-              }}
+            <Stack
+              direction="row"
+              alignItems="center"
+              justifyContent="space-between"
+              spacing={2}
             >
-              {item}
-            </Typography>
+              <Typography
+                sx={{
+                  textAlign: "left",
+                }}
+              >
+                {item}
+              </Typography>
+
+              {submitted && answer === item ? (
+                correctAnswer === item ? (
+                  <CheckCircleIcon fontSize="small" />
+                ) : (
+                  <CancelIcon fontSize="small" />
+                )
+              ) : null}
+
+              {submitted && answer !== item && correctAnswer === item && (
+                <CheckCircleIcon fontSize="small" />
+              )}
+            </Stack>
           </Button>
         ))}
       </Stack>
