@@ -73,9 +73,7 @@ export const submitCourse = async (cid, data = {}) => {
         category: obj?.category || "",
         duration: obj?.duration || "",
         allDocuments: _allDocs || [],
-        thumbnail:
-          obj?.thumbnail ||
-          "https://prod-discovery.edx-cdn.org/media/course/image/0e575a39-da1e-4e33-bb3b-e96cc6ffc58e-8372a9a276c1.png",
+        thumbnail: obj?.thumbnail,
       },
     };
     const contentRes = await setDoc(contentRef, {
@@ -132,7 +130,7 @@ export const getCourseWithContent = async (cid, seperate) => {
     if (contentSnap.exists()) {
       const contentData = contentSnap.data();
 
-      const docRef = doc(db, "courses", contentData.published);
+      const docRef = await doc(db, "courses", contentData.published);
       const docSnap = await getDoc(docRef);
 
       if (docSnap.exists()) {
@@ -159,11 +157,11 @@ export const getCourseWithContent = async (cid, seperate) => {
             contentData.updatedTimestamp,
         };
 
-        return docObj;
+        return cleanObject(docObj) || {};
       }
     }
   } catch (error) {
-    console.log("cid", cid, "No such course!");
+    console.log("cid", cid, "No such course!", error);
     throw error;
   }
 };

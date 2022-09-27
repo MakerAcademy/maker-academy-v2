@@ -1,19 +1,19 @@
-import GreenButton from "@components/buttons/GreenButton";
 import Title from "@components/Title";
-import { Box, Button, Stack, Typography, useTheme } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import { Button, Stack, Typography, useTheme } from "@mui/material";
+import React from "react";
 
-const AssessmentRadio = ({ question, options, handleSave, answer }) => {
+const AssessmentRadio = ({
+  question,
+  options,
+  handleChange,
+  answer,
+  index,
+}) => {
   const theme = useTheme();
-  const [value, setValue] = useState(answer);
 
   const handleClick = (item) => {
-    setValue?.(item);
+    handleChange?.(index, item);
   };
-
-  useEffect(() => {
-    handleSave?.(value);
-  }, [value]);
 
   return (
     <Stack alignItems="center" spacing={{ xs: 4, md: 7 }}>
@@ -40,12 +40,12 @@ const AssessmentRadio = ({ question, options, handleSave, answer }) => {
           <Button
             key={i}
             onClick={() => handleClick(item)}
-            variant={value === item ? "contained" : "outlined"}
+            variant={answer === item ? "contained" : "outlined"}
             sx={{
               p: 2,
               border: `1px solid ${theme.palette.primary.main}`,
               borderRadius: "10px",
-              color: value === item ? "text.invert" : "inherit",
+              color: answer === item ? "text.invert" : "inherit",
               width: { xs: 250, sm: 350, md: 400 },
             }}
           >
@@ -63,4 +63,4 @@ const AssessmentRadio = ({ question, options, handleSave, answer }) => {
   );
 };
 
-export default AssessmentRadio;
+export default React.memo(AssessmentRadio);

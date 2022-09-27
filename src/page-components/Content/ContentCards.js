@@ -2,7 +2,7 @@ import GreenButton from "@components/buttons/GreenButton";
 import ContentCard from "@components/cards/ContentCard";
 import Title from "@components/Title";
 import { useAppDispatch, useAppSelector } from "@hooks/useRedux";
-import { Box, Grid, Stack } from "@mui/material";
+import { Box, Grid, Stack, Typography } from "@mui/material";
 import { fetchContentData } from "@redux/slices/contentSlice";
 import useTranslation from "next-translate/useTranslation";
 import { useEffect } from "react";
@@ -75,6 +75,10 @@ const ContentCards = ({ query }) => {
           <GreenButton variant="outlined" size="small" onClick={fetchMorePosts}>
             {t("load_more")}
           </GreenButton>
+        )}
+
+        {reachedLast && (
+          <Typography>You have reached end of content</Typography>
         )}
 
         {empty && <Title variant="h6"> {t("no_data")} </Title>}

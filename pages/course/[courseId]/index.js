@@ -11,13 +11,15 @@ const Course = ({ course }) => {
   const theme = useTheme();
 
   useEffect(() => {
-    const unsub = listenOneContent(course?.id, (res) => {
-      setData((old) => ({ ...old, ...res }));
-    });
+    if (course?.id) {
+      const unsub = listenOneContent(course?.id, (res) => {
+        setData((old) => ({ ...old, ...res }));
+      });
 
-    return () => {
-      unsub?.();
-    };
+      return () => {
+        unsub?.();
+      };
+    }
   }, []);
 
   return (
@@ -40,10 +42,10 @@ export const getServerSideProps = withUser(async (context, { profile }) => {
     }
 
     return {
-      props: { course: JSON.parse(JSON.stringify(course)) },
+      props: { course: course ? JSON.parse(JSON.stringify(course)) : null },
     };
   } catch (error) {
-    console.log(1, error);
+    console.log("Course Error", error);
     return { redirect: { destination: "/content" } };
   }
 });

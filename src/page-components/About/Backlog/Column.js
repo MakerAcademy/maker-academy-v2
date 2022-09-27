@@ -1,3 +1,4 @@
+import Title from "@components/Title";
 import { CommonContext } from "@context/commonContext";
 import ElectricBoltIcon from "@mui/icons-material/ElectricBolt";
 import LightbulbIcon from "@mui/icons-material/Lightbulb";
@@ -19,7 +20,7 @@ const ISSUE_TYPE_NEW_BUTTON = {
   feature: { name: "suggest_feature", icon: LightbulbIcon },
 };
 
-const Header = ({ title }) => {
+const Header = ({ title, length }) => {
   const { commonState, setCommonState } = useContext(CommonContext);
   const { t } = useTranslation("about");
   const Icon = ISSUE_TYPE_NEW_BUTTON[title].icon;
@@ -35,7 +36,7 @@ const Header = ({ title }) => {
       }}
     >
       <Typography sx={{ mb: 2, fontWeight: 600 }}>
-        {t(ISSUE_TYPE_TITLE[title])}
+        {t(ISSUE_TYPE_TITLE[title])} ({length})
       </Typography>
 
       <Button
@@ -63,15 +64,16 @@ const Column = ({ elements, title }) => {
         borderRadius: "16px",
       }}
     >
-      <Header title={title} />
+      <Header title={title} length={elements?.length || 0} />
 
       <Stack
         spacing={2}
         sx={{
-          maxHeight: "100vh",
+          maxHeight: "600px",
           overflowY: "scroll",
           px: 1,
           ml: -1,
+          pb: 2,
           width: "107%",
           "&::-webkit-scrollbar": {
             display: "none",

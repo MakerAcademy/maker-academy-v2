@@ -34,6 +34,7 @@ import MarkdownBody from "./MarkdownBody";
 export const AuthorInBanner = ({ author, brand }) => {
   const theme = useTheme();
   const [name, setName] = useState(brand);
+  const { t } = useTranslation("common");
 
   useEffect(() => {
     if (!brand && author) {
@@ -62,7 +63,7 @@ export const AuthorInBanner = ({ author, brand }) => {
       >
         <Stack direction="row" alignItems="center" spacing={1}>
           <Avatar
-            src={CONTENT_CARD_BRAND_STYLES[brand]}
+            src={""} //CONTENT_CARD_BRAND_STYLES[brand]?.logo
             sx={{ height: "40px", width: "40px" }}
           />
 
@@ -74,7 +75,7 @@ export const AuthorInBanner = ({ author, brand }) => {
               Author
             </Typography>
             <Typography variant="body2" sx={{ fontWeight: 500 }}>
-              {name}
+              {brand ? t(name) : name}
             </Typography>
           </Stack>
         </Stack>

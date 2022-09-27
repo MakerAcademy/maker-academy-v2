@@ -116,7 +116,7 @@ const CourseBody = ({ course = {} }) => {
             </Box>
 
             <img
-              src={DefaultCourseImage}
+              src={metadata?.thumbnail || DefaultCourseImage}
               alt="Course Thumbnail"
               style={{
                 height: "100%",

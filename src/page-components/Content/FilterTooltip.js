@@ -28,8 +28,6 @@ const FilterTooltip = ({ openFilterBtnRef }) => {
     mutate("filterTooltipDisplayed", true);
   };
 
-  console.log(router);
-
   const open = data === null && router.pathname === "/content";
 
   const top = openFilterBtnRef?.current?.offsetTop;

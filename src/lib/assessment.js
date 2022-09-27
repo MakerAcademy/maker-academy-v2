@@ -10,6 +10,10 @@ import {
   updateDoc,
   arrayUnion,
   increment,
+  query,
+  onSnapshot,
+  where,
+  limit,
 } from "firebase/firestore";
 
 export const submitAssessment = async (cid, _data = {}) => {
@@ -165,6 +169,32 @@ export const getAssessmentWithContent = async (cid, seperate) => {
   } catch (error) {
     console.log("cid", cid, "No such assessment!");
     throw error;
+  }
+};
+
+export const listenUsersSubmittedAssessment = (cid, docId, callback) => {
+  const q = query(
+    collection(db, "submitted_assessments"),
+    where("cid", "==", cid),
+    where("assessmentId", "==", docId),
+    limit(1)
+  );
+
+  const unsub = onSnapshot(q, (snap) => {
+    callback?.(snap?.docs?.[0]?.data?.());
+  });
+
+  return unsub;
+};
+
+export const getAssessmentAnswers = async (docId) => {
+  try {
+    const assessmentRef = doc(db, "assessments", docId, "answers", "answers");
+    const assessmentSnap = await getDoc(assessmentRef);
+
+    return { success: true, payload: assessmentSnap.data()?.answers };
+  } catch (error) {
+    console.log(error);
   }
 };
 

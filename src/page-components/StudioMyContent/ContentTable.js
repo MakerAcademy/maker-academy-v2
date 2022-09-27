@@ -91,7 +91,7 @@ const buildColumns = (t) => {
     {
       field: "actions",
       headerName: "",
-      width: 400,
+      width: 280,
       align: "right",
       sortable: false,
       filterable: false,

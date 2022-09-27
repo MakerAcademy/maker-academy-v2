@@ -26,7 +26,7 @@ import GreenButton from "@components/buttons/GreenButton";
 export const ASSESSMENT_QUESTION_TYPES = [
   "radio",
   "checkbox",
-  "text",
+  // "text",
   // "file",
 ];
 
@@ -59,14 +59,14 @@ const RenderListItem = (_props) => {
             disabled={disabled}
           />
 
-          <FormSelectField
+          {/* <FormSelectField
             name={`questions[${index}].type`}
             label="Question Type"
             control={control}
             fullWidth
             disabled={disabled}
             options={ASSESSMENT_QUESTION_TYPES}
-          />
+          /> */}
 
           <AssessmentBuilder
             control={control}
@@ -101,7 +101,15 @@ const AssessmentForm = ({
     level: Yup.string().required("Required"),
     category: Yup.string().required("Required"),
     duration: Yup.number().required("Required"),
-    questions: Yup.array().required("required"),
+    questions: Yup.array(
+      Yup.object({
+        answer: Yup.mixed().required().nullable(),
+        options: Yup.array().required(),
+        question: Yup.string().required(),
+      })
+    )
+      .min(1, "at least 1")
+      .required("Required"),
   });
 
   const formOptions = {
@@ -114,6 +122,7 @@ const AssessmentForm = ({
 
   const onSubmit = (data, e) => {
     // setDisabled(true);
+    return console.log(data);
     propsHandleSubmit(cleanObject(data));
   };
 

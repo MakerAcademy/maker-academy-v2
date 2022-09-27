@@ -87,25 +87,6 @@ const ContentCard = ({
 
   const [isHovered, setIsHovered] = useState(false);
 
-  const LikesViews = ({ sx, text, Icon, iconSize = 18 }) => (
-    <Stack
-      direction="row"
-      alignItems="center"
-      spacing={0.5}
-      sx={{
-        position: "absolute",
-        py: 0.5,
-        px: 1,
-        borderRadius: 2,
-        backgroundColor: "rgba(255, 255, 255, 0.2)",
-        ...sx,
-      }}
-    >
-      <Icon sx={{ fontSize: iconSize }} />
-      <Typography>{text}</Typography>
-    </Stack>
-  );
-
   const setHover = (e, val) => {
     e.preventDefault();
     setIsHovered(!!val);
@@ -175,17 +156,19 @@ const ContentCard = ({
           />
 
           {/* Likes */}
-          <Chip
-            label={`${likes || 0} ${t("likes")}`}
-            sx={{
-              position: "absolute",
-              top: 12,
-              right: 12,
-              bgcolor: "common.white",
-              color: "background.dark",
-              borderRadius: 1,
-            }}
-          />
+          {likes > 0 && (
+            <Chip
+              label={`${likes || 0} ${t("likes")}`}
+              sx={{
+                position: "absolute",
+                top: 12,
+                right: 12,
+                bgcolor: "common.white",
+                color: "background.dark",
+                borderRadius: 1,
+              }}
+            />
+          )}
         </Box>
 
         {/* Content */}

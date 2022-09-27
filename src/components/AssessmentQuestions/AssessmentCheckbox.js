@@ -1,23 +1,26 @@
-import GreenButton from "@components/buttons/GreenButton";
 import Title from "@components/Title";
-import { Box, Button, Stack, Typography, useTheme } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import CancelIcon from "@mui/icons-material/Cancel";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import { Button, Stack, Typography, useTheme } from "@mui/material";
 
-const AssessmentCheckbox = ({ question, options, handleSave, answer = [] }) => {
+const AssessmentCheckbox = ({
+  question,
+  options,
+  handleChange,
+  answer = [],
+  submitted,
+  correctAnswer,
+  index,
+}) => {
   const theme = useTheme();
-  const [value, setValue] = useState(answer || []);
 
   const handleClick = (item) => {
-    if (value?.includes?.(item)) {
-      setValue(value.filter((i) => i !== item));
-    } else {
-      setValue([...value, item]);
-    }
-  };
+    const _ans = answer?.includes?.(item)
+      ? answer.filter((i) => i !== item)
+      : [...answer, item];
 
-  useEffect(() => {
-    handleSave?.(value?.length ? value : null);
-  }, [value]);
+    handleChange(index, _ans);
+  };
 
   return (
     <Stack alignItems="center" spacing={{ xs: 4, md: 8 }}>
@@ -36,23 +39,49 @@ const AssessmentCheckbox = ({ question, options, handleSave, answer = [] }) => {
         {options?.map?.((item, i) => (
           <Button
             key={i}
-            onClick={() => handleClick(item)}
-            variant={value?.includes(item) ? "contained" : "outlined"}
+            onClick={() => (submitted ? null : handleClick(item))}
+            variant={answer?.includes(item) ? "contained" : "outlined"}
+            // disabled={disabled}
             sx={{
               p: 2,
               border: `1px solid ${theme.palette.primary.main}`,
               borderRadius: "10px",
-              color: value?.includes(item) ? "text.invert" : "inherit",
+              color: answer?.includes(item) ? "text.invert" : "inherit",
               width: { xs: 250, sm: 350, md: 400 },
             }}
           >
-            <Typography
-              sx={{
-                textAlign: "left",
-              }}
+            <Stack
+              direction="row"
+              alignItems="center"
+              justifyContent="space-between"
+              spacing={2}
             >
-              {item}
-            </Typography>
+              <Typography
+                sx={{
+                  textAlign: "left",
+                }}
+              >
+                {item}
+              </Typography>
+
+              {submitted && answer?.includes(item) ? (
+                correctAnswer?.includes(item) ? (
+                  <CheckCircleIcon fontSize="small" />
+                ) : (
+                  <CancelIcon fontSize="small" />
+                )
+              ) : null}
+
+              {submitted &&
+                !answer?.includes(item) &&
+                correctAnswer?.includes(item) && (
+                  <CheckCircleIcon fontSize="small" />
+                )}
+
+              {/* {submitted &&
+                value?.includes(item) &&
+                correctAnswer?.includes(item) && <CheckCircleIcon />} */}
+            </Stack>
           </Button>
         ))}
       </Stack>
