@@ -7,6 +7,7 @@ import {
   submitCompletedAssessment,
 } from "@lib/assessment";
 import { Box, Container, Stack } from "@mui/material";
+import { isArrayEqual } from "@utils/helperFunctions";
 import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
 import { useEffect, useReducer, useState } from "react";
@@ -116,6 +117,7 @@ const AssessmentPage = ({ assessment }) => {
         profile?.id,
         assessment?.id,
         (res) => {
+          setSubmission(res);
           const _answers = res.answers?.reduce((acc, item) => {
             return { ...acc, [item.index]: item.answer };
           }, {});

@@ -214,6 +214,7 @@ export const submitCompletedAssessment = async (
     const fetchedAnswers = answersRef.data?.();
 
     const graded = gradeAnswers(fetchedAnswers?.answers, answers);
+    // return console.log(graded);
 
     const sum = graded.reduce((acc, item) => {
       return acc + item.points;
@@ -268,7 +269,7 @@ const gradeAnswers = (answers, submission) => {
     }
   });
 
-  console.log(correctAnswers);
+  // console.log(correctAnswers);
 
   return correctAnswers;
 };
