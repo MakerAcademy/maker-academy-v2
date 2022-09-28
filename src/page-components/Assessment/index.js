@@ -4,13 +4,15 @@ import { useAppSelector } from "@hooks/useRedux";
 import {
   getAssessmentAnswers,
   listenUsersSubmittedAssessment,
+  retakeAssessment,
   submitCompletedAssessment,
 } from "@lib/assessment";
-import { Box, Container, Stack } from "@mui/material";
+import { Box, Button, Container, Stack } from "@mui/material";
 import { isArrayEqual } from "@utils/helperFunctions";
 import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
 import { useEffect, useReducer, useState } from "react";
+import Completed from "./Completed";
 import Progress from "./Progress";
 
 const reducer = (state, action) => {
@@ -33,6 +35,7 @@ const reducer = (state, action) => {
 };
 
 const AssessmentPage = ({ assessment }) => {
+  const [viewQuestions, setViewQuestions] = useState(false);
   const [qnNumber, setQnNumber] = useState(0);
   const [answers, dispatch] = useReducer(reducer, {});
   const [correctAnswers, setCorrectAnswers] = useState({});
@@ -43,6 +46,8 @@ const AssessmentPage = ({ assessment }) => {
   const isSubmitted = profile?.submittedAssessments?.includes(assessment?.id);
 
   const { query } = useRouter();
+  const { courseId, docId } = query;
+
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   const currentQuestion = assessment?.questions?.[qnNumber];
@@ -75,8 +80,6 @@ const AssessmentPage = ({ assessment }) => {
   };
 
   const handleSubmit = async () => {
-    const { courseId, docId } = query;
-
     // return console.log(answers);
 
     const _key = enqueueSnackbar("Submitting Assessment...", {
@@ -88,7 +91,8 @@ const AssessmentPage = ({ assessment }) => {
       courseId,
       docId,
       assessment?.published,
-      answers
+      answers,
+      totalLength
     )
       .then(() => {
         closeSnackbar(_key);
@@ -117,6 +121,8 @@ const AssessmentPage = ({ assessment }) => {
         profile?.id,
         assessment?.id,
         (res) => {
+          if (!res) return null;
+
           setSubmission(res);
           const _answers = res.answers?.reduce((acc, item) => {
             return { ...acc, [item.index]: item.answer };
@@ -135,11 +141,20 @@ const AssessmentPage = ({ assessment }) => {
     }
   }, [isSubmitted]);
 
-  // console.log(correctAnswers);
+  if (isSubmitted && !viewQuestions) {
+    const handleRetake = () => {
+      retakeAssessment(profile?.id, docId);
+    };
 
-  // console.log(submission);
-
-  // console.log(answers);
+    return (
+      <Completed
+        points={submission?.totalPoints}
+        outOf={submission?.outOf}
+        handleViewQuestionsClick={() => setViewQuestions(true)}
+        handleRetake={handleRetake}
+      />
+    );
+  }
 
   return (
     <Box>
@@ -206,6 +221,10 @@ const AssessmentPage = ({ assessment }) => {
               </Stack>
             )}
           </Box>
+
+          {isSubmitted && (
+            <Button onClick={() => setViewQuestions(false)}>View Grades</Button>
+          )}
         </Stack>
       </Container>
     </Box>

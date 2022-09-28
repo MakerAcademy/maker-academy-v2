@@ -15,8 +15,6 @@ const AssessmentRadio = ({
 }) => {
   const theme = useTheme();
 
-  console.log(correctAnswer);
-
   const handleClick = (item) => {
     if (submitted) return null;
     handleChange?.(index, item);

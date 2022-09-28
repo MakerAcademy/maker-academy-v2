@@ -14,6 +14,9 @@ import {
   onSnapshot,
   where,
   limit,
+  deleteDoc,
+  arrayRemove,
+  getDocs,
 } from "firebase/firestore";
 
 export const submitAssessment = async (cid, _data = {}) => {
@@ -203,7 +206,8 @@ export const submitCompletedAssessment = async (
   courseId,
   assessmentId,
   publishedId,
-  answers
+  answers,
+  totalQuestionsLength
 ) => {
   // return console.log(answers);
   try {
@@ -224,6 +228,8 @@ export const submitCompletedAssessment = async (
     const docRef = doc(collection(db, "submitted_assessments"));
     const docPayload = {
       totalPoints: sum,
+      outOf: totalQuestionsLength,
+      passed: sum === totalQuestionsLength,
       answers: graded,
       id: docRef.id,
       course: courseId,
@@ -245,6 +251,38 @@ export const submitCompletedAssessment = async (
   } catch (error) {
     console.log("error", error);
     throw error;
+  }
+};
+
+export const retakeAssessment = async (cid, assessmentId) => {
+  try {
+    // return console.log(cid, assessmentId);
+    // Remove assessment from users submition
+    const userRef = doc(db, "contacts", cid);
+    await updateDoc(
+      userRef,
+      {
+        submittedAssessments: arrayRemove(assessmentId),
+      },
+      { merge: true }
+    );
+
+    // Remove all from submitted_assessment db
+    const q = query(
+      collection(db, "submitted_assessments"),
+      where("cid", "==", cid),
+      where("assessmentId", "==", assessmentId)
+    );
+    const querySnapshot = await getDocs(q);
+
+    querySnapshot.forEach(async (doc) => {
+      await deleteDoc(doc.ref);
+    });
+
+    return { success: true };
+  } catch (error) {
+    console.log(error);
+    return null;
   }
 };
 
