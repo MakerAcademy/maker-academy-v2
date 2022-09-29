@@ -422,7 +422,12 @@ const ProfileForm = ({ values, handleSubmit: propsHandleSubmit }) => {
             </Tooltip>
 
             {resetPassword && (
-              <Typography variant="caption" component="div" color="gray">
+              <Typography
+                variant="caption"
+                component="div"
+                color="gray"
+                sx={{ mt: 1 }}
+              >
                 Password reset email sent. Please check your inbox or spam and
                 follow the instructions.
               </Typography>
