@@ -17,12 +17,14 @@ import AboutAcademyProposal from "@page-components/About/AcademyProposal";
 import AboutBacklog from "@page-components/About/Backlog";
 import AboutBudget from "@page-components/About/Budget";
 import AboutMission from "@page-components/About/Mission";
+import AboutPrivacyPolicy from "@page-components/About/PrivacyPolicy";
 import AboutStatusUpdates from "@page-components/About/StatusUpdates";
 import AboutTeam from "@page-components/About/Team";
 import { BlurSection1, BlurSection2 } from "@page-components/Home/images";
 import useTranslation from "next-translate/useTranslation";
 import Router, { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import SecurityIcon from '@mui/icons-material/Security';
 
 const routes = [
   { name: "mission", link: "/about/mission", icon: StarIcon },
@@ -39,6 +41,7 @@ const routes = [
     icon: CampaignIcon,
   },
   { name: "team", link: "/about/team", icon: Diversity3Icon },
+  { name: "privacy_policy", link: "/about/privacy_policy", icon: SecurityIcon },
 ];
 
 const AboutUs = () => {
@@ -159,6 +162,7 @@ AboutUs.type = {
   "/about/backlog": AboutBacklog,
   "/about/status_updates": AboutStatusUpdates,
   "/about/team": AboutTeam,
+  "/about/privacy_policy": AboutPrivacyPolicy,
 };
 
 export default AboutUs;
