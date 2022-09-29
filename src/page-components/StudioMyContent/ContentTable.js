@@ -92,7 +92,7 @@ const buildColumns = (t) => {
       field: "actions",
       headerName: "",
       width: 280,
-      align: "right",
+      align: "left",
       sortable: false,
       filterable: false,
       renderCell: (params) => (

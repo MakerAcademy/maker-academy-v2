@@ -6,6 +6,7 @@ import { Box, Container, Paper, Stack, useTheme } from "@mui/material";
 import AssessmentPage from "@page-components/Assessment";
 import CourseBreadrumbsNav from "@page-components/Course/CourseBreadrumbsNav";
 import LearnContentDrawer from "@page-components/Course/LearnContentDrawer";
+import NextPreviousButtons from "@page-components/Course/NextPreviousButtons";
 import ErrorPage from "@page-components/Error";
 
 const LearnContent = ({ course, assessment }) => {
@@ -32,7 +33,9 @@ const LearnContent = ({ course, assessment }) => {
           />
         </Container>
 
-        <AssessmentPage assessment={assessment} />
+        <AssessmentPage assessment={assessment} course={course} />
+
+        {/* <NextPreviousButtons course={course} /> */}
       </Box>
     </>
   );

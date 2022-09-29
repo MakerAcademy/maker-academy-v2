@@ -8,6 +8,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import {
   Avatar,
   Box,
+  Button,
   Divider,
   Grid,
   InputAdornment,
@@ -21,10 +22,16 @@ import useTranslation from "next-translate/useTranslation";
 import { useForm, useWatch } from "react-hook-form";
 import * as Yup from "yup";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
+import { emailPasswordReset } from "@lib/auth";
+import { useAppSelector } from "@hooks/useRedux";
+import { useState } from "react";
 
 const ProfileForm = ({ values, handleSubmit: propsHandleSubmit }) => {
+  const [resetPassword, setResetPassword] = useState(false);
   const theme = useTheme();
   const { t } = useTranslation("common");
+
+  const { user } = useAppSelector((state) => state.user);
 
   // form validation rules
   const validationSchema = Yup.object().shape({
@@ -395,6 +402,31 @@ const ProfileForm = ({ values, handleSubmit: propsHandleSubmit }) => {
                 placeholder="https://www.yourwebsite.com"
               />
             </Stack>
+          </DashboardPaper>
+
+          <DashboardPaper>
+            <Typography sx={{ mb: 2 }}>Password</Typography>
+
+            <Tooltip title="Send Password Reset Email">
+              <Button
+                variant="outlined"
+                onClick={() =>
+                  emailPasswordReset(user?.email).then(() => {
+                    setResetPassword(true);
+                  })
+                }
+                disabled={!!resetPassword}
+              >
+                Reset Password
+              </Button>
+            </Tooltip>
+
+            {resetPassword && (
+              <Typography variant="caption" component="div" color="gray">
+                Password reset email sent. Please check your inbox or spam and
+                follow the instructions.
+              </Typography>
+            )}
           </DashboardPaper>
 
           <Stack alignItems="flex-end" spacing={2} sx={{ mt: 3 }}>

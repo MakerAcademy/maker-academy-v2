@@ -57,6 +57,7 @@ const Completed = ({
   outOf,
   handleViewQuestionsClick,
   handleRetake,
+  handleContinue,
 }) => {
   const percentage = parseInt((points / outOf) * 100 || 0);
   const fullGrade = percentage === 100;
@@ -84,9 +85,11 @@ const Completed = ({
 
         {fullGrade && (
           <Stack spacing={1}>
-            <GreenButton onClick={handleViewQuestionsClick}>
-              Continue Course
-            </GreenButton>
+            {handleContinue && (
+              <GreenButton onClick={handleContinue}>
+                Continue Course
+              </GreenButton>
+            )}
             <Button onClick={handleViewQuestionsClick}>View Questions</Button>
           </Stack>
         )}
@@ -94,7 +97,9 @@ const Completed = ({
         {!fullGrade && (
           <Stack spacing={1}>
             <GreenButton onClick={handleRetake}>Retake Quiz</GreenButton>
-            <Button onClick={handleViewQuestionsClick}>Continue Course</Button>
+            {handleContinue && (
+              <Button onClick={handleContinue}>Continue Course</Button>
+            )}
           </Stack>
         )}
       </Stack>

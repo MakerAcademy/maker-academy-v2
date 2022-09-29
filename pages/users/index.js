@@ -1,9 +1,14 @@
+import ContentBannerDark from "@assets/images/backgrounds/content-banner-dark.png";
+import ContentBannerLight from "@assets/images/backgrounds/content-banner-light.png";
 import GreenButton from "@components/buttons/GreenButton";
 import ProfileCard from "@components/cards/ProfileCard";
 import Title from "@components/Title";
 import { CONTACT_ROLES } from "@constants/index";
+import useDebounce from "@hooks/useDebounce";
 import { useAppDispatch, useAppSelector } from "@hooks/useRedux";
-import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import useScrollPosition from "@hooks/useScrollPosition";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import SearchIcon from "@mui/icons-material/Search";
 import {
   Box,
@@ -16,16 +21,12 @@ import {
   Stack,
   TextField,
   Typography,
+  useTheme,
 } from "@mui/material";
-import Breadcrumbs from "@mui/material/Breadcrumbs";
 import { fetchProfilesData } from "@redux/slices/profilesSlice";
 import useTranslation from "next-translate/useTranslation";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import useScrollPosition from "@hooks/useScrollPosition";
-import useDebounce from "@hooks/useDebounce";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 const StyledSearch = (props) => {
   return (
@@ -95,6 +96,9 @@ const Profiles = () => {
   } = useAppSelector((state) => state.profiles);
   const { t } = useTranslation("users");
 
+  const theme = useTheme();
+  const isDark = theme.palette.mode === "dark";
+
   useEffect(() => {
     if (!!anchorEl) {
       setAnchorEl(null);
@@ -122,12 +126,50 @@ const Profiles = () => {
 
   return (
     <Container sx={{ py: 5 }} maxWidth="lg">
-      <Breadcrumbs
+      {/* <Breadcrumbs
         separator={<NavigateNextIcon fontSize="small" />}
         sx={{ mb: 3 }}
       >
         {breadcrumbs}
-      </Breadcrumbs>
+      </Breadcrumbs> */}
+
+      {/* Banner */}
+      <Box sx={{ position: "relative", width: "100%", mb: 5, height: 200 }}>
+        <img
+          src={isDark ? ContentBannerDark : ContentBannerLight}
+          alt={"Maker Academy Content Banner"}
+          style={{
+            height: "100%",
+            width: "100%",
+            objectFit: "cover",
+            borderRadius: 20,
+          }}
+        />
+
+        <Box
+          sx={{
+            position: "absolute",
+            top: "25%",
+            transform: "translate(50%, 0%)",
+          }}
+        >
+          <Stack
+            spacing={2}
+            // justifyContent="center"
+            // alignItems="center"
+            // sx={{ p: { xs: 4, md: 8 } }}
+          >
+            <Title
+              variant={{ xs: "h4", md: "h2" }}
+              sx={{ fontWeight: "600!important" }}
+            >
+              {t("users")}
+            </Title>
+
+            <Typography>Users Caption</Typography>
+          </Stack>
+        </Box>
+      </Box>
 
       <Stack
         direction="row"

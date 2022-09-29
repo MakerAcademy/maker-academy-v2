@@ -5,6 +5,7 @@ import { getDocumentWithContent } from "@lib/document";
 import { Box, Container, Stack, useTheme } from "@mui/material";
 import CourseBreadrumbsNav from "@page-components/Course/CourseBreadrumbsNav";
 import LearnContentDrawer from "@page-components/Course/LearnContentDrawer";
+import NextPreviousButtons from "@page-components/Course/NextPreviousButtons";
 import ErrorPage from "@page-components/Error";
 
 const LearnContent = ({ course, document: _document }) => {
@@ -25,6 +26,8 @@ const LearnContent = ({ course, document: _document }) => {
           </Box>
 
           <CourseDocument data={_document} hideScrollspy />
+
+          <NextPreviousButtons course={course} />
         </Container>
       </Box>
     </Stack>

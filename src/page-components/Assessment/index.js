@@ -8,8 +8,11 @@ import {
   submitCompletedAssessment,
 } from "@lib/assessment";
 import { Box, Button, Container, Stack } from "@mui/material";
-import { isArrayEqual } from "@utils/helperFunctions";
-import { useRouter } from "next/router";
+import {
+  buildCourseNavLink,
+  getNextPreviousFromCourse,
+} from "@page-components/Course/CourseBreadrumbsNav";
+import Router, { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
 import { useEffect, useReducer, useState } from "react";
 import Completed from "./Completed";
@@ -34,7 +37,7 @@ const reducer = (state, action) => {
   }
 };
 
-const AssessmentPage = ({ assessment }) => {
+const AssessmentPage = ({ assessment, course }) => {
   const [viewQuestions, setViewQuestions] = useState(false);
   const [qnNumber, setQnNumber] = useState(0);
   const [answers, dispatch] = useReducer(reducer, {});
@@ -146,12 +149,17 @@ const AssessmentPage = ({ assessment }) => {
       retakeAssessment(profile?.id, docId);
     };
 
+    const { _next } = getNextPreviousFromCourse(course, docId);
+    const _nextLink =
+      _next && buildCourseNavLink(courseId, _next.docId, _next.contentType);
+
     return (
       <Completed
         points={submission?.totalPoints}
         outOf={submission?.outOf}
         handleViewQuestionsClick={() => setViewQuestions(true)}
         handleRetake={handleRetake}
+        handleContinue={() => (_nextLink ? Router.push(_nextLink) : null)}
       />
     );
   }
@@ -162,7 +170,7 @@ const AssessmentPage = ({ assessment }) => {
         <Stack
           alignItems="center"
           justifyContent="center"
-          sx={{ minHeight: "70vh", py: 4 }}
+          sx={{ minHeight: "60vh", py: 4 }}
           spacing={2}
         >
           <Progress

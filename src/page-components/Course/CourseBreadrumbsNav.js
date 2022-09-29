@@ -8,7 +8,23 @@ import { useRouter } from "next/router";
 import { useAppSelector } from "@hooks/useRedux";
 import Link from "next/link";
 
-const NextPreviousButton = ({ Icon, href }) => {
+export const buildCourseNavLink = (courseId, docId, contentType) => {
+  return `/course/${courseId}/${
+    contentType === "assessment" ? "assessment" : "learn"
+  }/${docId}`;
+};
+
+export const getNextPreviousFromCourse = (course, docId) => {
+  const _allDocs = course?.carriculum?.flatMap?.((n) => n.documents);
+  const _currentIdx = _allDocs?.findIndex?.((el) => el.docId === docId);
+
+  const _next = _allDocs[_currentIdx + 1];
+  const _previous = _allDocs[_currentIdx - 1];
+
+  return { _next, _previous, _currentIdx, _allDocs };
+};
+
+const NextPreviousButton = ({ Icon, href, tooltip }) => {
   const MyComponent = href ? Link : React.Fragment;
 
   const _props = {
@@ -17,9 +33,11 @@ const NextPreviousButton = ({ Icon, href }) => {
 
   return (
     <MyComponent {..._props}>
-      <IconButton size="small" disabled={!href}>
-        <Icon fontSize="small" />
-      </IconButton>
+      <Tooltip title={tooltip}>
+        <IconButton size="small" disabled={!href}>
+          <Icon fontSize="small" />
+        </IconButton>
+      </Tooltip>
     </MyComponent>
   );
 };
@@ -32,15 +50,15 @@ const CourseBreadrumbsNav = ({ course, _document, type }) => {
 
   const courseTitle = course?.metadata?.title;
   const documentTitle = _document?.metadata?.title;
-  const _allDocs = course?.carriculum?.flatMap?.((n) => n.documents);
-  const _currentIdx = _allDocs?.findIndex?.((el) => el.docId === docId);
   const isRead =
     type === "assessment"
       ? !!profile?.submittedAssessments?.includes(docId)
       : profile?.readDocuments?.includes(docId);
 
-  const _next = _allDocs[_currentIdx + 1];
-  const _previous = _allDocs[_currentIdx - 1];
+  const { _next, _previous, _currentIdx, _allDocs } = getNextPreviousFromCourse(
+    course,
+    docId
+  );
 
   return (
     <Stack
@@ -69,25 +87,25 @@ const CourseBreadrumbsNav = ({ course, _document, type }) => {
         </Typography>
 
         <NextPreviousButton
+          tooltip={"Previous Article"}
           Icon={KeyboardArrowLeftIcon}
           href={
             _previous
-              ? `/course/${courseId}/${
-                  _previous.contentType === "assessment"
-                    ? "assessment"
-                    : "learn"
-                }/${_previous.docId}`
+              ? buildCourseNavLink(
+                  courseId,
+                  _previous.docId,
+                  _previous.contentType
+                )
               : null
           }
         />
 
         <NextPreviousButton
+          tooltip={"Next Article"}
           Icon={KeyboardArrowRightIcon}
           href={
             _next
-              ? `/course/${courseId}/${
-                  _next.contentType === "assessment" ? "assessment" : "learn"
-                }/${_next.docId}`
+              ? buildCourseNavLink(courseId, _next.docId, _next.contentType)
               : null
           }
         />
