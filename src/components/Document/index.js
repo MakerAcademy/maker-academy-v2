@@ -4,7 +4,10 @@ import { BRANDS, CONTENT_CARD_BRAND_STYLES } from "@constants/index";
 import useDocRead from "@hooks/useDocRead";
 import { useAppSelector } from "@hooks/useRedux";
 import { listenOneContent } from "@lib/content";
-import { updateUserReadDocument } from "@lib/document";
+import {
+  DEFAULT_CONTENT_THUMBNAIL,
+  updateUserReadDocument,
+} from "@lib/document";
 import { getContact } from "@lib/user";
 import {
   Avatar,
@@ -74,7 +77,11 @@ export const AuthorInBanner = ({ author, brand }) => {
             >
               Author
             </Typography>
-            <Typography variant="body2" sx={{ fontWeight: 500 }}>
+
+            <Typography
+              variant="body2"
+              sx={{ fontWeight: 500, color: grey[900] }}
+            >
               {brand ? t(name) : name}
             </Typography>
           </Stack>
@@ -111,7 +118,7 @@ const ContentDocument = ({ data = {}, hideScrollspy, previewMode }) => {
     views,
     metadata,
     author,
-    thumbnail = "https://thumbs.dreamstime.com/b/bitcoin-banner-golden-digital-currency-cryptocurrency-futuristic-money-technology-worldwide-network-concept-vector-206771631.jpg",
+    thumbnail = DEFAULT_CONTENT_THUMBNAIL,
   } = document || {};
 
   const read = useDocRead(false, 500);
@@ -191,8 +198,7 @@ const ContentDocument = ({ data = {}, hideScrollspy, previewMode }) => {
                 src={thumbnail}
                 alt={title}
                 onError={(e) => {
-                  e.target.src =
-                    "https://thumbs.dreamstime.com/b/bitcoin-banner-golden-digital-currency-cryptocurrency-futuristic-money-technology-worldwide-network-concept-vector-206771631.jpg";
+                  e.target.src = DEFAULT_CONTENT_THUMBNAIL;
                   return true;
                 }}
                 style={{

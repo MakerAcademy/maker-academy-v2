@@ -1,4 +1,6 @@
+import { AuthorInBanner } from "@components/Document";
 import Title from "@components/Title";
+import { CommonContext } from "@context/commonContext";
 import { useAppSelector } from "@hooks/useRedux";
 import { enrollToCourse } from "@lib/course";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
@@ -17,12 +19,9 @@ import hex from "@utils/hexTransparency";
 import Router from "next/router";
 import { useContext, useState } from "react";
 import Content from "./ContentTab";
-import Overview from "./OverviewTab";
-import DefaultCourseImage from "@assets/images/misc/course-default.png";
 import CourseBreadcrumbs from "./CourseBreadcrumbs";
 import CourseMetadata from "./CourseMetadata";
-import { CommonContext } from "@context/commonContext";
-import { AuthorInBanner } from "@components/Document";
+import Overview from "./OverviewTab";
 
 const CourseBody = ({ course = {} }) => {
   const theme = useTheme();
@@ -116,7 +115,10 @@ const CourseBody = ({ course = {} }) => {
             </Box>
 
             <img
-              src={metadata?.thumbnail || DefaultCourseImage}
+              src={
+                metadata?.thumbnail ||
+                "https://firebasestorage.googleapis.com/v0/b/maker-academy-c22f7.appspot.com/o/app%2Fcontent-thumbnail.png?alt=media&token=fd884230-663a-4a0d-96c8-fc6988f3ecb0"
+              }
               alt="Course Thumbnail"
               style={{
                 height: "100%",

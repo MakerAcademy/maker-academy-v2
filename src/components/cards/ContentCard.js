@@ -82,7 +82,7 @@ const ContentCard = ({
     level,
     duration,
     category,
-    thumbnail = "https://prod-discovery.edx-cdn.org/media/course/image/0e575a39-da1e-4e33-bb3b-e96cc6ffc58e-8372a9a276c1.png",
+    thumbnail = "https://firebasestorage.googleapis.com/v0/b/maker-academy-c22f7.appspot.com/o/app%2Fcontent-thumbnail.png?alt=media&token=fd884230-663a-4a0d-96c8-fc6988f3ecb0",
   } = metadata;
 
   const [isHovered, setIsHovered] = useState(false);

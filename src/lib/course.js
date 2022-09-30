@@ -12,6 +12,7 @@ import {
   increment,
   arrayRemove,
 } from "firebase/firestore";
+import { DEFAULT_CONTENT_THUMBNAIL } from "./document";
 import { uploadFile } from "./storage";
 
 export const generateCourseSearchTerm = (data) => {
@@ -37,6 +38,7 @@ export const submitCourse = async (cid, data = {}) => {
     const docRef = doc(collection(db, "courses"));
     const docPayload = {
       ...obj,
+      thumbnail: obj?.thumbnail || DEFAULT_CONTENT_THUMBNAIL,
       author: cid,
       id: docRef.id,
     };
@@ -73,7 +75,7 @@ export const submitCourse = async (cid, data = {}) => {
         category: obj?.category || "",
         duration: obj?.duration || "",
         allDocuments: _allDocs || [],
-        thumbnail: obj?.thumbnail,
+        thumbnail: obj?.thumbnail || DEFAULT_CONTENT_THUMBNAIL,
       },
     };
     const contentRes = await setDoc(contentRef, {

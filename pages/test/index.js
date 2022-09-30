@@ -1,9 +1,18 @@
-import React from 'react'
+import { getStorageDownloadUrl } from "@lib/storage";
+import React from "react";
 
 const Test = () => {
-  return (
-    <div>Test</div>
-  )
-}
+  const handleClick = async () => {
+    getStorageDownloadUrl("/app/content-thumbnail.png").then((res) => {
+      console.log(res);
+    });
+  };
 
-export default Test
+  return (
+    <div>
+      <button onClick={handleClick}>Click</button>
+    </div>
+  );
+};
+
+export default Test;

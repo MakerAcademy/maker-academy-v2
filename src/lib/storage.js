@@ -6,11 +6,12 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 
+const storage = getStorage();
+
 export const uploadFile = async (_ref, file) => {
   // console.log(_ref, file);
   try {
     if (file && _ref) {
-      const storage = getStorage();
       const storageRef = ref(storage, _ref);
       const uploadTask = uploadBytesResumable(storageRef, file);
 
@@ -44,5 +45,15 @@ export const uploadFile = async (_ref, file) => {
     }
   } catch (error) {
     console.log(123, error);
+  }
+};
+
+export const getStorageDownloadUrl = async (_ref) => {
+  try {
+    console.log(_ref);
+    const _url = await getDownloadURL(ref(storage, _ref));
+    return _url;
+  } catch (error) {
+    console.log(error);
   }
 };

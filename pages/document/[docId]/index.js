@@ -2,7 +2,7 @@ import ContentDocument from "@components/Document/index";
 import { NAVBAR_HEIGHT_DESKTOP, NAVBAR_HEIGHT_MOBILE } from "@constants/";
 import { withUser } from "@hoc/routes";
 import { getDocumentWithContent } from "@lib/document";
-import { Box, Container, useTheme } from "@mui/material";
+import { Container, useTheme } from "@mui/material";
 import ErrorPage from "@page-components/Error";
 import { cleanObject } from "@utils/helpers";
 

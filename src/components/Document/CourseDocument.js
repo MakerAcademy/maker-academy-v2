@@ -2,7 +2,10 @@ import Title from "@components/Title";
 import useDocRead from "@hooks/useDocRead";
 import { useAppSelector } from "@hooks/useRedux";
 import { listenOneContent } from "@lib/content";
-import { updateUserReadDocument } from "@lib/document";
+import {
+  DEFAULT_CONTENT_THUMBNAIL,
+  updateUserReadDocument,
+} from "@lib/document";
 import { Box, Container, Stack, Typography } from "@mui/material";
 import DocMetadata from "@page-components/Document/DocMetadata";
 import Image from "next/image";
@@ -33,7 +36,7 @@ const CourseDocument = ({ data = {} }) => {
     views,
     likes,
     author,
-    thumbnail = "https://thumbs.dreamstime.com/b/bitcoin-banner-golden-digital-currency-cryptocurrency-futuristic-money-technology-worldwide-network-concept-vector-206771631.jpg",
+    thumbnail = DEFAULT_CONTENT_THUMBNAIL,
   } = document || {};
 
   const read = useDocRead(false, 500);

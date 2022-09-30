@@ -17,6 +17,9 @@ import {
 } from "firebase/firestore";
 import { uploadFile } from "./storage";
 
+export const DEFAULT_CONTENT_THUMBNAIL =
+  "https://firebasestorage.googleapis.com/v0/b/maker-academy-c22f7.appspot.com/o/app%2Fcontent-thumbnail.png?alt=media&token=fd884230-663a-4a0d-96c8-fc6988f3ecb0";
+
 export const generateDocumentSearchTerm = (data) => {
   let _searchTerm = `${data?.title || ""} ${data?.brand || ""} ${
     data?.shortDescription || ""
@@ -42,6 +45,7 @@ export const submitDocument = async (cid, data = {}) => {
     const docRef = doc(collection(db, "documents"));
     const docPayload = {
       ...obj,
+      thumbnail: obj?.thumbnail || DEFAULT_CONTENT_THUMBNAIL,
       author: cid,
       id: docRef.id,
     };
@@ -74,9 +78,7 @@ export const submitDocument = async (cid, data = {}) => {
         shortDescription: obj?.shortDescription || "",
         category: obj?.category || "",
         duration: obj?.duration || "",
-        thumbnail:
-          obj?.thumbnail ||
-          "https://prod-discovery.edx-cdn.org/media/course/image/0e575a39-da1e-4e33-bb3b-e96cc6ffc58e-8372a9a276c1.png",
+        thumbnail: obj?.thumbnail || DEFAULT_CONTENT_THUMBNAIL,
       },
     };
     const contentRes = await setDoc(contentRef, {
@@ -149,7 +151,7 @@ export const updateDocument = async (data = {}, disableUpdatedTimestamp) => {
         duration: obj?.duration || "",
         thumbnail:
           obj?.thumbnail ||
-          "https://prod-discovery.edx-cdn.org/media/course/image/0e575a39-da1e-4e33-bb3b-e96cc6ffc58e-8372a9a276c1.png",
+          "https://firebasestorage.googleapis.com/v0/b/maker-academy-c22f7.appspot.com/o/app%2Fcontent-thumbnail.png?alt=media&token=fd884230-663a-4a0d-96c8-fc6988f3ecb0",
       },
       private: !!obj?.private,
     };
