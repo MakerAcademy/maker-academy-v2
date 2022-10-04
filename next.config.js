@@ -16,6 +16,8 @@ module.exports = withPlugins([withImages, nextTranslate], {
       },
     });
 
+    config.resolve.fallback = { fs: false };
+
     return config;
   },
 });
