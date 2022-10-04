@@ -1,12 +1,5 @@
-import {
-  getDownloadURL,
-  getStorage,
-  ref,
-  uploadBytes,
-  uploadBytesResumable,
-} from "firebase/storage";
-
-const storage = getStorage();
+import { storage } from "@config/firebase";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 
 export const uploadFile = async (_ref, file) => {
   // console.log(_ref, file);
@@ -50,7 +43,7 @@ export const uploadFile = async (_ref, file) => {
 
 export const getStorageDownloadUrl = async (_ref) => {
   try {
-    console.log(_ref);
+    // console.log(_ref);
     const _url = await getDownloadURL(ref(storage, _ref));
     return _url;
   } catch (error) {
