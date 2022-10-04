@@ -1,11 +1,14 @@
-import { getStorageDownloadUrl } from "@lib/storage";
-import React from "react";
+import { withAdminDb } from "@hoc/routes";
 
 const Test = () => {
   const handleClick = async () => {
-    getStorageDownloadUrl("/app/content-thumbnail.png").then((res) => {
-      console.log(res);
-    });
+    // try {
+    //   const q = await getDoc(doc(db, `test/9UNtMnxLOHqI8TCWWhR6`));
+    //   console.log(q.data?.());
+    // } catch (error) {
+    //   console.log(error);
+    //   return error;
+    // }
   };
 
   return (
@@ -16,3 +19,23 @@ const Test = () => {
 };
 
 export default Test;
+
+export const getServerSideProps = withAdminDb(async (context, { db }) => {
+  // console.log(db);
+
+  const course = await db
+    .collection("test")
+    .get()
+    .then((snap) => {
+      let arr = [];
+      snap.docs.map((doc) => arr.push(doc.data()));
+
+      return arr;
+    });
+
+  console.log(course);
+
+  return {
+    props: {},
+  };
+});

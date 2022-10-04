@@ -1,16 +1,11 @@
 import Title from "@components/Title";
 import { withProtectedUser } from "@hoc/routes";
-import {
-  getAssessmentWithContent,
-  submitAssessment,
-  updateAssessment,
-} from "@lib/assessment";
+import { getAssessmentWithContent, updateAssessment } from "@lib/assessment";
 import { Box, Typography } from "@mui/material";
 import { cleanObject } from "@utils/helpers";
 import dynamic from "next/dynamic";
 import Router from "next/router";
 import { useSnackbar } from "notistack";
-import React from "react";
 
 const AssessmentForm = dynamic(
   () => import("@components/forms/AssessmentForm"),

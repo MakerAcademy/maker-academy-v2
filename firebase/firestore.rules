@@ -1,8 +1,100 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /{document=**} {
-      allow read, write: if false;
+  
+    // ---------- FUNCTIONS ----------
+    // Get UID
+    function uid() {
+      return request.auth.uid
     }
+
+    function isOwner() {
+      return request.resource.data.uid == request.auth.uid
+    }
+  
+    // Checks if user is signed in
+    function isSignedIn() {
+      return request.auth.uid != null;
+    }
+
+    // Get trust level
+    function getTrustLevel(uid) {
+      return get(/databases/$(database)/documents/users/$(uid)).data.trustLevel
+    }
+    // ---------- FUNCTIONS ----------
+
+    
+    // ---------- RULES ----------
+
+    // match /{document=**} {
+    //   allow read, write: if
+    //       request.time < timestamp.date(2023, 9, 20);
+    // }
+
+    match /assessments/{id} {
+      allow read: if true;
+      allow write: if isSignedIn();
+    }
+    
+    match /backlogs/{id} {
+      allow read: if true;
+      allow write: if getTrustLevel(uid()) > 3;
+    }
+    
+    match /contacts/{id} {
+      allow read: if true;
+      allow write: if isOwner() || getTrustLevel(uid()) > 3;
+    }
+
+    match /content/{id} {
+      allow read: if true;
+      allow write: if isSignedIn();
+    }
+
+    match /courses/{id} {
+      allow read: if true;
+      allow write: if isSignedIn();
+    }
+
+    match /documents/{id} {
+      allow read: if true;
+      allow write: if isSignedIn();
+    }
+
+    match /drafts/{id} {
+      allow read: if true;
+      allow write: if isSignedIn();
+    }
+
+    match /edit_requests/{id} {
+      allow read: if true;
+      allow write: if isSignedIn();
+    }
+
+    match /locales/{id} {
+      allow read: if isSignedIn() && getTrustLevel(uid()) > 3;
+      allow write: if isSignedIn() && getTrustLevel(uid()) > 3;
+    }    
+
+    match /marketing/{id} {
+      allow read: if isSignedIn();
+      allow write: if true;
+    }
+    
+    match /status_updates/{id} {
+      allow read: if true;
+      allow write: if getTrustLevel(uid()) > 3;
+    }
+    
+    match /submitted_assessments/{id} {
+      allow read: if isSignedIn();
+      allow write: if isSignedIn();
+    }
+    
+    match /users/{id} {
+      allow read: if isSignedIn();
+      allow write: if isSignedIn();
+    }
+    // ---------- RULES ----------
   }
 }

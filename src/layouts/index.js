@@ -20,21 +20,28 @@ const LandingLayout = ({ children }) => {
   const fixed = query.courseId && query.docId;
 
   return (
-    <React.Fragment>
+    <Box sx={{ position: "relative", minHeight: "100vh" }}>
       <Navbar
         transparent={transparent}
         withElevation={withElevation}
         fixed={fixed}
       />
 
-      <Box sx={{ pt: transparent ? 0 : `${NAVBAR_HEIGHT_DESKTOP}px` }}>
+      <Box
+        sx={{
+          pt: transparent ? 0 : `${NAVBAR_HEIGHT_DESKTOP}px`,
+          height: "100%",
+        }}
+      >
         {children}
       </Box>
 
       {/* <Divider /> */}
 
+      {/* <Box sx={{ position: "absolute", bottom: 0, width: "100%" }}> */}
       <Footer />
-    </React.Fragment>
+      {/* </Box> */}
+    </Box>
   );
 };
 

@@ -122,7 +122,7 @@ const Section3 = () => {
         {/* Content */}
         <Box>
           <Grid container spacing={4}>
-            {data.map((item, i) => (
+            {data?.map?.((item, i) => (
               <Grid item xs={12} md={4} key={i}>
                 <Zoom delay={100 * i} triggerOnce style={{ height: "100%" }}>
                   <ContentCard {...item} />
