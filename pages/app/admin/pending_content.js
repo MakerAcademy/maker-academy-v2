@@ -1,9 +1,8 @@
 import { withProtectedUser } from "@hoc/routes";
 import { useAppDispatch } from "@hooks/useRedux";
-import { approveRejectContent, listenPendingContent } from "@lib/content";
+import { listenPendingContent } from "@lib/content";
 import PendingContentTable from "@page-components/Admin/PendingContentTable";
-import { fetchPendingContent } from "@redux/slices/contentSlice";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const Admin = () => {
   const [pendingContent, setPendingContent] = useState(null);

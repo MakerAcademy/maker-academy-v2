@@ -1,7 +1,7 @@
 import Title from "@components/Title";
 import { withProtectedUser } from "@hoc/routes";
 import { submitCourse } from "@lib/course";
-import { Box, Container, Paper, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { cleanObject } from "@utils/helpers";
 import dynamic from "next/dynamic";
 import Router from "next/router";

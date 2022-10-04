@@ -3,12 +3,12 @@ import { submitDocument } from "@lib/document";
 // import DocumentForm from "@forms/DocumentForm";
 import DashboardPaper from "@components/DashboardPaper";
 import Title from "@components/Title";
-import { Box, Typography } from "@mui/material";
-import dynamic from "next/dynamic";
-import { useSnackbar } from "notistack";
-import Router from "next/router";
-import { cleanObject } from "@utils/helpers";
 import { submitDraft } from "@lib/drafts";
+import { Box, Typography } from "@mui/material";
+import { cleanObject } from "@utils/helpers";
+import dynamic from "next/dynamic";
+import Router from "next/router";
+import { useSnackbar } from "notistack";
 
 const DocumentForm = dynamic(() => import("@forms/DocumentForm"), {
   ssr: false,

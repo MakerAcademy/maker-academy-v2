@@ -2,7 +2,6 @@ import { NAVBAR_HEIGHT_DESKTOP } from "@constants/";
 import { withProtectedUser } from "@hoc/routes";
 import { getCourseWithContent } from "@lib/course";
 import { Box } from "@mui/material";
-import React from "react";
 
 const Learn = () => {
   return (

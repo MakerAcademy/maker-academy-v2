@@ -1,7 +1,6 @@
 import { withProtectedUser } from "@hoc/routes";
 import { useAppDispatch } from "@hooks/useRedux";
 import { listenPublishedContent } from "@lib/content";
-import PendingContentTable from "@page-components/Admin/PendingContentTable";
 import PublishedContentTable from "@page-components/Admin/PublishedContentTable";
 import { useEffect, useState } from "react";
 

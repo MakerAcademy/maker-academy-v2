@@ -1,4 +1,4 @@
-import * as firebaseAdmin from "firebase-admin";
+import firebaseAdmin from "firebase-admin";
 
 const project_id = process.env.NEXT_PUBLIC_FIREBASE_ADMIN_PROJECT_ID;
 

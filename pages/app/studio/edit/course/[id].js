@@ -1,4 +1,3 @@
-import DashboardPaper from "@components/DashboardPaper";
 import Title from "@components/Title";
 import { withProtectedUser } from "@hoc/routes";
 import { getCourseWithContent } from "@lib/course";

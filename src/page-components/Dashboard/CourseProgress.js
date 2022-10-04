@@ -1,11 +1,9 @@
 import ContentCard from "@components/cards/ContentCard";
 import DashboardPaper from "@components/DashboardPaper";
-import { withProtectedUser } from "@hoc/routes";
 import { useAppSelector } from "@hooks/useRedux";
 import { getDashboardUserContent } from "@lib/content";
 import { Grid, Typography } from "@mui/material";
-import _ from "lodash";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const CourseProgress = () => {
   const [data, setData] = useState(null);
@@ -50,5 +48,3 @@ const CourseProgress = () => {
 };
 
 export default CourseProgress;
-
-export const getServerSideProps = withProtectedUser();

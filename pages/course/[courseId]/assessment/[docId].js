@@ -1,12 +1,10 @@
-import { NAVBAR_HEIGHT_DESKTOP, NAVBAR_HEIGHT_MOBILE } from "@constants/";
 import { withProtectedUser } from "@hoc/routes";
 import { getAssessmentWithContent } from "@lib/assessment";
 import { getCourseWithContent } from "@lib/course";
-import { Box, Container, Paper, Stack, useTheme } from "@mui/material";
+import { Box, Container, useTheme } from "@mui/material";
 import AssessmentPage from "@page-components/Assessment";
 import CourseBreadrumbsNav from "@page-components/Course/CourseBreadrumbsNav";
 import LearnContentDrawer from "@page-components/Course/LearnContentDrawer";
-import NextPreviousButtons from "@page-components/Course/NextPreviousButtons";
 import ErrorPage from "@page-components/Error";
 
 const LearnContent = ({ course, assessment }) => {

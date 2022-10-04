@@ -1,10 +1,9 @@
 import ContentCard from "@components/cards/ContentCard";
 import DashboardPaper from "@components/DashboardPaper";
-import { withProtectedUser } from "@hoc/routes";
 import { useAppSelector } from "@hooks/useRedux";
 import { getDashboardUserContent } from "@lib/content";
 import { Grid, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const LikedDocuments = () => {
   const [data, setData] = useState(null);
@@ -37,5 +36,3 @@ const LikedDocuments = () => {
 };
 
 export default LikedDocuments;
-
-export const getServerSideProps = withProtectedUser();

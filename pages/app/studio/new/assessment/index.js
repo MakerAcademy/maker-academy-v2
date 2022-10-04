@@ -6,7 +6,6 @@ import { cleanObject } from "@utils/helpers";
 import dynamic from "next/dynamic";
 import Router from "next/router";
 import { useSnackbar } from "notistack";
-import React from "react";
 
 const AssessmentForm = dynamic(
   () => import("@components/forms/AssessmentForm"),
