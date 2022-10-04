@@ -15,7 +15,6 @@ module.exports = withPlugins([withImages, nextTranslate], {
         filename: "static/[hash][ext]",
       },
     });
-
     config.resolve.fallback = { fs: false };
 
     return config;
