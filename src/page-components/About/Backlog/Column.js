@@ -3,7 +3,8 @@ import { CommonContext } from "@context/commonContext";
 import ElectricBoltIcon from "@mui/icons-material/ElectricBolt";
 import LightbulbIcon from "@mui/icons-material/Lightbulb";
 import PestControlIcon from "@mui/icons-material/PestControl";
-import { Box, Button, Paper, Stack, Typography } from "@mui/material";
+import { Box, Button, Paper, Stack, Typography, useTheme } from "@mui/material";
+import hex from "@utils/hexTransparency";
 import useTranslation from "next-translate/useTranslation";
 import { useContext } from "react";
 import Element from "./Element";
@@ -20,10 +21,21 @@ const ISSUE_TYPE_NEW_BUTTON = {
   feature: { name: "suggest_feature", icon: LightbulbIcon },
 };
 
+export const ISSUE_TYPE_COLOR = (theme, type) => {
+  const _color = {
+    bug_fix: theme.palette.info.main,
+    improvement: theme.palette.warning.light,
+    feature: theme.palette.primary.main,
+  };
+
+  return _color[type];
+};
+
 const Header = ({ title, length }) => {
   const { commonState, setCommonState } = useContext(CommonContext);
   const { t } = useTranslation("about");
   const Icon = ISSUE_TYPE_NEW_BUTTON[title].icon;
+  const theme = useTheme();
 
   return (
     <Paper
@@ -40,9 +52,19 @@ const Header = ({ title, length }) => {
       </Typography>
 
       <Button
-        // variant="contained"
+        variant="contained"
+        disableElevation
         size="small"
-        sx={{ borderRadius: "8px" }}
+        sx={{
+          height: 30,
+          borderRadius: "8px",
+          color: ISSUE_TYPE_COLOR(theme, title),
+          bgcolor: `${ISSUE_TYPE_COLOR(theme, title)}${hex["5%"]}`,
+          border: `1px solid ${ISSUE_TYPE_COLOR(theme, title)}`,
+          "&:hover": {
+            bgcolor: `${ISSUE_TYPE_COLOR(theme, title)}${hex["20%"]}`,
+          },
+        }}
         onClick={() => setCommonState({ backlogDialogOpen: true })}
       >
         {t(ISSUE_TYPE_NEW_BUTTON[title].name)}
@@ -58,9 +80,10 @@ const Column = ({ elements, title }) => {
   return (
     <Box
       sx={{
+        width: "100%",
         height: "100%",
         // bgcolor: "grey.grey2",
-        p: 3,
+        // p: 3,
         borderRadius: "16px",
       }}
     >

@@ -6,9 +6,8 @@ import {
   DEFAULT_CONTENT_THUMBNAIL,
   updateUserReadDocument,
 } from "@lib/document";
-import { Box, Container, Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography, useTheme } from "@mui/material";
 import DocMetadata from "@page-components/Document/DocMetadata";
-import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import MarkdownBody from "./MarkdownBody";
@@ -16,6 +15,8 @@ import MarkdownBody from "./MarkdownBody";
 const CourseDocument = ({ data = {} }) => {
   const { user } = useAppSelector((state) => state.user);
   const { profile } = useAppSelector((state) => state.profile);
+
+  const theme = useTheme();
 
   const [document, setDocument] = useState(data);
   const router = useRouter();
@@ -74,7 +75,7 @@ const CourseDocument = ({ data = {} }) => {
             mb: 3,
           }}
         >
-          <Image
+          {/* <Image
             src={thumbnail}
             loader={() => thumbnail}
             alt={title}
@@ -82,6 +83,22 @@ const CourseDocument = ({ data = {} }) => {
             objectFit="cover"
             style={{
               borderRadius: "12px",
+            }}
+          /> */}
+          <img
+            src={thumbnail}
+            alt={title}
+            onError={(e) => {
+              e.target.src = DEFAULT_CONTENT_THUMBNAIL;
+              return true;
+            }}
+            style={{
+              height: "100%",
+              width: "100%",
+              objectFit: "cover",
+              borderRadius: "24px",
+              maxHeight: "300px",
+              boxShadow: theme.palette.boxShadows.shadow6,
             }}
           />
         </Box>

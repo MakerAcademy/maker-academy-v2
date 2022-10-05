@@ -7,9 +7,14 @@ export const lightTheme = {
   palette: {
     mode: "light",
     primary: {
-      main: "#1ABC9C",
+      main: "#1AAB9B",
       dark: "#0c6e5a",
       invert: "#FFF",
+    },
+    info: {
+      main: "#447AFB",
+      light: "#739CFF",
+      darkk: "#1E53D2",
     },
     grey: {
       grey1: "#F9F9FA",

@@ -5,11 +5,20 @@ import { updateContact } from "@lib/user";
 import EditIcon from "@mui/icons-material/Edit";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import { Box, Button, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  IconButton,
+  Stack,
+  Tooltip,
+  Typography,
+} from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import moment from "moment";
 import useTranslation from "next-translate/useTranslation";
 import { useEffect, useMemo, useState } from "react";
+import GroupAddIcon from "@mui/icons-material/GroupAdd";
+import GroupRemoveIcon from "@mui/icons-material/GroupRemove";
 
 const buildRows = (data, t) => {
   const rows = data?.map?.(({ ...item }, i) => ({
@@ -70,7 +79,7 @@ const buildColumns = (t) => {
     {
       field: "actions",
       headerName: "",
-      width: 300,
+      width: 400,
       align: "right",
       sortable: false,
       filterable: false,
@@ -97,57 +106,61 @@ const buildColumns = (t) => {
           </GreenButton>
 
           <Stack direction="row" alignItems="center">
-            <Button
-              sx={{ minWidth: 40 }}
-              onClick={() =>
-                updateContact(
-                  params.row.id,
-                  { level: (params.row.data.level || 1) - 1 },
-                  true
-                )
-              }
-            >
-              <KeyboardArrowDownIcon fontSize="small" />
-            </Button>
+            <Tooltip title="Descrease user level">
+              <Button
+                sx={{ minWidth: 40 }}
+                onClick={() =>
+                  updateContact(
+                    params.row.id,
+                    { level: (params.row.data.level || 1) - 1 },
+                    true
+                  )
+                }
+              >
+                <KeyboardArrowDownIcon fontSize="small" />
+              </Button>
+            </Tooltip>
 
             <Typography variant="body2">{params.row.data.level}</Typography>
 
-            <Button
-              sx={{ minWidth: 40 }}
-              onClick={() => {
-                updateContact(
-                  params.row.id,
-                  { level: (params.row.data.level || 1) + 1 },
-                  true
-                );
-              }}
-            >
-              <KeyboardArrowUpIcon fontSize="small" />
-            </Button>
+            <Tooltip title="Increase user level">
+              <Button
+                sx={{ minWidth: 40 }}
+                onClick={() => {
+                  updateContact(
+                    params.row.id,
+                    { level: (params.row.data.level || 1) + 1 },
+                    true
+                  );
+                }}
+              >
+                <KeyboardArrowUpIcon fontSize="small" />
+              </Button>
+            </Tooltip>
           </Stack>
 
-          {/* <GreenButton
-            size="small"
-            icon={<OpenInNewIcon sx={{ fontSize: 16 }} />}
-            onClick={() =>
-              approveRejectContent({ id: params.id, approve: true })
-            }
-          >
-            {t("accept")}
-          </GreenButton> */}
-
-          {params.row.data.status === "pending" && (
-            <Button
-              variant="contained"
-              size="small"
-              color="error"
-              onClick={() =>
-                approveRejectContent({ id: params.id, approve: false })
-              }
-              sx={{ height: 38, px: 3, borderRadius: "8px", fontWeight: 600 }}
-            >
-              {t("reject")}
-            </Button>
+          {params.row.data.partOfTeam ? (
+            <Tooltip title="Remove from Team">
+              <IconButton
+                size="small"
+                onClick={() =>
+                  updateContact(params.row.id, { partOfTeam: false }, true)
+                }
+              >
+                <GroupRemoveIcon fontSize="small" />
+              </IconButton>
+            </Tooltip>
+          ) : (
+            <Tooltip title="Add to Team">
+              <IconButton
+                size="small"
+                onClick={() =>
+                  updateContact(params.row.id, { partOfTeam: true }, true)
+                }
+              >
+                <GroupAddIcon fontSize="small" />
+              </IconButton>
+            </Tooltip>
           )}
         </Stack>
       ),

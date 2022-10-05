@@ -86,7 +86,7 @@ const Banners = () => {
           title="Create an Article"
           description="Publish an article to the Maker Academy."
           buttonText="Create an article"
-          color="#1ABC9C"
+          color="#1AAB9B"
           href="/app/studio/new/document"
         />
       </Grid>

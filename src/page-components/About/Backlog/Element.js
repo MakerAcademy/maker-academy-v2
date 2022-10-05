@@ -1,11 +1,15 @@
+import MarkdownBody from "@components/Document/MarkdownBody";
 import Title from "@components/Title";
-import { BACKLOG_TYPES } from "@constants/";
 import { useAppSelector } from "@hooks/useRedux";
 import { deleteBacklog, updateBacklog } from "@lib/backlog";
+import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
+import ReviewsIcon from "@mui/icons-material/Reviews";
+import TipsAndUpdatesIcon from "@mui/icons-material/TipsAndUpdates";
 import {
   Box,
-  Button,
-  Card,
   Chip,
   Dialog,
   FormControl,
@@ -18,16 +22,15 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
+import { cleanObject } from "@utils/helpers";
+import hex from "@utils/hexTransparency";
 import useTranslation from "next-translate/useTranslation";
-import React, { useState } from "react";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
-import MarkdownBody from "@components/Document/MarkdownBody";
+import dynamic from "next/dynamic";
+import { useSnackbar } from "notistack";
+import { useState } from "react";
 import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
-import { useSnackbar } from "notistack";
-import { cleanObject } from "@utils/helpers";
-import dynamic from "next/dynamic";
+import { ISSUE_TYPE_COLOR } from "./Column";
 
 const BacklogForm = dynamic(() => import("@forms/BacklogForm"), {
   ssr: false,
@@ -37,6 +40,17 @@ const ISSUE_TYPE_NUMBER = {
   bug_fix: "bug",
   improvement: "improvement",
   feature: "feature",
+};
+
+export const ISSUE_STATUS = (theme, type) => {
+  const _type = {
+    open: { color: theme.palette.info.main, Icon: TipsAndUpdatesIcon },
+    development: { color: theme.palette.warning.light, Icon: AutoAwesomeIcon },
+    review: { color: theme.palette.secondary.light, Icon: ReviewsIcon },
+    done: { color: theme.palette.primary.main, Icon: CheckCircleIcon },
+  };
+
+  return _type[type];
 };
 
 const Element = (props) => {
@@ -95,6 +109,9 @@ const Element = (props) => {
     }
   };
 
+  const statusColor = ISSUE_STATUS(theme, status).color;
+  const StatusIcon = ISSUE_STATUS(theme, status).Icon;
+
   return (
     <Box sx={{ position: "relative" }}>
       <Box
@@ -133,12 +150,20 @@ const Element = (props) => {
               label={t(issue_type)}
               size="small"
               sx={{
-                border: `2px solid ${theme.palette.primary.main}`,
+                bgcolor: `${ISSUE_TYPE_COLOR(theme, issue_type)}${hex["5%"]}`,
+                color: `${ISSUE_TYPE_COLOR(theme, issue_type)}`,
+                border: `1px solid ${ISSUE_TYPE_COLOR(theme, issue_type)}`,
                 fontSize: 14,
               }}
             />
 
-            <Typography variant="caption">{t(status)}</Typography>
+            <Stack direction="row" alignItems="center" spacing={0.5}>
+              <Typography variant="caption" sx={{ color: statusColor }}>
+                {t(status)}
+              </Typography>
+
+              <StatusIcon sx={{ color: statusColor, fontSize: 18 }} />
+            </Stack>
           </Stack>
         </Paper>
       </Box>

@@ -24,11 +24,12 @@ import { BlurSection1, BlurSection2 } from "@page-components/Home/images";
 import useTranslation from "next-translate/useTranslation";
 import Router, { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import SecurityIcon from '@mui/icons-material/Security';
+import SecurityIcon from "@mui/icons-material/Security";
+import { withAdminDb } from "@hoc/routes";
 
 const routes = [
   { name: "mission", link: "/about/mission", icon: StarIcon },
-  { name: "budget", link: "/about/budget", icon: BarChartIcon },
+  // { name: "budget", link: "/about/budget", icon: BarChartIcon },
   // {
   //   name: "academy_proposals",
   //   link: "/about/academy_proposals",
@@ -44,7 +45,7 @@ const routes = [
   { name: "privacy_policy", link: "/about/privacy_policy", icon: SecurityIcon },
 ];
 
-const AboutUs = () => {
+const AboutUs = (props) => {
   const { asPath } = useRouter();
   const { t } = useTranslation("about");
 
@@ -148,7 +149,7 @@ const AboutUs = () => {
         </Tabs>
 
         <Box sx={{ my: 5 }}>
-          <RenderedComponent />
+          <RenderedComponent {...props} />
         </Box>
       </Container>
     </Box>
@@ -166,3 +167,17 @@ AboutUs.type = {
 };
 
 export default AboutUs;
+
+export const getServerSideProps = withAdminDb(async (context, { db }) => {
+  const contacts = await db
+    .collection("contacts")
+    .where("partOfTeam", "==", true)
+    .get()
+    .then((snap) => {
+      return snap.docs.map((doc) => doc.data());
+    });
+
+  return {
+    props: { contacts: contacts ? JSON.parse(JSON.stringify(contacts)) : [] },
+  };
+});

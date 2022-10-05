@@ -17,7 +17,7 @@ const Board = () => {
       <Stack
         direction="row"
         justifyContent="space-between"
-        spacing={3}
+        spacing={4}
         // sx={{ bgcolor: "white" }}
       >
         {BACKLOG_TYPES.map((item, i) => (

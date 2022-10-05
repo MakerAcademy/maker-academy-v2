@@ -70,7 +70,7 @@ const Banners = () => {
           title="MakerDAO History "
           description="Start here if you're new to MakerDAO and the Academy."
           buttonText="Learn More"
-          color="#1ABC9C"
+          color="#1AAB9B"
         />
       </Grid>
  
