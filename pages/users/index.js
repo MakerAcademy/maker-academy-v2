@@ -1,5 +1,5 @@
-import ContentBannerDark from "@assets/images/backgrounds/content-banner-dark.png";
-import ContentBannerLight from "@assets/images/backgrounds/content-banner-light.png";
+import UsersBannerDark from "@assets/images/backgrounds/users-banner-dark.png";
+import UsersBannerLight from "@assets/images/backgrounds/users-banner-light.png";
 import GreenButton from "@components/buttons/GreenButton";
 import ProfileCard from "@components/cards/ProfileCard";
 import Title from "@components/Title";
@@ -134,9 +134,9 @@ const Profiles = () => {
       </Breadcrumbs> */}
 
       {/* Banner */}
-      <Box sx={{ position: "relative", width: "100%", mb: 5, height: 200 }}>
+      <Box sx={{ position: "relative", width: "100%", mb: 5, height: 220 }}>
         <img
-          src={isDark ? ContentBannerDark : ContentBannerLight}
+          src={isDark ? UsersBannerDark : UsersBannerLight}
           alt={"Maker Academy Content Banner"}
           style={{
             height: "100%",
@@ -166,7 +166,7 @@ const Profiles = () => {
               {t("users")}
             </Title>
 
-            <Typography>Users Caption</Typography>
+            <Typography>Explore Maker Academy Users</Typography>
           </Stack>
         </Box>
       </Box>
@@ -180,6 +180,7 @@ const Profiles = () => {
         <StyledSearch
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
+          placeholder="Search.."
         />
 
         <Button onClick={(e) => setAnchorEl(e.currentTarget)}>
@@ -231,9 +232,9 @@ const Profiles = () => {
           {t("show_all")}
         </MenuItem>
 
-        {CONTACT_ROLES.map((item) => (
-          <MenuItem key={item} onClick={() => handleMenuSelect(item)}>
-            {t(item)}
+        {CONTACT_ROLES.map(({ name }) => (
+          <MenuItem key={name} onClick={() => handleMenuSelect(name)}>
+            {t(name)}
           </MenuItem>
         ))}
       </Menu>

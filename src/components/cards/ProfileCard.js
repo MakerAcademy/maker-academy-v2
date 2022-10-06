@@ -12,6 +12,7 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
+import { MakerShortLogoBlack, MakerShortLogoWhite } from "@utils/images";
 import Router from "next/router";
 
 const ProfileCard = ({
@@ -24,6 +25,7 @@ const ProfileCard = ({
   email,
 }) => {
   const theme = useTheme();
+  const isDark = theme.palette.mode === "dark";
 
   const name =
     firstName || lastName ? `${firstName} ${lastName}` : email?.split("@")?.[0];
@@ -69,17 +71,22 @@ const ProfileCard = ({
         >
           <IconButton
             size="small"
-            sx={{
-              color: socials?.facebook
-                ? "#4267B2"
-                : `${theme.palette.grey.grey2} !important`,
-            }}
-            href={`https://www.facebook.com/${socials?.facebook}`}
+            href={`https://forum.makerdao.com/u/${socials?.makerforum}`}
             target="_blank"
-            disabled={!socials?.facebook}
+            disabled={!socials?.makerforum}
             onClick={(e) => e.stopPropagation()}
           >
-            <FacebookIcon fontSize="small" />
+            <img
+              src={!isDark ? MakerShortLogoBlack : MakerShortLogoWhite}
+              alt="Maker Logo"
+              style={{
+                width: "24px",
+                objectFit: "contain",
+                filter:
+                  !socials?.makerforum &&
+                  "invert(99%) sepia(0%) saturate(741%) hue-rotate(205deg) brightness(119%) contrast(95%)",
+              }}
+            />
           </IconButton>
 
           <IconButton

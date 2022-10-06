@@ -1,4 +1,15 @@
-import { FullLogoWhite } from "@utils/images";
+import {
+  FullLogoWhite,
+  RoleFullstack,
+  RoleFrontend,
+  RoleBackend,
+  RoleSolidity,
+  RoleDatascientist,
+  RoleFinancialengineer,
+  RoleUiux,
+  RoleProductmanager,
+  RoleStudent,
+} from "@utils/images";
 
 export const COMMON_CONTEXT_STORAGE = "COMMON_STORAGE_PERSIST";
 export const THEME_CONTEXT_STORAGE = "MAKER ACADEMY THEME";
@@ -80,15 +91,15 @@ export const FIREBASE_ERRORS = {
 };
 
 export const CONTACT_ROLES = [
-  "full_stack_developer",
-  "frontend_developer",
-  "backend_developer",
-  "solidity_engineer",
-  "data_scientist",
-  "financial_engineer",
-  "uiux_designer",
-  "product_manager",
-  "student",
+  { name: "full_stack_developer", icon: RoleFullstack },
+  { name: "frontend_developer", icon: RoleFrontend },
+  { name: "backend_developer", icon: RoleBackend },
+  { name: "solidity_engineer", icon: RoleSolidity },
+  { name: "data_scientist", icon: RoleDatascientist },
+  { name: "financial_engineer", icon: RoleFinancialengineer },
+  { name: "uiux_designer", icon: RoleUiux },
+  { name: "product_manager", icon: RoleProductmanager },
+  { name: "student", icon: RoleStudent },
 ];
 
 export const BRANDS = [

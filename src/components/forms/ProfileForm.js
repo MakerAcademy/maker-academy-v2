@@ -261,17 +261,17 @@ const ProfileForm = ({ values, handleSubmit: propsHandleSubmit }) => {
                 flexWrap="wrap"
                 sx={{ mt: "0px !important" }}
               >
-                {CONTACT_ROLES.map((item) => (
-                  <Grid item key={item}>
+                {CONTACT_ROLES.map(({ name, icon }) => (
+                  <Grid item key={name}>
                     <Paper
-                      onClick={() => handleRoleChange(item)}
+                      onClick={() => handleRoleChange(name)}
                       sx={{
-                        bgcolor: _role === item ? "grey.grey2" : "inherit",
+                        bgcolor: _role === name ? "grey.grey2" : "inherit",
                         cursor: "pointer",
                         p: 2,
                         // mb: 2,
                         minHeight: 85,
-                        //   height: "100%",
+                        height: "100%",
                         width: 110,
                         display: "flex",
                         flexDirection: "column",
@@ -287,8 +287,11 @@ const ProfileForm = ({ values, handleSubmit: propsHandleSubmit }) => {
                         },
                       }}
                     >
-                      <Avatar sx={{ mb: 1, height: 26, width: 26 }} />
-                      <Typography variant="caption">{t(item)}</Typography>
+                      <Avatar
+                        sx={{ mb: 1, height: 26, width: 26 }}
+                        src={icon}
+                      />
+                      <Typography variant="caption">{t(name)}</Typography>
                     </Paper>
                   </Grid>
                 ))}
@@ -308,23 +311,6 @@ const ProfileForm = ({ values, handleSubmit: propsHandleSubmit }) => {
                 label="Public Email"
                 control={control}
                 placeholder="abc@gmail.com"
-              />
-
-              <FormTextField
-                name="socials.facebook"
-                label="Facebook"
-                control={control}
-                placeholder="colby_anderson"
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment
-                      position="start"
-                      sx={{ color: "grey.grey4" }}
-                    >
-                      <Typography>@</Typography>
-                    </InputAdornment>
-                  ),
-                }}
               />
 
               <FormTextField
@@ -381,6 +367,23 @@ const ProfileForm = ({ values, handleSubmit: propsHandleSubmit }) => {
               <FormTextField
                 name="socials.linkedin"
                 label="LinkedIn"
+                control={control}
+                placeholder="colby_anderson"
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment
+                      position="start"
+                      sx={{ color: "grey.grey4" }}
+                    >
+                      <Typography>@</Typography>
+                    </InputAdornment>
+                  ),
+                }}
+              />
+
+              <FormTextField
+                name="socials.makerforum"
+                label="Maker Forum"
                 control={control}
                 placeholder="colby_anderson"
                 InputProps={{
