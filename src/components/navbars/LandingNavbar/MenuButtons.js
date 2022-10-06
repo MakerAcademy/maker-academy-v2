@@ -1,5 +1,6 @@
-import { Button, Link, Stack, Typography } from "@mui/material";
+import { Button, Stack, Typography } from "@mui/material";
 import useTranslation from "next-translate/useTranslation";
+import Link from "next/link";
 import React from "react";
 
 const MenuButtons = ({ menuItems = [], theme }) => {
@@ -12,7 +13,7 @@ const MenuButtons = ({ menuItems = [], theme }) => {
       alignItems="center"
     >
       {menuItems.map(({ name, link }, i) => (
-        <Link key={link} href={link} underline="none">
+        <Link key={link} href={link} passHref>
           <Button
             sx={{
               // p: 1,
