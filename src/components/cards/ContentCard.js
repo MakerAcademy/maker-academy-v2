@@ -19,6 +19,7 @@ import Link from "next/link";
 import { useState } from "react";
 import ContentBrandBanner from "@assets/images/misc/contentBrandBanenr.svg";
 import FeedIcon from "@mui/icons-material/Feed";
+import { DEFAULT_CONTENT_THUMBNAIL } from "@lib/document";
 
 const BrandBadge = ({ name, text }) => {
   const theme = useTheme();
@@ -126,6 +127,10 @@ const ContentCard = ({
             <img
               loading="lazy"
               src={thumbnail}
+              onError={(e) => {
+                e.target.src = DEFAULT_CONTENT_THUMBNAIL;
+                return true;
+              }}
               alt={title}
               style={{
                 objectFit: "cover",

@@ -18,7 +18,7 @@ import {
 import { uploadFile } from "./storage";
 
 export const DEFAULT_CONTENT_THUMBNAIL =
-  "https://firebasestorage.googleapis.com/v0/b/maker-academy-c22f7.appspot.com/o/app%2Fcontent-thumbnail.png?alt=media&token=fd884230-663a-4a0d-96c8-fc6988f3ecb0";
+  "https://firebasestorage.googleapis.com/v0/b/maker-academy-c22f7.appspot.com/o/app%2Fcourse_thumbs%2Fdefault.png?alt=media&token=4e00665e-a0d0-4df1-a140-a3ee116340e6";
 
 export const generateDocumentSearchTerm = (data) => {
   let _searchTerm = `${data?.title || ""} ${data?.brand || ""} ${
@@ -151,7 +151,7 @@ export const updateDocument = async (data = {}, disableUpdatedTimestamp) => {
         duration: obj?.duration || "",
         thumbnail:
           obj?.thumbnail ||
-          "https://firebasestorage.googleapis.com/v0/b/maker-academy-c22f7.appspot.com/o/app%2Fcontent-thumbnail.png?alt=media&token=fd884230-663a-4a0d-96c8-fc6988f3ecb0",
+          "https://firebasestorage.googleapis.com/v0/b/maker-academy-c22f7.appspot.com/o/app%2Fcourse_thumbs%2Fdefault.png?alt=media&token=4e00665e-a0d0-4df1-a140-a3ee116340e6",
       },
       private: !!obj?.private,
     };

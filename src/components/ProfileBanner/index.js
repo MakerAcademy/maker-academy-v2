@@ -1,13 +1,7 @@
 import Title from "@components/Title";
 import EmailIcon from "@mui/icons-material/Email";
-import FileCopyIcon from "@mui/icons-material/FileCopy";
-import LanguageIcon from "@mui/icons-material/Language";
-import TelegramIcon from "@mui/icons-material/Telegram";
-import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
-import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import WorkIcon from "@mui/icons-material/Work";
 import {
@@ -15,15 +9,13 @@ import {
   Box,
   Button,
   Grid,
-  Link,
   Paper,
   Stack,
-  Tab,
-  Tabs,
-  Tooltip,
   Typography,
   useTheme,
 } from "@mui/material";
+import { MakerShortLogoBlack, MakerShortLogoWhite } from "@utils/images";
+import useTranslation from "next-translate/useTranslation";
 import { useState } from "react";
 
 const dummyTabs = ["all", "content", "programs"];
@@ -77,6 +69,7 @@ const ProfileBanner = ({
   name,
   bio,
   title,
+  role,
   socials = {},
   profile_link,
   walletAddress,
@@ -85,6 +78,8 @@ const ProfileBanner = ({
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
   const [tabValue, setTabValue] = useState(0);
+
+  const { t } = useTranslation("common");
 
   const handleTabChange = (event, newValue) => {
     setTabValue(newValue);
@@ -150,7 +145,7 @@ const ProfileBanner = ({
 
           <Stack>
             <Title variant="h5">{name}</Title>
-            <Typography variant="body2">{title}</Typography>
+            <Typography variant="body2">{role}</Typography>
           </Stack>
         </Stack>
       </Box>
@@ -182,7 +177,7 @@ const ProfileBanner = ({
               <SocialLink
                 // href={`mailto:${socials?.publicEmail}`}
                 Icon={WorkIcon}
-                text={title}
+                text={t(role)}
               />
             </Stack>
           </CustomPaper>
@@ -191,13 +186,34 @@ const ProfileBanner = ({
         <Grid item xs={12} md={6}>
           <CustomPaper title="Socials">
             <Stack spacing={1.5}>
-              <SocialLink
-                href={`https://www.facebook.com/${socials?.facebook}`}
-                Icon={FacebookIcon}
-                text={socials?.facebook}
-                disabled={!socials?.facebook}
-                color="#4267B2"
-              />
+              <Button
+                href={`https://forum.makerdao.com/u/${socials?.makerforum}`}
+                target="_blank"
+                sx={{ width: "fit-content", minWidth: 115 }}
+              >
+                <img
+                  src={!isDark ? MakerShortLogoBlack : MakerShortLogoWhite}
+                  alt="Maker Logo"
+                  style={{
+                    width: "24px",
+                    objectFit: "contain",
+                    filter:
+                      !socials?.makerforum &&
+                      "invert(99%) sepia(0%) saturate(741%) hue-rotate(205deg) brightness(119%) contrast(95%)",
+                  }}
+                />
+
+                <Typography
+                  variant="body2"
+                  sx={{
+                    ml: 1,
+                    color: !socials?.makerforum ? "grey.grey3" : "text.primary",
+                  }}
+                >
+                  {socials?.makerforum}
+                </Typography>
+              </Button>
+
               <SocialLink
                 href={`https://www.instagram.com/${socials?.instagram}`}
                 Icon={InstagramIcon}

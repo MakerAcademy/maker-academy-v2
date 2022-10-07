@@ -32,6 +32,7 @@ const AboutTeam = ({ contacts }) => {
             <Paper
               onClick={() => Router.push(`/u/${item.id}`)}
               sx={{
+                cursor: "pointer",
                 borderRadius: "16px",
                 boxShadow: "0px 2px 10px rgba(24, 39, 75, 0.05)",
                 "&:hover": {

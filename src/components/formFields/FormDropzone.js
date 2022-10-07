@@ -6,6 +6,7 @@ import { useDropzone } from "react-dropzone";
 import { Controller } from "react-hook-form";
 import CloudUploadOutlinedIcon from "@mui/icons-material/CloudUploadOutlined";
 import Title from "@components/Title";
+import hex from "@utils/hexTransparency";
 
 const Dropzone = ({
   onChange,
@@ -52,7 +53,11 @@ const Dropzone = ({
         minHeight: 120,
         borderRadius: "12px",
         p: 2,
-        backgroundColor: exists && (isDark ? "green" : "lime"),
+        backgroundColor:
+          exists &&
+          (isDark
+            ? `${theme.palette.primary.main}${hex["70%"]}`
+            : `${theme.palette.primary.main}${hex["30%"]}`),
       }}
     >
       <CloudUploadOutlinedIcon sx={{ mb: 0.5, fontSize: 48 }} />
