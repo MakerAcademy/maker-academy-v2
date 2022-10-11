@@ -7,7 +7,10 @@ import {
   signInWithPopup,
   signOut,
   sendPasswordResetEmail,
+  updateProfile,
+  sendEmailVerification,
 } from "firebase/auth";
+import { updateUser } from "./user";
 
 export const handleGoogleLogin = async () => {
   try {
@@ -33,11 +36,30 @@ export const handleLogin = async (email, password) => {
   }
 };
 
-export const handleRegister = async (email, password) => {
+export const handleRegister = async (firstName, lastName, email, password) => {
   try {
-    if (!email && !password) throw { error: true, message: error.message };
+    if (!firstName && !lastName && !email && !password)
+      throw { error: true, message: "Missing Fields" };
+
+    const displayName = `${firstName} ${lastName}`.trim();
 
     const res = await createUserWithEmailAndPassword(auth, email, password);
+
+    if (res.user) {
+      await updateProfile(res.user, {
+        displayName,
+      });
+
+      await updateUser(res.user.uid, {
+        firstName,
+        lastName,
+        displayName,
+      });
+
+      await sendUserEmailVerification(res.user);
+    } else {
+      throw new Error();
+    }
 
     return { success: true, user: res.user };
   } catch (error) {
@@ -56,6 +78,16 @@ export const handleSignOut = async () => {
 export const emailPasswordReset = async (email) => {
   try {
     await sendPasswordResetEmail(auth, email);
+
+    return { success: true };
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const sendUserEmailVerification = async () => {
+  try {
+    sendEmailVerification(auth.currentUser);
 
     return { success: true };
   } catch (error) {

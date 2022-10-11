@@ -4,12 +4,18 @@ import { auth } from "@firebase";
 import { useAppDispatch, useAppSelector } from "@hooks/useRedux";
 import LandingLayout from "@layouts/";
 import DashboardLayout from "@layouts/Dashboard";
-import { getContactFromUid, getUser, listenContactWithUid } from "@lib/user";
+import {
+  getContactFromUid,
+  getUser,
+  listenContactWithUid,
+  updateContact,
+  updateUser,
+} from "@lib/user";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { setProfile, updateUserProfile } from "@redux/slices/contactSlice";
 import { setUser } from "@redux/slices/userSlice";
 import { onAuthStateChanged } from "firebase/auth";
-import { useRouter } from "next/router";
+import Router, { useRouter } from "next/router";
 import nookies from "nookies";
 import { SnackbarProvider } from "notistack";
 import React, { useEffect } from "react";
@@ -45,6 +51,10 @@ const Root = ({ children }) => {
       }
 
       const { email, displayName, emailVerified, uid } = _user;
+
+      if (uid && !emailVerified && pathname !== "/verify_email") {
+        // Router.push("/verify_email");
+      }
 
       const userObj = {
         email,

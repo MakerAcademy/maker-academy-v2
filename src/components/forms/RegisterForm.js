@@ -47,8 +47,20 @@ const RegisterForm = () => {
   const [type, setType] = useState("learner");
 
   const validationSchema = Yup.object().shape({
-    email: Yup.string().required("Email is required"),
-    password: Yup.string().required("Password is required"),
+    firstName: Yup.string()
+      .required("First name is required")
+      .min(2, "Minimum 2 characters"),
+    lastName: Yup.string()
+      .required("Last name is required")
+      .min(2, "Minimum 2 characters"),
+    email: Yup.string().email().required("Email is required"),
+    password: Yup.string()
+      .required("Password is required")
+      .min(8, "Password should be 8 chars minimum.")
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[.!@#\$%\^&\*])(?=.{8,})/,
+        "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character (! . # % & *)"
+      ),
     passwordConfirmation: Yup.string().oneOf(
       [Yup.ref("password"), null],
       "Passwords must match"
@@ -60,9 +72,9 @@ const RegisterForm = () => {
   const { handleSubmit, control } = useForm(formOptions);
 
   const onSubmit = async (data, e) => {
-    const { email, password } = data;
+    const { firstName, lastName, email, password } = data;
 
-    handleRegister(email, password)
+    handleRegister(firstName, lastName, email, password)
       .then(() => {
         setCommonState({
           loadingOverlay: [
@@ -157,6 +169,30 @@ const RegisterForm = () => {
         {/*  <ToggleButton value="educator">Educator</ToggleButton>*/}
         {/*  <ToggleButton value="contributor">Contributor</ToggleButton>*/}
         {/*</ToggleButtonGroup>*/}
+
+        <Stack
+          direction="row"
+          justifyContent="center"
+          spacing={2}
+          sx={{ width: "100%" }}
+        >
+          <FormTextField
+            name="firstName"
+            label="First Name"
+            control={control}
+            placeholder="Colby"
+            fullWidth
+            sx={{ maxWidth: 217 }}
+          />
+          <FormTextField
+            name="lastName"
+            label="Last Name"
+            control={control}
+            placeholder="Anderson"
+            fullWidth
+            sx={{ maxWidth: 217 }}
+          />
+        </Stack>
 
         <FormTextField
           name="email"

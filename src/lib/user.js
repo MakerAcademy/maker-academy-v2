@@ -99,6 +99,17 @@ export const getUser = async (uid) => {
   }
 };
 
+export const updateUser = async (uid, data = {}) => {
+  try {
+    const docRef = doc(db, "users", uid);
+    await updateDoc(docRef, {
+      ...cleanObject(data),
+    });
+  } catch (error) {
+    return error;
+  }
+};
+
 export const listenUsers = (callback) => {
   const q = query(collection(db, "users"));
 
