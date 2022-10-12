@@ -1,5 +1,6 @@
 import { NAVBAR_HEIGHT_DESKTOP } from "@constants/";
 import { withProtectedUser } from "@hoc/routes";
+import { getCourseWithContentAdmin } from "@lib/admin/course";
 import { getCourseWithContent } from "@lib/course";
 import { Box } from "@mui/material";
 
@@ -14,13 +15,13 @@ const Learn = () => {
 export default Learn;
 
 export const getServerSideProps = withProtectedUser(
-  async (context, { profile }) => {
+  async (context, { db, profile }) => {
     const _id = context.params.id;
 
     try {
       const courseId = context.params.courseId;
 
-      const course = await getCourseWithContent(courseId);
+      const course = await getCourseWithContentAdmin(db, courseId);
 
       if (course?.private && !profile?.enrolledCourses?.includes?.(courseId)) {
         return { redirect: { destination: "/content" } };

@@ -57,7 +57,6 @@ export const submitAssessment = async (cid, _data = {}) => {
       id: contentRef.id,
       contentType: "assessment",
       views: 0,
-      enrolledUsers: 0,
       status: "pending",
       private: true,
       metadata: {
@@ -171,6 +170,7 @@ export const getAssessmentWithContent = async (cid, seperate) => {
     }
   } catch (error) {
     console.log("cid", cid, "No such assessment!");
+    console.log("assessment error", error);
     throw error;
   }
 };

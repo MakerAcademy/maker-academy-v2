@@ -1,6 +1,6 @@
 import { withProtectedUser } from "@hoc/routes";
-import { getAssessmentWithContent } from "@lib/assessment";
-import { getCourseWithContent } from "@lib/course";
+import { getAssessmentWithContentAdmin } from "@lib/admin/assessment";
+import { getCourseWithContentAdmin } from "@lib/admin/course";
 import { Box, Container, useTheme } from "@mui/material";
 import AssessmentPage from "@page-components/Assessment";
 import CourseBreadrumbsNav from "@page-components/Course/CourseBreadrumbsNav";
@@ -42,12 +42,12 @@ const LearnContent = ({ course, assessment }) => {
 export default LearnContent;
 
 export const getServerSideProps = withProtectedUser(
-  async (context, { profile }) => {
+  async (context, { db, profile }) => {
     try {
       const courseId = context.params.courseId;
       const docId = context.params.docId;
 
-      const course = await getCourseWithContent(courseId);
+      const course = await getCourseWithContentAdmin(db, courseId);
 
       if (course?.private && !profile?.enrolledCourses?.includes?.(courseId)) {
         return { redirect: { destination: "/content" } };
@@ -61,9 +61,9 @@ export const getServerSideProps = withProtectedUser(
       let assessment = {};
 
       if (docFound) {
-        assessment = await getAssessmentWithContent(docId);
+        assessment = await getAssessmentWithContentAdmin(db, docId);
       } else {
-        // return { redirect: { destination: `/course/${courseId}` } };
+        return { redirect: { destination: `/course/${courseId}` } };
       }
 
       return {
@@ -73,8 +73,9 @@ export const getServerSideProps = withProtectedUser(
         },
       };
     } catch (error) {
-      console.log(1, error);
-      return { redirect: { destination: "/content" } };
+      console.log("serverside assessment error", error);
+      return { props: {} };
+      // return { redirect: { destination: "/content" } };
     }
   }
 );

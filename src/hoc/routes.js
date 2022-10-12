@@ -52,7 +52,7 @@ export function withUser(gssp, options = {}) {
     }
 
     const gsspData = gssp
-      ? await gssp(context, { user, profile })
+      ? await gssp(context, { user, profile, db: firebaseAdmin.firestore() })
       : { props: {} };
 
     if (gsspData.redirect) {

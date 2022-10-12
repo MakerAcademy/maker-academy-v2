@@ -1,7 +1,7 @@
 import ContentDocument from "@components/Document/index";
 import { NAVBAR_HEIGHT_DESKTOP, NAVBAR_HEIGHT_MOBILE } from "@constants/";
 import { withUser } from "@hoc/routes";
-import { getDocumentWithContent } from "@lib/document";
+import { getDocumentWithContentAdmin } from "@lib/admin/document";
 import { Container, useTheme } from "@mui/material";
 import ErrorPage from "@page-components/Error";
 import { cleanObject } from "@utils/helpers";
@@ -28,11 +28,11 @@ const Document = ({ document }) => {
 
 export default Document;
 
-export const getServerSideProps = withUser(async (context, { user }) => {
+export const getServerSideProps = withUser(async (context, { db, user }) => {
   try {
     const docId = context.params.docId;
 
-    const document = await getDocumentWithContent(docId);
+    const document = await getDocumentWithContentAdmin(db, docId);
 
     if (document?.response?.private && user?.trustLevel < 4) {
       return { redirect: { destination: "/content" } };

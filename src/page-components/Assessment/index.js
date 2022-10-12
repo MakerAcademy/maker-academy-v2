@@ -31,6 +31,8 @@ const reducer = (state, action) => {
       return {
         ...action.payload,
       };
+    case "RESET":
+      return {};
 
     default:
       return state;
@@ -116,9 +118,9 @@ const AssessmentPage = ({ assessment, course }) => {
 
   useEffect(() => {
     if (isSubmitted) {
-      getAssessmentAnswers(assessment?.published).then((res) =>
-        setCorrectAnswers(res.payload)
-      );
+      getAssessmentAnswers(assessment?.published).then((res) => {
+        setCorrectAnswers(res?.payload);
+      });
 
       const unsub = listenUsersSubmittedAssessment(
         profile?.id,
@@ -146,7 +148,12 @@ const AssessmentPage = ({ assessment, course }) => {
 
   if (isSubmitted && !viewQuestions) {
     const handleRetake = () => {
-      retakeAssessment(profile?.id, docId);
+      retakeAssessment(profile?.id, docId).then(() => {
+        setQnNumber(0);
+        dispatch({
+          type: "RESET",
+        });
+      });
     };
 
     const { _next } = getNextPreviousFromCourse(course, docId);

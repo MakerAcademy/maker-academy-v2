@@ -1,6 +1,8 @@
 import ContentDocument from "@components/Document/index";
 import { NAVBAR_HEIGHT_DESKTOP, NAVBAR_HEIGHT_MOBILE } from "@constants/";
 import { withUser } from "@hoc/routes";
+import { getDocumentWithContentAdmin } from "@lib/admin/document";
+import { getDraftAdmin } from "@lib/admin/drafts";
 import { getDocumentWithContent } from "@lib/document";
 import { getDraft } from "@lib/drafts";
 import { Box, Container, Typography, useTheme } from "@mui/material";
@@ -34,15 +36,15 @@ const PreviewDocument = ({ document }) => {
 export default PreviewDocument;
 
 export const getServerSideProps = withUser(
-  async (context, { user, profile }) => {
+  async (context, { db, user, profile }) => {
     try {
       const docId = context.params.docId;
 
       const isDraft = context.query?.draft === "true";
 
       const res = isDraft
-        ? await getDraft(docId)
-        : await getDocumentWithContent(docId, true);
+        ? await getDraftAdmin(docId)
+        : await getDocumentWithContentAdmin(db, docId, true);
 
       // const document = await getDraft(docId);
 

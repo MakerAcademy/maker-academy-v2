@@ -14,7 +14,7 @@ const CustomProgress = ({ percentage }) => {
     <Box sx={{ position: "relative" }}>
       <CircularProgress
         variant="determinate"
-        disableShrink
+        // disableShrink
         value={100}
         size={140}
         thickness={9}

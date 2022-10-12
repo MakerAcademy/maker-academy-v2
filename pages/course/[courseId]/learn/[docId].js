@@ -1,7 +1,7 @@
 import CourseDocument from "@components/Document/CourseDocument";
 import { withProtectedUser } from "@hoc/routes";
-import { getCourseWithContent } from "@lib/course";
-import { getDocumentWithContent } from "@lib/document";
+import { getCourseWithContentAdmin } from "@lib/admin/course";
+import { getDocumentWithContentAdmin } from "@lib/admin/document";
 import { Box, Container, Stack, useTheme } from "@mui/material";
 import CourseBreadrumbsNav from "@page-components/Course/CourseBreadrumbsNav";
 import LearnContentDrawer from "@page-components/Course/LearnContentDrawer";
@@ -37,12 +37,12 @@ const LearnContent = ({ course, document: _document }) => {
 export default LearnContent;
 
 export const getServerSideProps = withProtectedUser(
-  async (context, { profile }) => {
+  async (context, { db, profile }) => {
     try {
       const courseId = context.params.courseId;
       const docId = context.params.docId;
 
-      const course = await getCourseWithContent(courseId);
+      const course = await getCourseWithContentAdmin(db, courseId);
 
       if (course?.private && !profile?.enrolledCourses?.includes?.(courseId)) {
         return { redirect: { destination: "/content" } };
@@ -56,7 +56,7 @@ export const getServerSideProps = withProtectedUser(
       let document = {};
 
       if (docFound) {
-        document = await getDocumentWithContent(docId);
+        document = await getDocumentWithContentAdmin(db, docId);
       } else {
         return { redirect: { destination: `/course/${courseId}` } };
       }

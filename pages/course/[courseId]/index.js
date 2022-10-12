@@ -1,7 +1,6 @@
-import { NAVBAR_HEIGHT_DESKTOP } from "@constants/";
 import { withUser } from "@hoc/routes";
+import { getCourseWithContentAdmin } from "@lib/admin/course";
 import { listenOneContent } from "@lib/content";
-import { getCourseWithContent } from "@lib/course";
 import { Box, useTheme } from "@mui/material";
 import CourseBody from "@page-components/Course/CourseBody";
 import { useEffect, useState } from "react";
@@ -31,11 +30,11 @@ const Course = ({ course }) => {
 
 export default Course;
 
-export const getServerSideProps = withUser(async (context, { profile }) => {
+export const getServerSideProps = withUser(async (context, { db, profile }) => {
   try {
     const courseId = context.params.courseId;
 
-    const course = await getCourseWithContent(courseId);
+    const course = await getCourseWithContentAdmin(db, courseId);
 
     if (course?.private && !profile?.enrolledCourses?.includes?.(courseId)) {
       return { redirect: { destination: "/content" } };
