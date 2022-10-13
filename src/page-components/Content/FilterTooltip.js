@@ -28,7 +28,7 @@ const FilterTooltip = ({ openFilterBtnRef }) => {
     mutate("filterTooltipDisplayed", true);
   };
 
-  const open = data === null && router.pathname === "/content";
+  const open = false //data === null && router.pathname === "/content";
 
   const top = openFilterBtnRef?.current?.offsetTop;
   const left = openFilterBtnRef?.current?.offsetLeft;
@@ -51,7 +51,7 @@ const FilterTooltip = ({ openFilterBtnRef }) => {
           py: 0.8,
           px: 1,
           position: "absolute",
-          top: top + 40,
+          top: top + 140,
           left: left - 70,
           display: "flex",
           alignItems: "center",
