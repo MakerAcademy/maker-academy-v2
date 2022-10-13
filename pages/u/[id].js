@@ -22,7 +22,12 @@ const User = ({ user }) => {
     <Container sx={{ py: 5 }}>
       <Breadcrumbs
         separator={<NavigateNextIcon fontSize="small" />}
-        sx={{ mb: 5 }}
+        sx={{
+          mb: 5,
+          "& a": {
+            color: "grey.grey5",
+          },
+        }}
       >
         {breadcrumbs}
         <Typography key="3" color="text.primary">

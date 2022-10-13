@@ -45,12 +45,14 @@ export const getServerSideProps = withProtectedUser(
       const course = await getCourseWithContentAdmin(db, courseId);
 
       if (course?.private && !profile?.enrolledCourses?.includes?.(courseId)) {
-        return { redirect: { destination: "/content" } };
+        // return { redirect: { destination: "/content" } };
       }
 
-      const _docFound = Object.values(course?.curriculum).find((item) => {
-        return Object.values(item.documents)?.find((j) => j.docId === docId);
-      });
+      const _docFound =
+        course?.curriculum &&
+        Object.values(course?.curriculum).find((item) => {
+          return Object.values(item.documents)?.find((j) => j.docId === docId);
+        });
       const docFound = _docFound?.documents?.find((j) => j.docId === docId);
 
       let document = {};
@@ -69,7 +71,8 @@ export const getServerSideProps = withProtectedUser(
       };
     } catch (error) {
       console.log(1, error);
-      return { redirect: { destination: "/content" } };
+      // return { redirect: { destination: "/content" } };
+      return { props: {} };
     }
   }
 );

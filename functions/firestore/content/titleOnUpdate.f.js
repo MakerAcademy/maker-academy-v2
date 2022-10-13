@@ -15,10 +15,6 @@ exports = module.exports = functions.firestore
       const after = change.after.data();
       const contentId = context.params.contentId;
 
-      console.log(id);
-      console.log(before);
-      console.log(change);
-
       const contentType = before.contentType;
       const docId = before.published;
       const oldTitle = before.metadata.title;
@@ -30,7 +26,7 @@ exports = module.exports = functions.firestore
           .where("metadata.allDocuments", "array-contains", {
             contentType,
             docId,
-            title,
+            oldTitle,
           })
           .get()
           .then((snap) => {
@@ -38,7 +34,9 @@ exports = module.exports = functions.firestore
             snap.docs.map((doc) => arr.push(doc.data()));
           });
 
-        console.log("DONE", docs.length);
+        //Update all the metadata titles inside course
+
+        //Update all the metadata titles inside content
       }
 
       return;

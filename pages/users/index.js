@@ -163,7 +163,7 @@ const Profiles = () => {
               variant={{ xs: "h4", md: "h2" }}
               sx={{ fontWeight: "600!important" }}
             >
-              {t("users")}
+              {t("search_users")}
             </Title>
 
             <Typography>Explore Maker Academy Users</Typography>
@@ -183,8 +183,17 @@ const Profiles = () => {
           placeholder="Search.."
         />
 
-        <Button onClick={(e) => setAnchorEl(e.currentTarget)}>
-          Role: {t(userRoleFilter)}
+        <Button
+          onClick={(e) => setAnchorEl(e.currentTarget)}
+          sx={{ textTransform: "inherit", height: 48, borderRadius: "12px" }}
+        >
+          <Typography
+            sx={{ fontWeight: 500, color: "grey.grey7" }}
+            variant="body2"
+          >
+            Role: {t(userRoleFilter)}
+          </Typography>
+
           {!!anchorEl ? (
             <KeyboardArrowUpIcon fontSize="small" sx={{ ml: 1 }} />
           ) : (

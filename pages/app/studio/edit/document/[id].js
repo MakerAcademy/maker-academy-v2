@@ -1,6 +1,8 @@
 import DashboardPaper from "@components/DashboardPaper";
 import Title from "@components/Title";
 import { withProtectedUser } from "@hoc/routes";
+import { getDocumentWithContentAdmin } from "@lib/admin/document";
+import { getDraftAdmin } from "@lib/admin/drafts";
 import { getDocumentWithContent, updateDocument } from "@lib/document";
 import { getDraft, updateDraft } from "@lib/drafts";
 import { submitDocumentEditRequest } from "@lib/editrequests";
@@ -106,26 +108,28 @@ const EditDocumentPage = ({
   );
 };
 
-export const getServerSideProps = withProtectedUser(async (context) => {
-  const docId = context.params.id;
+export const getServerSideProps = withProtectedUser(
+  async (context, { db, user, profile }) => {
+    const docId = context.params.id;
 
-  const isDraft = context.query?.draft === "true";
+    const isDraft = context.query?.draft === "true";
 
-  const res = isDraft
-    ? await getDraft(docId, true)
-    : await getDocumentWithContent(docId, true);
+    const res = isDraft
+      ? await getDraftAdmin(db, docId, true)
+      : await getDocumentWithContentAdmin(db, docId, true);
 
-  return {
-    props: {
-      isDraft,
-      response: JSON.parse(JSON.stringify(cleanObject(res?.response))),
-      document: JSON.parse(
-        JSON.stringify(
-          cleanObject(isDraft ? res?.response : res?.response?.document)
-        )
-      ),
-    },
-  };
-});
+    return {
+      props: {
+        isDraft,
+        response: JSON.parse(JSON.stringify(cleanObject(res?.response))),
+        document: JSON.parse(
+          JSON.stringify(
+            cleanObject(isDraft ? res?.response : res?.response?.document)
+          )
+        ),
+      },
+    };
+  }
+);
 
 export default EditDocumentPage;

@@ -1,15 +1,16 @@
 import {
-  FullLogoWhite,
-  RoleFullstack,
-  RoleFrontend,
+  ContentDeveloper,
+  MakerContentLogo,
   RoleBackend,
-  RoleSolidity,
   RoleDatascientist,
   RoleFinancialengineer,
-  RoleUiux,
+  RoleFrontend,
+  RoleFullstack,
   RoleProductmanager,
+  RoleSolidity,
   RoleStudent,
-  ContentDeveloper,
+  RoleUiux,
+  SesContentLogo,
 } from "@utils/images";
 
 export const COMMON_CONTEXT_STORAGE = "COMMON_STORAGE_PERSIST";
@@ -134,14 +135,13 @@ export const BRANDS = [
 export const CONTENT_CARD_BRAND_STYLES = {
   maker_academy: {
     color: "#1AAB9B",
-    logo: FullLogoWhite,
+    logo: MakerContentLogo,
   },
   sustainable_ecosystem_scaling: {
-    color: "#000000",
-    logo: FullLogoWhite,
+    color: "#333333",
+    logo: SesContentLogo,
   },
   protocol_engineering: {
     color: "#555555",
-    logo: FullLogoWhite,
   },
 };

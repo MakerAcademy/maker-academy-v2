@@ -43,7 +43,7 @@ export const getServerSideProps = withUser(
       const isDraft = context.query?.draft === "true";
 
       const res = isDraft
-        ? await getDraftAdmin(docId)
+        ? await getDraftAdmin(db, docId)
         : await getDocumentWithContentAdmin(db, docId, true);
 
       // const document = await getDraft(docId);

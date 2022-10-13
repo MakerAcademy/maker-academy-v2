@@ -16,6 +16,7 @@ import {
 } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import hex from "@utils/hexTransparency";
+import useTranslation from "next-translate/useTranslation";
 import Router from "next/router";
 import { useContext, useState } from "react";
 import Content from "./ContentTab";
@@ -29,6 +30,7 @@ const CourseBody = ({ course = {} }) => {
   const [tabValue, setTabValue] = useState(0);
   const { profile } = useAppSelector((state) => state.profile);
   const { setCommonState } = useContext(CommonContext);
+  const { t } = useTranslation("content");
 
   const {
     title,
@@ -111,7 +113,7 @@ const CourseBody = ({ course = {} }) => {
                 borderRadius: "6px",
               }}
             >
-              <Typography variant="body2">{category}</Typography>
+              <Typography variant="body2">{t(category)}</Typography>
             </Box>
 
             <img
@@ -154,7 +156,7 @@ const CourseBody = ({ course = {} }) => {
                 textTransform: "inherit",
                 color: grey[700],
                 backgroundColor: `${theme.palette.grey.grey1}`,
-                fontWeight: 300,
+                fontWeight: 500,
               },
               "& .Mui-selected": {
                 color: theme.palette.primary.main,

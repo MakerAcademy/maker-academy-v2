@@ -1,7 +1,8 @@
 import { CONTENT_CARD_BRAND_STYLES } from "@constants/index";
+import { DEFAULT_CONTENT_THUMBNAIL } from "@lib/document";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import AssessmentOutlinedIcon from "@mui/icons-material/AssessmentOutlined";
-import FeedOutlinedIcon from "@mui/icons-material/FeedOutlined";
+import FeedIcon from "@mui/icons-material/Feed";
 import SubscriptionsOutlinedIcon from "@mui/icons-material/SubscriptionsOutlined";
 import {
   Box,
@@ -17,47 +18,28 @@ import { yellow } from "@mui/material/colors";
 import useTranslation from "next-translate/useTranslation";
 import Link from "next/link";
 import { useState } from "react";
-import ContentBrandBanner from "@assets/images/misc/contentBrandBanenr.svg";
-import FeedIcon from "@mui/icons-material/Feed";
-import { DEFAULT_CONTENT_THUMBNAIL } from "@lib/document";
 
 const BrandBadge = ({ name, text }) => {
   const theme = useTheme();
 
   const _item = CONTENT_CARD_BRAND_STYLES[name];
 
-  const _logo = CONTENT_CARD_BRAND_STYLES?.[name]?.logo || text;
+  const _logo = _item?.logo;
+
+  if (!_logo) return null;
 
   return (
     <Box sx={{ position: "absolute", bottom: 10, left: 0 }}>
-      <Box sx={{ position: "relative" }}>
-        <img
-          src={ContentBrandBanner}
-          alt="banner"
-          style={{
-            minHeight: "35px",
-            minWidth: "120px",
-            position: "relative",
-            top: 0,
-            left: 0,
-          }}
-        />
-
-        <img
-          src={_logo}
-          alt={text}
-          style={{
-            position: "absolute",
-            top: "25%",
-            left: "48%",
-            transform: "translate(-50%, 0%)",
-            height: "100%",
-            width: "100%",
-            maxHeight: "17px",
-            objectFit: "contain",
-          }}
-        />
-      </Box>
+      <img
+        src={_logo}
+        alt={text}
+        style={{
+          height: "40px",
+          width: "100%",
+          // maxHeight: "35px",
+          objectFit: "contain",
+        }}
+      />
     </Box>
   );
 };

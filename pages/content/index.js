@@ -70,7 +70,7 @@ const Content = ({ query }) => {
               </Title>
 
               <Typography>
-                Discover courses and expertise from MakerDAO Experts.
+                {t("content_banner_description")}
               </Typography>
             </Stack>
           </Box>

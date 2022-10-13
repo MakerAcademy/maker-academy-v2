@@ -37,15 +37,16 @@ import MarkdownBody from "./MarkdownBody";
 export const AuthorInBanner = ({ author, brand }) => {
   const theme = useTheme();
   const [name, setName] = useState(brand);
+  const [contact, setContact] = useState({});
   const { t } = useTranslation("common");
 
   useEffect(() => {
-    if (!brand && author) {
-      getContact(author).then((res) => {
-        setName(`${res.firstName || ""} ${res.lastName || ""}`);
-      });
-    }
+    getContact(author).then((res) => {
+      setContact(res);
+    });
   }, []);
+
+  const usersName = `${contact?.firstName || ""} ${contact?.lastName || ""}`;
 
   return (
     <Link passHref href={`/u/${author}`} target="_blank">
@@ -66,7 +67,7 @@ export const AuthorInBanner = ({ author, brand }) => {
       >
         <Stack direction="row" alignItems="center" spacing={1}>
           <Avatar
-            src={""} //CONTENT_CARD_BRAND_STYLES[brand]?.logo
+            src={contact?.profilePicture} //CONTENT_CARD_BRAND_STYLES[brand]?.logo
             sx={{ height: "40px", width: "40px" }}
           />
 
@@ -82,7 +83,7 @@ export const AuthorInBanner = ({ author, brand }) => {
               variant="body2"
               sx={{ fontWeight: 500, color: grey[900] }}
             >
-              {brand ? t(name) : name}
+              {usersName}
             </Typography>
           </Stack>
         </Stack>

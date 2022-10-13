@@ -72,14 +72,17 @@ export const getServerSideProps = withProtectedUser(
   async (context, { db, user, profile }) => {
     const docId = context.params.id;
 
-    const assessment = await getAssessmentWithContentAdmin(db, docId);
+    const res = await getAssessmentWithContentAdmin(db, docId, true);
 
-    if (assessment.author !== profile?.id && user?.trustLevel < 4) {
+    if (res.author !== profile?.id && user?.trustLevel < 4) {
       return { redirect: { destination: "/app/studio" } };
     }
 
     return {
-      props: { assessment },
+      props: {
+        response: JSON.parse(JSON.stringify(cleanObject(res))),
+        assessment: JSON.parse(JSON.stringify(cleanObject(res?.document))),
+      },
     };
   }
 );

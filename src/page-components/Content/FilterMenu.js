@@ -19,10 +19,14 @@ import {
   Hidden,
   InputAdornment,
   Stack,
+  Tab,
+  Tabs,
   TextField,
   Typography,
   useTheme,
 } from "@mui/material";
+import { grey } from "@mui/material/colors";
+import hex from "@utils/hexTransparency";
 import { createSlug } from "@utils/markdown";
 import useTranslation from "next-translate/useTranslation";
 import Router, { useRouter } from "next/router";
@@ -311,55 +315,34 @@ const FilterMenu = () => {
         justifyContent="space-between"
         spacing={2}
       >
-        {/* Left side */}
         <Stack direction="row" alignItems="center" spacing={1}>
           <Typography sx={{ pr: 2 }}>Type:</Typography>
 
-          {/* all */}
-          <Button
-            variant="contained"
-            disableElevation
-            sx={typeBtnCommonStyles(
-              theme,
-              filters?.contentType === "all" || !filters?.contentType
-            )}
-            onClick={() => handleTypeChange("all")}
+          <Tabs
+            value={filters?.contentType}
+            onChange={(e, v) => handleTypeChange(v)}
+            variant="scrollable"
+            scrollButtons="auto"
+            TabIndicatorProps={{ style: { display: "none" } }}
+            sx={{
+              "& .MuiButtonBase-root": {
+                mr: 1.5,
+                borderRadius: "12px",
+                textTransform: "inherit",
+                color: "grey.grey7",
+                backgroundColor: `${theme.palette.grey.grey1}`,
+                fontWeight: 500,
+              },
+              "& .Mui-selected": {
+                color: theme.palette.primary.main,
+                backgroundColor: `${theme.palette.primary.main}${hex["10%"]}`,
+              },
+            }}
           >
-            {t("all")}
-          </Button>
-
-          {/* documents */}
-          <Button
-            variant="contained"
-            disableElevation
-            sx={typeBtnCommonStyles(
-              theme,
-              filters?.contentType === "documents"
-            )}
-            onClick={() => handleTypeChange("documents")}
-          >
-            {t("articles")}
-          </Button>
-
-          {/* courses */}
-          <Button
-            variant="contained"
-            disableElevation
-            sx={typeBtnCommonStyles(theme, filters?.contentType === "courses")}
-            onClick={() => handleTypeChange("courses")}
-          >
-            {t("courses")}
-          </Button>
-
-          <Hidden smDown>
-            {filterOpen && (
-              <StyledSearch
-                value={filters?.searchTerm || ""}
-                dispatch={dispatch}
-                placeholder={t("search")}
-              />
-            )}
-          </Hidden>
+            <Tab label={t("all")} value="all" />
+            <Tab label={t("articles")} value="documents" />
+            <Tab label={t("courses")} value="courses" />
+          </Tabs>
         </Stack>
 
         {/* Right side */}
@@ -367,17 +350,20 @@ const FilterMenu = () => {
           ref={openFilterBtnRef}
           onClick={triggerFilterDrawer}
           color="inherit"
-          sx={{ textTransform: "inherit" }}
+          sx={{ textTransform: "inherit", height: 48, borderRadius: "12px" }}
         >
           <Stack direction="row" alignItems="center" spacing={0.5}>
-            <Typography>
+            <Typography
+              sx={{ fontWeight: 500, color: "grey.grey7" }}
+              variant="body2"
+            >
               {filterOpen ? t("close_filter") : t("open_filter")}
             </Typography>
 
             {filterOpen ? (
-              <KeyboardArrowUpIcon sx={{ fontSize: 16 }} />
+              <KeyboardArrowUpIcon sx={{ fontSize: 20 }} />
             ) : (
-              <KeyboardArrowDownIcon sx={{ fontSize: 16 }} />
+              <KeyboardArrowDownIcon sx={{ fontSize: 20 }} />
             )}
           </Stack>
         </Button>

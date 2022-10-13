@@ -1,5 +1,6 @@
 import Title from "@components/Title";
 import { withProtectedUser } from "@hoc/routes";
+import { getCourseWithContentAdmin } from "@lib/admin/course";
 import { getCourseWithContent } from "@lib/course";
 import { submitCourseEditRequest } from "@lib/editrequests";
 import { ConstructionOutlined } from "@mui/icons-material";
@@ -79,17 +80,20 @@ const EditCoursePage = ({ course, profile, user }) => {
 };
 
 export const getServerSideProps = withProtectedUser(
-  async (context, { user, profile }) => {
+  async (context, { db, user, profile }) => {
     const docId = context.params.id;
 
-    const course = await getCourseWithContent(docId);
+    const res = await getCourseWithContentAdmin(db, docId, true);
 
-    if (course.author !== profile?.id && user?.trustLevel < 4) {
+    if (res.author !== profile?.id && user?.trustLevel < 4) {
       return { redirect: { destination: "/app/studio" } };
     }
 
     return {
-      props: { course },
+      props: {
+        response: JSON.parse(JSON.stringify(cleanObject(res))),
+        course: JSON.parse(JSON.stringify(cleanObject(res?.document))),
+      },
     };
   }
 );
