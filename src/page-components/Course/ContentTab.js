@@ -72,7 +72,7 @@ const Content = ({ course }) => {
                       />
                       <ListItemSecondaryAction>
                         <Typography variant="caption">
-                          {_doc.duration} minutes
+                          {_doc.duration}
                         </Typography>
                       </ListItemSecondaryAction>
                     </ListItem>
