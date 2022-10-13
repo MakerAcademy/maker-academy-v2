@@ -14,7 +14,7 @@ import useTranslation from "next-translate/useTranslation";
 import { useState } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import * as Yup from "yup";
-import CourseCarriculum from "./Carriculum";
+import CourseCurriculum from "./Curriculum";
 import LearningOutcomes from "./LearningOutcomes";
 
 const CourseForm = ({
@@ -35,7 +35,7 @@ const CourseForm = ({
     level: Yup.string().required("Required"),
     category: Yup.string().required("Required"),
     duration: Yup.number().required("Required"),
-    carriculum: Yup.array().required("required"),
+    curriculum: Yup.array().required("required"),
     learningOutcomes: Yup.array().required("required"),
   });
 
@@ -157,9 +157,9 @@ const CourseForm = ({
         <LearningOutcomes control={control} />
       </DashboardPaper>
 
-      {/* Carriculum */}
+      {/* Curriculum */}
       <DashboardPaper>
-        <CourseCarriculum control={control} name="carriculum" />
+        <CourseCurriculum control={control} name="curriculum" />
 
         {/* Submit */}
         <Stack

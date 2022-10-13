@@ -186,7 +186,7 @@ export const submitCourseEditRequest = async (cid, data = {}, contentId) => {
     };
     const docRes = await setDoc(docRef, docPayload);
 
-    const _allDocs = obj?.carriculum?.flatMap?.((n) => n.documents);
+    const _allDocs = obj?.curriculum?.flatMap?.((n) => n.documents);
 
     //searchable term
     let _searchTerm = generateCourseSearchTerm(obj);

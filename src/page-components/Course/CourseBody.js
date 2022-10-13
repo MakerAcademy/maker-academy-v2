@@ -41,7 +41,7 @@ const CourseBody = ({ course = {} }) => {
     views,
     enrolledUsers,
     author,
-    carriculum,
+    curriculum,
     learningOutcomes = [],
     id,
   } = course;

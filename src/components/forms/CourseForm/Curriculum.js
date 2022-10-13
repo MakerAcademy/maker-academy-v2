@@ -18,11 +18,11 @@ import useTranslation from "next-translate/useTranslation";
 import React, { useEffect, useState } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { useFieldArray } from "react-hook-form";
-import CarriculumDocs from "./CarriculumDocs";
+import CurriculumDocs from "./CurriculumDocs";
 
-const CourseCarriculum = ({ control, name }) => {
+const CourseCurriculum = ({ control, name }) => {
   const [documents, setDocuments] = useState([]);
-  const [carriculums, setCarriculums] = useState([]);
+  const [curriculums, setCurriculums] = useState([]);
   const { t } = useTranslation("creator-studio");
   const theme = useTheme();
 
@@ -60,7 +60,7 @@ const CourseCarriculum = ({ control, name }) => {
   return (
     <Box>
       <Stack spacing={2} direction="row" justifyContent="space-between">
-        <Typography sx={{ fontWeight: 600 }}>Carriculum</Typography>
+        <Typography sx={{ fontWeight: 600 }}>Curriculum</Typography>
 
         {documents?.length > 0 && (
           <Button
@@ -143,7 +143,7 @@ const CourseCarriculum = ({ control, name }) => {
                             />
 
                             <Collapse in timeout="auto" unmountOnExit>
-                              <CarriculumDocs
+                              <CurriculumDocs
                                 control={control}
                                 name={`${name}.${i}.documents`}
                                 documents={documents}
@@ -166,4 +166,4 @@ const CourseCarriculum = ({ control, name }) => {
   );
 };
 
-export default React.memo(CourseCarriculum);
+export default React.memo(CourseCurriculum);

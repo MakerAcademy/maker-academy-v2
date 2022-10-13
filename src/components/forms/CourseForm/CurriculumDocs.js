@@ -16,7 +16,7 @@ import React, { useState } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { useFieldArray } from "react-hook-form";
 
-const CarriculumDocs = ({ control, name, documents }) => {
+const CurriculumDocs = ({ control, name, documents }) => {
   const [dialogOpen, setDialogOpen] = useState(false);
   const theme = useTheme();
 
@@ -133,7 +133,6 @@ const CarriculumDocs = ({ control, name, documents }) => {
                           docId: doc.id,
                           title: doc?.metadata?.title,
                           contentType: doc.contentType,
-                          duration: doc?.metadata?.duration,
                         })
                   }
                   button
@@ -153,4 +152,4 @@ const CarriculumDocs = ({ control, name, documents }) => {
   );
 };
 
-export default React.memo(CarriculumDocs);
+export default React.memo(CurriculumDocs);

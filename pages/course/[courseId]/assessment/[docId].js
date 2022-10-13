@@ -53,7 +53,7 @@ export const getServerSideProps = withProtectedUser(
         return { redirect: { destination: "/content" } };
       }
 
-      const _docFound = Object.values(course?.carriculum).find((item) => {
+      const _docFound = Object.values(course?.curriculum).find((item) => {
         return Object.values(item.documents)?.find((j) => j.docId === docId);
       });
       const docFound = _docFound?.documents?.find((j) => j.docId === docId);

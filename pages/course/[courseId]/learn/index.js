@@ -27,7 +27,7 @@ export const getServerSideProps = withProtectedUser(
         return { redirect: { destination: "/content" } };
       }
 
-      const docId = course?.carriculum?.[0]?.documents?.[0]?.docId;
+      const docId = course?.curriculum?.[0]?.documents?.[0]?.docId;
       return {
         redirect: { destination: `/course/${courseId}/learn/${docId}` },
       };

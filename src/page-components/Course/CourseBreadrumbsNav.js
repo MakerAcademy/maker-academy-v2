@@ -15,7 +15,7 @@ export const buildCourseNavLink = (courseId, docId, contentType) => {
 };
 
 export const getNextPreviousFromCourse = (course, docId) => {
-  const _allDocs = course?.carriculum?.flatMap?.((n) => n.documents);
+  const _allDocs = course?.curriculum?.flatMap?.((n) => n.documents);
   const _currentIdx = _allDocs?.findIndex?.((el) => el.docId === docId);
 
   const _next = _allDocs[_currentIdx + 1];

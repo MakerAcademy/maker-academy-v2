@@ -122,7 +122,6 @@ const AssessmentForm = ({
 
   const onSubmit = (data, e) => {
     // setDisabled(true);
-    return console.log(data);
     propsHandleSubmit(cleanObject(data));
   };
 

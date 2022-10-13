@@ -73,6 +73,7 @@ export const CONTENT_CATEGORIES = [
   "scaling",
   "maker",
   "insurance",
+  "operations",
 ];
 
 export const DASHBOARD_BREADCRUMBS = {

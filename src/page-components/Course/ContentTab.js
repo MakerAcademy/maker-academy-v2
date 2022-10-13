@@ -17,12 +17,12 @@ import BookmarkIcon from "@mui/icons-material/BookmarkBorder";
 import AssessmentOutlinedIcon from "@mui/icons-material/AssessmentOutlined";
 
 const Content = ({ course }) => {
-  const { carriculum = {} } = course;
+  const { curriculum = {} } = course;
   const [open, setOpen] = useState(0);
 
   return (
     <List>
-      {Object.values(carriculum).map((section, i) => {
+      {Object.values(curriculum).map((section, i) => {
         const documents = Object.values(section?.documents || {});
 
         return (

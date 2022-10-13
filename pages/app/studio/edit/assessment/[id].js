@@ -1,6 +1,7 @@
 import Title from "@components/Title";
 import { withProtectedUser } from "@hoc/routes";
-import { getAssessmentWithContent, updateAssessment } from "@lib/assessment";
+import { getAssessmentWithContentAdmin } from "@lib/admin/assessment";
+import { updateAssessment } from "@lib/assessment";
 import { Box, Typography } from "@mui/material";
 import { cleanObject } from "@utils/helpers";
 import dynamic from "next/dynamic";
@@ -68,10 +69,10 @@ const Assessment = ({ assessment, user, profile }) => {
 export default Assessment;
 
 export const getServerSideProps = withProtectedUser(
-  async (context, { user, profile }) => {
+  async (context, { db, user, profile }) => {
     const docId = context.params.id;
 
-    const assessment = await getAssessmentWithContent(docId);
+    const assessment = await getAssessmentWithContentAdmin(db, docId);
 
     if (assessment.author !== profile?.id && user?.trustLevel < 4) {
       return { redirect: { destination: "/app/studio" } };

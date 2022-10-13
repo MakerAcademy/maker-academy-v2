@@ -26,7 +26,7 @@ const BrandBadge = ({ name, text }) => {
 
   const _item = CONTENT_CARD_BRAND_STYLES[name];
 
-  const _logo = CONTENT_CARD_BRAND_STYLES[name].logo || text;
+  const _logo = CONTENT_CARD_BRAND_STYLES?.[name]?.logo || text;
 
   return (
     <Box sx={{ position: "absolute", bottom: 10, left: 0 }}>

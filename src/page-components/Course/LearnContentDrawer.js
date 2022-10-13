@@ -30,14 +30,14 @@ const DRAWER_WIDTH = 280;
 
 const LearnContentDrawer = ({ course }) => {
   const { profile } = useAppSelector((state) => state.profile);
-  const { title, carriculum = {} } = course;
+  const { title, curriculum = {} } = course;
   const theme = useTheme();
   const scrollPosition = useScrollPosition();
   const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
 
   const { query } = useRouter();
 
-  const docIdx = Object.values(carriculum).findIndex((item) => {
+  const docIdx = Object.values(curriculum).findIndex((item) => {
     return Object.values(item.documents)?.find((j) => j.docId === query.docId);
   });
 
@@ -91,7 +91,7 @@ const LearnContentDrawer = ({ course }) => {
       </Stack>
 
       <List>
-        {Object.values(carriculum).map((section, i) => {
+        {Object.values(curriculum).map((section, i) => {
           return (
             <React.Fragment key={i}>
               <ListItemButton
