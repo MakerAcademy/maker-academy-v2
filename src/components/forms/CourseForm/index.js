@@ -1,5 +1,6 @@
 import GreenButton from "@components/buttons/GreenButton";
 import DashboardPaper from "@components/DashboardPaper";
+import FirebaseGallery from "@components/FirebaseGallery";
 import FormCheckbox from "@components/formFields/FormCheckbox";
 import FormDropzone from "@components/formFields/FormDropzone";
 import FormSelectField from "@components/formFields/FormSelectField";
@@ -7,7 +8,7 @@ import FormTextField from "@components/formFields/FormTextField";
 import { CONTENT_CATEGORIES } from "@constants/";
 import { BRANDS, CONTENT_DIFFICULTY_LEVELS } from "@constants/";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Divider, Paper, Stack, Typography } from "@mui/material";
+import { Box, Button, Divider, Paper, Stack, Typography } from "@mui/material";
 import { cleanObject } from "@utils/helpers";
 import useTranslation from "next-translate/useTranslation";
 import { useState } from "react";
@@ -58,8 +59,6 @@ const CourseForm = ({
 
   const _thumbnail = useWatch({ control, name: "thumbnail" });
 
-  // console.log(_image);
-
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       {/* Basic Information */}
@@ -71,15 +70,27 @@ const CourseForm = ({
             <Divider />
           </Stack>
 
-          <FormDropzone
-            name="thumbnail"
-            label="Thumbnail"
-            control={control}
-            accept="image/*"
-            restrict={{ type: "images", maxSize: 3 }}
-            acceptedFilesTitle="(PNG or JPG no bigger than 3mb)"
-            exists={!!_thumbnail}
-          />
+          <Box>
+            <FormDropzone
+              name="thumbnail"
+              label="Thumbnail"
+              control={control}
+              accept="image/*"
+              restrict={{ type: "images", maxSize: 3 }}
+              acceptedFilesTitle="(PNG or JPG no bigger than 3mb)"
+              exists={!!_thumbnail}
+            />
+
+            <FirebaseGallery
+              storageRef={"/app/course_thumbs"}
+              handleSelect={(_url) => {
+                setValue("thumbnail", _url);
+              }}
+              ButtonComponent={(_props) => (
+                <Button {..._props}>Or click to select image</Button>
+              )}
+            />
+          </Box>
 
           <FormTextField
             name="title"

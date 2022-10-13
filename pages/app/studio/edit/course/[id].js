@@ -2,6 +2,7 @@ import Title from "@components/Title";
 import { withProtectedUser } from "@hoc/routes";
 import { getCourseWithContent } from "@lib/course";
 import { submitCourseEditRequest } from "@lib/editrequests";
+import { ConstructionOutlined } from "@mui/icons-material";
 import { Box, Typography } from "@mui/material";
 import ErrorPage from "@page-components/Error";
 import { cleanObject } from "@utils/helpers";

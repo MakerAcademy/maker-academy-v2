@@ -14,6 +14,7 @@ import RoleFinancialengineer from "@assets/images/roles/financialengineer.svg";
 import RoleUiux from "@assets/images/roles/uiux.svg";
 import RoleProductmanager from "@assets/images/roles/productmanager.svg";
 import RoleStudent from "@assets/images/roles/student.svg";
+import ContentDeveloper from "@assets/images/roles/contentdeveloper.svg";
 
 export {
   FullLogoWhite,
@@ -31,4 +32,5 @@ export {
   RoleUiux,
   RoleProductmanager,
   RoleStudent,
+  ContentDeveloper,
 };

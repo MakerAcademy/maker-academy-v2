@@ -9,6 +9,7 @@ import {
   RoleUiux,
   RoleProductmanager,
   RoleStudent,
+  ContentDeveloper,
 } from "@utils/images";
 
 export const COMMON_CONTEXT_STORAGE = "COMMON_STORAGE_PERSIST";
@@ -17,6 +18,8 @@ export const NAVBAR_HEIGHT_DESKTOP = 80;
 export const NAVBAR_HEIGHT_MOBILE = 80;
 
 export const DASHBOARD_SIDE_DRAWER_WIDTH = 280;
+
+export const YOUTUBE_DEMO_LINK = "https://youtu.be/qLnyI6E2Z2I";
 
 export const CONTENT_SORT_ITEMS = [
   "newest",
@@ -99,17 +102,16 @@ export const CONTACT_ROLES = [
   { name: "financial_engineer", icon: RoleFinancialengineer },
   { name: "uiux_designer", icon: RoleUiux },
   { name: "product_manager", icon: RoleProductmanager },
+  { name: "content_developer", icon: ContentDeveloper },
   { name: "student", icon: RoleStudent },
 ];
 
 export const BRANDS = [
   "maker_academy",
-  "sustainable_ecosystem_scaling",
-  "protocol_engineering",
   "risk",
   "oracles",
   "real_world_finance",
-  "Growth",
+  "growth",
   "protocol_engineering",
   "govalpha",
   "sustainable_ecosystem_scaling",
@@ -125,7 +127,6 @@ export const BRANDS = [
   "sidestream_auction_services",
   "techops",
   "strategic_finance",
-  "core_unit_archive",
   "events",
 ];
 

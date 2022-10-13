@@ -172,6 +172,7 @@ export const getServerSideProps = withAdminDb(async (context, { db }) => {
   const contacts = await db
     .collection("contacts")
     .where("partOfTeam", "==", true)
+    .orderBy("teamIndex", "asc")
     .get()
     .then((snap) => {
       return snap.docs.map((doc) => doc.data());

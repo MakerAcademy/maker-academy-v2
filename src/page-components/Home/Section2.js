@@ -1,4 +1,5 @@
 import Title from "@components/Title";
+import { YOUTUBE_DEMO_LINK } from "@constants/index";
 import ArrowForwardOutlinedIcon from "@mui/icons-material/ArrowForwardOutlined";
 import PlayArrowOutlinedIcon from "@mui/icons-material/PlayArrowOutlined";
 import {
@@ -288,9 +289,7 @@ const Section2 = () => {
       >
         <DialogContent>
           <ReactPlayer
-            url={
-              "https://www.youtube.com/watch?v=lupjOrsTs18&ab_channel=MakerDAOSES"
-            }
+            url={YOUTUBE_DEMO_LINK}
             width="100%"
             height={500}
             playing

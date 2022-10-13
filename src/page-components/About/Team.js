@@ -4,13 +4,6 @@ import useTranslation from "next-translate/useTranslation";
 import Router from "next/router";
 import React from "react";
 
-const team = [
-  { name: "Colby", title: "Product" },
-  { name: "Sam", title: "Product" },
-  { name: "Ashley", title: "Product" },
-  { name: "Raj", title: "Product" },
-];
-
 const AboutTeam = ({ contacts }) => {
   const { t } = useTranslation("common");
 

@@ -18,7 +18,11 @@ import {
   onSnapshot,
 } from "firebase/firestore";
 import { generateCourseSearchTerm, getCourse } from "./course";
-import { generateDocumentSearchTerm, getDocument } from "./document";
+import {
+  DEFAULT_CONTENT_THUMBNAIL,
+  generateDocumentSearchTerm,
+  getDocument,
+} from "./document";
 import { uploadFile } from "./storage";
 
 export const getUserEditRequests = async (cid) => {
@@ -99,6 +103,7 @@ export const submitDocumentEditRequest = async (
     const docRef = doc(collection(db, "documents"));
     const docPayload = {
       ...data,
+      thumbnail: obj?.thumbnail || DEFAULT_CONTENT_THUMBNAIL,
       id: docRef.id,
     };
     const docRes = await setDoc(docRef, docPayload);
@@ -110,7 +115,7 @@ export const submitDocumentEditRequest = async (
     const erRef = doc(collection(db, "edit_requests"));
     const erPayload = {
       updateAuthor: cid,
-      author: data.author,
+      author: obj.author,
       contentId,
       published: docRef.id,
       oldPublished,
@@ -118,20 +123,21 @@ export const submitDocumentEditRequest = async (
       contentType: "document",
       status: "pending",
       filters: {
-        brand: data?.brand || "none",
+        brand: obj?.brand || "none",
         searchTerm: _searchTerm,
-        category: data?.category || "",
-        level: data?.level || "",
+        category: obj?.category || "",
+        level: obj?.level || "",
       },
       metadata: {
-        level: data?.level || "",
-        title: data?.title || "",
-        brand: data?.brand || "",
-        shortDescription: data?.shortDescription || "",
-        category: data?.category || "",
-        duration: data?.duration || "",
+        level: obj?.level || "",
+        title: obj?.title || "",
+        brand: obj?.brand || "",
+        shortDescription: obj?.shortDescription || "",
+        category: obj?.category || "",
+        duration: obj?.duration || "",
+        thumbnail: obj?.thumbnail,
       },
-      private: !!data?.private,
+      private: !!obj?.private,
     };
     const erRes = await setDoc(erRef, {
       ...cleanObject(erPayload),
@@ -161,7 +167,7 @@ export const submitDocumentEditRequest = async (
       }
     }
 
-    return { success: true, payload: { ...data, id: erRef.id } };
+    return { success: true, payload: { ...obj, id: erRef.id } };
   } catch (error) {
     console.log(error);
     return error;

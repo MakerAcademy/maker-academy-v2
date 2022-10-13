@@ -209,14 +209,14 @@ const ProfileForm = ({ values, handleSubmit: propsHandleSubmit }) => {
                 name="firstName"
                 label="First Name"
                 control={control}
-                placeholder="Colby"
+                placeholder="Your first name"
               />
 
               <FormTextField
                 name="lastName"
                 label="Last Name"
                 control={control}
-                placeholder="Anderson"
+                placeholder="Your last name"
               />
 
               <FormTextField
@@ -317,7 +317,7 @@ const ProfileForm = ({ values, handleSubmit: propsHandleSubmit }) => {
                 name="socials.twitter"
                 label="Twitter"
                 control={control}
-                placeholder="colby_anderson"
+                placeholder="your_username"
                 InputProps={{
                   startAdornment: (
                     <InputAdornment
@@ -334,7 +334,7 @@ const ProfileForm = ({ values, handleSubmit: propsHandleSubmit }) => {
                 name="socials.instagram"
                 label="Instagram"
                 control={control}
-                placeholder="colby_anderson"
+                placeholder="your_username"
                 InputProps={{
                   startAdornment: (
                     <InputAdornment
@@ -351,7 +351,7 @@ const ProfileForm = ({ values, handleSubmit: propsHandleSubmit }) => {
                 name="socials.telegram"
                 label="Telegram"
                 control={control}
-                placeholder="colby_anderson"
+                placeholder="your_username"
                 InputProps={{
                   startAdornment: (
                     <InputAdornment
@@ -368,7 +368,7 @@ const ProfileForm = ({ values, handleSubmit: propsHandleSubmit }) => {
                 name="socials.linkedin"
                 label="LinkedIn"
                 control={control}
-                placeholder="colby_anderson"
+                placeholder="your_username"
                 InputProps={{
                   startAdornment: (
                     <InputAdornment
@@ -385,7 +385,7 @@ const ProfileForm = ({ values, handleSubmit: propsHandleSubmit }) => {
                 name="socials.makerforum"
                 label="Maker Forum"
                 control={control}
-                placeholder="colby_anderson"
+                placeholder="your_username"
                 InputProps={{
                   startAdornment: (
                     <InputAdornment
@@ -409,6 +409,15 @@ const ProfileForm = ({ values, handleSubmit: propsHandleSubmit }) => {
 
           <DashboardPaper>
             <Typography sx={{ mb: 2 }}>Password</Typography>
+
+            <Typography
+              variant="body2"
+              component="div"
+              sx={{ mb: 2 }}
+              color="gray"
+            >
+              Click the button below to receive a password reset email.
+            </Typography>
 
             <Tooltip title="Send Password Reset Email">
               <Button

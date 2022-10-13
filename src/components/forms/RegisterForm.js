@@ -180,7 +180,7 @@ const RegisterForm = () => {
             name="firstName"
             label="First Name"
             control={control}
-            placeholder="Colby"
+            placeholder="Your first name"
             fullWidth
             sx={{ maxWidth: 217 }}
           />
@@ -188,7 +188,7 @@ const RegisterForm = () => {
             name="lastName"
             label="Last Name"
             control={control}
-            placeholder="Anderson"
+            placeholder="Your last name"
             fullWidth
             sx={{ maxWidth: 217 }}
           />

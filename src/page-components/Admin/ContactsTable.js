@@ -89,8 +89,7 @@ const buildColumns = (t) => {
             size="small"
             variant="outlined"
             href={`/u/${params.id}`}
-            target="_black"
-            icon={<EditIcon sx={{ fontSize: 16 }} />}
+            target="_blank"
           >
             {t("open")}
           </GreenButton>
@@ -98,8 +97,8 @@ const buildColumns = (t) => {
           <GreenButton
             size="small"
             variant="outlined"
-            // href={`/preview/${params.row.contentType}/${params.id}`}
-            // target="_black"
+            href={`/app/settings/${params.id}`}
+            target="_blank"
             icon={<EditIcon sx={{ fontSize: 16 }} />}
           >
             {t("edit")}

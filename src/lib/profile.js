@@ -54,6 +54,15 @@ export const getProfiles = async (params = {}) => {
   }
 };
 
+export const getProfile = async (cid) => {
+  try {
+    const q = await getDoc(doc(db, `contacts/${cid}`));
+    return q.data?.();
+  } catch (error) {
+    return error;
+  }
+};
+
 export const listenProfiles = (callback, params = {}) => {
   const { author } = params;
 
