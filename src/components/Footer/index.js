@@ -29,28 +29,28 @@ const MAKER_SOCIALS = [
   {
     label: "Discord",
     icon: faDiscord,
-    link: "https://discord.gg/FAQWbM5p",
+    link: "https://discord.com/invite/RBRumCpEDH",
     fontAwesome: true,
   },
   {
     label: "Twitter",
     icon: TwitterIcon,
-    link: "https://discord.gg/FAQWbM5p",
+    link: "https://twitter.com/MakerDAO",
   },
   {
     label: "Reddit",
     icon: RedditIcon,
-    link: "https://discord.gg/FAQWbM5p",
+    link: "https://www.reddit.com/r/MakerDAO/",
   },
   {
     label: "Youtube",
     icon: YouTubeIcon,
-    link: "https://www.youtube.com/watch?v=lupjOrsTs18&t=38s",
+    link: "https://www.youtube.com/MakerDAO",
   },
   {
     label: "Github",
     icon: GitHubIcon,
-    link: "https://www.youtube.com/watch?v=lupjOrsTs18&t=38s",
+    link: "https://github.com/makerdao",
   },
 ];
 
@@ -58,18 +58,18 @@ const MA_SOCIALS = [
   {
     label: "Discord",
     icon: faDiscord,
-    link: "https://discord.gg/FAQWbM5p",
+    link: "https://discord.gg/Vj9g2rYK",
     fontAwesome: true,
   },
   {
     label: "Twitter",
     icon: TwitterIcon,
-    link: "https://discord.gg/FAQWbM5p",
+    link: "https://twitter.com/MakerAcademyCU",
   },
   {
     label: "Youtube",
     icon: YouTubeIcon,
-    link: "https://www.youtube.com/watch?v=lupjOrsTs18&t=38s",
+    link: "https://www.youtube.com/channel/UCx6oQCJCPuTmZn7RMc2nisw/featured",
   },
 ];
 
@@ -158,7 +158,12 @@ const LandingFooter = ({}) => {
               {MAKER_SOCIALS.map((item, i) => {
                 if (item.fontAwesome) {
                   return (
-                    <IconButton size="small" key={i}>
+                    <IconButton
+                      size="small"
+                      key={i}
+                      href={item.link}
+                      target="_blank"
+                    >
                       <FontAwesomeIcon
                         icon={item.icon}
                         color={theme.palette.text.title}
@@ -169,7 +174,12 @@ const LandingFooter = ({}) => {
                 }
 
                 return (
-                  <IconButton key={i} size="small">
+                  <IconButton
+                    key={i}
+                    size="small"
+                    href={item.link}
+                    target="_blank"
+                  >
                     <item.icon sx={{ color: "text.title" }} fontSize="small" />
                   </IconButton>
                 );
@@ -265,7 +275,12 @@ const LandingFooter = ({}) => {
               {MA_SOCIALS.map((item, i) => {
                 if (item.fontAwesome) {
                   return (
-                    <IconButton size="small" key={i}>
+                    <IconButton
+                      size="small"
+                      key={i}
+                      href={item.link}
+                      target="_blank"
+                    >
                       <FontAwesomeIcon
                         icon={item.icon}
                         color={theme.palette.text.title}
@@ -276,7 +291,12 @@ const LandingFooter = ({}) => {
                 }
 
                 return (
-                  <IconButton key={i} size="small">
+                  <IconButton
+                    key={i}
+                    size="small"
+                    href={item.link}
+                    target="_blank"
+                  >
                     <item.icon sx={{ color: "text.title" }} fontSize="small" />
                   </IconButton>
                 );
