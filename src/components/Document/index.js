@@ -1,6 +1,5 @@
 import ScrollSpy from "@components/ScrollSpy";
 import Title from "@components/Title";
-import { BRANDS, CONTENT_CARD_BRAND_STYLES } from "@constants/index";
 import useDocRead from "@hooks/useDocRead";
 import { useAppSelector } from "@hooks/useRedux";
 import { listenOneContent } from "@lib/content";
@@ -20,23 +19,15 @@ import {
 } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import DocMetadata from "@page-components/Document/DocMetadata";
-import {
-  addChapters,
-  createSlug,
-  createTitle,
-  extractHeadingsFromMd,
-  getLevel,
-  parseDepths,
-} from "@utils/markdown";
+import { createSlug } from "@utils/markdown";
 import useTranslation from "next-translate/useTranslation";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import MarkdownBody from "./MarkdownBody";
 
 export const AuthorInBanner = ({ author, brand }) => {
   const theme = useTheme();
-  const [name, setName] = useState(brand);
+  // const [name, setName] = useState(brand);
   const [contact, setContact] = useState({});
   const { t } = useTranslation("common");
 
@@ -57,9 +48,9 @@ export const AuthorInBanner = ({ author, brand }) => {
           right: "20px",
           bottom: "20px",
           bgcolor: "white",
-          borderRadius: "24px",
-          px: 2,
-          py: 1.5,
+          borderRadius: { xs: "16px", sm: "24px" },
+          px: { xs: 1.5, sm: 2 },
+          py: { xs: 1, sm: 1.5 },
           "&:hover": {
             boxShadow: theme.palette.boxShadows.shadow1,
           },
@@ -68,7 +59,14 @@ export const AuthorInBanner = ({ author, brand }) => {
         <Stack direction="row" alignItems="center" spacing={1}>
           <Avatar
             src={contact?.profilePicture} //CONTENT_CARD_BRAND_STYLES[brand]?.logo
-            sx={{ height: "40px", width: "40px" }}
+            sx={{
+              height: "30px",
+              width: "30px",
+              [theme.breakpoints.up("sm")]: {
+                height: "40px",
+                width: "40px",
+              },
+            }}
           />
 
           <Stack>
@@ -99,10 +97,6 @@ const ContentDocument = ({ data = {}, hideScrollspy, previewMode }) => {
   const theme = useTheme();
 
   const [document, setDocument] = useState(data);
-  const [ids, setIds] = useState([]);
-  const router = useRouter();
-
-  const uid = user?._id;
 
   var {
     id,
@@ -141,41 +135,19 @@ const ContentDocument = ({ data = {}, hideScrollspy, previewMode }) => {
     };
   }, []);
 
-  const liked = !!profile?.likedContent?.includes?.(id);
-
-  // Edit Button condition here
-  const isLoggedIn = !!user?.uid;
-
-  // Generate all Ids from markdown headings
-  useEffect(() => {
-    if (markdown) {
-      const headers = extractHeadingsFromMd(markdown);
-      const _ids = headers?.reduce((acc, header) => {
-        const title = createTitle(header);
-        const slug = createSlug(title);
-        const level = getLevel(header);
-        return [...acc, { title, slug, level }];
-      }, []);
-
-      const _temp2 = parseDepths(_ids || []);
-      const _temp3 = addChapters(_temp2 || []);
-
-      setIds(_temp3 || []);
-    }
-  }, [markdown]);
-
   return (
     <Box>
       <Stack direction="row" spacing={5}>
+        {/* Left side scrollspy */}
         {!hideScrollspy && (
-          <Hidden smDown>
-            {/* Left side scrollspy */}
-            {ids?.length > 0 && (
-              <Box sx={{ py: 5 }}>
-                {/* <BackButton sx={{ mb: { xs: 1, md: 2 } }} /> */}
-                <ScrollSpy title="Table of Content" data={ids} />
-              </Box>
-            )}
+          <Hidden mdDown>
+            <Box sx={{ py: 5 }}>
+              <ScrollSpy
+                title="Table of Content"
+                firstItem={{ title, slug: createSlug(title), depth: 0 }}
+                markdown={markdown}
+              />
+            </Box>
           </Hidden>
         )}
 
@@ -190,12 +162,12 @@ const ContentDocument = ({ data = {}, hideScrollspy, previewMode }) => {
               sx={{
                 position: "relative",
                 height: "100%",
-                minHeight: 260,
                 width: "100%",
                 mb: 3,
               }}
             >
               <img
+                loading="lazy"
                 src={thumbnail}
                 alt={title}
                 onError={(e) => {
@@ -233,7 +205,9 @@ const ContentDocument = ({ data = {}, hideScrollspy, previewMode }) => {
             </Box>
 
             {/* Title */}
-            <Title variant={{ xs: "h3", md: "h2" }}>{title}</Title>
+            <Title variant={{ xs: "h3", md: "h2" }} id={createSlug(title)}>
+              {title}
+            </Title>
 
             {/* Description */}
             <Typography>{description}</Typography>

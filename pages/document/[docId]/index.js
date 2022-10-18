@@ -5,11 +5,12 @@ import { getDocumentWithContentAdmin } from "@lib/admin/document";
 import { Container, useTheme } from "@mui/material";
 import ErrorPage from "@page-components/Error";
 import { cleanObject } from "@utils/helpers";
+import Head from "next/head";
 
-const Document = ({ document }) => {
+const Document = ({ document: _document }) => {
   const theme = useTheme();
 
-  if (!document) return <ErrorPage />;
+  if (!_document) return <ErrorPage />;
 
   return (
     <Container
@@ -21,7 +22,12 @@ const Document = ({ document }) => {
         },
       }}
     >
-      <ContentDocument data={document} />
+      <Head>
+        <title>{_document?.title || "Hello"}</title>
+        <meta name="description" content={_document?.description} />
+      </Head>
+
+      <ContentDocument data={_document} />
     </Container>
   );
 };

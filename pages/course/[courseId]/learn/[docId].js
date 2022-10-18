@@ -7,6 +7,7 @@ import CourseBreadrumbsNav from "@page-components/Course/CourseBreadrumbsNav";
 import LearnContentDrawer from "@page-components/Course/LearnContentDrawer";
 import NextPreviousButtons from "@page-components/Course/NextPreviousButtons";
 import ErrorPage from "@page-components/Error";
+import Head from "next/head";
 
 const LearnContent = ({ course, document: _document }) => {
   const theme = useTheme();
@@ -15,8 +16,15 @@ const LearnContent = ({ course, document: _document }) => {
 
   if (!contentType) return <ErrorPage />;
 
+  console.log(_document);
+
   return (
     <Stack direction="row">
+      <Head>
+        <title>{_document?.title || "Hello"}</title>
+        <meta name="description" content={_document?.description} />
+      </Head>
+
       <LearnContentDrawer course={course} />
 
       <Box sx={{ width: "100%" }}>

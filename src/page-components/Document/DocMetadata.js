@@ -4,9 +4,10 @@ import DescriptionIcon from "@mui/icons-material/Description";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import TimerIcon from "@mui/icons-material/Timer";
-import { Button, Stack, Typography } from "@mui/material";
+import { Button, Grid, Stack, Typography } from "@mui/material";
 import moment from "moment";
 import useTranslation from "next-translate/useTranslation";
+import React from "react";
 
 const DocMetadata = ({
   id,
@@ -21,8 +22,6 @@ const DocMetadata = ({
   const { t } = useTranslation("content");
   const { profile } = useAppSelector((state) => state.profile);
 
-  // console.log(timestamp);
-
   const hasUserLiked = profile?.likedContent?.includes?.(id);
 
   const triggerLike = () => {
@@ -35,37 +34,43 @@ const DocMetadata = ({
 
   return (
     <Stack
-      direction={{ xs: "column", md: "row" }}
+      direction="row"
       alignItems="center"
       justifyContent="space-between"
       spacing={{ xs: 2, md: 3, lg: 4 }}
     >
-      <Stack
-        direction={{ xs: "column", md: "row" }}
+      <Grid
+        container
+        direction="row"
+        flexWrap="wrap"
         alignItems="center"
-        spacing={{ xs: 2, md: 3, lg: 4 }}
+        spacing={{ xs: 1, md: 3, lg: 4 }}
       >
         {/* Difficulty */}
-        <Stack
-          direction="row"
-          alignItems="center"
-          spacing={0.5}
-          sx={{
-            px: 1,
-            py: 0.5,
-            backgroundColor: "rgba(249,166,6,0.1)",
-            color: "rgba(249,166,6)",
-            borderRadius: 2,
-          }}
-        >
-          <DescriptionIcon sx={{ fontSize: 17 }} />
-          <Typography variant="body2">{t(level)}</Typography>
-        </Stack>
+        <Grid item>
+          <Stack
+            direction="row"
+            alignItems="center"
+            spacing={0.5}
+            sx={{
+              px: 1,
+              py: 0.5,
+              backgroundColor: "rgba(249,166,6,0.1)",
+              color: "rgba(249,166,6)",
+              borderRadius: 2,
+            }}
+          >
+            <DescriptionIcon sx={{ fontSize: 17 }} />
+            <Typography variant="body2">{t(level)}</Typography>
+          </Stack>
+        </Grid>
 
         {/* Timestamps */}
-        <Typography variant="body2">
-          {t("published")} {moment(timestamp?.toDate?.()).format("ll")}
-        </Typography>
+        <Grid item>
+          <Typography variant="body2">
+            {t("published")} {moment(timestamp?.toDate?.()).format("ll")}
+          </Typography>
+        </Grid>
 
         {/* {updatedTimestamp && (
           <Typography variant="body2">
@@ -74,21 +79,25 @@ const DocMetadata = ({
         )} */}
 
         {/* Duration */}
-        <Stack direction="row" alignItems="center" spacing={0.5}>
-          <TimerIcon sx={{ fontSize: 18 }} />
-          <Typography variant="body2">
-            {duration} {t("minutes")}
-          </Typography>
-        </Stack>
+        <Grid item>
+          <Stack direction="row" alignItems="center" spacing={0.5}>
+            <TimerIcon sx={{ fontSize: 18 }} />
+            <Typography variant="body2">
+              {duration} {t("minutes")}
+            </Typography>
+          </Stack>
+        </Grid>
 
         {/* Likes */}
-        <Stack direction="row" alignItems="center" spacing={0.5}>
-          <FavoriteIcon sx={{ fontSize: 18 }} />
-          <Typography variant="body2">
-            {likes || 0} {t("likes")}
-          </Typography>
-        </Stack>
-      </Stack>
+        <Grid item>
+          <Stack direction="row" alignItems="center" spacing={0.5}>
+            <FavoriteIcon sx={{ fontSize: 18 }} />
+            <Typography variant="body2">
+              {likes || 0} {t("likes")}
+            </Typography>
+          </Stack>
+        </Grid>
+      </Grid>
 
       {/* Buttons */}
       {profile?.id && (
@@ -123,4 +132,4 @@ const DocMetadata = ({
   );
 };
 
-export default DocMetadata;
+export default React.memo(DocMetadata);

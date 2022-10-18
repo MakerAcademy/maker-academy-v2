@@ -24,12 +24,20 @@ export const parseDepths = (data) => {
     data.map((o) => o.level)
   );
 
-  const parsed = data.map((item) => {
-    const depth = item.level - lowestHeader;
+  let _current = 0;
+
+  const parsed = data.map((item, i) => {
+    if (item.level > data[i - 1]?.level) {
+      _current = _current + 1;
+    } else if (_current !== 0 && item.level === data[i - 1]?.level) {
+      _current;
+    } else {
+      _current = 0;
+    }
 
     return {
       ...item,
-      depth,
+      depth: _current,
     };
   });
 
@@ -84,6 +92,8 @@ export const addChapters = (data) => {
 
     return { ...item, chapter: latest };
   });
+
+  console.log(data, parsed);
 
   return parsed;
 };

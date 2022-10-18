@@ -1,3 +1,4 @@
+import { getAnalytics } from "firebase/analytics";
 import { getApp, getApps, initializeApp } from "firebase/app";
 import {
   browserSessionPersistence,
@@ -5,7 +6,6 @@ import {
   GoogleAuthProvider,
   setPersistence,
 } from "firebase/auth";
-
 import { getFirestore } from "firebase/firestore";
 
 import { getStorage } from "firebase/storage";
@@ -36,3 +36,6 @@ export const providerGoogle = new GoogleAuthProvider();
 export const db = getFirestore(firebaseApp);
 
 export const storage = getStorage(firebaseApp);
+
+export const analytics =
+  typeof window !== "undefined" && getAnalytics(firebaseApp);

@@ -8,6 +8,7 @@ import {
 } from "@lib/document";
 import { Box, Stack, Typography, useTheme } from "@mui/material";
 import DocMetadata from "@page-components/Document/DocMetadata";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import MarkdownBody from "./MarkdownBody";
@@ -75,17 +76,8 @@ const CourseDocument = ({ data = {} }) => {
             mb: 3,
           }}
         >
-          {/* <Image
-            src={thumbnail}
-            loader={() => thumbnail}
-            alt={title}
-            layout="fill"
-            objectFit="cover"
-            style={{
-              borderRadius: "12px",
-            }}
-          /> */}
           <img
+            loading="lazy"
             src={thumbnail}
             alt={title}
             onError={(e) => {
