@@ -16,8 +16,6 @@ const LearnContent = ({ course, document: _document }) => {
 
   if (!contentType) return <ErrorPage />;
 
-  console.log(_document);
-
   return (
     <Stack direction="row">
       <Head>
