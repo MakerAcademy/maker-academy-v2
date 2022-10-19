@@ -19,6 +19,12 @@ const AboutMission = () => {
           mb: 5,
           height: 220,
           borderRadius: "20px",
+          "& img": {
+            objectPosition: "right",
+            [theme.breakpoints.up("sm")]: {
+              objectPosition: "left",
+            },
+          },
         }}
       >
         <img
@@ -27,7 +33,6 @@ const AboutMission = () => {
           style={{
             height: "100%",
             width: "100%",
-            objectPosition: "left",
             objectFit: "cover",
             borderRadius: "inherit",
           }}
@@ -36,7 +41,7 @@ const AboutMission = () => {
         <Box
           sx={{
             position: "absolute",
-            top: "48%",
+            top: "38%",
             transform: "translate(22%, 0%)",
             [theme.breakpoints.up("sm")]: {
               top: "45%",

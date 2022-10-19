@@ -7,6 +7,7 @@ import {
   AppBar,
   Box,
   Container,
+  Divider,
   Drawer,
   Hidden,
   IconButton,
@@ -36,7 +37,7 @@ const MobileDrawer = ({ anchorEl, setAnchorEl }) => {
       anchor="right"
       open={Boolean(anchorEl)}
       onClose={() => setAnchorEl(null)}
-      PaperProps={{ sx: { minWidth: 300 } }}
+      PaperProps={{ sx: { minWidth: 300, py: 2 } }}
     >
       {MENU_ITEMS.map((item, i) => (
         <Box key={i}>
@@ -49,12 +50,16 @@ const MobileDrawer = ({ anchorEl, setAnchorEl }) => {
               <MenuItem>{t(subItem.name)}</MenuItem>
             </Link>
           ))}
+
+          <Divider />
         </Box>
       ))}
 
       <Box sx={{ pl: 1 }}>
         <LanguageMenu fullWidth />
       </Box>
+
+      <Divider sx={{ my: 1 }} />
 
       <Box sx={{ pl: 2 }}>
         <ThemeSwitch fullWidth />
@@ -83,7 +88,7 @@ const Navbar = ({ transparent, withElevation, fixed }) => {
             ? "transparent"
             : theme.palette.background.default,
           width: "100%",
-          zIndex: theme.zIndex.drawer + 1,
+          // zIndex: theme.zIndex.drawer + 1,
           position: "absolute",
           // position: fixed ? "fixed" : "absolute",
           // [theme.breakpoints.up("md")]: {
