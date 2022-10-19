@@ -8,7 +8,9 @@ import YouTubeIcon from "@mui/icons-material/YouTube";
 import {
   Box,
   Container,
+  Divider,
   Grid,
+  Hidden,
   IconButton,
   Link as MUILink,
   Stack,
@@ -113,7 +115,7 @@ const LandingFooter = ({}) => {
     <Box
       sx={{
         bgcolor: "background.default",
-        zIndex: theme.zIndex.drawer + 1,
+        // zIndex: theme.zIndex.drawer + 1,
         position: "relative",
         width: "100%",
         overflow: "hidden",
@@ -134,10 +136,17 @@ const LandingFooter = ({}) => {
         }}
       />
 
-      <Container maxWidth="xl" sx={{ pt: 12, pb: 8 }}>
+      <Container
+        maxWidth="xl"
+        sx={{ py: 6, [theme.breakpoints.up("md")]: { pt: 12, pb: 8 } }}
+      >
         <Grid container>
           {/* LEFT SIDE */}
           <Grid item xs={12} md={3}>
+            <Hidden mdUp>
+              <Divider sx={{ my: 2 }} />
+            </Hidden>
+
             <Typography
               variant="body2"
               sx={{ fontWeight: 500, mb: 2, color: "text.title" }}
@@ -198,6 +207,10 @@ const LandingFooter = ({}) => {
           <Grid item xs={12} md={6}>
             <Grid container justifyContent="center">
               <Grid item xs={12} md={6}>
+                <Hidden mdUp>
+                  <Divider sx={{ my: 2 }} />
+                </Hidden>
+
                 <Typography
                   variant="body2"
                   sx={{ fontWeight: 500, mb: 2, color: "text.title" }}
@@ -225,6 +238,10 @@ const LandingFooter = ({}) => {
               </Grid>
 
               <Grid item xs={12} md={6}>
+                <Hidden mdUp>
+                  <Divider sx={{ my: 2 }} />
+                </Hidden>
+
                 <Typography
                   variant="body2"
                   sx={{ fontWeight: 500, mb: 2, color: "text.title" }}
@@ -255,6 +272,10 @@ const LandingFooter = ({}) => {
 
           {/* RIGHT SIDE */}
           <Grid item xs={12} md={3}>
+            <Hidden mdUp>
+              <Divider sx={{ my: 2 }} />
+            </Hidden>
+
             <Typography
               variant="body2"
               sx={{ fontWeight: 500, mb: 2, color: "text.title" }}

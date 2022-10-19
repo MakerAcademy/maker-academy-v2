@@ -74,80 +74,84 @@ const Navbar = ({ transparent, withElevation, fixed }) => {
   const isScrolled = scrollPosition > 150;
 
   return (
-    <AppBar
-      elevation={withElevation ? 2 : 0}
-      sx={{
-        flexGrow: 1,
-        backgroundColor: transparent
-          ? "transparent"
-          : theme.palette.background.default,
-        width: "100%",
-        zIndex: theme.zIndex.drawer + 1,
-        position: "absolute",
-        // position: fixed ? "fixed" : "absolute",
-        // [theme.breakpoints.up("md")]: {
-        //   position: fixed ? "fixed" : "absolute",
-        // },
-      }}
-    >
-      <Container maxWidth="xl">
-        <Stack
-          direction="row"
-          justifyContent="space-between"
-          alignItems="center"
-          sx={{
-            transition: "0.4s",
-            height: NAVBAR_HEIGHT_MOBILE,
-            [theme.breakpoints.up("md")]: {
-              height: NAVBAR_HEIGHT_DESKTOP,
-            },
-          }}
-        >
-          {/* Logo */}
-          <Box sx={{ flex: 1 }}>
-            <Link href="/" passHref>
-              <img
-                src={
-                  theme.palette.mode === "light" ? FullLogoBlack : FullLogoWhite
-                }
-                alt="Maker Academy Logo"
-                style={{
-                  height: "100%",
-                  maxHeight: "35px",
-                  objectFit: "contain",
-                  cursor: "pointer",
-                }}
-              />
-            </Link>
-          </Box>
-
-          <Hidden mdDown>
-            {/* Menu Buttons */}
-            <Box sx={{ mr: 4 }}>
-              <MenuButtons menuItems={MENU_ITEMS} theme={theme} />
+    <>
+      <AppBar
+        elevation={withElevation ? 2 : 0}
+        sx={{
+          flexGrow: 1,
+          backgroundColor: transparent
+            ? "transparent"
+            : theme.palette.background.default,
+          width: "100%",
+          zIndex: theme.zIndex.drawer + 1,
+          position: "absolute",
+          // position: fixed ? "fixed" : "absolute",
+          // [theme.breakpoints.up("md")]: {
+          //   position: fixed ? "fixed" : "absolute",
+          // },
+        }}
+      >
+        <Container maxWidth="xl">
+          <Stack
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+            sx={{
+              transition: "0.4s",
+              height: NAVBAR_HEIGHT_MOBILE,
+              [theme.breakpoints.up("md")]: {
+                height: NAVBAR_HEIGHT_DESKTOP,
+              },
+            }}
+          >
+            {/* Logo */}
+            <Box sx={{ flex: 1 }}>
+              <Link href="/" passHref>
+                <img
+                  src={
+                    theme.palette.mode === "light"
+                      ? FullLogoBlack
+                      : FullLogoWhite
+                  }
+                  alt="Maker Academy Logo"
+                  style={{
+                    height: "100%",
+                    maxHeight: "35px",
+                    objectFit: "contain",
+                    cursor: "pointer",
+                  }}
+                />
+              </Link>
             </Box>
 
-            {/* Other Buttons */}
-            <ActionButtons />
-          </Hidden>
+            <Hidden mdDown>
+              {/* Menu Buttons */}
+              <Box sx={{ mr: 4 }}>
+                <MenuButtons menuItems={MENU_ITEMS} theme={theme} />
+              </Box>
 
-          {/* Mobile Navbar */}
-          <Hidden mdUp>
-            <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              onClick={(e) => setAnchorEl(e.currentTarget)}
-              sx={{ ml: 1 }}
-            >
-              <MenuIcon />
-            </IconButton>
+              {/* Other Buttons */}
+              <ActionButtons />
+            </Hidden>
 
-            <MobileDrawer anchorEl={anchorEl} setAnchorEl={setAnchorEl} />
-          </Hidden>
-        </Stack>
-      </Container>
-    </AppBar>
+            {/* Mobile Navbar */}
+            <Hidden mdUp>
+              <IconButton
+                size="large"
+                edge="start"
+                color="inherit"
+                onClick={(e) => setAnchorEl(e.currentTarget)}
+                sx={{ ml: 1 }}
+              >
+                <MenuIcon />
+              </IconButton>
+            </Hidden>
+          </Stack>
+        </Container>
+      </AppBar>
+
+      <MobileDrawer anchorEl={anchorEl} setAnchorEl={setAnchorEl} />
+    </>
   );
 };
 

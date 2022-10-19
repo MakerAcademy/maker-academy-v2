@@ -12,33 +12,38 @@ const AboutMission = () => {
   return (
     <>
       {/* Banner */}
-      <Box sx={{ position: "relative", width: "100%", mb: 5, height: 220 }}>
+      <Box
+        sx={{
+          position: "relative",
+          width: "100%",
+          mb: 5,
+          height: 220,
+          borderRadius: "20px",
+        }}
+      >
         <img
           src={isDark ? MissionBannerDark : MissionBannerLight}
           alt={"Maker Academy Content Banner"}
           style={{
             height: "100%",
             width: "100%",
+            objectPosition: "left",
             objectFit: "cover",
-            borderRadius: 20,
+            borderRadius: "inherit",
           }}
         />
 
         <Box
           sx={{
             position: "absolute",
-            top: "45%",
+            top: "48%",
             transform: "translate(22%, 0%)",
+            [theme.breakpoints.up("sm")]: {
+              top: "45%",
+            },
           }}
         >
-          <Stack
-            spacing={2}
-            // justifyContent="center"
-            // alignItems="center"
-            // sx={{ p: { xs: 4, md: 8 } }}
-          >
-            <Title variant="h2">Our Mission</Title>
-          </Stack>
+          <Title variant="h2">Our Mission</Title>
         </Box>
       </Box>
 
