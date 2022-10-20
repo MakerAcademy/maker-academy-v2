@@ -113,6 +113,84 @@ export const submitCourse = async (cid, data = {}) => {
   }
 };
 
+export const updateCourse = async (data = {}, disableUpdatedTimestamp) => {
+  try {
+    const { obj, files } = extractFileInObject(data);
+
+    const { published, id, timestamp, updatedTimestamp, ...other } = obj;
+
+    // Add to courses
+    const docRef = doc(db, "courses", published);
+    const docPayload = {
+      ...other,
+      thumbnail: obj?.thumbnail || DEFAULT_CONTENT_THUMBNAIL,
+    };
+    const docRes = await updateDoc(docRef, cleanObject(docPayload));
+
+    const _allDocs = obj?.curriculum?.flatMap?.((n) => n.documents);
+
+    //searchable term
+    let _searchTerm = generateCourseSearchTerm(obj);
+
+    // new content
+    const contentRef = doc(db, "content", id);
+    const contentPayload = {
+      private: !!obj?.private,
+      filters: {
+        brand: obj?.brand || "none",
+        searchTerm: _searchTerm,
+        category: obj?.category || "",
+        level: obj?.level || "",
+      },
+      metadata: {
+        level: obj?.level || "",
+        title: obj?.title || "",
+        brand: obj?.brand || "",
+        shortDescription: obj?.shortDescription || "",
+        category: obj?.category || "",
+        duration: obj?.duration || "",
+        allDocuments: _allDocs || [],
+        thumbnail: obj?.thumbnail || DEFAULT_CONTENT_THUMBNAIL,
+      },
+    };
+
+    const contentRes = await updateDoc(contentRef, {
+      ...cleanObject(contentPayload),
+      ...(disableUpdatedTimestamp
+        ? {}
+        : { updatedTimestamp: serverTimestamp() }),
+    });
+
+    // Upload files
+    if (files && Object.keys(files)) {
+      for await (const [key, value] of Object.entries(files)) {
+        const extension = value?.name?.split(".")?.[1];
+
+        await uploadFile(
+          `/content/${contentRef.id}/${key}.${extension}`,
+          value
+        ).then(async (res) => {
+          if (res?.success) {
+            await updateDoc(docRef, { [key]: res?.metadata?.downloadURL });
+            await updateDoc(
+              contentRef,
+              {
+                [`metadata.${key}`]: res?.metadata?.downloadURL,
+              },
+              { merge: true }
+            );
+          }
+        });
+      }
+    }
+
+    return { success: true, payload: { ...obj, id: contentRef.id } };
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
 export const getCourse = async (cid) => {
   const docRef = doc(db, "courses", cid);
   const docSnap = await getDoc(docRef);

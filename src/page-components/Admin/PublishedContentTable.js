@@ -154,7 +154,7 @@ const PublishedContentTable = ({ data }) => {
         columns={buildColumns(t)}
         pageSize={pageSize}
         onPageSizeChange={(i) => setPageSize(i)}
-        rowsPerPageOptions={[5, 10, 20, 50]}
+        rowsPerPageOptions={[5, 10, 20, 50, 100]}
         sx={{
           "& .MuiDataGrid-root": {
             border: "none !important",

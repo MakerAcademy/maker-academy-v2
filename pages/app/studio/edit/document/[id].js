@@ -3,8 +3,8 @@ import Title from "@components/Title";
 import { withProtectedUser } from "@hoc/routes";
 import { getDocumentWithContentAdmin } from "@lib/admin/document";
 import { getDraftAdmin } from "@lib/admin/drafts";
-import { getDocumentWithContent, updateDocument } from "@lib/document";
-import { getDraft, updateDraft } from "@lib/drafts";
+import { updateDocument } from "@lib/document";
+import { updateDraft } from "@lib/drafts";
 import { submitDocumentEditRequest } from "@lib/editrequests";
 import { Box, Typography } from "@mui/material";
 import ErrorPage from "@page-components/Error";
@@ -37,7 +37,7 @@ const EditDocumentPage = ({
 
   if (!document) return <ErrorPage />;
 
-  const handleDocumentSubmit = async (data) => {
+  const handleDocumentSubmit = async (data, skipEditRequest) => {
     const _key = enqueueSnackbar("Submitting Document...", {
       variant: "default",
     });
@@ -48,7 +48,7 @@ const EditDocumentPage = ({
       if (isDraft) {
         res = await updateDraft(docId, cleanObject(data));
       } else {
-        if (status === "pending") {
+        if (status === "pending" || user?.trustLevel >= 4) {
           res = await updateDocument({ ...data, published, id: docId });
         } else {
           res = await submitDocumentEditRequest(

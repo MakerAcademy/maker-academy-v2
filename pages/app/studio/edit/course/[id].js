@@ -1,7 +1,7 @@
 import Title from "@components/Title";
 import { withProtectedUser } from "@hoc/routes";
 import { getCourseWithContentAdmin } from "@lib/admin/course";
-import { getCourseWithContent } from "@lib/course";
+import { getCourseWithContent, updateCourse } from "@lib/course";
 import { submitCourseEditRequest } from "@lib/editrequests";
 import { ConstructionOutlined } from "@mui/icons-material";
 import { Box, Typography } from "@mui/material";
@@ -22,8 +22,10 @@ const editableFields = [
   // "markdown",
 ];
 
-const EditCoursePage = ({ course, profile, user }) => {
+const EditCoursePage = ({ course, response, profile, user }) => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+
+  const { id: docId, status, published } = response;
 
   if (!course) return <ErrorPage />;
 
@@ -32,26 +34,33 @@ const EditCoursePage = ({ course, profile, user }) => {
       variant: "default",
     });
 
-    const res = await submitCourseEditRequest(
-      profile?.id,
-      cleanObject({ ...data, contentId: course.id }),
-      course?.id
-    )
-      .then(() => {
-        closeSnackbar(_key);
-        enqueueSnackbar("Success", {
-          variant: "success",
-          autoHideDuration: 2000,
-          onClose: () => Router.push("/app/studio"),
-        });
-      })
-      .catch((err) => {
-        enqueueSnackbar("Error", {
-          variant: "error",
-          autoHideDuration: 2000,
-          onClose: () => Router.push("/app/studio"),
-        });
+    try {
+      let res = null;
+
+      if (status === "pending" || user?.trustLevel >= 4) {
+        res = await updateCourse({ ...data, published, id: docId });
+      } else {
+        res = await submitCourseEditRequest(
+          profile?.id,
+          cleanObject({ ...data, contentId: course.id }),
+          course?.id
+        );
+      }
+
+      closeSnackbar(_key);
+      enqueueSnackbar("Success", {
+        variant: "success",
+        autoHideDuration: 2000,
+        onClose: () => Router.push("/app/studio"),
       });
+    } catch (error) {
+      console.log(error);
+      enqueueSnackbar("Error", {
+        variant: "error",
+        autoHideDuration: 2000,
+        onClose: () => Router.push("/app/studio"),
+      });
+    }
   };
 
   const isRestricted = course.author !== profile?.id || user?.trustLevel < 4;

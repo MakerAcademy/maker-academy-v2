@@ -126,6 +126,7 @@ export const updateDocument = async (data = {}, disableUpdatedTimestamp) => {
     const docRef = doc(db, "documents", published);
     const docPayload = {
       ...other,
+      thumbnail: obj?.thumbnail || DEFAULT_CONTENT_THUMBNAIL,
     };
     const docRes = await updateDoc(docRef, cleanObject(docPayload));
 
@@ -135,7 +136,6 @@ export const updateDocument = async (data = {}, disableUpdatedTimestamp) => {
     //update content
     const contentRef = doc(db, "content", id);
     const contentPayload = {
-      status: "pending",
       filters: {
         brand: obj?.brand || "none",
         searchTerm: _searchTerm,
@@ -149,9 +149,7 @@ export const updateDocument = async (data = {}, disableUpdatedTimestamp) => {
         shortDescription: obj?.shortDescription || "",
         category: obj?.category || "",
         duration: obj?.duration || "",
-        thumbnail:
-          obj?.thumbnail ||
-          "https://firebasestorage.googleapis.com/v0/b/maker-academy-c22f7.appspot.com/o/app%2Fcourse_thumbs%2Fdefault.png?alt=media&token=4e00665e-a0d0-4df1-a140-a3ee116340e6",
+        thumbnail: obj?.thumbnail || DEFAULT_CONTENT_THUMBNAIL,
       },
       private: !!obj?.private,
     };
