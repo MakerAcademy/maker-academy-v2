@@ -57,4 +57,4 @@ const NewCourse = ({ user, profile }) => {
 
 export default NewCourse;
 
-export const getServerSideProps = withProtectedUser();
+export const getServerSideProps = withProtectedUser(null, { trustLevel: 4 });

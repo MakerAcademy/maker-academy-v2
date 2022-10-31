@@ -60,4 +60,4 @@ const Assessment = ({ profile }) => {
 
 export default Assessment;
 
-export const getServerSideProps = withProtectedUser();
+export const getServerSideProps = withProtectedUser(null, { trustLevel: 4 });

@@ -104,7 +104,8 @@ export const getServerSideProps = withProtectedUser(
         course: JSON.parse(JSON.stringify(cleanObject(res?.document))),
       },
     };
-  }
+  },
+  { trustLevel: 4 }
 );
 
 export default EditCoursePage;

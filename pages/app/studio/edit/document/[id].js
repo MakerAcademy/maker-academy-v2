@@ -129,7 +129,8 @@ export const getServerSideProps = withProtectedUser(
         ),
       },
     };
-  }
+  },
+  { trustLevel: 4 }
 );
 
 export default EditDocumentPage;

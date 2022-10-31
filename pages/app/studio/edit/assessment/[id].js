@@ -84,5 +84,6 @@ export const getServerSideProps = withProtectedUser(
         assessment: JSON.parse(JSON.stringify(cleanObject(res?.document))),
       },
     };
-  }
+  },
+  { trustLevel: 4 }
 );

@@ -64,4 +64,4 @@ const NewDocument = ({ user, profile }) => {
 
 export default NewDocument;
 
-export const getServerSideProps = withProtectedUser();
+export const getServerSideProps = withProtectedUser(null, { trustLevel: 4 });
