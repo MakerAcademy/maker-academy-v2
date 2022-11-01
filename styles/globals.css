@@ -21,3 +21,9 @@
   src: url("../src/assets/fonts/SF-Pro-Display-Heavy.otf");
   font-weight: 600;
 }
+
+a {
+  text-decoration: inherit;
+  color: inherit;
+  font-size: inherit;
+}
