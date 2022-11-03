@@ -1,6 +1,6 @@
 import GreenButton from "@components/buttons/GreenButton";
 import FormDropzone from "@components/formFields/FormDropzone";
-import FormMarkdown from "@components/formFields/FormMarkdownOld";
+import FormMarkdown from "@components/formFields/FormMarkdown";
 import FormSelectField from "@components/formFields/FormSelectField";
 import FormTextField from "@components/formFields/FormTextField";
 import { BACKLOG_TYPES } from "@constants/";

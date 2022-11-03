@@ -1,6 +1,6 @@
 import GreenButton from "@components/buttons/GreenButton";
 import FormDropzone from "@components/formFields/FormDropzone";
-import FormMarkdown from "@components/formFields/FormMarkdownOld";
+import FormMarkdown from "@components/formFields/FormMarkdown";
 import FormTextField from "@components/formFields/FormTextField";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Divider, Stack, Typography, useTheme } from "@mui/material";
