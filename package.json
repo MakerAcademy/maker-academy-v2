@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "playwright test"
   },
   "dependencies": {
     "@emotion/cache": "^11.9.3",
@@ -74,6 +75,7 @@
     "yup": "^0.32.11"
   },
   "devDependencies": {
+    "@playwright/test": "^1.27.1",
     "eslint": "8.17.0",
     "eslint-config-next": "12.1.6"
   },
