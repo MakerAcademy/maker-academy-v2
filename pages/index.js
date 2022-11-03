@@ -5,12 +5,18 @@ import Section2 from "@page-components/Home/Section2";
 import Section3 from "@page-components/Home/Section3";
 import Section4 from "@page-components/Home/Section4";
 import Section5 from "@page-components/Home/Section5";
+import Head from "next/head";
 
 const Home = () => {
   const scrollPosition = useScrollPosition();
 
   return (
     <>
+      <Head>
+        <title>Maker Academy Homepage</title>
+        {/* <meta name="description" content={_document?.description} /> */}
+      </Head>
+
       <Section1 />
       <Section2 />
       <Section3 />

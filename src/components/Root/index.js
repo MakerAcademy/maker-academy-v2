@@ -1,6 +1,6 @@
 import LoadingOverlay from "@components/LoadingOverlay";
 import { createTheme } from "@config/theme";
-import { auth } from "@firebase";
+import { auth } from "@config/firebase";
 import { useAppDispatch, useAppSelector } from "@hooks/useRedux";
 import LandingLayout from "@layouts/";
 import DashboardLayout from "@layouts/Dashboard";

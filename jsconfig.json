@@ -12,8 +12,6 @@
       "@constants": ["src/constants"],
       "@config/*": ["src/config/*"],
       "@config": ["src/config"],
-      "@firebase/*": ["src/config/firebase/*"],
-      "@firebase": ["src/config/firebase"],
       "@context/*": ["src/context/*"],
       "@context": ["src/context"],
       "@hoc/*": ["src/hoc/*"],

@@ -26,6 +26,7 @@ import Router, { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import SecurityIcon from "@mui/icons-material/Security";
 import { withAdminDb } from "@hoc/routes";
+import Head from "next/head";
 
 const routes = [
   { name: "mission", link: "/about/mission", icon: StarIcon },
@@ -64,95 +65,101 @@ const AboutUs = (props) => {
   const RenderedComponent = AboutUs.type[tabValue] || Empty;
 
   return (
-    <Box
-      sx={{
-        position: "relative",
-        overflow: "hidden",
-        // backgroundColor: "red",
-        minHeight: "100vh",
-      }}
-    >
-      {/* Background images */}
-      <img
-        loading="lazy"
-        src={BlurSection1}
-        alt="Blur 1"
-        style={{
-          maxWidth: "100%",
-          position: "absolute",
-          top: 0,
-          left: 0,
-          zIndex: -1,
-        }}
-      />
-
-      <img
-        loading="lazy"
-        src={BlurSection2}
-        alt="Blur 1"
-        style={{
-          maxWidth: "100%",
-          position: "absolute",
-          bottom: 0,
-          right: 0,
-          zIndex: -1,
-        }}
-      />
-
-      <Container
-        maxWidth="md"
+    <>
+      <Head>
+        <title>Maker Academy - About us {t(tabValue)}</title>
+        {/* <meta name="description" content={_document?.description} /> */}
+      </Head>
+      <Box
         sx={{
-          //   bgcolor: "red",
-          pt: `${NAVBAR_HEIGHT_MOBILE}px`,
-          [theme.breakpoints.up("md")]: {
-            px: 10,
-            minHeight: 750, //remove
-          },
-          [theme.breakpoints.up("lg")]: {
-            pt: `calc(${NAVBAR_HEIGHT_MOBILE}px + 50px)`,
-            px: 3,
-          },
+          position: "relative",
+          overflow: "hidden",
+          // backgroundColor: "red",
+          minHeight: "100vh",
         }}
       >
-        <Tabs
-          variant="scrollable"
-          TabIndicatorProps={{ style: { display: "none" } }}
-          value={tabValue}
-          onChange={(e, v) => setTabValue(v)}
-        >
-          {routes.map((item) => {
-            return (
-              <Tab
-                key={item.link}
-                value={item.link}
-                // label={t(item.name)}
-                label={
-                  <Stack direction="row" alignItems="center" spacing={1}>
-                    <item.icon sx={{ fontSize: 20 }} />
-                    <Typography variant="body2" sx={{ fontWeight: 500 }}>
-                      {t(item.name)}
-                    </Typography>
-                  </Stack>
-                }
-                sx={{
-                  mx: 1,
-                  bgcolor: "grey.grey1",
-                  borderRadius: "12px",
-                  "&.Mui-selected": {
-                    color: "text.invert",
-                    bgcolor: "grey.grey8",
-                  },
-                }}
-              />
-            );
-          })}
-        </Tabs>
+        {/* Background images */}
+        <img
+          loading="lazy"
+          src={BlurSection1}
+          alt="Blur 1"
+          style={{
+            maxWidth: "100%",
+            position: "absolute",
+            top: 0,
+            left: 0,
+            zIndex: -1,
+          }}
+        />
 
-        <Box sx={{ my: 5 }}>
-          <RenderedComponent {...props} />
-        </Box>
-      </Container>
-    </Box>
+        <img
+          loading="lazy"
+          src={BlurSection2}
+          alt="Blur 1"
+          style={{
+            maxWidth: "100%",
+            position: "absolute",
+            bottom: 0,
+            right: 0,
+            zIndex: -1,
+          }}
+        />
+
+        <Container
+          maxWidth="md"
+          sx={{
+            //   bgcolor: "red",
+            pt: `${NAVBAR_HEIGHT_MOBILE}px`,
+            [theme.breakpoints.up("md")]: {
+              px: 10,
+              minHeight: 750, //remove
+            },
+            [theme.breakpoints.up("lg")]: {
+              pt: `calc(${NAVBAR_HEIGHT_MOBILE}px + 50px)`,
+              px: 3,
+            },
+          }}
+        >
+          <Tabs
+            variant="scrollable"
+            TabIndicatorProps={{ style: { display: "none" } }}
+            value={tabValue}
+            onChange={(e, v) => setTabValue(v)}
+          >
+            {routes.map((item) => {
+              return (
+                <Tab
+                  key={item.link}
+                  value={item.link}
+                  // label={t(item.name)}
+                  label={
+                    <Stack direction="row" alignItems="center" spacing={1}>
+                      <item.icon sx={{ fontSize: 20 }} />
+                      <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                        {t(item.name)}
+                      </Typography>
+                    </Stack>
+                  }
+                  sx={{
+                    mx: 1,
+                    bgcolor: "grey.grey1",
+                    borderRadius: "12px",
+                    "&.Mui-selected": {
+                      color: "text.invert",
+                      bgcolor: "grey.grey8",
+                    },
+                  }}
+                />
+              );
+            })}
+          </Tabs>
+
+          <Box sx={{ my: 5 }}>
+            <RenderedComponent {...props} />
+          </Box>
+        </Container>
+      </Box>
+    </>
   );
 };
 

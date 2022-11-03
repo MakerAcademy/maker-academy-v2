@@ -11,7 +11,7 @@ import {
   updateDoc,
   where,
   onSnapshot,
-} from "@firebase/firestore";
+} from "firebase/firestore";
 import { extractFileInObject } from "@utils/helperFunctions";
 import { cleanObject } from "@utils/helpers";
 import { uploadFile } from "./storage";
