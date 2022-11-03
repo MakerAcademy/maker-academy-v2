@@ -12,5 +12,7 @@ jobs:
 
       - name: Install packages
         run: npm ci
+      - name: install playwright browsers
+        run: npx playwright install --with-deps
       - name: Run Tests
         run: npm run test:e2e
