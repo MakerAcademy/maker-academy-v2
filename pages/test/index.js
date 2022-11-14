@@ -1,13 +1,38 @@
-import FormMarkdown from "@components/formFields/FormMarkdown";
-import { Container } from "@mui/material";
-import React from "react";
+import { getUserFromEmail } from "@lib/user";
+import {
+  useConnectModal,
+  useAccountModal,
+  useChainModal,
+} from "@rainbow-me/rainbowkit";
+import "@rainbow-me/rainbowkit/styles.css";
+import { useEffect } from "react";
 
-const Test = () => {
+export const YourApp = () => {
+  const { openConnectModal } = useConnectModal();
+  const { openAccountModal } = useAccountModal();
+  const { openChainModal } = useChainModal();
+
   return (
-    <Container sx={{ my: 5 }}>
-      <FormMarkdown />
-    </Container>
+    <>
+      {openConnectModal && (
+        <button onClick={openConnectModal} type="button">
+          Open Connect Modal
+        </button>
+      )}
+
+      {openAccountModal && (
+        <button onClick={openAccountModal} type="button">
+          Open Account Modal
+        </button>
+      )}
+
+      {openChainModal && (
+        <button onClick={openChainModal} type="button">
+          Open Chain Modal
+        </button>
+      )}
+    </>
   );
 };
 
-export default Test;
+export default YourApp;

@@ -6,7 +6,7 @@ import { CommonContext } from "@context/commonContext";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { handleGoogleLogin, handleLogin } from "@lib/auth";
 import GoogleIcon from "@mui/icons-material/Google";
-import { Divider, Stack, Typography } from "@mui/material";
+import { Divider, Stack, Tooltip, Typography } from "@mui/material";
 import Router from "next/router";
 import { useSnackbar } from "notistack";
 import { useContext } from "react";
@@ -14,6 +14,7 @@ import { Bounce } from "react-awesome-reveal";
 import { useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { SocialButton } from "./RegisterForm";
+import Web3AuthButton from "@components/buttons/Web3Auth";
 
 const LoginForm = () => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
@@ -148,9 +149,17 @@ const LoginForm = () => {
           spacing={2.5}
         >
           <Bounce>
-            <SocialButton color="#DF4D3B" onClick={onGoogleLogin}>
+            <SocialButton
+              color="#DF4D3B"
+              tooltip="Google"
+              onClick={onGoogleLogin}
+            >
               <GoogleIcon />
             </SocialButton>
+          </Bounce>
+
+          <Bounce>
+            <Web3AuthButton />
           </Bounce>
         </Stack>
       </Stack>

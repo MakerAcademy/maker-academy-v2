@@ -1,4 +1,5 @@
 import GreenButton from "@components/buttons/GreenButton";
+import Web3AuthButton from "@components/buttons/Web3Auth";
 import FormTextField from "@components/formFields/FormTextField";
 import Title from "@components/Title";
 import { CommonContext } from "@context/commonContext";
@@ -9,6 +10,7 @@ import {
   Divider,
   IconButton,
   Stack,
+  Tooltip,
   Typography,
   useTheme,
 } from "@mui/material";
@@ -19,24 +21,26 @@ import { Bounce } from "react-awesome-reveal";
 import { useForm } from "react-hook-form";
 import * as Yup from "yup";
 
-export const SocialButton = ({ color, children, ...other }) => {
+export const SocialButton = ({ color, children, tooltip = "", ...other }) => {
   const theme = useTheme();
 
   return (
-    <IconButton
-      // size="large"
-      sx={{
-        backgroundColor: color,
-        color: theme.palette.common.white,
-        "&:hover": {
+    <Tooltip title={tooltip}>
+      <IconButton
+        // size="large"
+        sx={{
           backgroundColor: color,
-          filter: "brightness(90%)",
-        },
-      }}
-      {...other}
-    >
-      {children}
-    </IconButton>
+          color: theme.palette.common.white,
+          "&:hover": {
+            backgroundColor: color,
+            filter: "brightness(90%)",
+          },
+        }}
+        {...other}
+      >
+        {children}
+      </IconButton>
+    </Tooltip>
   );
 };
 
@@ -249,9 +253,17 @@ const RegisterForm = () => {
           spacing={2.5}
         >
           <Bounce>
-            <SocialButton color="#DF4D3B" onClick={onGoogleRegister}>
+            <SocialButton
+              color="#DF4D3B"
+              tooltip="Google"
+              onClick={onGoogleRegister}
+            >
               <GoogleIcon />
             </SocialButton>
+          </Bounce>
+
+          <Bounce>
+            <Web3AuthButton />
           </Bounce>
         </Stack>
       </Stack>

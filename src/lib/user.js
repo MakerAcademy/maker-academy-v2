@@ -11,6 +11,7 @@ import {
   updateDoc,
   where,
   onSnapshot,
+  setDoc,
 } from "firebase/firestore";
 import { extractFileInObject } from "@utils/helperFunctions";
 import { cleanObject } from "@utils/helpers";
@@ -90,6 +91,22 @@ export const getContactFromUid = async (uid) => {
   }
 };
 
+export const findWalletUser = async (address) => {
+  try {
+    const q = query(
+      collection(db, "wallet_users"),
+      where("address", "==", address),
+      limit(1)
+    );
+
+    const snap = await getDocs(q);
+
+    return snap?.docs?.[0]?.data?.();
+  } catch (error) {
+    return error;
+  }
+};
+
 export const getUser = async (uid) => {
   try {
     const q = await getDoc(doc(db, `users/${uid}`));
@@ -106,6 +123,22 @@ export const updateUser = async (uid, data = {}) => {
       ...cleanObject(data),
     });
   } catch (error) {
+    return error;
+  }
+};
+
+export const updateWalletUser = async (uid, data = {}) => {
+  try {
+    const docRef = doc(db, "wallet_users", uid);
+    await setDoc(
+      docRef,
+      {
+        ...cleanObject(data),
+      },
+      { merge: true }
+    );
+  } catch (error) {
+    console.log(error);
     return error;
   }
 };

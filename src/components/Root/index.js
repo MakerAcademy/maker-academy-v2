@@ -19,6 +19,7 @@ import Router, { useRouter } from "next/router";
 import nookies from "nookies";
 import { SnackbarProvider } from "notistack";
 import React, { useEffect } from "react";
+import { useDisconnect } from "wagmi";
 
 const EmptyLayout = ({ children }) => (
   <React.Fragment>{children}</React.Fragment>
@@ -32,9 +33,12 @@ const Root = ({ children }) => {
   const dispatch = useAppDispatch();
   let unsubscribeAuth;
 
+  const { disconnect } = useDisconnect();
+
   const watchAuth = () => {
     unsubscribeAuth = onAuthStateChanged(auth, async (_user) => {
       if (!_user) {
+        disconnect();
         dispatch(setUser(null));
         dispatch(setProfile(null));
         console.log("Not Logged In");
