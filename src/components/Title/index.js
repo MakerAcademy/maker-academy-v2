@@ -3,6 +3,19 @@ import React from "react";
 
 const Title = ({ sx = {}, variant = "h6", children, ...other }) => {
   const _variant =
+    typeof variant !== "object" ? variant : variant === "h7" ? "h6" : "h6";
+
+  const _component =
+    typeof variant !== "object"
+      ? variant
+      : variant.xl ||
+        variant.lg ||
+        variant.md ||
+        variant.sm ||
+        variant.xs ||
+        "h6";
+
+  const _variantStyles =
     typeof variant === "object"
       ? {
           xs: variant.xs,
@@ -16,15 +29,14 @@ const Title = ({ sx = {}, variant = "h6", children, ...other }) => {
 
   return (
     <Typography
-      variant={
-        typeof variant !== "object" ? variant : variant === "h7" ? "h6" : "h6"
-      }
+      variant={_variant}
       sx={{
         fontWeight: 600,
         color: "text.title",
-        typography: typeof _variant === "object" && _variant,
+        typography: typeof _variantStyles === "object" && _variantStyles,
         ...sx,
       }}
+      component={_component}
       {...other}
     >
       {children}
