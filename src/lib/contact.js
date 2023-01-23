@@ -11,7 +11,7 @@ import {
   where,
 } from "firebase/firestore";
 
-export const getProfiles = async (params = {}) => {
+export const getContacts = async (params = {}) => {
   const {
     sort: _sort = "level",
     order: _order = "desc",
@@ -54,7 +54,7 @@ export const getProfiles = async (params = {}) => {
   }
 };
 
-export const getProfile = async (cid) => {
+export const getContact = async (cid) => {
   try {
     const q = await getDoc(doc(db, `contacts/${cid}`));
     return q.data?.();
@@ -63,7 +63,7 @@ export const getProfile = async (cid) => {
   }
 };
 
-export const listenProfiles = (callback, params = {}) => {
+export const listenContacts = (callback, params = {}) => {
   const { author } = params;
 
   try {
@@ -94,7 +94,7 @@ export const listenProfiles = (callback, params = {}) => {
   }
 };
 
-export const listenOneProfile = (_id, callback) => {
+export const listenOneContact = (_id, callback) => {
   try {
     const docRef = doc(db, "contacts", _id);
 

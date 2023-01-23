@@ -1,7 +1,6 @@
-import { Button, Stack, Typography } from "@mui/material";
+import { Button, Stack } from "@mui/material";
 import useTranslation from "next-translate/useTranslation";
 import Link from "next/link";
-import React from "react";
 
 const MenuButtons = ({ menuItems = [], theme }) => {
   const { t } = useTranslation("common");

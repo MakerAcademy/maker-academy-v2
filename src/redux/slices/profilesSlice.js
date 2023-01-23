@@ -1,4 +1,4 @@
-import { getProfiles } from "@lib/profile";
+import { getContacts } from "@lib/contact";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
@@ -21,7 +21,7 @@ export const fetchProfilesData = createAsyncThunk(
       profiles: { limit, lastVisible },
     } = getState();
 
-    const res = await getProfiles({
+    const res = await getContacts({
       //   sort,
       //   order,
       limit,

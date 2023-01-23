@@ -4,6 +4,7 @@ import GreenButton from "@components/buttons/GreenButton";
 import ProfileCard from "@components/cards/ProfileCard";
 import Title from "@components/Title";
 import { CONTACT_ROLES } from "@constants/index";
+import { withProtectedUser } from "@hoc/routes";
 import useDebounce from "@hooks/useDebounce";
 import { useAppDispatch, useAppSelector } from "@hooks/useRedux";
 import useScrollPosition from "@hooks/useScrollPosition";
@@ -252,3 +253,5 @@ const Profiles = () => {
 };
 
 export default Profiles;
+
+export const getServerSideProps = withProtectedUser(null, { trustLevel: 4 });

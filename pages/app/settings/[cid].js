@@ -1,6 +1,6 @@
 import { withProtectedUser } from "@hoc/routes";
 import { useAppDispatch, useAppSelector } from "@hooks/useRedux";
-import { listenOneProfile } from "@lib/profile";
+import { listenOneContact } from "@lib/contact";
 import { updateContact } from "@lib/user";
 import useTranslation from "next-translate/useTranslation";
 import dynamic from "next/dynamic";
@@ -15,7 +15,7 @@ const Profile = ({ profileId }) => {
   const [profile, setProfile] = useState(null);
 
   useEffect(() => {
-    const unsub = listenOneProfile(profileId, setProfile);
+    const unsub = listenOneContact(profileId, setProfile);
     return () => unsub();
   }, []);
 

@@ -25,7 +25,7 @@ import MenuButtons from "./MenuButtons";
 const MENU_ITEMS = [
   { name: "content", link: "/content" },
   { name: "about", link: "/about/mission" },
-  { name: "users", link: "/users" },
+  // { name: "users", link: "/users" },
   // { name: "creator", link: "/content" },
 ];
 
