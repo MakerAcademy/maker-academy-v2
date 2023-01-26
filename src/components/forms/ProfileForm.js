@@ -202,7 +202,7 @@ const ProfileForm = ({ values, handleSubmit: propsHandleSubmit }) => {
         {/* Left side - account details */}
         <Grid item xs={12} md={6}>
           <DashboardPaper>
-            <Title sx={{ mb: 3 }}>Account Details</Title>
+            <Title sx={{ mb: 3 }}>Public User Profile</Title>
 
             <Stack spacing={3}>
               <FormTextField
@@ -219,14 +219,14 @@ const ProfileForm = ({ values, handleSubmit: propsHandleSubmit }) => {
                 placeholder="Your last name"
               />
 
-              <FormTextField
+              {/* <FormTextField
                 name="phone"
                 label="Phone"
                 control={control}
                 placeholder="+1 234 567890"
-              />
+              /> */}
 
-              <FormTextField
+              {/* <FormTextField
                 name="birthday"
                 label="Birthday"
                 type="date"
@@ -234,7 +234,7 @@ const ProfileForm = ({ values, handleSubmit: propsHandleSubmit }) => {
                 InputLabelProps={{
                   shrink: true,
                 }}
-              />
+              /> */}
 
               <FormTextField
                 name="walletAddress"
