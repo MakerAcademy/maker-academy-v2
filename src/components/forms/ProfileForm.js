@@ -306,12 +306,12 @@ const ProfileForm = ({ values, handleSubmit: propsHandleSubmit }) => {
             <Title sx={{ mb: 3 }}>Social Media</Title>
 
             <Stack spacing={3}>
-              <FormTextField
+              {/* <FormTextField
                 name="socials.publicEmail"
                 label="Public Email"
                 control={control}
                 placeholder="abc@gmail.com"
-              />
+              /> */}
 
               <FormTextField
                 name="socials.twitter"
