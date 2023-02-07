@@ -3,9 +3,7 @@ import { NAVBAR_HEIGHT_DESKTOP, NAVBAR_HEIGHT_MOBILE } from "@constants/";
 import { withUser } from "@hoc/routes";
 import { getDocumentWithContentAdmin } from "@lib/admin/document";
 import { getDraftAdmin } from "@lib/admin/drafts";
-import { getDocumentWithContent } from "@lib/document";
-import { getDraft } from "@lib/drafts";
-import { Box, Container, Typography, useTheme } from "@mui/material";
+import { Container, Typography, useTheme } from "@mui/material";
 import ErrorPage from "@page-components/Error";
 import { cleanObject } from "@utils/helpers";
 

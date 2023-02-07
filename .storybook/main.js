@@ -21,6 +21,8 @@ module.exports = {
       "@hooks": path.resolve(__dirname, "../src/hooks"),
       "@assets": path.resolve(__dirname, "../src/assets"),
       "@constants": path.resolve(__dirname, "../src/constants"),
+      "@lib": path.resolve(__dirname, "../src/lib"),
+      "@page-components": path.resolve(__dirname, "../src/page-components"),
     };
 
     return config;
