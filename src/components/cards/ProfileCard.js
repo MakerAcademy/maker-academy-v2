@@ -111,7 +111,7 @@ const ProfileCard = ({
                 ? "#0e76a8"
                 : `${theme.palette.grey.grey2} !important`,
             }}
-            href={`https://www.linkedin.com/${socials?.linkedin}`}
+            href={`https://www.linkedin.com/in/${socials?.linkedin}`}
             target="_blank"
             disabled={!socials?.linkedin}
             onClick={(e) => e.stopPropagation()}

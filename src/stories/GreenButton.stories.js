@@ -1,7 +1,7 @@
 import GreenButton from "../components/buttons/GreenButton";
 
 export default {
-  title: "Main Button",
+  title: "Buttons/Main Button",
   component: GreenButton,
 };
 
