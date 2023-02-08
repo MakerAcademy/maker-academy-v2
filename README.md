@@ -1,8 +1,8 @@
 # Maker Academy
 
 Maker Academy Website. An educational platform for Maker.
-## Local Development
-For development run:
+## Running the project
+For install and run:
 
 `npm i && npm run dev`
 
@@ -10,15 +10,9 @@ Pushed commits are automatically deployed by Vercel.
 
 ## Environmental Variables
 
-Requires a local `.env` file with the following fields to configure various services.
+Requires a local `.env` file with the firebase api keys, firebase admin keys and for translating new localization words, the google translate api key.
+Contact admin to provide these keys.
 
-### Install dependencies
+## Storybook
 
-```bash
-   npm i
-```
-### Running the development server.
-
-```bash
-   npm run dev
-```
+`npm run storybook`
